@@ -23,7 +23,16 @@ function pct(amount) {
   if (amount.unit === 'fraction') return `${(Number(amount.value) * 100).toFixed(Math.abs(Number(amount.value) * 100 - Math.round(Number(amount.value) * 100)) < 1e-8 ? 0 : 1)}%`;
   return `${amount.value} ${amount.unit || ''}`.trim();
 }
-function omega(formula) { return pct(formula?.amounts?.range_separation_omega); }
+function formulaHtml(latex, mode = 'display') {
+  if (!latex) return '<span class="formula-placeholder">Formula not encoded yet</span>';
+  const body = escapeHtml(latex);
+  return mode === 'inline' ? `<span class="math-formula">\\(${body}\\)</span>` : `<div class="math-formula">\\[${body}\\]</div>`;
+}
+function queueMath(root = document) {
+  if (window.MathJax?.typesetPromise) {
+    window.MathJax.typesetPromise([root]).catch(err => console.warn('MathJax render failed', err));
+  }
+}
 function exactSummary(formula) {
   const sr = formula?.amounts?.short_range_exact_exchange;
   const lr = formula?.amounts?.long_range_exact_exchange;
@@ -39,6 +48,10 @@ function statusLabel(card) {
   return 'imported scaffold';
 }
 function sourceBadge(card) { return card.source === 'curated' ? 'curated' : 'imported'; }
+function shortText(value, n=150) {
+  const text = String(value || '').trim();
+  return text.length > n ? `${text.slice(0, n - 1)}…` : text;
+}
 
 function curatedToCard(entry) {
   const codes = (entry.libxc?.components || []).map(c => c.code).filter(Boolean);
@@ -66,7 +79,7 @@ function populateFilters(cards) {
 }
 function renderStats() {
   const dl = document.getElementById('stats'); if (!dl) return;
-  const items = [['Curated', state.curated.length], ['Libxc', state.snapshot.length], ['With refs', state.snapshot.filter(e => e.references?.length).length], ['Formula panels', state.curated.length + state.snapshot.length]];
+  const items = [['Curated', state.curated.length], ['Libxc', state.snapshot.length], ['References', state.snapshot.filter(e => e.references?.length).length], ['Formulas', state.curated.length + state.snapshot.length]];
   dl.innerHTML = items.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
 }
 function exactFilterMatch(card, filter) {
@@ -93,29 +106,31 @@ function recordHtml(card) {
   const f = card.formula || {}; const refs = card.references?.length || 0;
   const href = `functional.html?id=${encodeURIComponent(card.key)}`;
   const other = (f.amounts?.other_terms || []).map(t => t.name).join(', ') || '—';
+  const exchange = f.components?.exchange || (card.kind === 'exchange' ? card.title : 'not curated');
+  const correlation = f.components?.correlation || (card.kind === 'correlation' ? card.title : 'not curated');
   return `<article class="record">
-    <div class="record-head">
-      <div class="record-title"><h3>${escapeHtml(card.title)}</h3><div class="aliases">${escapeHtml(card.aliases?.slice(0, 5).join(', ') || card.subtitle || '')}</div></div>
-      <div class="badges"><span class="badge ${sourceBadge(card)}">${card.source === 'curated' ? 'curated' : 'Libxc import'}</span><span class="badge formula">${escapeHtml(statusLabel(card))}</span><span class="badge">${escapeHtml(card.rung || 'unknown')}</span><span class="badge">${escapeHtml(card.kind || 'unknown')}</span></div>
+    <div class="record-topline">
+      <div class="record-title"><h3><a href="${href}">${escapeHtml(card.title)}</a></h3><div class="aliases">${escapeHtml(card.aliases?.slice(0, 4).join(', ') || card.subtitle || '')}</div></div>
+      <div class="badges"><span class="badge ${sourceBadge(card)}">${card.source === 'curated' ? 'curated' : 'Libxc'}</span><span class="badge formula">${escapeHtml(statusLabel(card))}</span></div>
     </div>
-    <div class="formula-line">${escapeHtml(f.latex || 'Formula not encoded yet')}</div>
-    <div class="science-grid">
-      <div class="science-cell"><span>Exact exchange</span><strong>${escapeHtml(exactSummary(f))}</strong></div>
-      <div class="science-cell"><span>Exchange</span><strong>${escapeHtml(f.components?.exchange || (card.kind === 'exchange' ? card.title : 'not curated'))}</strong></div>
-      <div class="science-cell"><span>Correlation</span><strong>${escapeHtml(f.components?.correlation || (card.kind === 'correlation' ? card.title : 'not curated'))}</strong></div>
-      <div class="science-cell"><span>Other terms</span><strong>${escapeHtml(other)}</strong></div>
-    </div>
-    <p>${escapeHtml(f.plain || card.summary || '')}</p>
-    <div class="record-actions"><a class="button secondary" href="${href}">Details</a><button type="button" data-compare="${escapeHtml(card.key)}" aria-label="Compare ${escapeHtml(card.title)}">Compare</button><span class="aliases">${refs} reference${refs === 1 ? '' : 's'} · ${escapeHtml(card.subtitle || '')}</span></div>
+    <div class="formula-line compact-formula">${formulaHtml(f.latex, 'display')}</div>
+    <dl class="compact-metrics">
+      <div><dt>Exact exchange</dt><dd>${escapeHtml(exactSummary(f))}</dd></div>
+      <div><dt>Exchange</dt><dd>${escapeHtml(shortText(exchange, 54))}</dd></div>
+      <div><dt>Correlation</dt><dd>${escapeHtml(shortText(correlation, 54))}</dd></div>
+      <div><dt>Other</dt><dd>${escapeHtml(shortText(other, 54))}</dd></div>
+    </dl>
+    <div class="record-footer"><span>${escapeHtml(card.rung || 'unknown')} · ${escapeHtml(card.kind || 'unknown')} · ${refs} ref${refs === 1 ? '' : 's'}</span><span class="actions"><button type="button" class="link-button" data-compare="${escapeHtml(card.key)}" aria-label="Compare ${escapeHtml(card.title)}">Compare</button><a href="${href}">Open</a></span></div>
   </article>`;
 }
 function renderCatalog() {
   const root = document.getElementById('cards'); if (!root) return;
   const { filtered, total } = sortedFilteredCards();
   const meta = document.getElementById('resultsMeta'); if (meta) meta.textContent = `${filtered.length} shown from ${total} records.`;
-  const limit = 350;
+  const limit = 250;
   root.innerHTML = filtered.slice(0, limit).map(recordHtml).join('') + (filtered.length > limit ? `<p class="notice">Showing first ${limit} records. Narrow your search for more.</p>` : '');
   document.querySelectorAll('[data-compare]').forEach(btn => btn.addEventListener('click', () => addCompare(btn.dataset.compare)));
+  queueMath(root);
 }
 function addCompare(key) { if (!state.compare.includes(key)) state.compare.push(key); if (state.compare.length > 4) state.compare.shift(); renderCompare(); }
 function renderCompare() {
@@ -124,8 +139,9 @@ function renderCompare() {
   const cards = state.compare.map(k => byKey.get(k)).filter(Boolean);
   names.innerHTML = cards.map(c => `<a href="functional.html?id=${encodeURIComponent(c.key)}">${escapeHtml(c.title)}</a>`).join(' vs ');
   if (!cards.length) { table.innerHTML = ''; return; }
-  const rows = [['Formula', c => c.formula?.latex || '—'], ['Exact exchange', c => exactSummary(c.formula)], ['Exchange', c => c.formula?.components?.exchange || 'not curated'], ['Correlation', c => c.formula?.components?.correlation || 'not curated'], ['Other terms', c => (c.formula?.amounts?.other_terms || []).map(t => t.name).join(', ') || '—'], ['Libxc', c => c.subtitle || '—'], ['Status', c => statusLabel(c)]];
-  table.innerHTML = `<table class="compare-table"><thead><tr><th scope="col">Field</th>${cards.map(c => `<th scope="col">${escapeHtml(c.title)}</th>`).join('')}</tr></thead><tbody>${rows.map(([label, fn]) => `<tr><th scope="row">${label}</th>${cards.map(c => `<td>${escapeHtml(fn(c))}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  const rows = [['Formula', c => formulaHtml(c.formula?.latex || '—', 'inline')], ['Exact exchange', c => escapeHtml(exactSummary(c.formula))], ['Exchange', c => escapeHtml(c.formula?.components?.exchange || 'not curated')], ['Correlation', c => escapeHtml(c.formula?.components?.correlation || 'not curated')], ['Other terms', c => escapeHtml((c.formula?.amounts?.other_terms || []).map(t => t.name).join(', ') || '—')], ['Libxc', c => escapeHtml(c.subtitle || '—')], ['Status', c => escapeHtml(statusLabel(c))]];
+  table.innerHTML = `<table class="compare-table"><thead><tr><th scope="col">Field</th>${cards.map(c => `<th scope="col">${escapeHtml(c.title)}</th>`).join('')}</tr></thead><tbody>${rows.map(([label, fn]) => `<tr><th scope="row">${label}</th>${cards.map(c => `<td>${fn(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  queueMath(table);
 }
 function amountRows(f) {
   const a = f?.amounts || {};
@@ -148,10 +164,11 @@ function renderDetail() {
   const vars = (f.variables || []).map(v => `<span class="badge">${escapeHtml(v.symbol)} · ${escapeHtml(v.role)}</span>`).join(' ');
   root.innerHTML = `<p><a href="index.html#catalog">← Catalog</a></p>
     <section class="detail-title"><p class="kicker">${escapeHtml(card.source)} record</p><h1>${escapeHtml(card.title)}</h1><div class="aliases">${escapeHtml(card.aliases?.join(', ') || '')}</div><div class="badges"><span class="badge ${sourceBadge(card)}">${card.source === 'curated' ? 'curated' : 'Libxc import'}</span><span class="badge formula">${escapeHtml(statusLabel(card))}</span><span class="badge">${escapeHtml(card.rung)}</span><span class="badge">${escapeHtml(card.kind)}</span></div></section>
-    <section class="definition"><h2>Scientific definition</h2><div class="formula-line">${escapeHtml(f.latex || 'Formula not encoded yet')}</div><p>${escapeHtml(f.plain || card.summary || '')}</p><div class="definition-grid">${amountRows(f).map(([k,v,s]) => `<div class="science-cell"><span>${escapeHtml(k)}</span><strong>${escapeHtml(v)}</strong>${s ? `<small>${escapeHtml(s)}</small>` : ''}</div>`).join('')}</div><div>${vars}</div></section>
+    <section class="definition"><h2>Scientific definition</h2><div class="formula-line detail-formula">${formulaHtml(f.latex, 'display')}</div><p>${escapeHtml(f.plain || card.summary || '')}</p><div class="definition-grid">${amountRows(f).map(([k,v,s]) => `<div class="science-cell"><span>${escapeHtml(k)}</span><strong>${escapeHtml(v)}</strong>${s ? `<small>${escapeHtml(s)}</small>` : ''}</div>`).join('')}</div><div class="variable-list">${vars}</div></section>
     <table class="meta-table"><caption>Formula components</caption><thead><tr><th scope="col">Term</th><th scope="col">Role</th><th scope="col">Libxc code</th><th scope="col">Amount</th><th scope="col">Status</th></tr></thead><tbody>${compRows}</tbody></table>
     <table class="meta-table"><caption>Record metadata</caption><tr><th scope="row">Exchange component</th><td>${escapeHtml(f.components?.exchange || 'not curated')}</td></tr><tr><th scope="row">Correlation component</th><td>${escapeHtml(f.components?.correlation || 'not curated')}</td></tr><tr><th scope="row">Libxc</th><td>${escapeHtml(card.subtitle || '—')}</td></tr><tr><th scope="row">Caveats</th><td>${escapeHtml((f.caveats || card.notes || []).join(' '))}</td></tr></table>
     <h2>References</h2><ol class="ref-list">${refs}</ol>`;
+  queueMath(root);
 }
 async function init() {
   try {
