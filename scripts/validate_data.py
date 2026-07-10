@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+import unicodedata
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -20,6 +21,12 @@ def load(path: str):
 def error(errors: list[str], msg: str) -> None:
     errors.append(msg)
 
+
+def normalize_alias(value: str) -> str:
+    text = unicodedata.normalize("NFKD", str(value)).lower()
+    text = text.replace("ω", "w").replace("Ω", "w")
+    text = re.sub(r"omega", "w", text)
+    return re.sub(r"[^a-z0-9]", "", text)
 
 
 def validate_formula(errors: list[str], formula: dict, label: str) -> None:
@@ -48,6 +55,7 @@ def main() -> int:
 
     libxc_codes = set()
     libxc_ids = set()
+    alias_index: dict[str, set[str]] = {}
     for idx, entry in enumerate(snapshot):
         prefix = f"snapshot[{idx}]"
         for key in ["libxc_code", "libxc_id", "description", "family", "section", "rung", "kind", "references", "source_url"]:
@@ -62,6 +70,14 @@ def main() -> int:
             error(errors, f"duplicate Libxc id: {libxc_id}")
         libxc_ids.add(libxc_id)
         validate_formula(errors, entry.get("formula"), f"{prefix}/{code}")
+        aliases_for_entry = entry.get("aliases", [])
+        if not isinstance(aliases_for_entry, list) or not aliases_for_entry:
+            error(errors, f"{code} missing generated aliases")
+        for alias in aliases_for_entry:
+            if not isinstance(alias, str) or not alias.strip():
+                error(errors, f"bad alias for {code}: {alias!r}")
+                continue
+            alias_index.setdefault(normalize_alias(alias), set()).add(code)
         for ref in entry.get("references", []):
             doi = ref.get("doi", "")
             if doi and not DOI_RE.match(doi):
@@ -72,6 +88,22 @@ def main() -> int:
                 error(errors, f"unsafe reference URL in {code}: {url}")
             if doi and not url.startswith("https://doi.org/"):
                 error(errors, f"DOI reference without doi.org URL in {code}: {doi}")
+
+    required_alias_targets = {
+        "BHHLYP": "HYB_GGA_XC_BHANDHLYP",
+        "BHLYP": "HYB_GGA_XC_BHANDH",
+        "BP86": "GGA_X_B88",
+        "SVWN": "LDA_X",
+        "HSE-06": "HYB_GGA_XC_HSE06",
+        "omegaB97X-D": "HYB_GGA_XC_WB97X_D",
+        "TPSSh": "HYB_MGGA_XC_TPSSH",
+    }
+    for alias, expected_code in required_alias_targets.items():
+        targets = alias_index.get(normalize_alias(alias), set())
+        if expected_code not in targets:
+            error(errors, f"required alias {alias} does not target {expected_code}; got {sorted(targets)}")
+    if sum(len(e.get("aliases", [])) for e in snapshot) < 2000:
+        error(errors, "Libxc alias coverage unexpectedly small")
 
     slugs = set()
     for idx, entry in enumerate(seed):

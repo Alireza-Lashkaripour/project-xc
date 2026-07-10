@@ -117,3 +117,7 @@ Core fields:
 - `formula.amounts.range_separation_omega`: omega value or explicit unknown/not-applicable status.
 - `formula.amounts.other_terms`: dispersion, VV10, or other external/nonlocal terms.
 - `formula.terms`: component-level decomposition with Libxc code links when available.
+
+## Search aliases and discoverability
+
+Project XC also stores a broad generated alias layer for imported Libxc records. This is search/display metadata, not final scientific curation. It makes common program and literature spellings discoverable even when Libxc stores the record under a formal code. Examples include `BHHLYP` → `HYB_GGA_XC_BHANDHLYP`, `BHLYP` → `HYB_GGA_XC_BHANDH`, `HSE-06` → `HYB_GGA_XC_HSE06`, `ωB97X-D`/`omegaB97X-D` → `HYB_GGA_XC_WB97X_D`, and component-style aliases such as `BP86` and `SVWN`. The homepage remains curated-only when blank, but typed searches automatically search curated plus imported records.

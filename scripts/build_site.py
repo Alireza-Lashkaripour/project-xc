@@ -36,6 +36,7 @@ def main() -> int:
         "kinds": dict(collections.Counter(e.get("kind") for e in snapshot)),
         "formula_count": sum(1 for e in snapshot if e.get("formula")) + sum(1 for e in seed if e.get("formula")),
         "curated_formula_count": sum(1 for e in seed if e.get("formula")),
+        "libxc_alias_count": sum(len(e.get("aliases", [])) for e in snapshot),
     }
     with open(PUBLIC / "generated" / "summary.json", "w", encoding="utf-8") as handle:
         json.dump(summary, handle, indent=2, ensure_ascii=False)

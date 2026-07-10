@@ -200,7 +200,11 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "B3LYP has variant ambiguity, especially VWN3/VWN5/RPA conventions across programs."
       ]
-    }
+    },
+    "search_aliases": [
+      "B3LYP",
+      "HYB_GGA_XC_B3LYP"
+    ]
   },
   {
     "slug": "b3lyp-vwn3",
@@ -389,7 +393,12 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Use this when reproducing legacy program definitions that explicitly used VWN3."
       ]
-    }
+    },
+    "search_aliases": [
+      "B3LYP",
+      "HYB_GGA_XC_B3LYP3",
+      "B3LYP3"
+    ]
   },
   {
     "slug": "b3lyp-vwn5",
@@ -578,7 +587,12 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Important for cross-program reproducibility."
       ]
-    }
+    },
+    "search_aliases": [
+      "B3LYP",
+      "HYB_GGA_XC_B3LYP5",
+      "B3LYP5"
+    ]
   },
   {
     "slug": "b88",
@@ -759,7 +773,17 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Commonly paired with LYP correlation as BLYP."
       ]
-    }
+    },
+    "search_aliases": [
+      "BP86",
+      "B88P86",
+      "BPW91",
+      "B88PW91",
+      "BLYP",
+      "B88LYP",
+      "GGA_X_B88",
+      "B88"
+    ]
   },
   {
     "slug": "blyp",
@@ -976,7 +1000,17 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Often implemented as separate exchange and correlation components rather than a single Libxc XC code."
       ]
-    }
+    },
+    "search_aliases": [
+      "BP86",
+      "B88P86",
+      "BPW91",
+      "B88PW91",
+      "BLYP",
+      "B88LYP",
+      "GGA_X_B88",
+      "B88"
+    ]
   },
   {
     "slug": "cam-b3lyp",
@@ -1180,14 +1214,17 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Range-separation parameters must be cited and checked; program defaults matter."
       ]
-    }
+    },
+    "search_aliases": [
+      "CAM-B3LYP",
+      "HYB_GGA_XC_CAM_B3LYP"
+    ]
   },
   {
     "slug": "lc-wpbe",
     "canonical_name": "LC-wPBE",
     "aliases": [
-      "LC-wPBE",
-      "LC-ωPBE"
+      "LC-wPBE"
     ],
     "summary": "Long-range corrected PBE-based hybrid using range separation to improve long-range exchange behavior.",
     "family": "range-separated hybrid GGA",
@@ -1362,7 +1399,11 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "The omega value can vary by code/input; record it with calculations."
       ]
-    }
+    },
+    "search_aliases": [
+      "LC-wPBE",
+      "HYB_GGA_XC_LC_WPBE"
+    ]
   },
   {
     "slug": "lda-c-pz81",
@@ -1519,7 +1560,11 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Often paired with Slater exchange as an LDA XC model."
       ]
-    }
+    },
+    "search_aliases": [
+      "LDA_C_PZ",
+      "PZ"
+    ]
   },
   {
     "slug": "lda-c-vwn",
@@ -1677,7 +1722,14 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Program names may hide the VWN variant; always check whether VWN3, VWN5, or RPA convention is meant."
       ]
-    }
+    },
+    "search_aliases": [
+      "SVWN",
+      "SVWN5",
+      "Slater-VWN",
+      "VWN",
+      "LDA_C_VWN"
+    ]
   },
   {
     "slug": "lda-x-dirac",
@@ -1862,7 +1914,20 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Used as the exchange component in many LDA combinations."
       ]
-    }
+    },
+    "search_aliases": [
+      "LDA",
+      "LSDA",
+      "LSD",
+      "SVWN",
+      "SVWN3",
+      "SVWN5",
+      "Slater-VWN",
+      "Xalpha",
+      "Xα",
+      "Xa",
+      "LDA_X"
+    ]
   },
   {
     "slug": "lyp",
@@ -2023,7 +2088,15 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "One component of BLYP and B3LYP."
       ]
-    }
+    },
+    "search_aliases": [
+      "OLYP",
+      "OPTX-LYP",
+      "BLYP",
+      "B88-LYP",
+      "GGA_C_LYP",
+      "LYP"
+    ]
   },
   {
     "slug": "m06-2x",
@@ -2244,7 +2317,11 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Exact exchange fraction and correlation component should both be documented."
       ]
-    }
+    },
+    "search_aliases": [
+      "M06-2X",
+      "HYB_MGGA_X_M06_2X"
+    ]
   },
   {
     "slug": "m06-l",
@@ -2467,7 +2544,11 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Highly parametrized; quote exact variant and implementation."
       ]
-    }
+    },
+    "search_aliases": [
+      "M06-L",
+      "MGGA_X_M06_L"
+    ]
   },
   {
     "slug": "pbe",
@@ -2679,7 +2760,11 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Check whether a code uses standard PBE, revPBE, RPBE, or another related variant."
       ]
-    }
+    },
+    "search_aliases": [
+      "PBE",
+      "GGA_X_PBE"
+    ]
   },
   {
     "slug": "pbe0",
@@ -2874,7 +2959,13 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Often named PBE1PBE in Gaussian-style nomenclature."
       ]
-    }
+    },
+    "search_aliases": [
+      "PBE0",
+      "PBEh",
+      "PBE1PBE",
+      "HYB_GGA_XC_PBEH"
+    ]
   },
   {
     "slug": "r2scan",
@@ -3093,7 +3184,11 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Often preferable to original SCAN for numerical stability."
       ]
-    }
+    },
+    "search_aliases": [
+      "r2SCAN",
+      "MGGA_X_R2SCAN"
+    ]
   },
   {
     "slug": "revpbe",
@@ -3101,7 +3196,8 @@
     "aliases": [
       "revPBE",
       "PBE_R",
-      "Zhang-Yang revised PBE exchange"
+      "Zhang-Yang revised PBE exchange",
+      "Zhang-Yang revised PBE"
     ],
     "summary": "The Zhang-Yang revised PBE exchange functional; distinct from RPBE/Hammer-Hansen-Nørskov exchange despite similar informal naming.",
     "family": "GGA",
@@ -3274,14 +3370,21 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Do not conflate revPBE/PBE_R with RPBE. This record maps to Libxc GGA_X_PBE_R."
       ]
-    }
+    },
+    "search_aliases": [
+      "revPBE",
+      "GGA_X_PBE_R",
+      "PBE_R",
+      "Zhang-Yang revised PBE"
+    ]
   },
   {
     "slug": "rpbe",
     "canonical_name": "RPBE / Hammer-Hansen-Nørskov exchange",
     "aliases": [
       "RPBE",
-      "Hammer-Hansen-Nørskov exchange"
+      "Hammer-Hansen-Nørskov exchange",
+      "Hammer-Hansen-Norskov exchange"
     ],
     "summary": "The Hammer-Hansen-Nørskov revised PBE-style exchange functional, commonly called RPBE and used in surface chemistry contexts.",
     "family": "GGA",
@@ -3454,7 +3557,13 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Distinct from Zhang-Yang revPBE/PBE_R. This record maps to Libxc GGA_X_RPBE."
       ]
-    }
+    },
+    "search_aliases": [
+      "RPBE",
+      "GGA_X_RPBE",
+      "Hammer-Hansen-Nørskov exchange",
+      "Hammer-Hansen-Norskov exchange"
+    ]
   },
   {
     "slug": "scan",
@@ -3668,14 +3777,19 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Meta-GGA grid sensitivity and regularization choices can affect reproducibility."
       ]
-    }
+    },
+    "search_aliases": [
+      "SCAN",
+      "SCAN-rVV10",
+      "SCAN-VV10",
+      "MGGA_X_SCAN"
+    ]
   },
   {
     "slug": "wb97m-v",
     "canonical_name": "ωB97M-V",
     "aliases": [
-      "wB97M-V",
-      "ωB97M-V"
+      "wB97M-V"
     ],
     "summary": "Range-separated hybrid meta-GGA with nonlocal VV10 correlation.",
     "family": "range-separated hybrid meta-GGA",
@@ -3879,14 +3993,17 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Nonlocal VV10 treatment may live outside the semilocal XC evaluator in some codes."
       ]
-    }
+    },
+    "search_aliases": [
+      "wB97M-V",
+      "HYB_MGGA_XC_WB97M_V"
+    ]
   },
   {
     "slug": "wb97x-d",
     "canonical_name": "ωB97X-D",
     "aliases": [
-      "wB97X-D",
-      "ωB97X-D"
+      "wB97X-D"
     ],
     "summary": "Range-separated hybrid with empirical atom-atom dispersion correction.",
     "family": "range-separated hybrid GGA",
@@ -4083,6 +4200,10 @@
         "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
         "Dispersion correction is part of the named model but may be implemented outside the XC kernel in some programs."
       ]
-    }
+    },
+    "search_aliases": [
+      "wB97X-D",
+      "HYB_GGA_XC_WB97X_D"
+    ]
   }
 ]
