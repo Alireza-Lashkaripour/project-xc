@@ -21,6 +21,22 @@ def error(errors: list[str], msg: str) -> None:
     errors.append(msg)
 
 
+
+def validate_formula(errors: list[str], formula: dict, label: str) -> None:
+    if not isinstance(formula, dict):
+        error(errors, f"{label} missing formula object")
+        return
+    for key in ["schema_version", "status", "template_id", "plain", "latex", "amounts"]:
+        if key not in formula:
+            error(errors, f"{label} formula missing {key}")
+    amounts = formula.get("amounts", {})
+    for key in ["channels", "exact_exchange", "short_range_exact_exchange", "long_range_exact_exchange", "range_separation_omega", "other_terms"]:
+        if key not in amounts:
+            error(errors, f"{label} formula.amounts missing {key}")
+    exact = amounts.get("exact_exchange", {})
+    if isinstance(exact, dict) and "status" not in exact:
+        error(errors, f"{label} exact_exchange missing status")
+
 def main() -> int:
     errors: list[str] = []
     snapshot = load("data/libxc_snapshot.json")
@@ -45,6 +61,7 @@ def main() -> int:
         if libxc_id in libxc_ids:
             error(errors, f"duplicate Libxc id: {libxc_id}")
         libxc_ids.add(libxc_id)
+        validate_formula(errors, entry.get("formula"), f"{prefix}/{code}")
         for ref in entry.get("references", []):
             doi = ref.get("doi", "")
             if doi and not DOI_RE.match(doi):
@@ -68,6 +85,7 @@ def main() -> int:
         if slug in slugs:
             error(errors, f"duplicate slug: {slug}")
         slugs.add(slug)
+        validate_formula(errors, entry.get("formula"), f"seed/{slug}")
         if len(entry.get("summary", "")) < 40:
             error(errors, f"summary too short for {slug}")
         components = entry.get("libxc", {}).get("components", [])
@@ -77,6 +95,7 @@ def main() -> int:
             code = comp.get("code")
             if comp.get("id") is not None and code not in libxc_codes:
                 error(errors, f"curated {slug} component {code} not in snapshot")
+        validate_formula(errors, entry.get("formula"), f"{prefix}/{code}")
         for ref in entry.get("references", []):
             doi = ref.get("doi", "")
             url = ref.get("url", "")

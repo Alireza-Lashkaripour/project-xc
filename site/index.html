@@ -4,65 +4,70 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Project XC — Functional Exchange</title>
-  <meta name="description" content="Searchable exchange-correlation functional exchange with aliases, references, and provenance.">
+  <meta name="description" content="Search exchange-correlation functionals by formula, exact exchange, aliases, references, and Libxc code.">
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-<header class="hero">
-  <nav class="topbar" aria-label="Main navigation">
+<a class="skip-link" href="#catalog">Skip to catalog</a>
+<header class="site-header">
+  <nav class="nav" aria-label="Main navigation">
     <a class="brand" href="index.html">Project XC</a>
+    <a href="#catalog">Catalog</a>
     <a href="methodology.html">Methodology</a>
     <a href="https://github.com/Alireza-Lashkaripour/project-xc">GitHub</a>
   </nav>
-  <section class="hero-grid">
-    <div>
-      <p class="eyebrow">Basis Set Exchange idea, for DFT functionals</p>
-      <h1>Find, compare, and cite exchange-correlation functionals.</h1>
-      <p class="lead">Project XC combines a machine-imported Libxc catalog with curated scientific records, aliases, parameters, and warnings about reproducibility traps.</p>
-      <div class="hero-actions">
-        <a class="button" href="#catalog">Explore catalog</a>
-        <a class="button secondary" href="methodology.html">Read curation workflow</a>
-      </div>
-    </div>
-    <aside class="stats-card" aria-live="polite">
-      <h2>Current bootstrap</h2>
-      <dl id="stats"></dl>
-    </aside>
+  <section class="intro">
+    <p class="kicker">Exchange-correlation functional exchange</p>
+    <h1>Definitions, formulas, exact-exchange amounts, aliases, and citations.</h1>
+    <p class="lead">A professional, data-driven catalog for DFT functionals. Curated records show explicit decomposition; imported Libxc records show honest generic formula scaffolds until fully audited.</p>
+    <form class="hero-search" role="search" onsubmit="return false;">
+      <label for="search">Search Project XC</label>
+      <input id="search" type="search" placeholder="B3LYP, PBE0, exact exchange 25%, ωB97, Libxc code, DOI…" autocomplete="off">
+    </form>
+    <dl id="stats" class="stats" aria-label="Data coverage"></dl>
   </section>
 </header>
 <main>
-  <section class="panel warning">
-    <h2>Why this is hard</h2>
-    <p>XC names are not always unique scientific objects. B3LYP variants, range-separation parameters, dispersion corrections, nonlocal VV10 terms, and program-specific aliases can change what a calculation actually means. Project XC stores provenance and curation status so each claim can be checked.</p>
+  <section class="notice" aria-label="Scientific caveat">
+    <strong>Scientific caveat.</strong> XC names can hide program-specific variants, exact-exchange fractions, range-separation parameters, and external dispersion/nonlocal terms. Project XC labels every formula as curated, generic, unknown, or needing audit.
   </section>
 
   <section id="catalog" class="catalog">
-    <div class="catalog-head">
+    <div class="section-title">
       <div>
-        <p class="eyebrow">Catalog</p>
-        <h2>Search functionals</h2>
+        <p class="kicker">Catalog</p>
+        <h2>Functional records</h2>
       </div>
-      <div class="search-box">
-        <label for="search">Search by name, Libxc code, alias, DOI, ingredient, or note</label>
-        <input id="search" type="search" placeholder="Try B3LYP, PBE, SCAN, VWN, range-separated, 10.1021...">
-      </div>
+      <div id="resultsMeta" class="results-meta" aria-live="polite"></div>
     </div>
-    <div class="filters" aria-label="Filters">
-      <select id="rungFilter" aria-label="Filter by rung"><option value="">All rungs</option></select>
-      <select id="kindFilter" aria-label="Filter by kind"><option value="">All kinds</option></select>
-      <select id="sourceFilter" aria-label="Filter by source"><option value="">Curated + Libxc</option><option value="curated">Curated only</option><option value="libxc">Libxc snapshot only</option></select>
-      <button id="resetFilters" class="button secondary" type="button">Reset</button>
+
+    <div class="filters" aria-label="Catalog filters">
+      <label>View
+        <select id="sourceFilter"><option value="curated">Curated only</option><option value="">All records (curated first)</option><option value="libxc">Libxc snapshot only</option></select>
+      </label>
+      <label>Rung
+        <select id="rungFilter"><option value="">All rungs</option></select>
+      </label>
+      <label>Kind
+        <select id="kindFilter"><option value="">All kinds</option></select>
+      </label>
+      <label>Exact exchange
+        <select id="exactFilter"><option value="">Any</option><option value="zero">0%</option><option value="known">known nonzero</option><option value="range">range-separated</option><option value="unknown">unknown / not curated</option><option value="na">not applicable</option></select>
+      </label>
+      <button id="resetFilters" class="secondary" type="button">Reset</button>
     </div>
-    <div class="compare-tray" id="compareTray" hidden>
-      <strong>Compare:</strong> <span id="compareNames"></span>
+
+    <div class="compare-panel" id="compareTray" hidden>
+      <div><strong>Compare</strong> <span id="compareNames"></span></div>
       <button id="clearCompare" type="button">Clear</button>
+      <div id="compareTable"></div>
     </div>
-    <div id="resultsMeta" class="results-meta"></div>
-    <div id="cards" class="cards"></div>
+
+    <div id="cards" class="records"></div>
   </section>
 </main>
-<footer>
-  <p>Project XC is a research software catalog. Always cite the original functional papers and verify program-specific definitions.</p>
+<footer class="footer">
+  <p>Project XC is open research software. Always cite the original functional papers and verify program-specific definitions before publication-grade use.</p>
 </footer>
 <script src="assets/app.js"></script>
 </body>

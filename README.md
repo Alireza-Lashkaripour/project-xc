@@ -103,3 +103,17 @@ Bootstrap created 2026-07-10T01:04:44Z. The site and harness are intentionally d
 ## Multi-agent harness
 
 Operational prompt packs and machine-readable task queues live under `harness/`. Start with `harness/queues/bootstrap-tasks.json` and validate with `python3 scripts/harness_status.py`.
+
+
+## Formula model
+
+Every displayed record now carries a `formula` object. For curated records this contains a Project XC seed interpretation of the functional decomposition and known exact-exchange/range-separation amounts. For imported Libxc records it contains a clearly labeled generic scaffold derived from rung/kind, with unknown coefficients marked `unknown-not-curated` rather than guessed.
+
+Core fields:
+
+- `formula.latex`: display formula or scaffold.
+- `formula.amounts.exact_exchange`: exact-exchange fraction or explicit unknown/not-applicable status.
+- `formula.amounts.short_range_exact_exchange` and `long_range_exact_exchange`: range-separated amounts when known.
+- `formula.amounts.range_separation_omega`: omega value or explicit unknown/not-applicable status.
+- `formula.amounts.other_terms`: dispersion, VV10, or other external/nonlocal terms.
+- `formula.terms`: component-level decomposition with Libxc code links when available.

@@ -7,33 +7,42 @@
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-<header class="compact">
-  <nav class="topbar" aria-label="Main navigation">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header compact">
+  <nav class="nav" aria-label="Main navigation">
     <a class="brand" href="index.html">Project XC</a>
+    <a href="index.html#catalog">Catalog</a>
     <a href="methodology.html">Methodology</a>
     <a href="https://github.com/Alireza-Lashkaripour/project-xc">GitHub</a>
   </nav>
 </header>
-<main class="prose">
-  <h1>Methodology and curation workflow</h1>
-  <p>Project XC is built from layered evidence. The imported Libxc layer gives broad discovery coverage. Curated Project XC records add interpretation, aliases, parameters, and caveats.</p>
+<main id="main" class="prose">
+  <p class="kicker">Methodology</p>
+  <h1>Formula and curation policy</h1>
+  <p>Project XC separates broad imported coverage from curated scientific definitions. Every record has a formula panel, but the status label tells you whether it is an exact curated decomposition or a generic scaffold derived from rung/kind.</p>
+  <h2>Formula status labels</h2>
+  <ul>
+    <li><strong>curated-partial</strong>: Project XC has an interpreted formula or amount, but more primary-source review may be needed.</li>
+    <li><strong>generic-derived</strong>: a generic LDA/GGA/meta-GGA/hybrid scaffold generated from classification, not a full implementation formula.</li>
+    <li><strong>unknown-not-curated</strong>: a coefficient or parameter is not yet verified.</li>
+    <li><strong>not-applicable</strong>: the channel does not apply, e.g. exact exchange for a correlation-only record.</li>
+  </ul>
   <h2>Validation gates</h2>
   <ol>
-    <li>Import gate: Libxc parser must produce a large, duplicate-free snapshot with DOI-shaped references.</li>
-    <li>Schema gate: curated records must include names, aliases, rung, kind, ingredients, components, references, notes, and status.</li>
-    <li>Reference gate: every scientific claim should be linked to DOI, program documentation, source code, or a reproducible input/output test.</li>
-    <li>Website gate: the site must build from data only; no hand-edited catalog HTML.</li>
-    <li>Agent-review gate: importer, curation, alias, and QA agents review each other before records become verified.</li>
+    <li>Imported Libxc records must have unique code/id and source provenance.</li>
+    <li>Every displayed record must have a formula object with exact-exchange/correlation status.</li>
+    <li>Curated numerical amounts must be explicit and must not be silently inferred from names.</li>
+    <li>Program aliases require per-program evidence before being marked verified.</li>
+    <li>External terms such as D3/D4 dispersion or VV10 nonlocal correlation must be labeled as outside/inside the XC kernel only after source review.</li>
   </ol>
   <h2>Known ambiguity classes</h2>
   <ul>
     <li>B3LYP VWN3/VWN5/RPA convention differences.</li>
-    <li>Range-separated functionals where omega and exact-exchange fractions are input-dependent.</li>
-    <li>Dispersion-corrected names where the correction may be outside the XC library.</li>
+    <li>Range-separated functionals where ω and exact-exchange fractions are input-dependent or implementation-dependent.</li>
+    <li>Dispersion-corrected names where the correction may be outside the semilocal XC library.</li>
     <li>Nonlocal correlation terms such as VV10 that may require separate grids/kernels.</li>
     <li>Meta-GGA grid sensitivity and kinetic-energy-density conventions.</li>
   </ul>
-  <p>See the repository docs for the full multi-agent harness.</p>
 </main>
 </body>
 </html>

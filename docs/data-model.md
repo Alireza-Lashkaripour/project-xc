@@ -39,3 +39,10 @@ This layer is broad and machine-imported.
 ## Program aliases
 
 `data/program_aliases.json` links program names to canonical records. Alias entries must include a status and caveat. Future versions should add evidence links to program documentation/source/test logs.
+
+
+## Formula object
+
+Project XC stores formula data for every displayed record. Curated seed records may include concrete decompositions and exact-exchange amounts; imported Libxc records get generic templates with explicit uncertainty labels. This prevents the site from silently inventing coefficients while still giving every functional a visible scientific definition panel.
+
+Required fields include `schema_version`, `status`, `template_id`, `plain`, `latex`, `variables`, `terms`, and `amounts`. The `amounts` object must include exact exchange, short/long-range exact exchange, range-separation omega, channel presence, and other/external terms.

@@ -52,7 +52,155 @@
       "B3LYP has variant ambiguity, especially VWN3/VWN5/RPA conventions across programs."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.hybrid-gga.exchange-correlation",
+      "kind": "exchange-correlation",
+      "rung": "hybrid GGA",
+      "plain": "B3LYP is a three-parameter hybrid. Common coefficients: a0=0.20 exact exchange, ax=0.72 B88 exchange correction, ac=0.81 LYP correlation; VWN convention is implementation-sensitive.",
+      "latex": "E_{xc}^{B3LYP}=E_x^{LDA}+a_0(E_x^{HF}-E_x^{LDA})+a_x\\Delta E_x^{B88}+a_cE_c^{LYP}+(1-a_c)E_c^{VWN}",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "K_x",
+          "name": "exact-exchange operator",
+          "role": "exact-exchange-operator",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "exact_exchange",
+          "role": "exchange",
+          "subrole": "exact-exchange",
+          "label": "Hartree-Fock exact exchange",
+          "expression_latex": "E_x^{HF}",
+          "component_codes": [],
+          "coefficient": {
+            "value": 0.2,
+            "expression": null,
+            "unit": "fraction",
+            "status": "curated-partial",
+            "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+          }
+        },
+        {
+          "term_id": "libxc:HYB_GGA_XC_B3LYP",
+          "role": "exchange-correlation",
+          "label": "HYB_GGA_XC_B3LYP",
+          "expression_latex": "HYB_GGA_XC_B3LYP",
+          "component_codes": [
+            "HYB_GGA_XC_B3LYP"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "LDA/B88 exchange mixture plus HF exchange",
+        "correlation": "LYP/VWN mixture",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": 0.2,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "a0",
+            "role": "exact-exchange-fraction",
+            "value": 0.2,
+            "unit": "fraction",
+            "status": "seed-curated-common-value"
+          },
+          {
+            "name": "a_x",
+            "role": "B88-gradient-exchange-coefficient",
+            "value": 0.72,
+            "unit": "coefficient",
+            "status": "seed-curated-common-value"
+          },
+          {
+            "name": "a_c",
+            "role": "LYP-correlation-coefficient",
+            "value": 0.81,
+            "unit": "coefficient",
+            "status": "seed-curated-common-value"
+          }
+        ],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "B3LYP has variant ambiguity, especially VWN3/VWN5/RPA conventions across programs."
+      ]
+    }
   },
   {
     "slug": "b3lyp-vwn3",
@@ -107,7 +255,141 @@
       "Use this when reproducing legacy program definitions that explicitly used VWN3."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.hybrid-gga.exchange-correlation",
+      "kind": "exchange-correlation",
+      "rung": "hybrid GGA",
+      "plain": "B3LYP variant using VWN3 convention for the local correlation remainder.",
+      "latex": "E_{xc}^{B3LYP3}=E_x^{LDA}+0.20(E_x^{HF}-E_x^{LDA})+0.72\\Delta E_x^{B88}+0.81E_c^{LYP}+0.19E_c^{VWN3}",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "K_x",
+          "name": "exact-exchange operator",
+          "role": "exact-exchange-operator",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "exact_exchange",
+          "role": "exchange",
+          "subrole": "exact-exchange",
+          "label": "Hartree-Fock exact exchange",
+          "expression_latex": "E_x^{HF}",
+          "component_codes": [],
+          "coefficient": {
+            "value": 0.2,
+            "expression": null,
+            "unit": "fraction",
+            "status": "curated-partial",
+            "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+          }
+        },
+        {
+          "term_id": "libxc:HYB_GGA_XC_B3LYP3",
+          "role": "exchange-correlation",
+          "label": "HYB_GGA_XC_B3LYP3",
+          "expression_latex": "HYB_GGA_XC_B3LYP3",
+          "component_codes": [
+            "HYB_GGA_XC_B3LYP3"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "LDA/B88 exchange mixture plus HF exchange",
+        "correlation": "LYP plus VWN3 remainder",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": 0.2,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "exact_exchange_fraction",
+            "role": "exact-exchange-fraction",
+            "value": 0.2,
+            "unit": "fraction",
+            "status": "curated-partial"
+          }
+        ],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Use this when reproducing legacy program definitions that explicitly used VWN3."
+      ]
+    }
   },
   {
     "slug": "b3lyp-vwn5",
@@ -162,7 +444,141 @@
       "Important for cross-program reproducibility."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.hybrid-gga.exchange-correlation",
+      "kind": "exchange-correlation",
+      "rung": "hybrid GGA",
+      "plain": "B3LYP variant using VWN5 convention for the local correlation remainder.",
+      "latex": "E_{xc}^{B3LYP5}=E_x^{LDA}+0.20(E_x^{HF}-E_x^{LDA})+0.72\\Delta E_x^{B88}+0.81E_c^{LYP}+0.19E_c^{VWN5}",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "K_x",
+          "name": "exact-exchange operator",
+          "role": "exact-exchange-operator",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "exact_exchange",
+          "role": "exchange",
+          "subrole": "exact-exchange",
+          "label": "Hartree-Fock exact exchange",
+          "expression_latex": "E_x^{HF}",
+          "component_codes": [],
+          "coefficient": {
+            "value": 0.2,
+            "expression": null,
+            "unit": "fraction",
+            "status": "curated-partial",
+            "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+          }
+        },
+        {
+          "term_id": "libxc:HYB_GGA_XC_B3LYP5",
+          "role": "exchange-correlation",
+          "label": "HYB_GGA_XC_B3LYP5",
+          "expression_latex": "HYB_GGA_XC_B3LYP5",
+          "component_codes": [
+            "HYB_GGA_XC_B3LYP5"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "LDA/B88 exchange mixture plus HF exchange",
+        "correlation": "LYP plus VWN5 remainder",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": 0.2,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "exact_exchange_fraction",
+            "role": "exact-exchange-fraction",
+            "value": 0.2,
+            "unit": "fraction",
+            "status": "curated-partial"
+          }
+        ],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Important for cross-program reproducibility."
+      ]
+    }
   },
   {
     "slug": "b88",
@@ -215,7 +631,135 @@
       "Commonly paired with LYP correlation as BLYP."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.gga.exchange",
+      "kind": "exchange",
+      "rung": "GGA",
+      "plain": "B88 exchange adds a gradient correction to LDA exchange.",
+      "latex": "E_x^{B88} = E_x^{LDA} + \\int \\Delta e_x^{B88}(n_\\sigma,\\nabla n_\\sigma;\\beta)\\,d\\mathbf r",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "exact_exchange",
+          "role": "exchange",
+          "subrole": "exact-exchange",
+          "label": "Hartree-Fock exact exchange",
+          "expression_latex": "E_x^{HF}",
+          "component_codes": [],
+          "coefficient": {
+            "value": 0.0,
+            "expression": null,
+            "unit": "fraction",
+            "status": "curated-partial",
+            "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+          }
+        },
+        {
+          "term_id": "libxc:GGA_X_B88",
+          "role": "exchange",
+          "label": "GGA_X_B88",
+          "expression_latex": "GGA_X_B88",
+          "component_codes": [
+            "GGA_X_B88"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "B88 gradient-corrected exchange",
+        "correlation": "not applicable",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": false,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": 0.0,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "exact_exchange_fraction",
+            "role": "exact-exchange-fraction",
+            "value": 0.0,
+            "unit": "fraction",
+            "status": "curated-partial"
+          }
+        ],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Commonly paired with LYP correlation as BLYP."
+      ]
+    }
   },
   {
     "slug": "blyp",
@@ -289,7 +833,150 @@
       "Often implemented as separate exchange and correlation components rather than a single Libxc XC code."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.gga.exchange-correlation",
+      "kind": "exchange-correlation",
+      "rung": "GGA",
+      "plain": "BLYP combines Becke 1988 exchange with Lee-Yang-Parr correlation.",
+      "latex": "E_{xc}^{BLYP} = E_x^{B88} + E_c^{LYP}",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "exact_exchange",
+          "role": "exchange",
+          "subrole": "exact-exchange",
+          "label": "Hartree-Fock exact exchange",
+          "expression_latex": "E_x^{HF}",
+          "component_codes": [],
+          "coefficient": {
+            "value": 0.0,
+            "expression": null,
+            "unit": "fraction",
+            "status": "curated-partial",
+            "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+          }
+        },
+        {
+          "term_id": "libxc:GGA_X_B88",
+          "role": "exchange",
+          "label": "GGA_X_B88",
+          "expression_latex": "GGA_X_B88",
+          "component_codes": [
+            "GGA_X_B88"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        },
+        {
+          "term_id": "libxc:GGA_C_LYP",
+          "role": "correlation",
+          "label": "GGA_C_LYP",
+          "expression_latex": "GGA_C_LYP",
+          "component_codes": [
+            "GGA_C_LYP"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "B88 exchange",
+        "correlation": "LYP correlation",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": 0.0,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "exact_exchange_fraction",
+            "role": "exact-exchange-fraction",
+            "value": 0.0,
+            "unit": "fraction",
+            "status": "curated-partial"
+          }
+        ],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Often implemented as separate exchange and correlation components rather than a single Libxc XC code."
+      ]
+    }
   },
   {
     "slug": "cam-b3lyp",
@@ -354,7 +1041,146 @@
       "Range-separation parameters must be cited and checked; program defaults matter."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.range-separated-hybrid-gga.exchange-correlation",
+      "kind": "exchange-correlation",
+      "rung": "range-separated hybrid GGA",
+      "plain": "CAM-B3LYP is a range-separated B3LYP-family hybrid with short-range and long-range exact-exchange fractions.",
+      "latex": "E_{xc}^{CAM-B3LYP}=a_{SR}E_{x,SR}^{HF}(\\omega)+a_{LR}E_{x,LR}^{HF}(\\omega)+E_x^{B3LYP,SR/LR}+E_c^{B3LYP}",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "ω",
+          "name": "range-separation parameter",
+          "role": "range-separation-omega",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "K_x^SR/LR",
+          "name": "short/long-range exact-exchange operator",
+          "role": "exact-exchange-operator",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "libxc:HYB_GGA_XC_CAM_B3LYP",
+          "role": "exchange-correlation",
+          "label": "HYB_GGA_XC_CAM_B3LYP",
+          "expression_latex": "HYB_GGA_XC_CAM_B3LYP",
+          "component_codes": [
+            "HYB_GGA_XC_CAM_B3LYP"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "range-separated B3LYP exchange plus HF exchange",
+        "correlation": "B3LYP/LYP-style correlation",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "unknown-not-curated",
+          "note": "Hybrid/range-separated record; exact-exchange coefficient must be audited unless curated below."
+        },
+        "short_range_exact_exchange": {
+          "value": 0.19,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Short-range exact-exchange fraction in seed record; audit primary source."
+        },
+        "long_range_exact_exchange": {
+          "value": 0.65,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Long-range exact-exchange fraction in seed record; audit primary source."
+        },
+        "range_separation_omega": {
+          "value": 0.33,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "curated-partial",
+          "note": "Range-separation parameter in seed record; audit primary source."
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "short_range_exact_exchange_fraction",
+            "role": "short-range-exact-exchange-fraction",
+            "value": 0.19,
+            "unit": "fraction",
+            "status": "curated-partial"
+          },
+          {
+            "name": "long_range_exact_exchange_fraction",
+            "role": "long-range-exact-exchange-fraction",
+            "value": 0.65,
+            "unit": "fraction",
+            "status": "curated-partial"
+          },
+          {
+            "name": "omega",
+            "role": "range-separation-omega",
+            "value": 0.33,
+            "unit": "bohr^-1",
+            "status": "curated-partial"
+          }
+        ],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Range-separation parameters must be cited and checked; program defaults matter."
+      ]
+    }
   },
   {
     "slug": "lc-wpbe",
@@ -414,7 +1240,129 @@
       "The omega value can vary by code/input; record it with calculations."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.range-separated-hybrid-gga.exchange-correlation",
+      "kind": "exchange-correlation",
+      "rung": "range-separated hybrid GGA",
+      "plain": "LC-wPBE is a long-range-corrected PBE-family hybrid. The exact omega and coefficients must be verified for the implementation/version.",
+      "latex": "E_{xc}^{LC-\\omega PBE}=E_{x,LR}^{HF}(\\omega)+E_{x,SR}^{PBE}(\\omega)+E_c^{PBE}",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "ω",
+          "name": "range-separation parameter",
+          "role": "range-separation-omega",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "K_x^SR/LR",
+          "name": "short/long-range exact-exchange operator",
+          "role": "exact-exchange-operator",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "libxc:HYB_GGA_XC_LC_WPBE",
+          "role": "exchange-correlation",
+          "label": "HYB_GGA_XC_LC_WPBE",
+          "expression_latex": "HYB_GGA_XC_LC_WPBE",
+          "component_codes": [
+            "HYB_GGA_XC_LC_WPBE"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "long-range HF exchange + short-range PBE exchange",
+        "correlation": "PBE correlation",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "unknown-not-curated",
+          "note": "Hybrid/range-separated record; exact-exchange coefficient must be audited unless curated below."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "unknown-not-curated",
+          "note": "Short-range exact-exchange fraction needs audit."
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "unknown-not-curated",
+          "note": "Long-range exact-exchange fraction needs audit."
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "unknown-not-curated",
+          "note": "Range-separation omega needs audit."
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "unknown-not-curated",
+        "values": [],
+        "unknown_required": [
+          {
+            "name": "range_separation_omega",
+            "status": "needs-primary-source-or-libxc-source-audit"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "The omega value can vary by code/input; record it with calculations."
+      ]
+    }
   },
   {
     "slug": "lda-c-pz81",
@@ -466,7 +1414,112 @@
       "Often paired with Slater exchange as an LDA XC model."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.lda.correlation",
+      "kind": "correlation",
+      "rung": "LDA",
+      "plain": "PZ81 is a local correlation parameterization based on uniform-electron-gas data.",
+      "latex": "E_c^{PZ81}[n] = \\int n(\\mathbf r)\\,\\epsilon_c^{PZ81}(n_\\alpha,n_\\beta;p)\\,d\\mathbf r",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "ζ",
+          "name": "spin polarization",
+          "role": "spin-polarization",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "libxc:LDA_C_PZ",
+          "role": "correlation",
+          "label": "LDA_C_PZ",
+          "expression_latex": "LDA_C_PZ",
+          "component_codes": [
+            "LDA_C_PZ"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "not applicable",
+        "correlation": "PZ81 local correlation",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": false,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": "No exchange channel in this record."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "unknown-not-curated",
+        "values": [],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Often paired with Slater exchange as an LDA XC model."
+      ]
+    }
   },
   {
     "slug": "lda-c-vwn",
@@ -519,7 +1572,112 @@
       "Program names may hide the VWN variant; always check whether VWN3, VWN5, or RPA convention is meant."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.lda.correlation",
+      "kind": "correlation",
+      "rung": "LDA",
+      "plain": "VWN is a local spin-density correlation parameterization of the uniform electron gas.",
+      "latex": "E_c^{VWN}[n] = \\int n(\\mathbf r)\\,\\epsilon_c^{VWN}(n_\\alpha,n_\\beta;p)\\,d\\mathbf r",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "ζ",
+          "name": "spin polarization",
+          "role": "spin-polarization",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "libxc:LDA_C_VWN",
+          "role": "correlation",
+          "label": "LDA_C_VWN",
+          "expression_latex": "LDA_C_VWN",
+          "component_codes": [
+            "LDA_C_VWN"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "not applicable",
+        "correlation": "VWN local correlation",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": false,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": "No exchange channel in this record."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "unknown-not-curated",
+        "values": [],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Program names may hide the VWN variant; always check whether VWN3, VWN5, or RPA convention is meant."
+      ]
+    }
   },
   {
     "slug": "lda-x-dirac",
@@ -576,7 +1734,135 @@
       "Used as the exchange component in many LDA combinations."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.lda.exchange",
+      "kind": "exchange",
+      "rung": "LDA",
+      "plain": "LDA exchange uses the uniform-electron-gas exchange energy density evaluated at the local spin density.",
+      "latex": "E_x^{LDA}[n] = \\int n(\\mathbf r)\\,\\epsilon_x^{unif}(n_\\alpha,n_\\beta)\\,d\\mathbf r",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "ζ",
+          "name": "spin polarization",
+          "role": "spin-polarization",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "exact_exchange",
+          "role": "exchange",
+          "subrole": "exact-exchange",
+          "label": "Hartree-Fock exact exchange",
+          "expression_latex": "E_x^{HF}",
+          "component_codes": [],
+          "coefficient": {
+            "value": 0.0,
+            "expression": null,
+            "unit": "fraction",
+            "status": "curated-partial",
+            "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+          }
+        },
+        {
+          "term_id": "libxc:LDA_X",
+          "role": "exchange",
+          "label": "LDA_X",
+          "expression_latex": "LDA_X",
+          "component_codes": [
+            "LDA_X"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "Dirac/Slater uniform-gas exchange",
+        "correlation": "not applicable",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": false,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": 0.0,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "exact_exchange_fraction",
+            "role": "exact-exchange-fraction",
+            "value": 0.0,
+            "unit": "fraction",
+            "status": "curated-partial"
+          }
+        ],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Used as the exchange component in many LDA combinations."
+      ]
+    }
   },
   {
     "slug": "lyp",
@@ -632,7 +1918,112 @@
       "One component of BLYP and B3LYP."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.gga.correlation",
+      "kind": "correlation",
+      "rung": "GGA",
+      "plain": "LYP is a GGA correlation functional derived from the Colle-Salvetti form.",
+      "latex": "E_c^{LYP}[n] = \\int f_c^{LYP}(n_\\sigma,\\nabla n_\\sigma;p)\\,d\\mathbf r",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "libxc:GGA_C_LYP",
+          "role": "correlation",
+          "label": "GGA_C_LYP",
+          "expression_latex": "GGA_C_LYP",
+          "component_codes": [
+            "GGA_C_LYP"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "not applicable",
+        "correlation": "LYP correlation",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": false,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": "No exchange channel in this record."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "unknown-not-curated",
+        "values": [],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "One component of BLYP and B3LYP."
+      ]
+    }
   },
   {
     "slug": "m06-2x",
@@ -698,7 +2089,162 @@
       "Exact exchange fraction and correlation component should both be documented."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.hybrid-meta-gga.exchange-correlation",
+      "kind": "exchange-correlation",
+      "rung": "hybrid meta-GGA",
+      "plain": "M06-2X is a high-exact-exchange Minnesota hybrid meta-GGA with 54% Hartree-Fock exchange in the standard definition.",
+      "latex": "E_{xc}^{M06-2X}=0.54E_x^{HF}+E_x^{M06-2X,semilocal}+E_c^{M06-2X}",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "τ_σ",
+          "name": "kinetic-energy density",
+          "role": "kinetic-energy-density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "K_x",
+          "name": "exact-exchange operator",
+          "role": "exact-exchange-operator",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "exact_exchange",
+          "role": "exchange",
+          "subrole": "exact-exchange",
+          "label": "Hartree-Fock exact exchange",
+          "expression_latex": "E_x^{HF}",
+          "component_codes": [],
+          "coefficient": {
+            "value": 0.54,
+            "expression": null,
+            "unit": "fraction",
+            "status": "curated-partial",
+            "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+          }
+        },
+        {
+          "term_id": "libxc:HYB_MGGA_X_M06_2X",
+          "role": "exchange",
+          "label": "HYB_MGGA_X_M06_2X",
+          "expression_latex": "HYB_MGGA_X_M06_2X",
+          "component_codes": [
+            "HYB_MGGA_X_M06_2X"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        },
+        {
+          "term_id": "libxc:MGGA_C_M06_2X",
+          "role": "correlation",
+          "label": "MGGA_C_M06_2X",
+          "expression_latex": "MGGA_C_M06_2X",
+          "component_codes": [
+            "MGGA_C_M06_2X"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "54% HF exchange plus M06-2X semilocal exchange",
+        "correlation": "M06-2X correlation",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": 0.54,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "exact_exchange_fraction",
+            "role": "exact-exchange-fraction",
+            "value": 0.54,
+            "unit": "fraction",
+            "status": "curated-partial"
+          }
+        ],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Exact exchange fraction and correlation component should both be documented."
+      ]
+    }
   },
   {
     "slug": "m06-l",
@@ -767,7 +2313,161 @@
       "Highly parametrized; quote exact variant and implementation."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.meta-gga.exchange-correlation",
+      "kind": "exchange-correlation",
+      "rung": "meta-GGA",
+      "plain": "M06-L is a local Minnesota meta-GGA with empirical parameters; no Hartree-Fock exact exchange.",
+      "latex": "E_{xc}^{M06-L}=\\int f_{xc}^{M06-L}(n_\\sigma,\\nabla n_\\sigma,\\tau_\\sigma;p)\\,d\\mathbf r",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "τ_σ",
+          "name": "kinetic-energy density",
+          "role": "kinetic-energy-density",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "exact_exchange",
+          "role": "exchange",
+          "subrole": "exact-exchange",
+          "label": "Hartree-Fock exact exchange",
+          "expression_latex": "E_x^{HF}",
+          "component_codes": [],
+          "coefficient": {
+            "value": 0.0,
+            "expression": null,
+            "unit": "fraction",
+            "status": "curated-partial",
+            "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+          }
+        },
+        {
+          "term_id": "libxc:MGGA_X_M06_L",
+          "role": "exchange",
+          "label": "MGGA_X_M06_L",
+          "expression_latex": "MGGA_X_M06_L",
+          "component_codes": [
+            "MGGA_X_M06_L"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        },
+        {
+          "term_id": "libxc:MGGA_C_M06_L",
+          "role": "correlation",
+          "label": "MGGA_C_M06_L",
+          "expression_latex": "MGGA_C_M06_L",
+          "component_codes": [
+            "MGGA_C_M06_L"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "M06-L meta-GGA exchange",
+        "correlation": "M06-L correlation",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": 0.0,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "unknown-not-curated",
+          "note": "Short-range exact-exchange fraction needs audit."
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "unknown-not-curated",
+          "note": "Long-range exact-exchange fraction needs audit."
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "unknown-not-curated",
+          "note": "Range-separation omega needs audit."
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "exact_exchange_fraction",
+            "role": "exact-exchange-fraction",
+            "value": 0.0,
+            "unit": "fraction",
+            "status": "curated-partial"
+          }
+        ],
+        "unknown_required": [
+          {
+            "name": "range_separation_omega",
+            "status": "needs-primary-source-or-libxc-source-audit"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Highly parametrized; quote exact variant and implementation."
+      ]
+    }
   },
   {
     "slug": "pbe",
@@ -836,7 +2536,150 @@
       "Check whether a code uses standard PBE, revPBE, RPBE, or another related variant."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.gga.exchange-correlation",
+      "kind": "exchange-correlation",
+      "rung": "GGA",
+      "plain": "PBE combines PBE exchange and PBE correlation in a nonempirical GGA.",
+      "latex": "E_{xc}^{PBE} = E_x^{PBE} + E_c^{PBE}",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "exact_exchange",
+          "role": "exchange",
+          "subrole": "exact-exchange",
+          "label": "Hartree-Fock exact exchange",
+          "expression_latex": "E_x^{HF}",
+          "component_codes": [],
+          "coefficient": {
+            "value": 0.0,
+            "expression": null,
+            "unit": "fraction",
+            "status": "curated-partial",
+            "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+          }
+        },
+        {
+          "term_id": "libxc:GGA_X_PBE",
+          "role": "exchange",
+          "label": "GGA_X_PBE",
+          "expression_latex": "GGA_X_PBE",
+          "component_codes": [
+            "GGA_X_PBE"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        },
+        {
+          "term_id": "libxc:GGA_C_PBE",
+          "role": "correlation",
+          "label": "GGA_C_PBE",
+          "expression_latex": "GGA_C_PBE",
+          "component_codes": [
+            "GGA_C_PBE"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "PBE exchange",
+        "correlation": "PBE correlation",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": 0.0,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "exact_exchange_fraction",
+            "role": "exact-exchange-fraction",
+            "value": 0.0,
+            "unit": "fraction",
+            "status": "curated-partial"
+          }
+        ],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Check whether a code uses standard PBE, revPBE, RPBE, or another related variant."
+      ]
+    }
   },
   {
     "slug": "pbe0",
@@ -897,7 +2740,141 @@
       "Often named PBE1PBE in Gaussian-style nomenclature."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.hybrid-gga.exchange-correlation",
+      "kind": "exchange-correlation",
+      "rung": "hybrid GGA",
+      "plain": "PBE0 mixes 25% Hartree-Fock exchange with 75% PBE exchange and full PBE correlation.",
+      "latex": "E_{xc}^{PBE0}=0.25E_x^{HF}+0.75E_x^{PBE}+E_c^{PBE}",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "K_x",
+          "name": "exact-exchange operator",
+          "role": "exact-exchange-operator",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "exact_exchange",
+          "role": "exchange",
+          "subrole": "exact-exchange",
+          "label": "Hartree-Fock exact exchange",
+          "expression_latex": "E_x^{HF}",
+          "component_codes": [],
+          "coefficient": {
+            "value": 0.25,
+            "expression": null,
+            "unit": "fraction",
+            "status": "curated-partial",
+            "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+          }
+        },
+        {
+          "term_id": "libxc:HYB_GGA_XC_PBEH",
+          "role": "exchange-correlation",
+          "label": "HYB_GGA_XC_PBEH",
+          "expression_latex": "HYB_GGA_XC_PBEH",
+          "component_codes": [
+            "HYB_GGA_XC_PBEH"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "25% HF exchange + 75% PBE exchange",
+        "correlation": "PBE correlation",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": 0.25,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "exact_exchange_fraction",
+            "role": "exact-exchange-fraction",
+            "value": 0.25,
+            "unit": "fraction",
+            "status": "curated-partial"
+          }
+        ],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Often named PBE1PBE in Gaussian-style nomenclature."
+      ]
+    }
   },
   {
     "slug": "r2scan",
@@ -967,7 +2944,156 @@
       "Often preferable to original SCAN for numerical stability."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.meta-gga.exchange-correlation",
+      "kind": "exchange-correlation",
+      "rung": "meta-GGA",
+      "plain": "r2SCAN is a regularized-restored SCAN meta-GGA depending on density, gradient, and kinetic-energy density.",
+      "latex": "E_{xc}^{r2SCAN}=\\int f_{xc}^{r2SCAN}(n_\\sigma,\\nabla n_\\sigma,\\tau_\\sigma;p)\\,d\\mathbf r",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "τ_σ",
+          "name": "kinetic-energy density",
+          "role": "kinetic-energy-density",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "exact_exchange",
+          "role": "exchange",
+          "subrole": "exact-exchange",
+          "label": "Hartree-Fock exact exchange",
+          "expression_latex": "E_x^{HF}",
+          "component_codes": [],
+          "coefficient": {
+            "value": 0.0,
+            "expression": null,
+            "unit": "fraction",
+            "status": "curated-partial",
+            "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+          }
+        },
+        {
+          "term_id": "libxc:MGGA_X_R2SCAN",
+          "role": "exchange",
+          "label": "MGGA_X_R2SCAN",
+          "expression_latex": "MGGA_X_R2SCAN",
+          "component_codes": [
+            "MGGA_X_R2SCAN"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        },
+        {
+          "term_id": "libxc:MGGA_C_R2SCAN",
+          "role": "correlation",
+          "label": "MGGA_C_R2SCAN",
+          "expression_latex": "MGGA_C_R2SCAN",
+          "component_codes": [
+            "MGGA_C_R2SCAN"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "r2SCAN exchange",
+        "correlation": "r2SCAN correlation",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": 0.0,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "exact_exchange_fraction",
+            "role": "exact-exchange-fraction",
+            "value": 0.0,
+            "unit": "fraction",
+            "status": "curated-partial"
+          }
+        ],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Often preferable to original SCAN for numerical stability."
+      ]
+    }
   },
   {
     "slug": "revpbe",
@@ -1020,7 +3146,135 @@
       "Do not conflate revPBE/PBE_R with RPBE. This record maps to Libxc GGA_X_PBE_R."
     ],
     "curation_status": "seed-curated; ambiguity split after multi-agent scientific review",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.gga.exchange",
+      "kind": "exchange",
+      "rung": "GGA",
+      "plain": "Zhang-Yang revised PBE exchange. Project XC keeps this distinct from RPBE.",
+      "latex": "E_x^{revPBE} = \\int f_x^{Zhang-Yang\\ revised\\ PBE}(n_\\sigma,\\nabla n_\\sigma;p)\\,d\\mathbf r",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "exact_exchange",
+          "role": "exchange",
+          "subrole": "exact-exchange",
+          "label": "Hartree-Fock exact exchange",
+          "expression_latex": "E_x^{HF}",
+          "component_codes": [],
+          "coefficient": {
+            "value": 0.0,
+            "expression": null,
+            "unit": "fraction",
+            "status": "curated-partial",
+            "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+          }
+        },
+        {
+          "term_id": "libxc:GGA_X_PBE_R",
+          "role": "exchange",
+          "label": "GGA_X_PBE_R",
+          "expression_latex": "GGA_X_PBE_R",
+          "component_codes": [
+            "GGA_X_PBE_R"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "Zhang-Yang revised PBE exchange",
+        "correlation": "not applicable",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": false,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": 0.0,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "exact_exchange_fraction",
+            "role": "exact-exchange-fraction",
+            "value": 0.0,
+            "unit": "fraction",
+            "status": "curated-partial"
+          }
+        ],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Do not conflate revPBE/PBE_R with RPBE. This record maps to Libxc GGA_X_PBE_R."
+      ]
+    }
   },
   {
     "slug": "rpbe",
@@ -1072,7 +3326,135 @@
       "Distinct from Zhang-Yang revPBE/PBE_R. This record maps to Libxc GGA_X_RPBE."
     ],
     "curation_status": "seed-curated; ambiguity split after multi-agent scientific review",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.gga.exchange",
+      "kind": "exchange",
+      "rung": "GGA",
+      "plain": "Hammer-Hansen-Nørskov RPBE exchange. Project XC keeps this distinct from Zhang-Yang revPBE.",
+      "latex": "E_x^{RPBE} = \\int f_x^{Hammer-Hansen-Nørskov\\ RPBE}(n_\\sigma,\\nabla n_\\sigma;p)\\,d\\mathbf r",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "exact_exchange",
+          "role": "exchange",
+          "subrole": "exact-exchange",
+          "label": "Hartree-Fock exact exchange",
+          "expression_latex": "E_x^{HF}",
+          "component_codes": [],
+          "coefficient": {
+            "value": 0.0,
+            "expression": null,
+            "unit": "fraction",
+            "status": "curated-partial",
+            "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+          }
+        },
+        {
+          "term_id": "libxc:GGA_X_RPBE",
+          "role": "exchange",
+          "label": "GGA_X_RPBE",
+          "expression_latex": "GGA_X_RPBE",
+          "component_codes": [
+            "GGA_X_RPBE"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "RPBE exchange",
+        "correlation": "not applicable",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": false,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": 0.0,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "exact_exchange_fraction",
+            "role": "exact-exchange-fraction",
+            "value": 0.0,
+            "unit": "fraction",
+            "status": "curated-partial"
+          }
+        ],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Distinct from Zhang-Yang revPBE/PBE_R. This record maps to Libxc GGA_X_RPBE."
+      ]
+    }
   },
   {
     "slug": "scan",
@@ -1137,7 +3519,156 @@
       "Meta-GGA grid sensitivity and regularization choices can affect reproducibility."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.meta-gga.exchange-correlation",
+      "kind": "exchange-correlation",
+      "rung": "meta-GGA",
+      "plain": "SCAN is a nonempirical meta-GGA depending on density, density gradient, and kinetic-energy density.",
+      "latex": "E_{xc}^{SCAN}=\\int f_{xc}^{SCAN}(n_\\sigma,\\nabla n_\\sigma,\\tau_\\sigma;p)\\,d\\mathbf r",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "τ_σ",
+          "name": "kinetic-energy density",
+          "role": "kinetic-energy-density",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "exact_exchange",
+          "role": "exchange",
+          "subrole": "exact-exchange",
+          "label": "Hartree-Fock exact exchange",
+          "expression_latex": "E_x^{HF}",
+          "component_codes": [],
+          "coefficient": {
+            "value": 0.0,
+            "expression": null,
+            "unit": "fraction",
+            "status": "curated-partial",
+            "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+          }
+        },
+        {
+          "term_id": "libxc:MGGA_X_SCAN",
+          "role": "exchange",
+          "label": "MGGA_X_SCAN",
+          "expression_latex": "MGGA_X_SCAN",
+          "component_codes": [
+            "MGGA_X_SCAN"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        },
+        {
+          "term_id": "libxc:MGGA_C_SCAN",
+          "role": "correlation",
+          "label": "MGGA_C_SCAN",
+          "expression_latex": "MGGA_C_SCAN",
+          "component_codes": [
+            "MGGA_C_SCAN"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "SCAN exchange",
+        "correlation": "SCAN correlation",
+        "other": []
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": 0.0,
+          "expression": null,
+          "unit": "fraction",
+          "status": "curated-partial",
+          "note": "Project XC seed-curated exact-exchange fraction; verify primary source before marking final."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "not-applicable",
+          "note": ""
+        },
+        "other_terms": []
+      },
+      "parameters": {
+        "status": "curated-partial",
+        "values": [
+          {
+            "name": "exact_exchange_fraction",
+            "role": "exact-exchange-fraction",
+            "value": 0.0,
+            "unit": "fraction",
+            "status": "curated-partial"
+          }
+        ],
+        "unknown_required": []
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Meta-GGA grid sensitivity and regularization choices can affect reproducibility."
+      ]
+    }
   },
   {
     "slug": "wb97m-v",
@@ -1206,7 +3737,149 @@
       "Nonlocal VV10 treatment may live outside the semilocal XC evaluator in some codes."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.range-separated-hybrid-meta-gga.exchange-correlation",
+      "kind": "exchange-correlation",
+      "rung": "range-separated hybrid meta-GGA",
+      "plain": "ωB97M-V is a range-separated hybrid meta-GGA with VV10 nonlocal correlation; coefficients and VV10 parameters need source/primary-paper audit.",
+      "latex": "E_{xc}^{\\omega B97M-V}=E_{xc}^{range-separated\\ hybrid\\ meta-GGA}+E_c^{VV10}",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "τ_σ",
+          "name": "kinetic-energy density",
+          "role": "kinetic-energy-density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "ω",
+          "name": "range-separation parameter",
+          "role": "range-separation-omega",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "K_x^SR/LR",
+          "name": "short/long-range exact-exchange operator",
+          "role": "exact-exchange-operator",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "libxc:HYB_MGGA_XC_WB97M_V",
+          "role": "exchange-correlation",
+          "label": "HYB_MGGA_XC_WB97M_V",
+          "expression_latex": "HYB_MGGA_XC_WB97M_V",
+          "component_codes": [
+            "HYB_MGGA_XC_WB97M_V"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "range-separated ωB97M meta-GGA exchange mixture",
+        "correlation": "ωB97M semilocal correlation + VV10 nonlocal correlation",
+        "other": [
+          "VV10 nonlocal correlation"
+        ]
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "unknown-not-curated",
+          "note": "Hybrid/range-separated record; exact-exchange coefficient must be audited unless curated below."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "unknown-not-curated",
+          "note": "Short-range exact-exchange fraction needs audit."
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "unknown-not-curated",
+          "note": "Long-range exact-exchange fraction needs audit."
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "unknown-not-curated",
+          "note": "Range-separation omega needs audit."
+        },
+        "other_terms": [
+          {
+            "name": "VV10 nonlocal correlation",
+            "role": "nonlocal-correlation",
+            "status": "needs-implementation-scope-verification"
+          },
+          {
+            "name": "VV10 nonlocal correlation",
+            "role": "nonlocal-correlation",
+            "status": "needs-implementation-scope-verification",
+            "note": "Nonlocal correlation may require separate evaluator/grid path beyond semilocal Libxc code."
+          }
+        ]
+      },
+      "parameters": {
+        "status": "unknown-not-curated",
+        "values": [],
+        "unknown_required": [
+          {
+            "name": "range_separation_omega",
+            "status": "needs-primary-source-or-libxc-source-audit"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Nonlocal VV10 treatment may live outside the semilocal XC evaluator in some codes."
+      ]
+    }
   },
   {
     "slug": "wb97x-d",
@@ -1274,6 +3947,142 @@
       "Dispersion correction is part of the named model but may be implemented outside the XC kernel in some programs."
     ],
     "curation_status": "seed-curated; references imported from Libxc snapshot when available",
-    "last_reviewed": "2026-07-10"
+    "last_reviewed": "2026-07-10",
+    "formula": {
+      "schema_version": "project-xc-formula-1",
+      "status": "curated-partial",
+      "template_id": "generic.range-separated-hybrid-gga.exchange-correlation",
+      "kind": "exchange-correlation",
+      "rung": "range-separated hybrid GGA",
+      "plain": "ωB97X-D is a range-separated hybrid with an empirical dispersion term; parameter values and dispersion scope require source/primary-paper audit.",
+      "latex": "E_{xc}^{\\omega B97X-D}=E_{xc}^{range-separated\\ hybrid}+E_{disp}^{D}",
+      "variables": [
+        {
+          "symbol": "n_σ",
+          "name": "spin density",
+          "role": "density",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "∇n_σ",
+          "name": "density gradient",
+          "role": "density-gradient",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "ω",
+          "name": "range-separation parameter",
+          "role": "range-separation-omega",
+          "status": "generic-derived"
+        },
+        {
+          "symbol": "K_x^SR/LR",
+          "name": "short/long-range exact-exchange operator",
+          "role": "exact-exchange-operator",
+          "status": "generic-derived"
+        }
+      ],
+      "terms": [
+        {
+          "term_id": "libxc:HYB_GGA_XC_WB97X_D",
+          "role": "exchange-correlation",
+          "label": "HYB_GGA_XC_WB97X_D",
+          "expression_latex": "HYB_GGA_XC_WB97X_D",
+          "component_codes": [
+            "HYB_GGA_XC_WB97X_D"
+          ],
+          "coefficient": {
+            "value": 1.0,
+            "unit": "coefficient",
+            "status": "derived-identity",
+            "note": "Single imported component term."
+          }
+        }
+      ],
+      "components": {
+        "exchange": "range-separated ωB97X exchange mixture",
+        "correlation": "ωB97X correlation",
+        "other": [
+          "empirical dispersion"
+        ]
+      },
+      "amounts": {
+        "channels": {
+          "exchange": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "correlation": {
+            "present": true,
+            "presence_status": "machine-derived"
+          },
+          "kinetic": {
+            "present": false,
+            "presence_status": "machine-derived"
+          }
+        },
+        "exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "unknown-not-curated",
+          "note": "Hybrid/range-separated record; exact-exchange coefficient must be audited unless curated below."
+        },
+        "short_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "unknown-not-curated",
+          "note": "Short-range exact-exchange fraction needs audit."
+        },
+        "long_range_exact_exchange": {
+          "value": null,
+          "expression": null,
+          "unit": "fraction",
+          "status": "unknown-not-curated",
+          "note": "Long-range exact-exchange fraction needs audit."
+        },
+        "range_separation_omega": {
+          "value": null,
+          "expression": null,
+          "unit": "bohr^-1",
+          "status": "unknown-not-curated",
+          "note": "Range-separation omega needs audit."
+        },
+        "other_terms": [
+          {
+            "name": "empirical dispersion",
+            "role": "dispersion",
+            "status": "needs-implementation-scope-verification"
+          },
+          {
+            "name": "empirical dispersion",
+            "role": "dispersion",
+            "status": "needs-implementation-scope-verification",
+            "note": "Some programs apply dispersion outside the XC kernel; verify before marking implementation-equivalent."
+          }
+        ]
+      },
+      "parameters": {
+        "status": "unknown-not-curated",
+        "values": [],
+        "unknown_required": [
+          {
+            "name": "range_separation_omega",
+            "status": "needs-primary-source-or-libxc-source-audit"
+          }
+        ]
+      },
+      "provenance": [
+        {
+          "type": "project-xc-seed",
+          "label": "Project XC seed curation"
+        }
+      ],
+      "caveats": [
+        "Formula/amount fields are displayed with status labels; do not treat partial seed curation as final benchmark-grade verification.",
+        "Dispersion correction is part of the named model but may be implemented outside the XC kernel in some programs."
+      ]
+    }
   }
 ]

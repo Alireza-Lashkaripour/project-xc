@@ -34,6 +34,8 @@ def main() -> int:
         "families": dict(collections.Counter(e.get("family") for e in snapshot)),
         "rungs": dict(collections.Counter(e.get("rung") for e in snapshot)),
         "kinds": dict(collections.Counter(e.get("kind") for e in snapshot)),
+        "formula_count": sum(1 for e in snapshot if e.get("formula")) + sum(1 for e in seed if e.get("formula")),
+        "curated_formula_count": sum(1 for e in seed if e.get("formula")),
     }
     with open(PUBLIC / "generated" / "summary.json", "w", encoding="utf-8") as handle:
         json.dump(summary, handle, indent=2, ensure_ascii=False)
