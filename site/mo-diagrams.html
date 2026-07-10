@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project XC — MO diagrams and active spaces</title>
+  <meta name="description" content="Textbook-style guide to drawing molecular orbital diagrams and using frontier orbital shapes for active-space selection.">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header compact">
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="index.html">Project XC</a>
+    <a href="index.html#catalog">Catalog</a>
+    <a href="methodology.html">Methodology</a>
+    <a href="mo-diagrams.html">MO guide</a>
+    <a href="https://github.com/Alireza-Lashkaripour/project-xc">GitHub</a>
+  </nav>
+</header>
+<main id="main" class="prose guide-page">
+  <p class="kicker">MO diagrams for active-space intuition</p>
+  <h1>How to draw molecular-orbital diagrams without fooling yourself</h1>
+  <p class="lead">A useful MO diagram is not a decorative energy ladder. It is a symmetry-, overlap-, and energy-matching argument that predicts which occupied, virtual, lone-pair, π, σ, Rydberg, charge-transfer, and metal-centered orbitals can change occupation. That is exactly the information needed before choosing a CASSCF/CASCI/DMRG active space.</p>
+
+  <section class="notice">
+    <strong>Core rule.</strong> There is no single universal hand-drawn MO diagram for “any molecule.” The reliable workflow is: choose a geometry and fragments, classify fragment orbitals by symmetry, mix only same-symmetry orbitals with meaningful overlap and comparable energy, fill electrons for the target spin/state, and then verify the frontier shapes with computed orbitals or natural orbitals.
+  </section>
+
+  <section class="definition">
+    <h2>The 10-step construction algorithm</h2>
+    <ol class="dense-list">
+      <li><strong>Fix the structure and question.</strong> MO order and shapes depend on geometry, spin, charge, conformation, and whether you target ground states, bond breaking, excited states, redox, or reaction coordinates.</li>
+      <li><strong>Choose fragments.</strong> For diatomics the fragments are atoms. For polyatomics use chemically meaningful fragments: central atom + ligand SALCs, π system + substituents, donor + acceptor, metal + ligand field, or breaking bond pair.</li>
+      <li><strong>Choose axes and symmetry.</strong> Label orbitals as σ/π/δ for linear fragments, g/u for centrosymmetric molecules, and irreducible representations for point groups. Only orbitals of the same symmetry can interact.</li>
+      <li><strong>Estimate atomic/fragment orbital energies.</strong> Valence AOs from more electronegative atoms are lower in energy. Compact core-like orbitals are usually too low for frontier chemistry; diffuse Rydberg/continuum-like orbitals are high unless excited states demand them.</li>
+      <li><strong>Estimate overlap.</strong> Strong head-on overlap gives σ splitting; side-on overlap gives π splitting; four-lobed d interactions can give δ splitting. Orthogonal or spatially separated orbitals remain nonbonding or weakly coupled.</li>
+      <li><strong>Mix by the interaction rule.</strong> Same symmetry + good overlap + small energy gap gives strong bonding/antibonding splitting. Same symmetry orbitals repel: the lower one goes lower, the upper one goes higher.</li>
+      <li><strong>Track nodes and phases.</strong> Bonding combinations have constructive overlap between fragments; antibonding combinations have a node between fragments. More nodes usually means higher energy within the same symmetry family.</li>
+      <li><strong>Place nonbonding orbitals honestly.</strong> Lone pairs, metal d orbitals, radical centers, and symmetry-forbidden SALCs often sit between bonding and antibonding levels and frequently become frontier orbitals.</li>
+      <li><strong>Fill electrons for the actual state.</strong> Apply Pauli and Hund rules, but also respect open-shell coupling, near degeneracy, ligand-field splittings, and state symmetry.</li>
+      <li><strong>Validate against computation.</strong> Visualize canonical orbitals, localized orbitals, natural orbitals, and occupations. If the hand diagram and computed frontier shapes disagree, debug symmetry/geometry/localization before selecting the active space.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Minimal interaction picture</h2>
+    <p>Every textbook MO diagram is built from repeated two-orbital interactions. The splitting grows when the fragment-orbital energy gap is small and the overlap/coupling is large.</p>
+    <figure class="mo-figure" aria-label="Two fragment orbitals combine to bonding and antibonding MOs">
+      <svg viewBox="0 0 760 310" role="img" aria-labelledby="twoOrbTitle twoOrbDesc">
+        <title id="twoOrbTitle">Two-level MO interaction</title>
+        <desc id="twoOrbDesc">Two fragment orbitals of the same symmetry form one lower bonding and one higher antibonding molecular orbital.</desc>
+        <line x1="80" y1="190" x2="240" y2="190" class="mo-line"></line>
+        <line x1="520" y1="140" x2="680" y2="140" class="mo-line"></line>
+        <line x1="325" y1="235" x2="435" y2="235" class="mo-line strong"></line>
+        <line x1="325" y1="80" x2="435" y2="80" class="mo-line anti"></line>
+        <line x1="240" y1="190" x2="325" y2="235" class="mo-mix"></line>
+        <line x1="520" y1="140" x2="435" y2="235" class="mo-mix"></line>
+        <line x1="240" y1="190" x2="325" y2="80" class="mo-mix"></line>
+        <line x1="520" y1="140" x2="435" y2="80" class="mo-mix"></line>
+        <text x="160" y="215" text-anchor="middle">fragment A</text>
+        <text x="600" y="165" text-anchor="middle">fragment B</text>
+        <text x="380" y="260" text-anchor="middle">bonding MO</text>
+        <text x="380" y="63" text-anchor="middle">antibonding MO</text>
+        <text x="380" y="155" text-anchor="middle" class="mo-note">same symmetry + overlap</text>
+        <text x="38" y="32" class="axis-label">energy ↑</text>
+      </svg>
+      <figcaption>Bonding and antibonding levels are not guessed: they follow from symmetry-allowed mixing. In heteronuclear cases, the bonding MO is usually closer in energy and has larger weight on the lower-energy fragment orbital; the antibonding MO is closer to the higher-energy fragment.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>What determines frontier-orbital shape?</h2>
+    <div class="guide-grid">
+      <article class="guide-card"><h3>Symmetry</h3><p>Orbitals with different irreducible representations do not mix. Degenerate partners must be kept together when they are chemically active.</p></article>
+      <article class="guide-card"><h3>Energy match</h3><p>Close fragment-orbital energies mix strongly. Large energy mismatch produces polarized bonding and weakly interacting nonbonding orbitals.</p></article>
+      <article class="guide-card"><h3>Overlap</h3><p>Large spatial overlap makes large splitting. Poor overlap can leave a formally “available” orbital nearly nonbonding.</p></article>
+      <article class="guide-card"><h3>Nodes</h3><p>Within a related set, more internal nodes and antibonding contacts usually mean higher energy. Nodal patterns help identify π*, σ*, and d-antibonding orbitals.</p></article>
+      <article class="guide-card"><h3>Electron count</h3><p>Electron filling decides which levels are frontier. Open-shell species often require singly occupied orbitals and their coupling partners.</p></article>
+      <article class="guide-card"><h3>Geometry</h3><p>Linear, bent, planar, and twisted geometries change symmetry and overlap. A MO diagram for one geometry may be wrong along a reaction path.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <h2>Common textbook motifs</h2>
+    <table class="meta-table wide-table">
+      <thead><tr><th>Motif</th><th>How to draw it</th><th>Active-space warning</th></tr></thead>
+      <tbody>
+        <tr><th>Second-row homonuclear diatomics</th><td>Make σ(2s), σ*(2s), π(2p), σ(2p), π*(2p), σ*(2p). For B₂/C₂/N₂, s-p mixing raises σ(2p) above π(2p). For O₂/F₂, the larger 2s–2p gap weakens s-p mixing and σ(2p) falls below π(2p).</td><td>For bond breaking, include the bonding and antibonding partners together. For O₂-like diradicals, include both degenerate π* orbitals.</td></tr>
+        <tr><th>Heteronuclear diatomics</th><td>Start from unequal AO energies. Bonding MOs are polarized toward the lower-energy/more electronegative AO; antibonding MOs are polarized toward the higher-energy/electropositive AO.</td><td>Do not choose only the visually large lobe. The small coefficient partner may be essential for charge transfer or dissociation.</td></tr>
+        <tr><th>Linear triatomics</th><td>Build ligand SALCs, then mix with central atom orbitals of matching symmetry. Linear CO₂-like molecules have σ and π manifolds with g/u labels when centrosymmetric.</td><td>π and π* pairs are often degenerate; keep both components when targeting bending, excitation, or degeneracy breaking.</td></tr>
+        <tr><th>Bent molecules</th><td>Lower symmetry splits linear degeneracies and mixes σ/π character. Water-like molecules are best drawn from H SALCs interacting with O 2s/2p orbitals.</td><td>Lone pairs are not interchangeable: one may be more s-like and lower, the other more p-like and frontier-active.</td></tr>
+        <tr><th>Conjugated π systems</th><td>Use p orbitals perpendicular to the framework; count nodes across the chain/ring. More nodes gives higher π energy. Alternant hydrocarbons often have paired bonding/antibonding π orbitals.</td><td>For π excitation, diradical, bond alternation, or pericyclic chemistry, include the full π/π* window needed by the process, not only HOMO/LUMO.</td></tr>
+        <tr><th>Lone-pair donor / acceptor systems</th><td>Place n orbitals on heteroatoms and π* or σ* acceptors on adjacent bonds. Donation strength follows symmetry, overlap, and energy match.</td><td>For n→π*, n→σ*, protonation, or charge-transfer states, include the donor lone pair and acceptor antibonding orbital together.</td></tr>
+        <tr><th>Transition-metal complexes</th><td>Draw ligand group orbitals first, then split metal d orbitals by ligand field: octahedral t₂g/e_g, tetrahedral e/t₂, square-planar d_x²-y² high, etc. π donor/acceptor ligands shift d levels.</td><td>Usually include the chemically relevant d shell plus ligand donor/acceptor orbitals involved in redox, spin-crossover, backbonding, or bond activation.</td></tr>
+        <tr><th>Rydberg and diffuse excited states</th><td>Rydberg orbitals are diffuse and high lying; they are not captured by a compact valence-only picture.</td><td>If the target spectrum has Rydberg character, use diffuse basis functions and include the relevant diffuse orbitals or keep them outside a clearly valence-only active space.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>From MO diagram to active space</h2>
+    <p>A good active space contains the orbitals whose occupations must be allowed to change. The hand-drawn diagram is a prefilter; final selection should be checked by occupations, orbital visualization, and state character.</p>
+    <div class="guide-grid two">
+      <article class="guide-card"><h3>Include pairs, not isolated fragments</h3><p>If a bonding orbital is active because a bond can break or excite, include its antibonding partner. If π is active, include the relevant π* set. If a lone pair donates, include the acceptor.</p></article>
+      <article class="guide-card"><h3>Keep symmetry partners together</h3><p>Degenerate π pairs, e/t₂ sets, and equivalent bonds should not be split unless the geometry or target state truly breaks that symmetry.</p></article>
+      <article class="guide-card"><h3>Balance across states</h3><p>For excited states, include donor and acceptor orbitals for every important configuration: n→π*, π→π*, MLCT, LMCT, d–d, Rydberg, or bond-breaking channels.</p></article>
+      <article class="guide-card"><h3>Watch natural occupations</h3><p>Closed orbitals near 2.00 and empty orbitals near 0.00 are usually inactive; orbitals with significant deviations, strong entanglement, or unstable occupations are active-space candidates.</p></article>
+      <article class="guide-card"><h3>Use automation as evidence</h3><p>AVAS, UNO, entanglement/DMRG, and autoCAS-style workflows can suggest active orbitals, but the chemist must still check shapes, symmetry, and target-state balance.</p></article>
+      <article class="guide-card"><h3>Do not trust HOMO/LUMO blindly</h3><p>Canonical orbitals can rotate within near-degenerate spaces, mix core/valence character, or reorder by method/basis. The active space is about chemically relevant occupation changes, not just orbital energy rank.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <h2>Practical active-space checklist</h2>
+    <ol class="dense-list">
+      <li>State the target: ground-state correlation, bond breaking, conical intersection, spectrum, redox, spin crossover, or reaction barrier.</li>
+      <li>Draw the minimal fragment/MO diagram and mark the orbitals whose occupation changes in the target process.</li>
+      <li>Include complete bonding/antibonding, π/π*, lone-pair/acceptor, radical/SOMO, or metal d/ligand donor-acceptor sets as needed.</li>
+      <li>Run a cheap calculation and visualize orbitals; relabel the diagram by actual shape, not by energy order alone.</li>
+      <li>Inspect natural occupations from a correlated or preliminary multireference calculation. Flag orbitals far from 2 or 0, and near-degenerate partners.</li>
+      <li>Check localization/orbital rotations: canonical MOs are not unique inside nearly degenerate subspaces; use localized or natural orbitals to see the chemistry.</li>
+      <li>Verify all target states are described by the same active orbital window; avoid a space that is excellent for one state and biased against another.</li>
+      <li>Document exclusions explicitly: core orbitals, very high Rydberg orbitals, σ frameworks, or inactive lone pairs should be excluded for a stated reason.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Common failure modes</h2>
+    <ul class="dense-list">
+      <li><strong>HOMO/LUMO-only active spaces:</strong> often miss lower bonding partners, lone pairs, degenerate companions, or state-specific acceptors.</li>
+      <li><strong>Unbalanced bond breaking:</strong> including σ* without σ, or one bond of an equivalent set, creates biased dissociation.</li>
+      <li><strong>Missing lone pairs:</strong> n orbitals can dominate heteroatom photochemistry, protonation, and charge transfer.</li>
+      <li><strong>Ignoring s-p or d-p mixing:</strong> same-symmetry orbital repulsion can reorder levels relative to a naive AO diagram.</li>
+      <li><strong>Confusing canonical and chemical orbitals:</strong> canonical orbitals may delocalize over many fragments; localized/natural orbitals often reveal the active chemistry.</li>
+      <li><strong>Using a diagram for the wrong geometry:</strong> twisting, bending, stretching, or symmetry lowering changes overlap and degeneracy.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Sources used for this guide</h2>
+    <p>This page is a textbook-style synthesis. It uses open textbook material for the core MO-theory rules and primary literature for modern active-space automation.</p>
+    <ul class="ref-list">
+      <li>OpenStax Chemistry 2e, Section 8.4, “Molecular Orbital Theory”: <a href="https://openstax.org/books/chemistry-2e/pages/8-4-molecular-orbital-theory">https://openstax.org/books/chemistry-2e/pages/8-4-molecular-orbital-theory</a></li>
+      <li>Chemistry LibreTexts mirror of OpenStax Section 8.4, “Molecular Orbital Theory”: <a href="https://chem.libretexts.org/Bookshelves/General_Chemistry/Chemistry_2e_(OpenStax)/08%3A_Advanced_Theories_of_Covalent_Bonding/8.04%3A_Molecular_Orbital_Theory">LibreTexts page</a></li>
+      <li>B. O. Roos, P. R. Taylor, P. E. M. Sigbahn, “The complete active space SCF method in a fock-matrix-based super-CI formulation,” DOI: <a href="https://doi.org/10.1002/qua.560180822">10.1002/qua.560180822</a></li>
+      <li>E. Sayfutyarova, Q. Sun, G. K.-L. Chan, G. Knizia, “Automated Construction of Molecular Active Spaces from Atomic Valence Orbitals,” JCTC 2017, DOI: <a href="https://doi.org/10.1021/acs.jctc.7b00128">10.1021/acs.jctc.7b00128</a></li>
+      <li>C. J. Stein, M. Reiher, “Automated Selection of Active Orbital Spaces,” JCTC 2016, DOI: <a href="https://doi.org/10.1021/acs.jctc.6b00156">10.1021/acs.jctc.6b00156</a></li>
+      <li>IUPAC Gold Book definition of complete active space self-consistent field, DOI: <a href="https://doi.org/10.1351/goldbook.ct07343">10.1351/goldbook.ct07343</a></li>
+    </ul>
+  </section>
+</main>
+<footer class="footer">
+  <p>Project XC is open research software. Use this MO guide as a chemical prefilter, then verify orbital shapes and occupations computationally before publication-grade active-space choices.</p>
+</footer>
+</body>
+</html>

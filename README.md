@@ -8,6 +8,8 @@ Goal: make it easy to find a functional, understand what it means, identify alia
 
 Web page: https://alireza-lashkaripour.github.io/project-xc/
 
+MO diagram and active-space guide: https://alireza-lashkaripour.github.io/project-xc/mo-diagrams.html
+
 Repository: https://github.com/Alireza-Lashkaripour/project-xc
 
 ## What is included now
@@ -17,6 +19,7 @@ Repository: https://github.com/Alireza-Lashkaripour/project-xc
 - Total imported reference links: 782.
 - Curated high-impact seed records: 21.
 - Static searchable website with filters, details, reference cards, and compare tray.
+- Textbook-style MO diagram and frontier-orbital guide for active-space preselection.
 - Validation harness for schema, DOI shape, duplicates, and curated/Libxc cross-links.
 - Multi-agent workflow harness for scaling the project safely.
 - GitHub Actions for validation and GitHub Pages deployment.
