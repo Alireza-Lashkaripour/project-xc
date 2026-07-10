@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project XC — Geometry to qualitative MO diagram</title>
+  <meta name="description" content="Paste XYZ geometry and draw a qualitative Hückel/LCAO molecular-orbital diagram with orbital-shape overlays for active-space preselection.">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header compact">
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="index.html">Project XC</a>
+    <a href="index.html#catalog">Catalog</a>
+    <a href="methodology.html">Methodology</a>
+    <a href="mo-diagrams.html">MO guide</a>
+    <a href="mo-builder.html">MO builder</a>
+    <a href="https://github.com/Alireza-Lashkaripour/project-xc">GitHub</a>
+  </nav>
+</header>
+<main id="main" class="prose guide-page mo-builder-page">
+  <p class="kicker">Interactive orbital sketcher</p>
+  <h1>Paste a geometry and draw a qualitative MO diagram</h1>
+  <p class="lead">This browser-only tool parses an XYZ geometry, infers bonds, builds a simple qualitative LCAO/Hückel Hamiltonian, diagonalizes it in JavaScript, and overlays each MO state on the molecular skeleton. It is designed for active-space intuition: which atoms/fragments carry the frontier orbitals, which bonding/antibonding partners appear, and what orbitals should be inspected in a real calculation.</p>
+
+  <section class="notice">
+    <strong>Scientific caveat.</strong> This is not Hartree–Fock, DFT, CASSCF, or a substitute for a quantum-chemistry calculation. The π model is a Hückel-style p-orbital graph; the atom-graph model is an intentionally crude one-orbital-per-atom LCAO sketch. Use it to form a hypothesis, then verify with computed canonical, localized, or natural orbitals and occupations.
+  </section>
+
+  <section class="builder-layout" aria-label="MO builder input and controls">
+    <div class="builder-input card-panel">
+      <h2>1. Geometry input</h2>
+      <p>Paste XYZ format. The first atom-count/comment lines are optional.</p>
+      <textarea id="xyzInput" spellcheck="false" rows="14" aria-label="XYZ geometry input"></textarea>
+      <div class="button-row">
+        <button type="button" data-example="benzene">Benzene</button>
+        <button type="button" data-example="ethylene">Ethylene</button>
+        <button type="button" data-example="water">Water</button>
+        <button type="button" data-example="oxygen">O₂</button>
+      </div>
+    </div>
+    <div class="builder-controls card-panel">
+      <h2>2. Model</h2>
+      <label>Qualitative model
+        <select id="modelSelect">
+          <option value="auto">Auto: π-Hückel if possible, otherwise atom graph</option>
+          <option value="pi">π-Hückel p-orbital network</option>
+          <option value="graph">Atom-graph LCAO sketch</option>
+        </select>
+      </label>
+      <label>Electron count override
+        <input id="electronOverride" type="number" min="0" step="1" placeholder="blank = estimate automatically">
+      </label>
+      <label>Bond scale
+        <input id="bondScale" type="number" min="0.8" max="1.6" step="0.05" value="1.25">
+      </label>
+      <button id="buildMo" type="button">Build MO diagram</button>
+      <p class="help-text">For active-space work, the best use is π systems, radical centers, bond-breaking fragments, and qualitative donor/acceptor maps. For full σ frameworks and transition metals, treat the output as a sketch only.</p>
+    </div>
+  </section>
+
+  <section class="card-panel output-panel">
+    <div class="section-title">
+      <div>
+        <p class="kicker">Output</p>
+        <h2>3. Qualitative molecular orbitals</h2>
+      </div>
+      <div id="builderStatus" class="results-meta" aria-live="polite">Load an example or paste XYZ, then build.</div>
+    </div>
+    <div id="builderWarnings" class="warning-list"></div>
+    <div class="mo-output-grid">
+      <div>
+        <h3>Energy-level diagram</h3>
+        <div id="energyDiagram" class="mo-canvas" aria-label="MO energy-level diagram"></div>
+      </div>
+      <div>
+        <h3>Selected MO shape on molecule</h3>
+        <label>MO state
+          <select id="moSelect"></select>
+        </label>
+        <div id="moleculeView" class="mo-canvas" aria-label="Molecular orbital shape overlay"></div>
+      </div>
+    </div>
+    <div id="orbitalInfo" class="orbital-info"></div>
+    <table class="meta-table wide-table" id="basisTable">
+      <caption>Basis centers used by the qualitative model</caption>
+      <thead><tr><th>#</th><th>Center</th><th>Atom</th><th>AO label</th><th>Diagonal α</th><th>π electrons</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section class="definition">
+    <h2>How to interpret the output</h2>
+    <ul class="dense-list">
+      <li><strong>Energy levels</strong> are relative model eigenvalues. Their ordering is useful; the numeric values are not excitation energies.</li>
+      <li><strong>Blue and orange lobes</strong> are opposite signs/phases of the selected MO coefficient. Size follows coefficient magnitude.</li>
+      <li><strong>HOMO/LUMO labels</strong> use the estimated or overridden electron count. If the count is wrong, set the override.</li>
+      <li><strong>For an active space,</strong> look for frontier MOs with large coefficients on chemically changing bonds/fragments, include symmetry partners, and include bonding/antibonding partners together.</li>
+      <li><strong>If π-Hückel fails,</strong> the molecule may not have a simple conjugated p network; use the atom-graph sketch only as a rough map and inspect real computed orbitals.</li>
+    </ul>
+  </section>
+</main>
+<footer class="footer">
+  <p>Project XC MO builder is a qualitative educational prefilter. Publication-grade active spaces must be checked with real orbital calculations and natural occupations.</p>
+</footer>
+<script src="assets/mo-builder.js"></script>
+</body>
+</html>

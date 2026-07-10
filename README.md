@@ -10,6 +10,8 @@ Web page: https://alireza-lashkaripour.github.io/project-xc/
 
 MO diagram and active-space guide: https://alireza-lashkaripour.github.io/project-xc/mo-diagrams.html
 
+Interactive geometry-to-MO builder: https://alireza-lashkaripour.github.io/project-xc/mo-builder.html
+
 Repository: https://github.com/Alireza-Lashkaripour/project-xc
 
 ## What is included now
@@ -20,6 +22,7 @@ Repository: https://github.com/Alireza-Lashkaripour/project-xc
 - Curated high-impact seed records: 21.
 - Static searchable website with filters, details, reference cards, and compare tray.
 - Textbook-style MO diagram and frontier-orbital guide for active-space preselection.
+- Interactive XYZ geometry-to-qualitative-MO builder with energy levels and orbital-shape overlays.
 - Validation harness for schema, DOI shape, duplicates, and curated/Libxc cross-links.
 - Multi-agent workflow harness for scaling the project safely.
 - GitHub Actions for validation and GitHub Pages deployment.
