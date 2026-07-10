@@ -320,15 +320,25 @@
     const lumo = occ.findIndex(o => o < 2);
     let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="qualitative MO energy diagram">`;
     svg += `<text x="18" y="28" class="axis-label">energy ↑</text>`;
+    const drawnGroups = new Set();
     vals.forEach((e, i) => {
       const group = groupForMo(data, i);
       const slot = group ? group.indices.indexOf(i) : 0;
       const slots = group ? group.indices.length : 1;
-      const dx = (slot - (slots-1)/2) * 18;
-      const labelDy = (slot - (slots-1)/2) * 15;
-      const yy = y(e);
+      const split = group ? Math.min(20, 34 / Math.max(1, slots - 1)) : 0;
+      const dy = group ? (slot - (slots-1)/2) * split : 0;
+      const dx = group ? (slot - (slots-1)/2) * 6 : 0;
+      const baseY = y(e);
+      const yy = baseY + dy;
       const x1 = 138 + dx, x2 = 390 + dx;
       const cls = i === selectedMO ? COLORS.selected : COLORS.level;
+      if (group && !drawnGroups.has(group.indices.join(','))) {
+        drawnGroups.add(group.indices.join(','));
+        const yMin = baseY - (slots-1)*split/2;
+        const yMax = baseY + (slots-1)*split/2;
+        svg += `<line x1="120" x2="120" y1="${yMin}" y2="${yMax}" stroke="#98a2b3" stroke-width="1.4" stroke-dasharray="3 4"></line>`;
+        svg += `<text x="124" y="${baseY-6}" font-size="10" fill="#667085">same E</text>`;
+      }
       svg += `<line x1="${x1}" x2="${x2}" y1="${yy}" y2="${yy}" stroke="${cls}" stroke-width="${i===selectedMO?5:3}" stroke-linecap="round" data-mo="${i}"></line>`;
       if (occ[i] >= 1) svg += `<text x="${244+dx}" y="${yy-6}" text-anchor="middle" font-size="18" fill="${COLORS.occ}">↑</text>`;
       if (occ[i] >= 2) svg += `<text x="${284+dx}" y="${yy-6}" text-anchor="middle" font-size="18" fill="${COLORS.occ}">↓</text>`;
@@ -337,7 +347,7 @@
       if (i === lumo) tags.push('LUMO');
       if (group) tags.push(`deg ${group.indices.map(x => x+1).join('/')}`);
       const label = `MO ${i+1} E=${fmt(e,3)}${tags.length?' · '+tags.join(' · ') : ''}`;
-      svg += `<text x="410" y="${yy+4+labelDy}" font-size="12" fill="${i===selectedMO?COLORS.selected:COLORS.text}">${esc(label)}</text>`;
+      svg += `<text x="410" y="${yy+4}" font-size="12" fill="${i===selectedMO?COLORS.selected:COLORS.text}">${esc(label)}</text>`;
       svg += `<rect x="${x1-8}" y="${yy-13}" width="${x2-x1+16}" height="26" fill="transparent" data-click-mo="${i}"></rect>`;
     });
     svg += `</svg>`;
