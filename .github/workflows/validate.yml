@@ -1,0 +1,22 @@
+name: Validate Project XC data
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate data
+        run: python3 scripts/validate_data.py
+      - name: Validate harness queue
+        run: python3 scripts/harness_status.py
+      - name: Build site
+        run: python3 scripts/build_site.py

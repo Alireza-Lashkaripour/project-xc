@@ -1,0 +1,106 @@
+{
+  "generated_at": "2026-07-10T01:16:44Z",
+  "policy": "Alias claims are curated and must cite program documentation, input examples, or source-code evidence before being marked verified.",
+  "programs": [
+    "Libxc",
+    "Gaussian",
+    "GAMESS-US",
+    "ORCA",
+    "PySCF",
+    "Psi4",
+    "Q-Chem",
+    "NWChem",
+    "OpenQP"
+  ],
+  "aliases": [
+    {
+      "canonical_slug": "b3lyp",
+      "program": "Gaussian",
+      "names": [
+        "B3LYP"
+      ],
+      "status": "needs-program-doc-verification",
+      "caveat": "VWN convention can differ across implementations.",
+      "program_version": "needs-versioning",
+      "evidence": "TODO: attach official program manual/source/test-output evidence before marking verified"
+    },
+    {
+      "canonical_slug": "pbe0",
+      "program": "Gaussian",
+      "names": [
+        "PBE1PBE"
+      ],
+      "status": "needs-program-doc-verification",
+      "caveat": "Common Gaussian-style alias for PBE0/PBEh.",
+      "program_version": "needs-versioning",
+      "evidence": "TODO: attach official program manual/source/test-output evidence before marking verified"
+    },
+    {
+      "canonical_slug": "pbe0",
+      "program": "Libxc",
+      "names": [
+        "HYB_GGA_XC_PBEH"
+      ],
+      "status": "imported-from-libxc",
+      "caveat": "Libxc uses PBEH code name for the standard PBE0/PBEh hybrid.",
+      "program_version": "needs-versioning",
+      "evidence": "https://libxc.gitlab.io/functionals/"
+    },
+    {
+      "canonical_slug": "scan",
+      "program": "Libxc",
+      "names": [
+        "MGGA_X_SCAN",
+        "MGGA_C_SCAN"
+      ],
+      "status": "imported-from-libxc",
+      "caveat": "SCAN is represented as separate exchange and correlation components.",
+      "program_version": "needs-versioning",
+      "evidence": "https://libxc.gitlab.io/functionals/"
+    },
+    {
+      "canonical_slug": "b3lyp-vwn3",
+      "program": "Libxc",
+      "names": [
+        "HYB_GGA_XC_B3LYP3"
+      ],
+      "status": "imported-from-libxc",
+      "caveat": "Explicit VWN3 convention.",
+      "program_version": "needs-versioning",
+      "evidence": "https://libxc.gitlab.io/functionals/"
+    },
+    {
+      "canonical_slug": "b3lyp-vwn5",
+      "program": "Libxc",
+      "names": [
+        "HYB_GGA_XC_B3LYP5"
+      ],
+      "status": "imported-from-libxc",
+      "caveat": "Explicit VWN5 convention.",
+      "program_version": "needs-versioning",
+      "evidence": "https://libxc.gitlab.io/functionals/"
+    },
+    {
+      "canonical_slug": "revpbe",
+      "program": "Libxc",
+      "program_version": "public functionals page snapshot",
+      "names": [
+        "GGA_X_PBE_R"
+      ],
+      "status": "imported-from-libxc",
+      "evidence": "https://libxc.gitlab.io/functionals/",
+      "caveat": "Zhang-Yang revised PBE exchange; not RPBE."
+    },
+    {
+      "canonical_slug": "rpbe",
+      "program": "Libxc",
+      "program_version": "public functionals page snapshot",
+      "names": [
+        "GGA_X_RPBE"
+      ],
+      "status": "imported-from-libxc",
+      "evidence": "https://libxc.gitlab.io/functionals/",
+      "caveat": "Hammer-Hansen-Nørskov RPBE; not Zhang-Yang revPBE."
+    }
+  ]
+}

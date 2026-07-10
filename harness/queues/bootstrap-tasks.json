@@ -1,0 +1,117 @@
+{
+  "generated_at": "2026-07-10T01:16:44Z",
+  "project": "Project XC",
+  "description": "Machine-readable queue for multi-agent curation and validation work.",
+  "tasks": [
+    {
+      "id": "SRC-LIBXC-001",
+      "lane": "source-discovery",
+      "status": "done",
+      "title": "Import Libxc public functionals page",
+      "inputs": [
+        "https://libxc.gitlab.io/functionals/"
+      ],
+      "outputs": [
+        "data/libxc_snapshot.json",
+        "data/libxc_summary.json",
+        "docs/provenance/libxc-bootstrap.md"
+      ],
+      "gates": [
+        "license/provenance noted",
+        "duplicate code/id validation",
+        "DOI URL validation"
+      ]
+    },
+    {
+      "id": "CUR-SEED-001",
+      "lane": "functional-curation",
+      "status": "done",
+      "title": "Seed high-impact functional records",
+      "inputs": [
+        "data/libxc_snapshot.json"
+      ],
+      "outputs": [
+        "data/functionals.seed.json"
+      ],
+      "gates": [
+        "curated fields present",
+        "Libxc components cross-linked",
+        "known ambiguity notes present"
+      ]
+    },
+    {
+      "id": "SCI-AMB-001",
+      "lane": "scientific-review",
+      "status": "done",
+      "title": "Split revPBE and RPBE ambiguity",
+      "inputs": [
+        "multi-agent scientific review",
+        "Libxc GGA_X_PBE_R",
+        "Libxc GGA_X_RPBE"
+      ],
+      "outputs": [
+        "data/functionals.seed.json",
+        "data/program_aliases.json"
+      ],
+      "gates": [
+        "separate slug per scientific object",
+        "distinct DOI/reference provenance"
+      ]
+    },
+    {
+      "id": "ALIAS-PROG-001",
+      "lane": "program-alias",
+      "status": "queued",
+      "title": "Verify aliases for Gaussian, ORCA, PySCF, Psi4, Q-Chem, GAMESS-US, NWChem, OpenQP",
+      "inputs": [
+        "program manuals",
+        "source code",
+        "test inputs"
+      ],
+      "outputs": [
+        "docs/provenance/programs/*.md",
+        "data/program_aliases.json"
+      ],
+      "gates": [
+        "one program per alias record",
+        "evidence URL/path required before verified status"
+      ]
+    },
+    {
+      "id": "PARAM-RSH-001",
+      "lane": "formula-parameter",
+      "status": "queued",
+      "title": "Audit range-separation and exact-exchange parameters",
+      "inputs": [
+        "primary papers",
+        "Libxc source/docs"
+      ],
+      "outputs": [
+        "data/functionals.seed.json",
+        "docs/provenance/parameters/range-separated-hybrids.md"
+      ],
+      "gates": [
+        "omega/units recorded or explicit unknown",
+        "source per parameter"
+      ]
+    },
+    {
+      "id": "SITE-QA-001",
+      "lane": "site-build",
+      "status": "done",
+      "title": "Build searchable static site",
+      "inputs": [
+        "site/*",
+        "data/*.json"
+      ],
+      "outputs": [
+        "public/"
+      ],
+      "gates": [
+        "validation OK",
+        "build OK",
+        "browser smoke OK"
+      ]
+    }
+  ]
+}

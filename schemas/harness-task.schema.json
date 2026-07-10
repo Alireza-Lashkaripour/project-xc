@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Project XC harness task",
+  "type": "object",
+  "required": [
+    "id",
+    "lane",
+    "status",
+    "title",
+    "inputs",
+    "outputs",
+    "gates"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "lane": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "queued",
+        "in_progress",
+        "blocked",
+        "done",
+        "cancelled"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

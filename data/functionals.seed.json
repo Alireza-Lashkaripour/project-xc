@@ -1,0 +1,1279 @@
+[
+  {
+    "slug": "b3lyp",
+    "canonical_name": "B3LYP",
+    "aliases": [
+      "B3LYP",
+      "Becke3LYP"
+    ],
+    "summary": "Three-parameter hybrid combining exact exchange with Becke exchange and LYP/VWN correlation ingredients.",
+    "family": "hybrid GGA",
+    "rung": "hybrid GGA",
+    "kind": "exchange-correlation",
+    "ingredients": [
+      "density",
+      "density gradient",
+      "exact exchange"
+    ],
+    "libxc": {
+      "primary_code": "HYB_GGA_XC_B3LYP",
+      "components": [
+        {
+          "code": "HYB_GGA_XC_B3LYP",
+          "id": 402,
+          "section": "hybrid GGA exchange-correlation",
+          "description": "B3LYP"
+        }
+      ]
+    },
+    "parameters": {
+      "exact_exchange_fraction": 0.2
+    },
+    "references": [
+      {
+        "doi": "10.1021/j100096a001",
+        "citation": "P. J. Stephens, F. J. Devlin, C. F. Chabalowski, and M. J. Frisch., J. Phys. Chem. 98, 11623 (1994)",
+        "url": "https://doi.org/10.1021/j100096a001"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "HYB_GGA_XC_B3LYP"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "B3LYP has variant ambiguity, especially VWN3/VWN5/RPA conventions across programs."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "b3lyp-vwn3",
+    "canonical_name": "B3LYP with VWN3 convention",
+    "aliases": [
+      "B3LYP3",
+      "B3LYP/VWN3"
+    ],
+    "summary": "B3LYP variant using VWN functional 3 rather than the default RPA/VWN convention.",
+    "family": "hybrid GGA",
+    "rung": "hybrid GGA",
+    "kind": "exchange-correlation",
+    "ingredients": [
+      "density",
+      "density gradient",
+      "exact exchange"
+    ],
+    "libxc": {
+      "primary_code": "HYB_GGA_XC_B3LYP3",
+      "components": [
+        {
+          "code": "HYB_GGA_XC_B3LYP3",
+          "id": 394,
+          "section": "hybrid GGA exchange-correlation",
+          "description": "B3LYP with VWN functional 3 instead of RPA"
+        }
+      ]
+    },
+    "parameters": {
+      "exact_exchange_fraction": 0.2
+    },
+    "references": [
+      {
+        "doi": "10.1021/j100096a001",
+        "citation": "P. J. Stephens, F. J. Devlin, C. F. Chabalowski, and M. J. Frisch., J. Phys. Chem. 98, 11623 (1994)",
+        "url": "https://doi.org/10.1021/j100096a001"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "HYB_GGA_XC_B3LYP3"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Use this when reproducing legacy program definitions that explicitly used VWN3."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "b3lyp-vwn5",
+    "canonical_name": "B3LYP with VWN5 convention",
+    "aliases": [
+      "B3LYP5",
+      "B3LYP/VWN5"
+    ],
+    "summary": "B3LYP variant using VWN functional 5 convention.",
+    "family": "hybrid GGA",
+    "rung": "hybrid GGA",
+    "kind": "exchange-correlation",
+    "ingredients": [
+      "density",
+      "density gradient",
+      "exact exchange"
+    ],
+    "libxc": {
+      "primary_code": "HYB_GGA_XC_B3LYP5",
+      "components": [
+        {
+          "code": "HYB_GGA_XC_B3LYP5",
+          "id": 475,
+          "section": "hybrid GGA exchange-correlation",
+          "description": "B3LYP with VWN functional 5 instead of RPA"
+        }
+      ]
+    },
+    "parameters": {
+      "exact_exchange_fraction": 0.2
+    },
+    "references": [
+      {
+        "doi": "10.1021/j100096a001",
+        "citation": "P. J. Stephens, F. J. Devlin, C. F. Chabalowski, and M. J. Frisch., J. Phys. Chem. 98, 11623 (1994)",
+        "url": "https://doi.org/10.1021/j100096a001"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "HYB_GGA_XC_B3LYP5"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Important for cross-program reproducibility."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "b88",
+    "canonical_name": "Becke 1988 exchange",
+    "aliases": [
+      "B88",
+      "Becke88",
+      "B exchange"
+    ],
+    "summary": "Gradient-corrected exchange designed to recover the correct asymptotic behavior and improve atomization energetics.",
+    "family": "GGA",
+    "rung": "GGA",
+    "kind": "exchange",
+    "ingredients": [
+      "density",
+      "density gradient"
+    ],
+    "libxc": {
+      "primary_code": "GGA_X_B88",
+      "components": [
+        {
+          "code": "GGA_X_B88",
+          "id": 106,
+          "section": "GGA exchange",
+          "description": "Becke 88"
+        }
+      ]
+    },
+    "parameters": {},
+    "references": [
+      {
+        "doi": "10.1103/PhysRevA.38.3098",
+        "citation": "A. D. Becke., Phys. Rev. A 38, 3098 (1988)",
+        "url": "https://doi.org/10.1103/PhysRevA.38.3098"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "GGA_X_B88"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Commonly paired with LYP correlation as BLYP."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "blyp",
+    "canonical_name": "BLYP",
+    "aliases": [
+      "BLYP",
+      "B88-LYP"
+    ],
+    "summary": "Composite GGA made from Becke 1988 exchange and Lee-Yang-Parr correlation.",
+    "family": "GGA",
+    "rung": "GGA",
+    "kind": "exchange-correlation",
+    "ingredients": [
+      "density",
+      "density gradient"
+    ],
+    "libxc": {
+      "primary_code": "GGA_X_B88",
+      "components": [
+        {
+          "code": "GGA_X_B88",
+          "id": 106,
+          "section": "GGA exchange",
+          "description": "Becke 88"
+        },
+        {
+          "code": "GGA_C_LYP",
+          "id": 131,
+          "section": "GGA correlation",
+          "description": "Lee, Yang & Parr"
+        }
+      ]
+    },
+    "parameters": {
+      "components": [
+        "GGA_X_B88",
+        "GGA_C_LYP"
+      ]
+    },
+    "references": [
+      {
+        "doi": "10.1103/PhysRevA.38.3098",
+        "citation": "A. D. Becke., Phys. Rev. A 38, 3098 (1988)",
+        "url": "https://doi.org/10.1103/PhysRevA.38.3098"
+      },
+      {
+        "doi": "10.1103/PhysRevB.37.785",
+        "citation": "C. Lee, W. Yang, and R. G. Parr., Phys. Rev. B 37, 785 (1988)",
+        "url": "https://doi.org/10.1103/PhysRevB.37.785"
+      },
+      {
+        "doi": "10.1016/0009-2614(89)87234-3",
+        "citation": "B. Miehlich, A. Savin, H. Stoll, and H. Preuss., Chem. Phys. Lett. 157, 200 (1989)",
+        "url": "https://doi.org/10.1016/0009-2614(89)87234-3"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "GGA_X_B88",
+          "GGA_C_LYP"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Often implemented as separate exchange and correlation components rather than a single Libxc XC code."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "cam-b3lyp",
+    "canonical_name": "CAM-B3LYP",
+    "aliases": [
+      "CAM-B3LYP",
+      "Coulomb-attenuating B3LYP"
+    ],
+    "summary": "Coulomb-attenuating range-separated hybrid derived from B3LYP for charge-transfer and excitation applications.",
+    "family": "range-separated hybrid GGA",
+    "rung": "range-separated hybrid GGA",
+    "kind": "exchange-correlation",
+    "ingredients": [
+      "density",
+      "density gradient",
+      "short-range exact exchange",
+      "long-range exact exchange"
+    ],
+    "libxc": {
+      "primary_code": "HYB_GGA_XC_CAM_B3LYP",
+      "components": [
+        {
+          "code": "HYB_GGA_XC_CAM_B3LYP",
+          "id": 433,
+          "section": "hybrid GGA exchange-correlation",
+          "description": "CAM version of B3LYP"
+        }
+      ]
+    },
+    "parameters": {
+      "range_separated": true,
+      "short_range_exact_exchange_fraction": 0.19,
+      "long_range_exact_exchange_fraction": 0.65,
+      "range_separation": {
+        "omega": 0.33,
+        "omega_units": "bohr^-1",
+        "short_range_exact_exchange_fraction": 0.19,
+        "long_range_exact_exchange_fraction": 0.65,
+        "status": "seed-literature-value; needs independent primary-source audit"
+      }
+    },
+    "references": [
+      {
+        "doi": "10.1016/j.cplett.2004.06.011",
+        "citation": "T. Yanai, D. P. Tew, and N. C. Handy., Chem. Phys. Lett. 393, 51 (2004)",
+        "url": "https://doi.org/10.1016/j.cplett.2004.06.011"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "HYB_GGA_XC_CAM_B3LYP"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Range-separation parameters must be cited and checked; program defaults matter."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "lc-wpbe",
+    "canonical_name": "LC-wPBE",
+    "aliases": [
+      "LC-wPBE",
+      "LC-ωPBE"
+    ],
+    "summary": "Long-range corrected PBE-based hybrid using range separation to improve long-range exchange behavior.",
+    "family": "range-separated hybrid GGA",
+    "rung": "range-separated hybrid GGA",
+    "kind": "exchange-correlation",
+    "ingredients": [
+      "density",
+      "density gradient",
+      "range separation",
+      "long-range exact exchange"
+    ],
+    "libxc": {
+      "primary_code": "HYB_GGA_XC_LC_WPBE",
+      "components": [
+        {
+          "code": "HYB_GGA_XC_LC_WPBE",
+          "id": 478,
+          "section": "hybrid GGA exchange-correlation",
+          "description": "Long-range corrected PBE (LC-wPBE) by Vydrov and Scuseria"
+        }
+      ]
+    },
+    "parameters": {
+      "range_separated": true,
+      "range_separation": {
+        "status": "needs-primary-source-parameter-verification",
+        "note": "Record must be completed with omega and exact-exchange fractions from primary paper or source implementation."
+      }
+    },
+    "references": [
+      {
+        "doi": "10.1063/1.2409292",
+        "citation": "O. A. Vydrov and G. E. Scuseria., J. Chem. Phys. 125, 234109 (2006)",
+        "url": "https://doi.org/10.1063/1.2409292"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "HYB_GGA_XC_LC_WPBE"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "The omega value can vary by code/input; record it with calculations."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "lda-c-pz81",
+    "canonical_name": "Perdew-Zunger 1981 local correlation",
+    "aliases": [
+      "PZ81",
+      "Perdew-Zunger"
+    ],
+    "summary": "Local correlation parameterization based on Ceperley-Alder quantum Monte Carlo data for the uniform electron gas.",
+    "family": "LDA",
+    "rung": "LDA",
+    "kind": "correlation",
+    "ingredients": [
+      "density",
+      "spin polarization"
+    ],
+    "libxc": {
+      "primary_code": "LDA_C_PZ",
+      "components": [
+        {
+          "code": "LDA_C_PZ",
+          "id": 9,
+          "section": "LDA correlation",
+          "description": "Perdew & Zunger"
+        }
+      ]
+    },
+    "parameters": {},
+    "references": [
+      {
+        "doi": "10.1103/PhysRevB.23.5048",
+        "citation": "J. P. Perdew and A. Zunger., Phys. Rev. B 23, 5048 (1981)",
+        "url": "https://doi.org/10.1103/PhysRevB.23.5048"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "LDA_C_PZ"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Often paired with Slater exchange as an LDA XC model."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "lda-c-vwn",
+    "canonical_name": "VWN local correlation",
+    "aliases": [
+      "VWN",
+      "Vosko-Wilk-Nusair",
+      "VWN5"
+    ],
+    "summary": "Local spin-density correlation parameterization of the uniform electron gas; one of the historically common LDA correlation choices.",
+    "family": "LDA",
+    "rung": "LDA",
+    "kind": "correlation",
+    "ingredients": [
+      "density",
+      "spin polarization"
+    ],
+    "libxc": {
+      "primary_code": "LDA_C_VWN",
+      "components": [
+        {
+          "code": "LDA_C_VWN",
+          "id": 7,
+          "section": "LDA correlation",
+          "description": "Vosko, Wilk & Nusair (VWN5)"
+        }
+      ]
+    },
+    "parameters": {},
+    "references": [
+      {
+        "doi": "10.1139/p80-159",
+        "citation": "S. H. Vosko, L. Wilk, and M. Nusair., Can. J. Phys. 58, 1200 (1980)",
+        "url": "https://doi.org/10.1139/p80-159"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "LDA_C_VWN"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Program names may hide the VWN variant; always check whether VWN3, VWN5, or RPA convention is meant."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "lda-x-dirac",
+    "canonical_name": "Slater/Dirac LDA exchange",
+    "aliases": [
+      "LDA exchange",
+      "Dirac exchange",
+      "Slater exchange"
+    ],
+    "summary": "The local-density approximation exchange energy density for the uniform electron gas. It is the exchange-only anchor for the first rung of Jacob's ladder.",
+    "family": "LDA",
+    "rung": "LDA",
+    "kind": "exchange",
+    "ingredients": [
+      "density"
+    ],
+    "libxc": {
+      "primary_code": "LDA_X",
+      "components": [
+        {
+          "code": "LDA_X",
+          "id": 1,
+          "section": "LDA exchange",
+          "description": "Slater exchange"
+        }
+      ]
+    },
+    "parameters": {},
+    "references": [
+      {
+        "doi": "10.1017/S0305004100016108",
+        "citation": "P. A. M. Dirac., Math. Proc. Cambridge Philos. Soc. 26, 376 (1930)",
+        "url": "https://doi.org/10.1017/S0305004100016108"
+      },
+      {
+        "doi": "10.1007/BF01340281",
+        "citation": "F. Bloch., Z. Phys. 57, 545 (1929)",
+        "url": "https://doi.org/10.1007/BF01340281"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "LDA_X"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Used as the exchange component in many LDA combinations."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "lyp",
+    "canonical_name": "Lee-Yang-Parr correlation",
+    "aliases": [
+      "LYP"
+    ],
+    "summary": "Gradient-corrected correlation derived from the Colle-Salvetti correlation-energy formula.",
+    "family": "GGA",
+    "rung": "GGA",
+    "kind": "correlation",
+    "ingredients": [
+      "density",
+      "density gradient"
+    ],
+    "libxc": {
+      "primary_code": "GGA_C_LYP",
+      "components": [
+        {
+          "code": "GGA_C_LYP",
+          "id": 131,
+          "section": "GGA correlation",
+          "description": "Lee, Yang & Parr"
+        }
+      ]
+    },
+    "parameters": {},
+    "references": [
+      {
+        "doi": "10.1103/PhysRevB.37.785",
+        "citation": "C. Lee, W. Yang, and R. G. Parr., Phys. Rev. B 37, 785 (1988)",
+        "url": "https://doi.org/10.1103/PhysRevB.37.785"
+      },
+      {
+        "doi": "10.1016/0009-2614(89)87234-3",
+        "citation": "B. Miehlich, A. Savin, H. Stoll, and H. Preuss., Chem. Phys. Lett. 157, 200 (1989)",
+        "url": "https://doi.org/10.1016/0009-2614(89)87234-3"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "GGA_C_LYP"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "One component of BLYP and B3LYP."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "m06-2x",
+    "canonical_name": "M06-2X",
+    "aliases": [
+      "M06-2X"
+    ],
+    "summary": "High-exact-exchange Minnesota hybrid meta-GGA often used for main-group thermochemistry and kinetics.",
+    "family": "hybrid meta-GGA",
+    "rung": "hybrid meta-GGA",
+    "kind": "exchange-correlation",
+    "ingredients": [
+      "density",
+      "density gradient",
+      "kinetic-energy density",
+      "exact exchange"
+    ],
+    "libxc": {
+      "primary_code": "HYB_MGGA_X_M06_2X",
+      "components": [
+        {
+          "code": "HYB_MGGA_X_M06_2X",
+          "id": 450,
+          "section": "hybrid meta-GGA exchange",
+          "description": "Minnesota M06-2X hybrid exchange functional"
+        },
+        {
+          "code": "MGGA_C_M06_2X",
+          "id": 236,
+          "section": "meta-GGA correlation",
+          "description": "Minnesota M06-2X correlation functional"
+        }
+      ]
+    },
+    "parameters": {
+      "exact_exchange_fraction": 0.54,
+      "components": [
+        "HYB_MGGA_X_M06_2X",
+        "MGGA_C_M06_2X"
+      ]
+    },
+    "references": [
+      {
+        "doi": "10.1007/s00214-007-0310-x",
+        "citation": "Y. Zhao and D. G. Truhlar., Theor. Chem. Acc. 120, 215 (2008)",
+        "url": "https://doi.org/10.1007/s00214-007-0310-x"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "HYB_MGGA_X_M06_2X",
+          "MGGA_C_M06_2X"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Exact exchange fraction and correlation component should both be documented."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "m06-l",
+    "canonical_name": "M06-L",
+    "aliases": [
+      "M06-L"
+    ],
+    "summary": "Local Minnesota meta-GGA functional developed for broad thermochemistry, kinetics, and noncovalent interaction performance.",
+    "family": "meta-GGA",
+    "rung": "meta-GGA",
+    "kind": "exchange-correlation",
+    "ingredients": [
+      "density",
+      "density gradient",
+      "kinetic-energy density"
+    ],
+    "libxc": {
+      "primary_code": "MGGA_X_M06_L",
+      "components": [
+        {
+          "code": "MGGA_X_M06_L",
+          "id": 203,
+          "section": "meta-GGA exchange",
+          "description": "Minnesota M06-L exchange functional"
+        },
+        {
+          "code": "MGGA_C_M06_L",
+          "id": 233,
+          "section": "meta-GGA correlation",
+          "description": "Minnesota M06-L correlation functional"
+        }
+      ]
+    },
+    "parameters": {
+      "components": [
+        "MGGA_X_M06_L",
+        "MGGA_C_M06_L"
+      ]
+    },
+    "references": [
+      {
+        "doi": "10.1063/1.2370993",
+        "citation": "Y. Zhao and D. G. Truhlar., J. Chem. Phys. 125, 194101 (2006)",
+        "url": "https://doi.org/10.1063/1.2370993"
+      },
+      {
+        "doi": "10.1007/s00214-007-0310-x",
+        "citation": "Y. Zhao and D. G. Truhlar., Theor. Chem. Acc. 120, 215 (2008)",
+        "url": "https://doi.org/10.1007/s00214-007-0310-x"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "MGGA_X_M06_L",
+          "MGGA_C_M06_L"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Highly parametrized; quote exact variant and implementation."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "pbe",
+    "canonical_name": "PBE",
+    "aliases": [
+      "PBE",
+      "Perdew-Burke-Ernzerhof"
+    ],
+    "summary": "Nonempirical generalized-gradient approximation satisfying many exact constraints; a default workhorse for solid-state and molecular DFT.",
+    "family": "GGA",
+    "rung": "GGA",
+    "kind": "exchange-correlation",
+    "ingredients": [
+      "density",
+      "density gradient"
+    ],
+    "libxc": {
+      "primary_code": "GGA_X_PBE",
+      "components": [
+        {
+          "code": "GGA_X_PBE",
+          "id": 101,
+          "section": "GGA exchange",
+          "description": "Perdew, Burke & Ernzerhof"
+        },
+        {
+          "code": "GGA_C_PBE",
+          "id": 130,
+          "section": "GGA correlation",
+          "description": "Perdew, Burke & Ernzerhof"
+        }
+      ]
+    },
+    "parameters": {
+      "components": [
+        "GGA_X_PBE",
+        "GGA_C_PBE"
+      ]
+    },
+    "references": [
+      {
+        "doi": "10.1103/PhysRevLett.77.3865",
+        "citation": "J. P. Perdew, K. Burke, and M. Ernzerhof., Phys. Rev. Lett. 77, 3865 (1996)",
+        "url": "https://doi.org/10.1103/PhysRevLett.77.3865"
+      },
+      {
+        "doi": "10.1103/PhysRevLett.78.1396",
+        "citation": "J. P. Perdew, K. Burke, and M. Ernzerhof., Phys. Rev. Lett. 78, 1396 (1997)",
+        "url": "https://doi.org/10.1103/PhysRevLett.78.1396"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "GGA_X_PBE",
+          "GGA_C_PBE"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Check whether a code uses standard PBE, revPBE, RPBE, or another related variant."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "pbe0",
+    "canonical_name": "PBE0 / PBEh",
+    "aliases": [
+      "PBE0",
+      "PBE1PBE",
+      "PBEh"
+    ],
+    "summary": "One-parameter hybrid mixing PBE exchange-correlation with 25% exact exchange.",
+    "family": "hybrid GGA",
+    "rung": "hybrid GGA",
+    "kind": "exchange-correlation",
+    "ingredients": [
+      "density",
+      "density gradient",
+      "exact exchange"
+    ],
+    "libxc": {
+      "primary_code": "HYB_GGA_XC_PBEH",
+      "components": [
+        {
+          "code": "HYB_GGA_XC_PBEH",
+          "id": 406,
+          "section": "hybrid GGA exchange-correlation",
+          "description": "PBEH (PBE0)"
+        }
+      ]
+    },
+    "parameters": {
+      "exact_exchange_fraction": 0.25
+    },
+    "references": [
+      {
+        "doi": "10.1063/1.478522",
+        "citation": "C. Adamo and V. Barone., J. Chem. Phys. 110, 6158 (1999)",
+        "url": "https://doi.org/10.1063/1.478522"
+      },
+      {
+        "doi": "10.1063/1.478401",
+        "citation": "M. Ernzerhof and G. E. Scuseria., J. Chem. Phys. 110, 5029 (1999)",
+        "url": "https://doi.org/10.1063/1.478401"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "HYB_GGA_XC_PBEH"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Often named PBE1PBE in Gaussian-style nomenclature."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "r2scan",
+    "canonical_name": "r2SCAN",
+    "aliases": [
+      "r2SCAN",
+      "regularized-restored SCAN"
+    ],
+    "summary": "Regularized and restored SCAN variant designed to improve numerical behavior while preserving much of SCAN's constraint-based design.",
+    "family": "meta-GGA",
+    "rung": "meta-GGA",
+    "kind": "exchange-correlation",
+    "ingredients": [
+      "density",
+      "density gradient",
+      "kinetic-energy density"
+    ],
+    "libxc": {
+      "primary_code": "MGGA_X_R2SCAN",
+      "components": [
+        {
+          "code": "MGGA_X_R2SCAN",
+          "id": 497,
+          "section": "meta-GGA exchange",
+          "description": "Re-regularized SCAN exchange by Furness et al"
+        },
+        {
+          "code": "MGGA_C_R2SCAN",
+          "id": 498,
+          "section": "meta-GGA correlation",
+          "description": "Re-regularized SCAN correlation by Furness et al"
+        }
+      ]
+    },
+    "parameters": {
+      "components": [
+        "MGGA_X_R2SCAN",
+        "MGGA_C_R2SCAN"
+      ]
+    },
+    "references": [
+      {
+        "doi": "10.1021/acs.jpclett.0c02405",
+        "citation": "J. W. Furness, A. D. Kaplan, J. Ning, J. P. Perdew, and J. Sun., J. Phys. Chem. Lett. 11, 8208-8215 (2020)",
+        "url": "https://doi.org/10.1021/acs.jpclett.0c02405"
+      },
+      {
+        "doi": "10.1021/acs.jpclett.0c03077",
+        "citation": "J. W. Furness, A. D. Kaplan, J. Ning, J. P. Perdew, and J. Sun., J. Phys. Chem. Lett. 11, 9248-9248 (2020)",
+        "url": "https://doi.org/10.1021/acs.jpclett.0c03077"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "MGGA_X_R2SCAN",
+          "MGGA_C_R2SCAN"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Often preferable to original SCAN for numerical stability."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "revpbe",
+    "canonical_name": "revPBE / Zhang-Yang revised PBE exchange",
+    "aliases": [
+      "revPBE",
+      "PBE_R",
+      "Zhang-Yang revised PBE exchange"
+    ],
+    "summary": "The Zhang-Yang revised PBE exchange functional; distinct from RPBE/Hammer-Hansen-Nørskov exchange despite similar informal naming.",
+    "family": "GGA",
+    "rung": "GGA",
+    "kind": "exchange",
+    "ingredients": [
+      "density",
+      "density gradient"
+    ],
+    "libxc": {
+      "primary_code": "GGA_X_PBE_R",
+      "components": [
+        {
+          "code": "GGA_X_PBE_R",
+          "id": 102,
+          "section": "GGA exchange",
+          "description": "Revised PBE from Zhang & Yang"
+        }
+      ]
+    },
+    "parameters": {},
+    "references": [
+      {
+        "doi": "10.1103/PhysRevLett.80.890",
+        "citation": "Y. Zhang and W. Yang., Phys. Rev. Lett. 80, 890 (1998)",
+        "url": "https://doi.org/10.1103/PhysRevLett.80.890"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "GGA_X_PBE_R"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Project XC distinguishes similarly named PBE-family variants by Libxc code and original reference."
+      }
+    ],
+    "notes": [
+      "Do not conflate revPBE/PBE_R with RPBE. This record maps to Libxc GGA_X_PBE_R."
+    ],
+    "curation_status": "seed-curated; ambiguity split after multi-agent scientific review",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "rpbe",
+    "canonical_name": "RPBE / Hammer-Hansen-Nørskov exchange",
+    "aliases": [
+      "RPBE",
+      "Hammer-Hansen-Nørskov exchange"
+    ],
+    "summary": "The Hammer-Hansen-Nørskov revised PBE-style exchange functional, commonly called RPBE and used in surface chemistry contexts.",
+    "family": "GGA",
+    "rung": "GGA",
+    "kind": "exchange",
+    "ingredients": [
+      "density",
+      "density gradient"
+    ],
+    "libxc": {
+      "primary_code": "GGA_X_RPBE",
+      "components": [
+        {
+          "code": "GGA_X_RPBE",
+          "id": 117,
+          "section": "GGA exchange",
+          "description": "Hammer, Hansen, and Norskov"
+        }
+      ]
+    },
+    "parameters": {},
+    "references": [
+      {
+        "doi": "10.1103/PhysRevB.59.7413",
+        "citation": "B. Hammer, L. B. Hansen, and J. K. Nørskov., Phys. Rev. B 59, 7413 (1999)",
+        "url": "https://doi.org/10.1103/PhysRevB.59.7413"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "GGA_X_RPBE"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Project XC distinguishes similarly named PBE-family variants by Libxc code and original reference."
+      }
+    ],
+    "notes": [
+      "Distinct from Zhang-Yang revPBE/PBE_R. This record maps to Libxc GGA_X_RPBE."
+    ],
+    "curation_status": "seed-curated; ambiguity split after multi-agent scientific review",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "scan",
+    "canonical_name": "SCAN",
+    "aliases": [
+      "SCAN",
+      "strongly constrained and appropriately normed"
+    ],
+    "summary": "Nonempirical meta-GGA built to satisfy many exact constraints and appropriate norms.",
+    "family": "meta-GGA",
+    "rung": "meta-GGA",
+    "kind": "exchange-correlation",
+    "ingredients": [
+      "density",
+      "density gradient",
+      "kinetic-energy density"
+    ],
+    "libxc": {
+      "primary_code": "MGGA_X_SCAN",
+      "components": [
+        {
+          "code": "MGGA_X_SCAN",
+          "id": 263,
+          "section": "meta-GGA exchange",
+          "description": "SCAN exchange of Sun, Ruzsinszky, and Perdew"
+        },
+        {
+          "code": "MGGA_C_SCAN",
+          "id": 267,
+          "section": "meta-GGA correlation",
+          "description": "SCAN correlation of Sun, Ruzsinszky, and Perdew"
+        }
+      ]
+    },
+    "parameters": {
+      "components": [
+        "MGGA_X_SCAN",
+        "MGGA_C_SCAN"
+      ]
+    },
+    "references": [
+      {
+        "doi": "10.1103/PhysRevLett.115.036402",
+        "citation": "J. Sun, A. Ruzsinszky, and J. P. Perdew., Phys. Rev. Lett. 115, 036402 (2015)",
+        "url": "https://doi.org/10.1103/PhysRevLett.115.036402"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "MGGA_X_SCAN",
+          "MGGA_C_SCAN"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Meta-GGA grid sensitivity and regularization choices can affect reproducibility."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "wb97m-v",
+    "canonical_name": "ωB97M-V",
+    "aliases": [
+      "wB97M-V",
+      "ωB97M-V"
+    ],
+    "summary": "Range-separated hybrid meta-GGA with nonlocal VV10 correlation.",
+    "family": "range-separated hybrid meta-GGA",
+    "rung": "range-separated hybrid meta-GGA",
+    "kind": "exchange-correlation",
+    "ingredients": [
+      "density",
+      "density gradient",
+      "kinetic-energy density",
+      "range separation",
+      "nonlocal VV10 correlation"
+    ],
+    "libxc": {
+      "primary_code": "HYB_MGGA_XC_WB97M_V",
+      "components": [
+        {
+          "code": "HYB_MGGA_XC_WB97M_V",
+          "id": 531,
+          "section": "hybrid meta-GGA exchange-correlation",
+          "description": "wB97M-V exchange-correlation functional"
+        }
+      ]
+    },
+    "parameters": {
+      "range_separated": true,
+      "nonlocal_correlation": "VV10",
+      "range_separation": {
+        "status": "needs-primary-source-parameter-verification",
+        "note": "Record must be completed with omega and exact-exchange fractions from primary paper or source implementation."
+      },
+      "external_terms": [
+        {
+          "name": "VV10 nonlocal correlation",
+          "status": "needs-implementation-scope-verification",
+          "note": "Nonlocal correlation may require separate evaluator/grid path beyond semilocal Libxc code."
+        }
+      ]
+    },
+    "references": [
+      {
+        "doi": "10.1063/1.4952647",
+        "citation": "N. Mardirossian and M. Head-Gordon., J. Chem. Phys. 144, 214110 (2016)",
+        "url": "https://doi.org/10.1063/1.4952647"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "HYB_MGGA_XC_WB97M_V"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Nonlocal VV10 treatment may live outside the semilocal XC evaluator in some codes."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  },
+  {
+    "slug": "wb97x-d",
+    "canonical_name": "ωB97X-D",
+    "aliases": [
+      "wB97X-D",
+      "ωB97X-D"
+    ],
+    "summary": "Range-separated hybrid with empirical atom-atom dispersion correction.",
+    "family": "range-separated hybrid GGA",
+    "rung": "range-separated hybrid GGA",
+    "kind": "exchange-correlation",
+    "ingredients": [
+      "density",
+      "density gradient",
+      "range separation",
+      "empirical dispersion"
+    ],
+    "libxc": {
+      "primary_code": "HYB_GGA_XC_WB97X_D",
+      "components": [
+        {
+          "code": "HYB_GGA_XC_WB97X_D",
+          "id": 471,
+          "section": "hybrid GGA exchange-correlation",
+          "description": "wB97X-D range-separated functional"
+        }
+      ]
+    },
+    "parameters": {
+      "range_separated": true,
+      "dispersion": "empirical D-style correction",
+      "range_separation": {
+        "status": "needs-primary-source-parameter-verification",
+        "note": "Record must be completed with omega and exact-exchange fractions from primary paper or source implementation."
+      },
+      "external_terms": [
+        {
+          "name": "empirical dispersion",
+          "status": "needs-implementation-scope-verification",
+          "note": "Some programs apply dispersion outside the XC kernel; verify before marking implementation-equivalent."
+        }
+      ]
+    },
+    "references": [
+      {
+        "doi": "10.1039/B810189B",
+        "citation": "J.-D. Chai and M. Head-Gordon., Phys. Chem. Chem. Phys. 10, 6615-6620 (2008)",
+        "url": "https://doi.org/10.1039/B810189B"
+      }
+    ],
+    "program_aliases": [
+      {
+        "program": "Libxc",
+        "program_version": "public functionals page snapshot",
+        "names": [
+          "HYB_GGA_XC_WB97X_D"
+        ],
+        "status": "imported-from-libxc",
+        "evidence": "https://libxc.gitlab.io/functionals/",
+        "caveat": "Libxc code names may represent separate exchange, correlation, and combined XC entries."
+      }
+    ],
+    "notes": [
+      "Dispersion correction is part of the named model but may be implemented outside the XC kernel in some programs."
+    ],
+    "curation_status": "seed-curated; references imported from Libxc snapshot when available",
+    "last_reviewed": "2026-07-10"
+  }
+]

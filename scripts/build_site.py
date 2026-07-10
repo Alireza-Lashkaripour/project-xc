@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+"""Build the static Project XC website into public/."""
+from __future__ import annotations
+import collections
+import json
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+PUBLIC = ROOT / "public"
+SITE = ROOT / "site"
+
+
+def main() -> int:
+    result = subprocess.run([sys.executable, str(ROOT / "scripts" / "validate_data.py")], cwd=ROOT, text=True)
+    if result.returncode != 0:
+        return result.returncode
+    if PUBLIC.exists():
+        shutil.rmtree(PUBLIC)
+    shutil.copytree(SITE, PUBLIC)
+    shutil.copytree(ROOT / "data", PUBLIC / "data")
+    (PUBLIC / "generated").mkdir(parents=True, exist_ok=True)
+
+    with open(ROOT / "data" / "libxc_snapshot.json", encoding="utf-8") as handle:
+        snapshot = json.load(handle)
+    with open(ROOT / "data" / "functionals.seed.json", encoding="utf-8") as handle:
+        seed = json.load(handle)
+    summary = {
+        "libxc_snapshot_count": len(snapshot),
+        "curated_seed_count": len(seed),
+        "entries_with_references": sum(bool(e.get("references")) for e in snapshot),
+        "families": dict(collections.Counter(e.get("family") for e in snapshot)),
+        "rungs": dict(collections.Counter(e.get("rung") for e in snapshot)),
+        "kinds": dict(collections.Counter(e.get("kind") for e in snapshot)),
+    }
+    with open(PUBLIC / "generated" / "summary.json", "w", encoding="utf-8") as handle:
+        json.dump(summary, handle, indent=2, ensure_ascii=False)
+        handle.write("\n")
+    with open(PUBLIC / "manifest.json", "w", encoding="utf-8") as handle:
+        json.dump({"name": "Project XC", "short_name": "Project XC", "start_url": "./", "display": "standalone"}, handle, indent=2)
+        handle.write("\n")
+    print(f"Built Project XC site into {PUBLIC}")
+    print(f"- curated records: {len(seed)}")
+    print(f"- Libxc snapshot records: {len(snapshot)}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,10 @@
+[project]
+name = "project-xc"
+version = "0.1.0"
+description = "Exchange-correlation functional exchange: searchable metadata, references, and validation harness."
+requires-python = ">=3.9"
+authors = [{name = "Alireza Lashkaripour"}]
+license = {text = "MIT"}
+
+[tool.project-xc]
+data_layers = ["data/libxc_snapshot.json", "data/functionals.seed.json", "data/program_aliases.json"]

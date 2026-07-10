@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-07-10T01:06:54Z",
+  "source_url": "https://libxc.gitlab.io/functionals/",
+  "entry_count": 678,
+  "entries_with_references": 666,
+  "reference_count": 782,
+  "families": {
+    "LDA functionals": 71,
+    "hybrid LDA functionals": 4,
+    "GGA functionals": 258,
+    "hybrid GGA functionals": 113,
+    "meta-GGA functionals": 181,
+    "hybrid meta-GGA functionals": 51
+  },
+  "rungs": {
+    "LDA": 71,
+    "hybrid LDA": 4,
+    "GGA": 258,
+    "hybrid GGA": 113,
+    "meta-GGA": 181,
+    "hybrid meta-GGA": 51
+  },
+  "kinds": {
+    "exchange": 257,
+    "correlation": 162,
+    "exchange-correlation": 192,
+    "kinetic": 67
+  }
+}

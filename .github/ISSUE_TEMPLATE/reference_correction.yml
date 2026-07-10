@@ -1,0 +1,23 @@
+name: Reference or DOI correction
+about: Correct a citation, DOI, or reference role
+title: "Reference correction: <functional>"
+labels: [references]
+body:
+  - type: input
+    id: functional
+    attributes:
+      label: Functional or Libxc code
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current incorrect/missing reference
+    validations:
+      required: true
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Proposed correction with evidence
+    validations:
+      required: true

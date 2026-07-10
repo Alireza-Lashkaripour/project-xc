@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project XC — Methodology</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<header class="compact">
+  <nav class="topbar" aria-label="Main navigation">
+    <a class="brand" href="index.html">Project XC</a>
+    <a href="methodology.html">Methodology</a>
+    <a href="https://github.com/Alireza-Lashkaripour/project-xc">GitHub</a>
+  </nav>
+</header>
+<main class="prose">
+  <h1>Methodology and curation workflow</h1>
+  <p>Project XC is built from layered evidence. The imported Libxc layer gives broad discovery coverage. Curated Project XC records add interpretation, aliases, parameters, and caveats.</p>
+  <h2>Validation gates</h2>
+  <ol>
+    <li>Import gate: Libxc parser must produce a large, duplicate-free snapshot with DOI-shaped references.</li>
+    <li>Schema gate: curated records must include names, aliases, rung, kind, ingredients, components, references, notes, and status.</li>
+    <li>Reference gate: every scientific claim should be linked to DOI, program documentation, source code, or a reproducible input/output test.</li>
+    <li>Website gate: the site must build from data only; no hand-edited catalog HTML.</li>
+    <li>Agent-review gate: importer, curation, alias, and QA agents review each other before records become verified.</li>
+  </ol>
+  <h2>Known ambiguity classes</h2>
+  <ul>
+    <li>B3LYP VWN3/VWN5/RPA convention differences.</li>
+    <li>Range-separated functionals where omega and exact-exchange fractions are input-dependent.</li>
+    <li>Dispersion-corrected names where the correction may be outside the XC library.</li>
+    <li>Nonlocal correlation terms such as VV10 that may require separate grids/kernels.</li>
+    <li>Meta-GGA grid sensitivity and kinetic-energy-density conventions.</li>
+  </ul>
+  <p>See the repository docs for the full multi-agent harness.</p>
+</main>
+</body>
+</html>
