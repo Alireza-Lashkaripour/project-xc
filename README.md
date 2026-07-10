@@ -22,7 +22,7 @@ Repository: https://github.com/Alireza-Lashkaripour/project-xc
 - Curated high-impact seed records: 21.
 - Static searchable website with filters, details, reference cards, and compare tray.
 - Textbook-style MO diagram and frontier-orbital guide for active-space preselection.
-- Interactive XYZ geometry-to-qualitative-MO builder with energy levels and orbital-shape overlays.
+- Interactive XYZ geometry-to-qualitative-MO builder with energy levels, degeneracy handling, hard examples, and orbital-shape overlays.
 - Validation harness for schema, DOI shape, duplicates, and curated/Libxc cross-links.
 - Multi-agent workflow harness for scaling the project safely.
 - GitHub Actions for validation and GitHub Pages deployment.

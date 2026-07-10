@@ -33,8 +33,14 @@
       <h2>1. Geometry input</h2>
       <p>Paste XYZ format. The first atom-count/comment lines are optional.</p>
       <textarea id="xyzInput" spellcheck="false" rows="14" aria-label="XYZ geometry input"></textarea>
-      <div class="button-row">
+      <div class="button-row example-row">
         <button type="button" data-example="benzene">Benzene</button>
+        <button type="button" data-example="naphthalene">Naphthalene</button>
+        <button type="button" data-example="pyridine">Pyridine</button>
+        <button type="button" data-example="butadiene">Butadiene</button>
+        <button type="button" data-example="hexatriene">Hexatriene</button>
+        <button type="button" data-example="polyeneDimer">Polyene dimer</button>
+        <button type="button" data-example="cyclobutadiene">Cyclobutadiene</button>
         <button type="button" data-example="ethylene">Ethylene</button>
         <button type="button" data-example="water">Water</button>
         <button type="button" data-example="oxygen">O₂</button>
@@ -79,6 +85,7 @@
         <label>MO state
           <select id="moSelect"></select>
         </label>
+        <div id="degenerateControls" class="degenerate-controls"></div>
         <div id="moleculeView" class="mo-canvas" aria-label="Molecular orbital shape overlay"></div>
       </div>
     </div>
@@ -94,7 +101,9 @@
     <h2>How to interpret the output</h2>
     <ul class="dense-list">
       <li><strong>Energy levels</strong> are relative model eigenvalues. Their ordering is useful; the numeric values are not excitation energies.</li>
-      <li><strong>Blue and orange lobes</strong> are opposite signs/phases of the selected MO coefficient. Size follows coefficient magnitude.</li>
+      <li><strong>Blue and orange paired lobes</strong> are opposite phases of the same local pπ AO. For planar π systems the AO normal is perpendicular to the molecular plane; the 2D drawing uses paired above/below-plane lobes to show that phase.</li>
+      <li><strong>Green/red connection overlays</strong> show how mixed AOs combine: green means same-phase bonding across that contact, red dashed means opposite-phase/antibonding node, and purple dotted means weak through-space π coupling.</li>
+      <li><strong>Degenerate/near-degenerate states are subspaces, not unique orbitals.</strong> If the page reports a group, rotate the displayed component with the slider and include the whole group in active-space decisions.</li>
       <li><strong>HOMO/LUMO labels</strong> use the estimated or overridden electron count. If the count is wrong, set the override.</li>
       <li><strong>For an active space,</strong> look for frontier MOs with large coefficients on chemically changing bonds/fragments, include symmetry partners, and include bonding/antibonding partners together.</li>
       <li><strong>If π-Hückel fails,</strong> the molecule may not have a simple conjugated p network; use the atom-graph sketch only as a rough map and inspect real computed orbitals.</li>
