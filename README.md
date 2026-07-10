@@ -1,10 +1,12 @@
+# EVERYTHING HERE WAS MADE BY AI, AND THIS REPO HAS NO PURPOSE TO EXIST!
+
 # Project XC — Exchange-Correlation Functional Exchange
 
 Project XC is a Basis-Set-Exchange-inspired open catalog for density-functional theory exchange-correlation (XC) functionals.
 
 Goal: make it easy to find a functional, understand what it means, identify aliases across quantum-chemistry programs, cite the right papers, and verify implementation/provenance.
 
-Live-site target: GitHub Pages from this repository.
+Web page: https://alireza-lashkaripour.github.io/project-xc/
 
 Repository: https://github.com/Alireza-Lashkaripour/project-xc
 
