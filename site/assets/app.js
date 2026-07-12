@@ -175,12 +175,12 @@ function renderDetail() {
   const root = document.getElementById('detailRoot'); if (!root) return;
   const params = new URLSearchParams(location.search); const id = params.get('id'); const cards = allCards(); cards.forEach(c => byKey.set(c.key, c));
   const card = byKey.get(id) || cards.find(c => c.title === id || c.subtitle?.includes(id));
-  if (!card) { root.innerHTML = `<h1>Functional not found</h1><p><a href="index.html">Return to catalog</a></p>`; return; }
+  if (!card) { root.innerHTML = `<h1>Functional not found</h1><p><a href="xc-functionals.html">Return to catalog</a></p>`; return; }
   const f = card.formula || {};
   const refs = (card.references || []).map(r => { const href = safeUrl(r.url || (r.doi ? 'https://doi.org/' + r.doi : '#')); return `<li><a href="${escapeHtml(href)}">${escapeHtml(r.citation || r.doi || 'reference')}</a>${r.doi ? ` <span class="code">${escapeHtml(r.doi)}</span>` : ''}</li>`; }).join('') || '<li>No imported reference yet.</li>';
   const compRows = (f.terms || []).map(t => `<tr><th scope="row">${escapeHtml(t.label || t.term_id)}</th><td>${escapeHtml(t.role || '')}</td><td>${escapeHtml((t.component_codes || []).join(', ') || '—')}</td><td>${escapeHtml(pct(t.coefficient))}</td><td>${escapeHtml(t.coefficient?.status || '')}</td></tr>`).join('') || '<tr><td colspan="5">No component terms encoded.</td></tr>';
   const vars = (f.variables || []).map(v => `<span class="badge">${escapeHtml(v.symbol)} · ${escapeHtml(v.role)}</span>`).join(' ');
-  root.innerHTML = `<p><a href="index.html#catalog">← Catalog</a></p>
+  root.innerHTML = `<p><a href="xc-functionals.html#catalog">← Catalog</a></p>
     <section class="detail-title"><p class="kicker">${escapeHtml(card.source)} record</p><h1>${escapeHtml(card.title)}</h1><div class="aliases">${escapeHtml(displayAliases(card, 8) || '')}</div><div class="badges"><span class="badge ${sourceBadge(card)}">${card.source === 'curated' ? 'curated' : 'Libxc import'}</span><span class="badge formula">${escapeHtml(statusLabel(card))}</span><span class="badge">${escapeHtml(card.rung)}</span><span class="badge">${escapeHtml(card.kind)}</span></div></section>
     <section class="definition"><h2>Scientific definition</h2><div class="formula-line detail-formula">${formulaHtml(f.latex, 'display')}</div><p>${escapeHtml(f.plain || card.summary || '')}</p><div class="definition-grid">${amountRows(f).map(([k,v,s]) => `<div class="science-cell"><span>${escapeHtml(k)}</span><strong>${escapeHtml(v)}</strong>${s ? `<small>${escapeHtml(s)}</small>` : ''}</div>`).join('')}</div><div class="variable-list">${vars}</div></section>
     <table class="meta-table"><caption>Formula components</caption><thead><tr><th scope="col">Term</th><th scope="col">Role</th><th scope="col">Libxc code</th><th scope="col">Amount</th><th scope="col">Status</th></tr></thead><tbody>${compRows}</tbody></table>

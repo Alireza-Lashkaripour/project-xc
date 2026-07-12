@@ -3,86 +3,38 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Project XC — Functional Exchange</title>
-  <meta name="description" content="Search exchange-correlation functionals by formula, exact exchange, aliases, references, and Libxc code.">
+  <title>Project XC</title>
+  <meta name="description" content="Choose the Project XC functional catalog or the molecular-orbital diagram builder.">
   <link rel="stylesheet" href="assets/styles.css">
-  <script>
-    window.MathJax = {
-      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
-      svg: { fontCache: 'global' },
-      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
-    };
-  </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
-<body>
-<a class="skip-link" href="#catalog">Skip to catalog</a>
-<header class="site-header">
+<body class="landing-body">
+<a class="skip-link" href="#choices">Skip to choices</a>
+<header class="site-header landing-header">
   <nav class="nav" aria-label="Main navigation">
-    <a class="brand" href="index.html">Project XC</a>
-    <a href="#catalog">Catalog</a>
-    <a href="methodology.html">Methodology</a>
-    <a href="mo-diagrams.html">MO guide</a>
-    <a href="mo-builder.html">MO builder</a>
-    <a href="https://github.com/Alireza-Lashkaripour/project-xc">GitHub</a>
+    <span class="brand">Project XC</span>
   </nav>
-  <section class="intro">
-    <p class="kicker">Exchange-correlation functional exchange</p>
-    <h1>Definitions, formulas, exact-exchange amounts, aliases, and citations.</h1>
-    <p class="lead">A professional, data-driven catalog for DFT functionals. Curated records show explicit decomposition; imported Libxc records show honest generic formula scaffolds until fully audited.</p>
-    <form class="hero-search" role="search" onsubmit="return false;">
-      <label for="search">Search Project XC</label>
-      <input id="search" type="search" placeholder="B3LYP, PBE0, exact exchange 25%, ωB97, Libxc code, DOI…" autocomplete="off">
-    </form>
-    <dl id="stats" class="stats" aria-label="Data coverage"></dl>
-  </section>
 </header>
-<main>
-  <section class="notice" aria-label="Scientific caveat">
-    <strong>Scientific caveat.</strong> XC names can hide program-specific variants, exact-exchange fractions, range-separation parameters, and external dispersion/nonlocal terms. Project XC labels every formula as curated, generic, unknown, or needing audit.
-  </section>
-
-  <section class="notice guide-callout" aria-label="Molecular orbital guide">
-    <strong>New:</strong> Need active-space intuition? Read the <a href="mo-diagrams.html">MO diagram and frontier-orbital guide</a>, or paste an XYZ geometry into the <a href="mo-builder.html">interactive MO builder</a> to sketch a qualitative frontier-orbital diagram.
-  </section>
-
-  <section id="catalog" class="catalog">
-    <div class="section-title">
-      <div>
-        <p class="kicker">Catalog</p>
-        <h2>Functional records</h2>
-      </div>
-      <div id="resultsMeta" class="results-meta" aria-live="polite"></div>
+<main id="choices" class="choice-main">
+  <section class="choice-hero" aria-label="Choose a Project XC workspace">
+    <p class="kicker">Project XC</p>
+    <h1>Choose what you want to work with.</h1>
+    <p class="lead">The start page is intentionally small: pick the functional catalog or the molecular-orbital diagram tool.</p>
+    <div class="choice-grid">
+      <a class="choice-card" href="xc-functionals.html">
+        <span class="choice-label">XC Functional</span>
+        <strong>Search DFT functionals</strong>
+        <span>Definitions, formulas, exact-exchange amounts, aliases, Libxc records, and citations.</span>
+      </a>
+      <a class="choice-card" href="mo-builder.html">
+        <span class="choice-label">MO Diagrams</span>
+        <strong>Draw qualitative MO diagrams</strong>
+        <span>Paste XYZ geometry, build a qualitative MO diagram, inspect degeneracies, and view MO shapes on the molecule.</span>
+      </a>
     </div>
-
-    <div class="filters" aria-label="Catalog filters">
-      <label>View
-        <select id="sourceFilter"><option value="curated">Curated only</option><option value="">All records (curated first)</option><option value="libxc">Libxc snapshot only</option></select>
-      </label>
-      <label>Rung
-        <select id="rungFilter"><option value="">All rungs</option></select>
-      </label>
-      <label>Kind
-        <select id="kindFilter"><option value="">All kinds</option></select>
-      </label>
-      <label>Exact exchange
-        <select id="exactFilter"><option value="">Any</option><option value="zero">0%</option><option value="known">known nonzero</option><option value="range">range-separated</option><option value="unknown">unknown / not curated</option><option value="na">not applicable</option></select>
-      </label>
-      <button id="resetFilters" class="secondary" type="button">Reset</button>
-    </div>
-
-    <div class="compare-panel" id="compareTray" hidden>
-      <div><strong>Compare</strong> <span id="compareNames"></span></div>
-      <button id="clearCompare" type="button">Clear</button>
-      <div id="compareTable"></div>
-    </div>
-
-    <div id="cards" class="records"></div>
   </section>
 </main>
-<footer class="footer">
-  <p>Project XC is open research software. Always cite the original functional papers and verify program-specific definitions before publication-grade use.</p>
+<footer class="footer landing-footer">
+  <p>Project XC is a qualitative research/teaching site. Verify program-specific XC definitions and real active spaces before publication use.</p>
 </footer>
-<script src="assets/app.js"></script>
 </body>
 </html>
