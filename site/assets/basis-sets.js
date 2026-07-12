@@ -116,5 +116,9 @@
     if (fill) fill.style.width = `${100/7}%`;
     document.querySelector('.lesson-nav button[data-step="1"]')?.classList.add('active');
   }
-  document.addEventListener('DOMContentLoaded', init);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
