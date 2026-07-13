@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project XC Academy — Mathematical Language</title>
+  <meta name="description" content="Ten interactive levels teaching the complex vectors, inner products, basis changes, matrices, eigensystems, tensor products, Fourier pairs, and variational language used in quantum chemistry.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      svg: { fontCache: 'global' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="academy-body">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header compact">
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="index.html">Project XC</a>
+    <a href="quantum-chemistry.html">Academy</a>
+    <a href="xc-functionals.html">XC Functionals</a>
+    <a href="mo-builder.html">MO Diagrams</a>
+    <a href="basis-sets.html">Basis Sets</a>
+  </nav>
+</header>
+<main id="main" class="prose guide-page academy-chapter-page">
+  <section class="academy-chapter-hero">
+    <div>
+      <p class="kicker">Academy A2 · Mathematical Language</p>
+      <h1>Make the mathematics of quantum chemistry visible</h1>
+      <p class="lead">Move between complex amplitudes, vectors, functions, and matrices without losing the physical state. Ten levels and four deterministic laboratories build the exact language behind orbital coefficients, Hermitian operators, eigensolvers, product spaces, Fourier pairs, and variational methods.</p>
+      <div class="module-snapshot" aria-label="Mathematical Language learning modes">
+        <div class="snapshot-card"><span>Starter</span><strong>See vectors, phase, and projections</strong></div>
+        <div class="snapshot-card"><span>Practitioner</span><strong>Change bases and diagnose eigenvectors</strong></div>
+        <div class="snapshot-card"><span>Professor</span><strong>Track conventions, domains, and variation</strong></div>
+      </div>
+      <div class="quest-actions">
+        <a class="button" href="#level-1">Begin Level 1</a>
+        <a class="button secondary" href="qc-foundations.html">Prerequisite: Quantum Foundations</a>
+        <a class="button secondary" href="quantum-chemistry.html">Academy roadmap</a>
+      </div>
+    </div>
+    <div class="quest-hud" aria-label="Chapter status">
+      <div><span>Levels</span><strong>10</strong></div>
+      <div><span>Interactive labs</span><strong>4</strong></div>
+      <div><span>Depth</span><strong>3 modes</strong></div>
+      <div><span>Goal</span><strong>Representation fluency</strong></div>
+    </div>
+  </section>
+
+  <section class="notice guide-callout">
+    <strong>Interactive-model boundary:</strong> the laboratories use exact two-dimensional linear algebra or an analytic Gaussian Fourier pair. They are not molecular calculations. Production quantum chemistry uses much larger real or complex matrix problems, often in nonorthogonal bases, with iterative algorithms and explicit numerical-error controls.
+  </section>
+
+  <section class="card-panel chapter-progress-panel" aria-label="Mathematical Language progress">
+    <div class="section-title">
+      <div>
+        <p class="kicker">Chapter map</p>
+        <h2>Ten missions from complex numbers to variation</h2>
+      </div>
+      <strong id="chapterProgressText" class="results-meta">0 / 10 missions</strong>
+    </div>
+    <div class="xp-panel">
+      <div><strong>Browser-local progress</strong><span>A completion button records navigation progress, not mathematical certification.</span></div>
+      <button id="resetChapterProgress" type="button" class="secondary">Reset this chapter</button>
+    </div>
+    <div class="basis-progress-bar" aria-hidden="true"><span id="chapterProgressFill"></span></div>
+    <div id="chapterBadgeShelf" class="badge-shelf" aria-live="polite"></div>
+    <div class="button-row academy-lesson-nav" aria-label="Jump to a Mathematical Language level">
+      <button type="button" data-step="1">1 · Complex</button>
+      <button type="button" data-step="2">2 · Vectors</button>
+      <button type="button" data-step="3">3 · Projection</button>
+      <button type="button" data-step="4">4 · Basis</button>
+      <button type="button" data-step="5">5 · Matrices</button>
+      <button type="button" data-step="6">6 · Eigen</button>
+      <button type="button" data-step="7">7 · Maps</button>
+      <button type="button" data-step="8">8 · Products</button>
+      <button type="button" data-step="9">9 · Fourier</button>
+      <button type="button" data-step="10">10 · Variation</button>
+    </div>
+  </section>
+
+  <section id="level-1" class="academy-lesson card-panel" data-step="1">
+    <p class="kicker">Level 1 · Complex amplitudes</p>
+    <h2>A complex number stores magnitude and phase in one scalar</h2>
+    <p>Quantum amplitudes are generally complex. Cartesian form separates real and imaginary components; polar form separates magnitude and phase:</p>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        z&amp;=x+iy=re^{i\phi},\\
+         &amp;=r(\cos\phi+i\sin\phi),\\
+        z^*&amp;=x-iy,\\
+        |z|^2&amp;=z^*z=x^2+y^2.
+      \end{aligned}
+    \]</div>
+    <div class="quest-grid three">
+      <article class="quest-card"><span class="quest-icon">Re</span><h3>Real component</h3><p>The horizontal coordinate in the complex plane; it is not automatically an observable.</p></article>
+      <article class="quest-card"><span class="quest-icon">Im</span><h3>Imaginary component</h3><p>The coefficient of \(i\), where \(i^2=-1\); “imaginary” does not mean fictitious.</p></article>
+      <article class="quest-card"><span class="quest-icon">φ</span><h3>Phase</h3><p>An angle defined modulo \(2\pi\). Relative phase changes interference, while one global phase does not.</p></article>
+    </div>
+    <div class="misconception-card"><strong>Misconception warning:</strong> complex phase is not a hidden spatial direction or a second probability. Probabilities come from squared magnitudes; phase controls how amplitudes combine.</div>
+    <details class="professor-note"><summary>Professor mode · fields and anti-linearity</summary><p>A complex vector space allows complex scalar multiplication. Its inner product must conjugate one argument; without conjugation, a nonzero vector could fail to have a positive norm. Project XC uses the physics convention: conjugate-linear in the bra and linear in the ket.</p></details>
+    <button class="academy-complete" data-mission="complex-amplitudes" data-badge="Complex-plane navigator" type="button">Complete Level 1</button>
+  </section>
+
+  <section id="level-2" class="academy-lesson card-panel" data-step="2">
+    <p class="kicker">Level 2 · State coordinates</p>
+    <h2>A vector is the object; its coordinate list depends on the basis</h2>
+    <p>Choose an orthonormal basis \(\{|e_i\rangle\}\). Then a state can be represented by coefficients \(c_i\), but the abstract state is not identical to any one list of coefficients:</p>
+    <div class="formula-line">\[
+      \begin{aligned}
+        |\psi\rangle&amp;=\sum_i c_i|e_i\rangle,\\
+        c_i&amp;=\langle e_i|\psi\rangle,\\
+        \|\psi\|&amp;=\sqrt{\langle\psi|\psi\rangle}.
+      \end{aligned}
+    \]</div>
+    <div class="table-scroll" role="region" aria-label="Mathematical Language notation table" tabindex="0">
+      <table class="meta-table wide-table">
+        <thead><tr><th>Symbol</th><th>Name</th><th>Role in quantum chemistry</th><th>Convention check</th></tr></thead>
+        <tbody>
+          <tr><th>\(z^*\), \(A^\dagger\)</th><td>Complex conjugate; conjugate transpose</td><td>Inner products, Hermitian matrices, orbital transformations</td><td>\(A^\dagger=(A^*)^T\)</td></tr>
+          <tr><th>\(\langle u|v\rangle\)</th><td>Inner product</td><td>Overlaps, norms, projections, matrix elements</td><td>Linear in \(|v\rangle\) here</td></tr>
+          <tr><th>\(\|v\|\)</th><td>Norm</td><td>Normalization and residual size</td><td>\(\sqrt{\langle v|v\rangle}\)</td></tr>
+          <tr><th>\(A_{ij}\)</th><td>Matrix element</td><td>Operator represented in a chosen basis</td><td>\(A_{ij}=\langle e_i|\hat A|e_j\rangle\)</td></tr>
+          <tr><th>\(\otimes\)</th><td>Tensor product</td><td>Combines one-particle or subsystem spaces</td><td>Dimensions multiply</td></tr>
+          <tr><th>\(\delta\)</th><td>Variation</td><td>Change of a functional under an admissible trial change</td><td>Not the same as an ordinary finite difference</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-scroll-hint">On a narrow screen, swipe the notation table horizontally.</p>
+    <div class="misconception-card"><strong>Coordinate list ≠ physical vector:</strong> changing an orthonormal basis changes the coefficients while preserving the represented state, norm, and basis-independent predictions.</div>
+    <button class="academy-complete" data-mission="vector-coordinates" data-badge="Vector translator" type="button">Complete Level 2</button>
+  </section>
+
+  <section id="level-3" class="academy-lesson card-panel" data-step="3">
+    <p class="kicker">Level 3 · Interactive lab 1</p>
+    <h2>Projection separates the component you can represent from the residual you cannot</h2>
+    <p>For a normalized direction \(|u\rangle\), the rank-one projector is \(P_u=|u\rangle\langle u|\). It splits any vector into parallel and orthogonal pieces:</p>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        |v\rangle&amp;=P_u|v\rangle\\
+        &amp;\quad +(I-P_u)|v\rangle,\\
+        P_u|v\rangle&amp;=|u\rangle\langle u|v\rangle,\\
+        \langle u|(I-P_u)|v\rangle&amp;=0.
+      \end{aligned}
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Vector x component<input id="projectionVX" type="number" min="-5" max="5" step="0.1" value="3"></label>
+        <label>Vector y component<input id="projectionVY" type="number" min="-5" max="5" step="0.1" value="2"></label>
+        <label>Normalized basis direction angle<input id="projectionAngle" type="range" min="0" max="180" step="1" value="25"></label>
+        <div id="projectionReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="projectionPlot" aria-label="Vector, projection, and orthogonal residual plot"></div>
+        <figcaption>The laboratory is real and two-dimensional so the geometry is visible. The same projector formula works in complex spaces when the bra includes complex conjugation.</figcaption>
+      </figure>
+    </div>
+    <details class="professor-note"><summary>Derivation path · why the residual is orthogonal</summary><p>Let \(|r\rangle=|v\rangle-|u\rangle\langle u|v\rangle\). Then \(\langle u|r\rangle=\langle u|v\rangle-\langle u|u\rangle\langle u|v\rangle=0\) because \(\langle u|u\rangle=1\). Therefore \(\|v\|^2=|\langle u|v\rangle|^2+\|r\|^2\).</p></details>
+    <button class="academy-complete" data-mission="projection" data-badge="Projection decomposer" type="button">Complete Level 3</button>
+  </section>
+
+  <section id="level-4" class="academy-lesson card-panel" data-step="4">
+    <p class="kicker">Level 4 · Interactive lab 2</p>
+    <h2>A basis rotation changes coordinates without changing the vector</h2>
+    <p>Let the columns of \(R(\theta)\) be a new orthonormal basis written in the old coordinates. A passive basis change uses \(R^T\) to obtain the new coordinates and \(R\) to reconstruct the original vector:</p>
+    <div class="formula-line">\[
+      \begin{aligned}
+        R(\theta)&amp;=\begin{pmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{pmatrix},\\
+        R^TR&amp;=I,\\
+        c'&amp;=R^Tc,\\
+        c&amp;=Rc'.
+      \end{aligned}
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Fixed vector x component<input id="rotationVX" type="number" min="-5" max="5" step="0.1" value="2.4"></label>
+        <label>Fixed vector y component<input id="rotationVY" type="number" min="-5" max="5" step="0.1" value="1.2"></label>
+        <label>Basis rotation angle<input id="rotationAngle" type="range" min="0" max="360" step="1" value="35"></label>
+        <div id="rotationReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="rotationPlot" aria-label="Fixed vector shown in a rotating orthonormal basis"></div>
+        <figcaption>The blue physical vector stays fixed while the violet and orange coordinate axes rotate. Its coordinates change, but its length and reconstruction do not.</figcaption>
+      </figure>
+    </div>
+    <div class="misconception-card"><strong>Convention warning:</strong> an active rotation of the vector and a passive rotation of its coordinate basis use closely related matrices but are not the same statement. Name what is held fixed before writing the transformation.</div>
+    <details class="professor-note"><summary>Professor mode · orbital rotations</summary><p>For complex orthonormal bases, replace \(R^T\) by \(U^\dagger\). Occupied–occupied or virtual–virtual orbital rotations can change individual orbital pictures while leaving a single-determinant subspace or invariant energy unchanged; occupied–virtual rotations generally change the determinant.</p></details>
+    <button class="academy-complete" data-mission="basis-rotation" data-badge="Basis rotation pilot" type="button">Complete Level 4</button>
+  </section>
+
+  <section id="level-5" class="academy-lesson card-panel" data-step="5">
+    <p class="kicker">Level 5 · Linear maps</p>
+    <h2>A matrix is an operator representation after a basis has been chosen</h2>
+    <p>For \(|\psi\rangle=\sum_j c_j|e_j\rangle\), the matrix elements of \(\hat A\) are \(A_{ij}=\langle e_i|\hat A|e_j\rangle\). If \(|\eta\rangle=\hat A|\psi\rangle\), matrix multiplication gives the output coefficients \(d_i\):</p>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        d_i&amp;=\sum_j A_{ij}c_j,\\
+        |\eta\rangle&amp;=\hat A|\psi\rangle,\\
+        [AB]_{ij}&amp;=\sum_k A_{ik}B_{kj}.
+      \end{aligned}
+    \]</div>
+    <div class="matrix-flow" aria-label="Operator representation flow">
+      <div>abstract state \(|\psi\rangle\)</div><span>→</span><div>choose basis</div><span>→</span><div>coordinate vector \(c\)</div><span>→</span><div>output coordinates \(d=Ac\)</div>
+    </div>
+    <div class="quest-grid three">
+      <article class="quest-card"><span class="quest-icon">S</span><h3>Overlap matrix</h3><p>In a nonorthogonal atomic-orbital basis, \(S_{\mu\nu}=\langle\chi_\mu|\chi_\nu\rangle\) and the metric is not the identity.</p></article>
+      <article class="quest-card"><span class="quest-icon">F</span><h3>Fock/Kohn–Sham matrix</h3><p>A basis representation of an effective one-electron operator that depends on the current density or orbitals.</p></article>
+      <article class="quest-card"><span class="quest-icon">P</span><h3>Density matrix</h3><p>Encodes one-particle occupancy information in a chosen basis; its elements are not individually basis invariant.</p></article>
+    </div>
+    <div class="misconception-card"><strong>Matrix ≠ operator:</strong> the same operator has different matrices in different bases. Conversely, writing down numbers without defining the basis, ordering, metric, and units does not define a physical operator.</div>
+    <button class="academy-complete" data-mission="matrix-representation" data-badge="Matrix map reader" type="button">Complete Level 5</button>
+  </section>
+
+  <section id="level-6" class="academy-lesson card-panel" data-step="6">
+    <p class="kicker">Level 6 · Interactive lab 3 and diagnostic game</p>
+    <h2>An eigenvector is a direction a linear map does not turn</h2>
+    <p>For \(Av=\lambda v\), the map may stretch, shrink, or reverse the direction but cannot rotate it away from itself. For any normalized trial direction, the residual diagnoses the failure:</p>
+    <div class="formula-line">\[
+      \begin{aligned}
+        \lambda(v)&amp;=v^TAv,\\
+        r(v)&amp;=Av-\lambda(v)v,\\
+        \|r\|=0&amp;\Longleftrightarrow v\text{ is an eigenvector}.
+      \end{aligned}
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Matrix preset
+          <select id="matrixPreset">
+            <option value="coupled">Coupled symmetric matrix</option>
+            <option value="diagonal">Diagonal reference</option>
+            <option value="near-degenerate">Near-degenerate pair</option>
+            <option value="custom">Custom values</option>
+          </select>
+        </label>
+        <label>Diagonal \(a\)<input id="matrixA" type="number" min="-6" max="6" step="0.05" value="2"></label>
+        <label>Coupling \(b\)<input id="matrixB" type="number" min="-4" max="4" step="0.05" value="1"></label>
+        <label>Diagonal \(d\)<input id="matrixD" type="number" min="-6" max="6" step="0.05" value="2"></label>
+        <label>Candidate direction angle<input id="eigenAngle" type="range" min="0" max="180" step="0.25" value="18"></label>
+        <button id="alignEigenvector" type="button" class="secondary">Reveal nearest eigenvector</button>
+        <div id="eigenReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="eigenPlot" aria-label="Candidate vector, transformed vector, Rayleigh direction, eigenvalues, and residual"></div>
+        <figcaption>Turn the blue candidate until orange \(Av\) lies on the same line. The residual is a reproducible numerical diagnostic—not a visual guess.</figcaption>
+      </figure>
+    </div>
+    <details class="professor-note"><summary>Professor mode · degeneracy and generalized eigenproblems</summary><p>A degenerate eigenspace does not select unique eigenvectors: any orthonormal rotation inside it remains valid. Atomic-orbital calculations commonly solve \(FC=SC\varepsilon\), a generalized Hermitian eigenproblem with overlap metric \(S\), rather than the standard \(Av=\lambda v\) game shown here.</p></details>
+    <button class="academy-complete" data-mission="eigensystem" data-badge="Residual diagnostician" type="button">Complete Level 6</button>
+  </section>
+
+  <section id="level-7" class="academy-lesson card-panel" data-step="7">
+    <p class="kicker">Level 7 · Structure-preserving maps</p>
+    <h2>Hermitian operators give real spectra; unitary maps preserve inner products</h2>
+    <div class="definition-grid">
+      <div class="science-cell"><span>Hermitian</span><strong>\(A^\dagger=A\)</strong><small>Finite-dimensional eigenvalues are real; eigenvectors for distinct eigenvalues are orthogonal.</small></div>
+      <div class="science-cell"><span>Unitary</span><strong>\(U^\dagger U=UU^\dagger=I\)</strong><small>Norms and inner products are preserved.</small></div>
+      <div class="science-cell"><span>Projector</span><strong>\(P^2=P=P^\dagger\)</strong><small>An orthogonal projector keeps one subspace and removes its orthogonal complement.</small></div>
+      <div class="science-cell"><span>Commutator</span><strong>\([A,B]=AB-BA\)</strong><small>Commuting Hermitian matrices can be simultaneously diagonalized under the finite-dimensional conditions used here.</small></div>
+    </div>
+    <div class="formula-line">\[
+      \begin{aligned}
+        \langle Uu|Uv\rangle&amp;=\langle u|U^\dagger U|v\rangle=\langle u|v\rangle,\\
+        \langle v|A|v\rangle^*&amp;=\langle v|A^\dagger|v\rangle=\langle v|A|v\rangle.
+      \end{aligned}
+    \]</div>
+    <div class="misconception-card"><strong>Vocabulary warning:</strong> Hermitian does not mean “all entries are real,” and unitary does not mean “each entry has magnitude one.” A complex Hermitian matrix may contain conjugate off-diagonal pairs; unitarity constrains complete rows and columns.</div>
+    <details class="professor-note"><summary>Professor mode · domains matter</summary><p>For finite matrices, Hermitian and self-adjoint coincide in ordinary practice. Unbounded operators in infinite-dimensional Hilbert spaces require a specified domain; symmetry of a formal differential expression alone is not enough to establish self-adjointness or a complete spectral resolution.</p></details>
+    <button class="academy-complete" data-mission="hermitian-unitary" data-badge="Structure keeper" type="button">Complete Level 7</button>
+  </section>
+
+  <section id="level-8" class="academy-lesson card-panel" data-step="8">
+    <p class="kicker">Level 8 · Composite spaces</p>
+    <h2>Tensor products combine degrees of freedom—and create nonfactorizable states</h2>
+    <p>If \(\mathcal H_A\) has basis \(|i\rangle\) and \(\mathcal H_B\) has basis \(|j\rangle\), the product space has basis \(|i\rangle\otimes|j\rangle\) and multiplied dimension:</p>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        \dim(\mathcal H_A\otimes\mathcal H_B)&amp;=\dim(\mathcal H_A)\\
+          &amp;\quad\times\dim(\mathcal H_B),\\
+        |\Psi\rangle&amp;=\sum_{ij}C_{ij}|i\rangle\otimes|j\rangle.
+      \end{aligned}
+    \]</div>
+    <div class="quest-grid three">
+      <article class="quest-card"><span class="quest-icon">2×2</span><h3>Two two-state spaces</h3><p>The product basis has four members: \(|00\rangle,|01\rangle,|10\rangle,|11\rangle\).</p></article>
+      <article class="quest-card"><span class="quest-icon">C</span><h3>Coefficient array</h3><p>If \(C_{ij}=a_i b_j\), the state factors. A general coefficient array need not have rank one.</p></article>
+      <article class="quest-card"><span class="quest-icon">N</span><h3>Many orbitals</h3><p>Product-space growth explains why exact many-electron representations become combinatorially expensive.</p></article>
+    </div>
+    <div class="misconception-card"><strong>Tensor product ≠ antisymmetry:</strong> combining one-electron spaces creates the labeled product space. Fermionic antisymmetry is an additional physical constraint imposed by antisymmetrized products, determinants, or Fock-space operators.</div>
+    <details class="professor-note"><summary>Professor mode · entanglement and orbital representations</summary><p>A state is entangled relative to a chosen subsystem factorization when it cannot be written as one product vector. This notion should not be casually equated with “electron correlation”: correlation measures and orbital partitions depend on the state, observable, and decomposition being used.</p></details>
+    <button class="academy-complete" data-mission="tensor-products" data-badge="Product-space builder" type="button">Complete Level 8</button>
+  </section>
+
+  <section id="level-9" class="academy-lesson card-panel" data-step="9">
+    <p class="kicker">Level 9 · Interactive lab 4</p>
+    <h2>Fourier transformation trades localization in one representation for width in its partner</h2>
+    <p>This chapter uses a symmetric angular-wave-number convention. Naming the convention is essential because software and textbooks distribute factors of \(2\pi\) differently:</p>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        \phi(k)&amp;=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{-ikx}\psi(x)\,dx,\\
+        \psi(x)&amp;=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{ikx}\phi(k)\,dk.
+      \end{aligned}
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Position-density standard deviation \(\sigma_x\)<input id="fourierSigmaX" type="range" min="0.2" max="2.5" step="0.02" value="0.8"></label>
+        <label>Carrier wave number \(k_0\)<input id="fourierK0" type="range" min="-4" max="4" step="0.1" value="1.2"></label>
+        <label>Target Fourier width \(\sigma_k\)<input id="fourierTarget" type="range" min="0.2" max="2.2" step="0.05" value="0.75"></label>
+        <button id="matchFourierTarget" type="button" class="secondary">Reveal exact dual width</button>
+        <div id="fourierReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="fourierPlot" aria-label="Gaussian position and Fourier-space density plots"></div>
+        <figcaption>Both panels are normalized analytic Gaussian densities. Their horizontal axes and vertical scales are independent; the plotted width is a standard deviation, not a decorative envelope parameter.</figcaption>
+      </figure>
+    </div>
+    <div class="misconception-card"><strong>Convention warning:</strong> \(k\) is angular wave number. Momentum is \(p=\hbar k\), so \(\sigma_x\sigma_k=1/2\) becomes \(\sigma_x\sigma_p=\hbar/2\). Using cycles per length would move factors of \(2\pi\).</div>
+    <details class="professor-note"><summary>Professor mode · what the Gaussian proves</summary><p>The displayed Gaussian exactly saturates the transform-width bound under the stated convention. It illustrates the mechanism but does not imply every state is Gaussian or minimum uncertainty. Finite grids add sampling, truncation, aliasing, and discrete-transform normalization choices.</p></details>
+    <button class="academy-complete" data-mission="fourier-pairs" data-badge="Fourier duality solver" type="button">Complete Level 9</button>
+  </section>
+
+  <section id="level-10" class="academy-lesson card-panel" data-step="10">
+    <p class="kicker">Level 10 · Variational bridge and chapter boss</p>
+    <h2>A functional maps a whole trial object to a number</h2>
+    <p>The Rayleigh quotient assigns a scalar to every nonzero coefficient vector. Requiring stationarity under admissible coefficient variations leads to an eigenvalue equation:</p>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        R[c]&amp;=\frac{c^\dagger Hc}{c^\dagger c},\\
+        \mathcal L[c]&amp;=c^\dagger Hc-\lambda(c^\dagger c-1),\\
+        \delta\mathcal L[c]&amp;=0,\\
+        &amp;\Longrightarrow Hc=\lambda c.
+      \end{aligned}
+    \]</div>
+    <details class="professor-note" open><summary>Derivation path · vary bra and ket consistently</summary><p>For a finite Hermitian matrix, treat the complex coefficients and their conjugates as independent variation variables. Variation with respect to \(c^*\) gives \(Hc-\lambda c=0\); variation with respect to \(c\) gives its conjugate. The lowest Rayleigh quotient is the lowest eigenvalue. Higher eigenvectors are stationary points too, so “stationary” does not automatically mean “minimum.”</p></details>
+    <div class="quest-grid three" aria-label="Mathematical Language chapter challenge">
+      <article class="quest-card"><span class="quest-icon">1</span><h3>Name the space and metric</h3><p>Are coefficients real or complex? Is the basis orthonormal, or does an overlap matrix define the metric?</p></article>
+      <article class="quest-card"><span class="quest-icon">2</span><h3>Name the representation</h3><p>Which basis, ordering, units, Fourier convention, and active/passive transformation convention produced the numbers?</p></article>
+      <article class="quest-card"><span class="quest-icon">3</span><h3>Demand a diagnostic</h3><p>Check norm, orthogonality, reconstruction, invariants, and residuals instead of trusting an attractive picture.</p></article>
+    </div>
+    <div class="notice quest-finale"><strong>Chapter boss:</strong> before accepting an eigenvalue or orbital coefficient table, identify the vector space, inner product, basis, operator class, normalization, residual, degeneracy policy, and model boundary. If one is missing, the result is not yet auditable.</div>
+    <div class="misconception-card"><strong>Variational upper bound has conditions:</strong> it applies to an admissible normalized trial state for a suitable Hermitian/self-adjoint Hamiltonian bounded from below. A truncated model can converge within its own space while retaining basis or model error.</div>
+    <div class="quest-actions">
+      <a class="button secondary" href="qc-foundations.html">Revisit Quantum Foundations</a>
+      <a class="button secondary" href="basis-sets.html">Apply the language in Basis Quest</a>
+      <a class="button secondary" href="mo-diagrams.html">Apply it to MO representations</a>
+      <a class="button secondary" href="quantum-chemistry.html">Return to the roadmap</a>
+    </div>
+    <button class="academy-complete" data-mission="variational-bridge" data-badge="Variational bridge" type="button">Complete Level 10</button>
+  </section>
+
+  <section class="lesson-card academy-source-card" aria-labelledby="sources-title">
+    <p class="kicker">Verified source spine</p>
+    <h2 id="sources-title">Where to continue and verify</h2>
+    <div class="table-scroll" role="region" aria-label="Mathematical Language source table" tabindex="0">
+      <table class="meta-table wide-table">
+        <thead><tr><th>Source</th><th>Role in this chapter</th><th>Link</th></tr></thead>
+        <tbody>
+          <tr><th>MIT OCW 18.06SC Linear Algebra</th><td>Vectors, inner products, projections, bases, matrices, and eigensystems.</td><td><a href="https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/" target="_blank" rel="noopener">18.06SC course</a></td></tr>
+          <tr><th>MIT OCW 18.04 Complex Variables</th><td>Complex numbers, Euler form, phase, and conjugation.</td><td><a href="https://ocw.mit.edu/courses/18-04-complex-variables-with-applications-spring-2018/" target="_blank" rel="noopener">18.04 course</a></td></tr>
+          <tr><th>NIST DLMF §1.14</th><td>Authoritative transform definitions and convention context.</td><td><a href="https://dlmf.nist.gov/1.14" target="_blank" rel="noopener">Integral transforms</a></td></tr>
+          <tr><th>MIT OCW 8.04 Quantum Physics I</th><td>Quantum vector, operator, eigenvalue, and Fourier applications.</td><td><a href="https://ocw.mit.edu/courses/8-04-quantum-physics-i-spring-2016/" target="_blank" rel="noopener">8.04 course</a></td></tr>
+          <tr><th>MIT OCW 5.61 Physical Chemistry</th><td>Chemistry-facing matrix mechanics and variational continuation.</td><td><a href="https://ocw.mit.edu/courses/5-61-physical-chemistry-fall-2017/" target="_blank" rel="noopener">5.61 course</a></td></tr>
+          <tr><th>IUPAC Gold Book</th><td>Chemistry terminology anchor for wavefunction representation.</td><td><a href="https://goldbook.iupac.org/terms/view/W06686" target="_blank" rel="noopener">Wavefunction entry</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-scroll-hint">On a narrow screen, swipe the source table horizontally.</p>
+    <p class="help-text">The repository source ledger records access checks, exact inner-product and Fourier conventions, model boundaries, and the deterministic test contract.</p>
+  </section>
+</main>
+<footer class="footer"><p>Project XC Academy · Mathematical Language. Mission progress is stored only in this browser and is not a certification of mastery.</p></footer>
+<script src="assets/academy-core.js"></script>
+<script src="assets/qc-math-language.js"></script>
+</body>
+</html>

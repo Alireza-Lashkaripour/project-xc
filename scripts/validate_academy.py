@@ -21,10 +21,45 @@ STATUS_VALUES = {"live", "in-development", "existing-tool", "planned"}
 PROGRESS_KINDS = {"academy-missions", "legacy-badges"}
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 ROUTE_RE = re.compile(r"^[a-z0-9][a-z0-9-]*\.html$")
+LIVE_CHAPTER_RULES = {
+    "qc-foundations": {
+        "script": "qc-foundations.js",
+        "test": "test_academy_models.js",
+        "source": "qc-foundations.md",
+        "boundary": "Toy-model boundary",
+        "challenge": "Final rule",
+    },
+    "qc-math-language": {
+        "script": "qc-math-language.js",
+        "test": "test_qc_math_models.js",
+        "source": "qc-math-language.md",
+        "boundary": "Interactive-model boundary",
+        "challenge": "Chapter boss",
+    },
+}
 
 
 def add(errors: list[str], message: str) -> None:
     errors.append(message)
+
+
+def responsive_table_counts(text: str) -> tuple[int, int, int]:
+    """Count wide tables, accessible scroll regions, and narrow-screen hints."""
+    wide_tables = len(re.findall(r'<table\b(?=[^>]*class="[^"]*\bwide-table\b[^"]*")[^>]*>', text))
+    scroll_regions = len(re.findall(
+        r'<div\b(?=[^>]*class="[^"]*\btable-scroll\b[^"]*")(?=[^>]*role="region")(?=[^>]*tabindex="0")[^>]*>',
+        text,
+    ))
+    scroll_hints = len(re.findall(r'<p\b(?=[^>]*class="[^"]*\btable-scroll-hint\b[^"]*")[^>]*>', text))
+    return wide_tables, scroll_regions, scroll_hints
+
+
+def safe_external_link_count(text: str) -> int:
+    """Count new-tab links that protect window.opener, regardless of attribute order."""
+    return len(re.findall(
+        r'<a\b(?=[^>]*target="_blank")(?=[^>]*rel="[^"]*\bnoopener\b[^"]*")[^>]*>',
+        text,
+    ))
 
 
 def load_json(path: Path, errors: list[str]) -> dict | None:
@@ -202,10 +237,8 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
         PLAN,
         WORKFLOW,
         SITE / "quantum-chemistry.html",
-        SITE / "qc-foundations.html",
         SITE / "assets" / "academy-core.js",
         SITE / "assets" / "academy-gateway.js",
-        SITE / "assets" / "qc-foundations.js",
     ]
     for path in required:
         if not path.exists():
@@ -218,6 +251,9 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
             add(errors, "homepage does not link to quantum-chemistry.html")
         if "Quantum Chemistry Academy" not in text:
             add(errors, "homepage does not name Quantum Chemistry Academy")
+        for chapter_id, chapter in chapters.items():
+            if chapter.get("status") == "live" and f'href="{chapter.get("route")}"' not in text:
+                add(errors, f"homepage does not link directly to live chapter {chapter_id}")
 
     for name in ("basis-sets.html", "mo-diagrams.html", "mo-builder.html", "xc-functionals.html", "functional.html", "methodology.html"):
         page = SITE / name
@@ -236,28 +272,68 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
             if needle not in text:
                 add(errors, f"Academy gateway missing contract text: {needle}")
 
-    foundations = SITE / "qc-foundations.html"
-    if foundations.exists():
-        text = foundations.read_text(encoding="utf-8")
-        class_token = r"(?<![A-Za-z0-9_-]){}(?![A-Za-z0-9_-])"
+    live_chapters = {chapter_id for chapter_id, chapter in chapters.items() if chapter.get("status") == "live"}
+    missing_rules = live_chapters - LIVE_CHAPTER_RULES.keys()
+    for chapter_id in sorted(missing_rules):
+        add(errors, f"live chapter {chapter_id} has no validator rule")
+
+    workflow_text = WORKFLOW.read_text(encoding="utf-8") if WORKFLOW.exists() else ""
+    class_token = r"(?<![A-Za-z0-9_-]){}(?![A-Za-z0-9_-])"
+    for chapter_id, rule in LIVE_CHAPTER_RULES.items():
+        chapter = chapters.get(chapter_id)
+        if not chapter or chapter.get("status") != "live":
+            continue
+        page = SITE / chapter["route"]
+        script = SITE / "assets" / rule["script"]
+        test = ROOT / "scripts" / rule["test"]
+        source = ROOT / "docs" / "academy" / "sources" / rule["source"]
+        for path in (page, script, test, source):
+            if not path.exists():
+                add(errors, f"{chapter_id} missing required file: {path.relative_to(ROOT)}")
+        if f"node scripts/{rule['test']}" not in workflow_text:
+            add(errors, f"GitHub validation workflow does not run {rule['test']}")
+        if not page.exists():
+            continue
+
+        text = page.read_text(encoding="utf-8")
         level_count = len(re.findall(r'class="[^"]*' + class_token.format("academy-lesson") + r'[^"]*"', text))
-        mission_count = len(re.findall(r'class="[^"]*' + class_token.format("academy-complete") + r'[^"]*"', text))
-        expected = chapters.get("qc-foundations", {})
-        if expected:
-            progress_contract = expected.get("progress")
-            mission_total = progress_contract.get("total", expected.get("levels")) if isinstance(progress_contract, dict) else expected.get("levels")
-            if level_count != expected.get("levels"):
-                add(errors, f"qc-foundations level count {level_count} != metadata {expected.get('levels')}")
-            if mission_count != mission_total:
-                add(errors, f"qc-foundations mission count {mission_count} != metadata progress total {mission_total}")
+        mission_tags = re.findall(r'<button\b[^>]*class="[^"]*' + class_token.format("academy-complete") + r'[^"]*"[^>]*>', text)
+        mission_count = len(mission_tags)
+        mission_ids = [match.group(1) for tag in mission_tags if (match := re.search(r'\bdata-mission="([^"]+)"', tag))]
+        game_count = len(re.findall(r'class="[^"]*' + class_token.format("lab-grid") + r'[^"]*"', text))
+        html_ids = re.findall(r'\bid="([^"]+)"', text)
+        duplicate_ids = sorted({item for item in html_ids if html_ids.count(item) > 1})
+        wide_table_count, scroll_region_count, scroll_hint_count = responsive_table_counts(text)
+        progress_contract = chapter.get("progress")
+        mission_total = progress_contract.get("total", chapter.get("levels")) if isinstance(progress_contract, dict) else chapter.get("levels")
+        if level_count != chapter.get("levels"):
+            add(errors, f"{chapter_id} level count {level_count} != metadata {chapter.get('levels')}")
+        if mission_count != mission_total:
+            add(errors, f"{chapter_id} mission count {mission_count} != metadata progress total {mission_total}")
+        if game_count != chapter.get("games"):
+            add(errors, f"{chapter_id} game count {game_count} != metadata {chapter.get('games')}")
+        if len(mission_ids) != mission_count:
+            add(errors, f"{chapter_id} completion controls must declare data-mission")
+        elif len(mission_ids) != len(set(mission_ids)):
+            add(errors, f"{chapter_id} mission ids must be unique")
+        if duplicate_ids:
+            add(errors, f"{chapter_id} has duplicate HTML ids: {', '.join(duplicate_ids)}")
+        if scroll_region_count < wide_table_count:
+            add(errors, f"{chapter_id} has {wide_table_count} wide tables but only {scroll_region_count} accessible scroll regions")
+        if scroll_hint_count < wide_table_count:
+            add(errors, f"{chapter_id} has {wide_table_count} wide tables but only {scroll_hint_count} narrow-screen scroll hints")
+        if safe_external_link_count(text) < 3:
+            add(errors, f"{chapter_id} must expose at least three safe external source links")
         for needle in (
             'assets/academy-core.js',
-            'assets/qc-foundations.js',
-            "Toy-model boundary",
+            f'assets/{rule["script"]}',
+            rule["boundary"],
             "Professor mode",
+            rule["challenge"],
+            "Verified source spine",
         ):
             if needle not in text:
-                add(errors, f"Quantum Foundations missing contract text: {needle}")
+                add(errors, f"{chapter_id} missing contract text: {needle}")
 
     basis = SITE / "basis-sets.html"
     basis_expected = chapters.get("qc-basis-sets", {})
@@ -268,9 +344,7 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
         expected_total = basis_progress["total"]
         if badge_count != expected_total:
             add(errors, f"Basis Quest badge count {badge_count} != metadata progress total {expected_total}")
-        wide_table_count = len(re.findall(r'<table\s+class="[^"]*\bwide-table\b[^"]*"', text))
-        scroll_region_count = len(re.findall(r'<div\s+class="table-scroll"[^>]*role="region"[^>]*tabindex="0"', text))
-        scroll_hint_count = len(re.findall(r'<p\s+class="table-scroll-hint"', text))
+        wide_table_count, scroll_region_count, scroll_hint_count = responsive_table_counts(text)
         if scroll_region_count < wide_table_count:
             add(errors, f"Basis Quest has {wide_table_count} wide tables but only {scroll_region_count} accessible scroll regions")
         if scroll_hint_count < wide_table_count:
@@ -302,7 +376,7 @@ def main() -> int:
     print("Project XC Academy validation OK")
     print(f"- Tracks: {track_count}")
     print(f"- Chapters: {chapter_count}")
-    print("- Homepage, gateway, shared progress, and Quantum Foundations contracts: OK")
+    print("- Homepage, gateway, shared progress, and live chapter contracts: OK")
     return 0
 
 

@@ -36,10 +36,15 @@
           "order": 2,
           "title": "Mathematical Language",
           "route": "qc-math-language.html",
-          "status": "planned",
+          "status": "live",
           "level": "Starter to graduate",
           "levels": 10,
           "games": 4,
+          "progress": {
+            "kind": "academy-missions",
+            "total": 10,
+            "label": "Academy missions"
+          },
           "prerequisites": ["qc-foundations"],
           "summary": "Master complex vectors, inner products, matrices, basis changes, tensor products, Fourier pairs, and variational calculus through visual problems.",
           "outcomes": [
