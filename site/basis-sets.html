@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Project XC — Basis Set Academy</title>
-  <meta name="description" content="A step-by-step, game-like PhD-level guide to quantum-chemistry basis sets with math, figures, and interactive challenges.">
+  <title>Project XC — Basis Set Quest</title>
+  <meta name="description" content="A game-like PhD-level basis-set academy with interactive plots, figures, quests, and Basis Set Exchange links.">
   <link rel="stylesheet" href="assets/styles.css">
   <script>
     window.MathJax = {
@@ -26,139 +26,269 @@
     <a href="mo-diagrams.html">MO theory guide</a>
   </nav>
 </header>
-<main id="main" class="prose guide-page basis-page">
-  <p class="kicker">Basis Set Academy</p>
-  <h1>Learn basis sets step by step — from shapes to PhD-level choices</h1>
-  <p class="lead">A basis set is the finite language used to write molecular orbitals. This page teaches that language as a game: build primitive Gaussians, contract them, add angular momentum, choose diffuse/polarization functions, and diagnose when a calculation needs a better basis.</p>
+<main id="main" class="prose guide-page basis-page basis-quest-page">
+  <section class="basis-quest-hero">
+    <div>
+      <p class="kicker">Basis Set Quest</p>
+      <h1>Play your way from atomic shapes to PhD-level basis-set strategy</h1>
+      <p class="lead">Basis sets are the playable “shape inventory” of quantum chemistry. Unlock levels, tune Gaussian primitives, forge contractions, fight BSSE, extrapolate to CBS, and learn why production calculations need balanced basis choices.</p>
+      <div class="quest-actions">
+        <a class="button" href="#level-2">Start shape lab</a>
+        <a class="button secondary" href="https://www.basissetexchange.org/" target="_blank" rel="noopener">Open Basis Set Exchange</a>
+      </div>
+    </div>
+    <div class="quest-hud" aria-label="Basis quest status">
+      <div><span>Levels</span><strong>12</strong></div>
+      <div><span>Games</span><strong>6</strong></div>
+      <div><span>Plots</span><strong>8+</strong></div>
+      <div><span>Goal</span><strong>CBS sense</strong></div>
+    </div>
+  </section>
 
   <section class="notice guide-callout">
-    <strong>Connected database:</strong> use <a href="https://www.basissetexchange.org/" target="_blank" rel="noopener">Basis Set Exchange</a> for the full library of published basis sets and program formats. This Project XC page explains how to think; Basis Set Exchange supplies the production data.
+    <strong>Connected database:</strong> this page teaches the concepts and strategy; <a href="https://www.basissetexchange.org/" target="_blank" rel="noopener">Basis Set Exchange</a> provides the production basis-set definitions, program formats, references, and API.
   </section>
 
   <section class="basis-progress card-panel" aria-label="Lesson map">
     <div class="section-title">
       <div>
-        <p class="kicker">Game map</p>
-        <h2>Seven levels of basis-set thinking</h2>
+        <p class="kicker">Quest map</p>
+        <h2>Twelve levels, six playable missions</h2>
       </div>
-      <div id="basisProgressText" class="results-meta">Level 1 / 7</div>
+      <div id="basisProgressText" class="results-meta">Level 1 / 12</div>
+    </div>
+    <div class="xp-panel">
+      <div><strong id="xpText">XP 0 / 1200</strong><span>Complete mission buttons to fill the bar.</span></div>
+      <button id="resetBasisQuest" type="button" class="secondary">Reset quest</button>
     </div>
     <div class="basis-progress-bar" aria-hidden="true"><span id="basisProgressFill"></span></div>
+    <div id="badgeShelf" class="badge-shelf" aria-live="polite"></div>
     <div class="button-row lesson-nav" aria-label="Jump to lesson level">
-      <button type="button" data-step="1">1 · Span</button>
-      <button type="button" data-step="2">2 · Shapes</button>
-      <button type="button" data-step="3">3 · Contractions</button>
-      <button type="button" data-step="4">4 · Matrices</button>
-      <button type="button" data-step="5">5 · Families</button>
-      <button type="button" data-step="6">6 · Pathologies</button>
-      <button type="button" data-step="7">7 · Strategy</button>
+      <button type="button" data-step="1">1 · Space</button>
+      <button type="button" data-step="2">2 · Shape lab</button>
+      <button type="button" data-step="3">3 · AO arena</button>
+      <button type="button" data-step="4">4 · Forge</button>
+      <button type="button" data-step="5">5 · Matrix</button>
+      <button type="button" data-step="6">6 · Families</button>
+      <button type="button" data-step="7">7 · Kit builder</button>
+      <button type="button" data-step="8">8 · BSSE duel</button>
+      <button type="button" data-step="9">9 · Alarm</button>
+      <button type="button" data-step="10">10 · CBS lab</button>
+      <button type="button" data-step="11">11 · Cost boss</button>
+      <button type="button" data-step="12">12 · Strategy</button>
     </div>
   </section>
 
   <section id="level-1" class="lesson-step card-panel" data-step="1">
-    <p class="kicker">Level 1</p>
-    <h2>What is a basis?</h2>
-    <p>In molecular electronic-structure theory, every molecular orbital is expanded in atom-centered functions:</p>
+    <p class="kicker">Level 1 · Language of orbitals</p>
+    <h2>What is a basis set?</h2>
+    <p>Every molecular orbital is written as a finite expansion in atom-centered basis functions:</p>
     <div class="formula-line detail-formula">\[ \psi_i(\mathbf r)=\sum_{\mu=1}^{K} C_{\mu i}\,\chi_\mu(\mathbf r). \]</div>
-    <p>The exact orbital lives in an infinite-dimensional function space. The basis set chooses a finite subspace. Increasing the basis usually lowers the variational energy, but it also increases cost and can create numerical problems.</p>
-    <div class="guide-grid three">
-      <article class="guide-card"><h3>Basis function \(\chi_\mu\)</h3><p>A local atom-centered shape: s, p, d, f, diffuse tail, tight core, etc.</p></article>
-      <article class="guide-card"><h3>Coefficient \(C_{\mu i}\)</h3><p>The MO recipe: how much of every local shape appears in orbital \(i\).</p></article>
-      <article class="guide-card"><h3>Basis size \(K\)</h3><p>The number of functions; larger \(K\) gives more flexibility and higher computational cost.</p></article>
+    <p>The basis set chooses the finite subspace. A better basis gives orbitals more ways to move, polarize, stretch, and correlate — but every extra function increases cost and can make the overlap matrix harder to invert.</p>
+    <div class="quest-grid three">
+      <article class="quest-card"><span class="quest-icon">🧩</span><h3>Basis function</h3><p>A local shape: s, p, d, f, tight core, diffuse tail, auxiliary fit, etc.</p></article>
+      <article class="quest-card"><span class="quest-icon">🎚️</span><h3>Coefficient</h3><p>The MO recipe: coefficients mix local shapes into bonding, antibonding, lone-pair, Rydberg, and diffuse states.</p></article>
+      <article class="quest-card"><span class="quest-icon">⚖️</span><h3>Tradeoff</h3><p>More flexibility lowers variational error but increases cost, BSSE risk, and linear-dependence risk.</p></article>
     </div>
+    <button class="quest-complete" data-badge="Orbital alphabet" data-xp="80" type="button">Complete Level 1</button>
   </section>
 
   <section id="level-2" class="lesson-step card-panel" data-step="2">
-    <p class="kicker">Level 2 · Mini-game</p>
-    <h2>Shape lab: build a radial Gaussian basis function</h2>
-    <p>Most molecular programs use Gaussian-type orbitals because Gaussian products make multicenter integrals tractable. A primitive Gaussian is roughly</p>
+    <p class="kicker">Level 2 · Playable plot</p>
+    <h2>Gaussian shape lab: sculpt a basis function</h2>
+    <p>Most molecular programs use Gaussian-type orbitals because Gaussian products make multicenter integrals tractable:</p>
     <div class="formula-line">\[ g_{\ell m}(\mathbf r-\mathbf A)=N\,r_A^\ell Y_{\ell m}(\widehat{\mathbf r_A}) e^{-\alpha r_A^2}. \]</div>
     <div class="lab-grid">
       <div class="basis-lab card-panel">
-        <label>Primitive 1 exponent \(\alpha_1\)<input id="alpha1" type="range" min="0.15" max="4" step="0.05" value="0.75"></label>
-        <label>Primitive 2 exponent \(\alpha_2\)<input id="alpha2" type="range" min="0.15" max="4" step="0.05" value="2.4"></label>
-        <label>Primitive 2 coefficient \(d_2\)<input id="coef2" type="range" min="-1" max="1" step="0.05" value="0.45"></label>
-        <label>Angular momentum \(\ell\)<select id="angularL"><option value="0">s-like radial shape</option><option value="1">p-like radial envelope</option><option value="2">d-like radial envelope</option></select></label>
+        <label>Primitive 1 exponent \(\alpha_1\)<input id="alpha1" type="range" min="0.08" max="5" step="0.02" value="0.75"></label>
+        <label>Primitive 2 exponent \(\alpha_2\)<input id="alpha2" type="range" min="0.08" max="5" step="0.02" value="2.4"></label>
+        <label>Primitive 2 coefficient \(d_2\)<input id="coef2" type="range" min="-1.2" max="1.2" step="0.02" value="0.45"></label>
+        <label>Angular momentum \(\ell\)<select id="angularL"><option value="0">s-like radial shape</option><option value="1">p-like radial envelope</option><option value="2">d-like radial envelope</option><option value="3">f-like radial envelope</option></select></label>
         <div id="labReadout" class="orbital-info"></div>
       </div>
-      <figure class="basis-figure">
+      <figure class="basis-figure plot-card">
         <div id="gaussianPlot" class="basis-svg" aria-label="Gaussian radial function plot"></div>
-        <figcaption>Move the sliders: tight functions describe the cusp/core region; diffuse functions describe tails, anions, Rydberg states, and weak interactions.</figcaption>
+        <figcaption>Goal: make one compact/core primitive and one diffuse/tail primitive. Watch overlap and radial diversity.</figcaption>
       </figure>
     </div>
+    <button class="quest-complete" data-badge="Gaussian sculptor" data-xp="100" type="button">Complete shape lab</button>
   </section>
 
   <section id="level-3" class="lesson-step card-panel" data-step="3">
-    <p class="kicker">Level 3</p>
-    <h2>Primitive, contracted, split-valence, polarization, diffuse</h2>
-    <p>A practical basis function is often a contraction — a fixed linear combination of primitives:</p>
-    <div class="formula-line">\[ \chi_\mu(\mathbf r)=\sum_p d_{p\mu} g_p(\mathbf r). \]</div>
-    <figure class="basis-figure">
-      <svg viewBox="0 0 860 250" role="img" aria-label="Primitive to contracted Gaussian figure">
-        <defs><linearGradient id="contractGrad" x1="0" x2="1"><stop offset="0" stop-color="#174ea6"/><stop offset="1" stop-color="#6d28d9"/></linearGradient></defs>
-        <text x="20" y="35" class="axis-label">three primitives</text>
-        <path d="M40 190 C95 20 145 20 200 190" fill="none" stroke="#93c5fd" stroke-width="5"/>
-        <path d="M115 190 C150 45 190 45 225 190" fill="none" stroke="#60a5fa" stroke-width="5"/>
-        <path d="M180 190 C205 75 235 75 260 190" fill="none" stroke="#2563eb" stroke-width="5"/>
-        <text x="315" y="120" font-size="42" fill="#667085">→</text>
-        <text x="390" y="35" class="axis-label">one contracted basis function</text>
-        <path d="M400 190 C455 35 530 35 600 190" fill="none" stroke="url(#contractGrad)" stroke-width="8" stroke-linecap="round"/>
-        <text x="625" y="80" class="axis-label">then add freedom:</text>
-        <text x="625" y="115" class="axis-label">split ζ = radial sizes</text>
-        <text x="625" y="145" class="axis-label">polarization = angular shape</text>
-        <text x="625" y="175" class="axis-label">diffuse = long tails</text>
-      </svg>
-      <figcaption>Contractions reduce cost; split-valence/polarization/diffuse layers add back chemical flexibility where it matters.</figcaption>
-    </figure>
-    <div class="guide-grid three">
-      <article class="guide-card"><h3>Minimal</h3><p>One basis function per occupied atomic orbital. Fast, but chemically cramped.</p></article>
-      <article class="guide-card"><h3>Split-valence</h3><p>Two or more radial valence functions, e.g. double-ζ or triple-ζ flexibility.</p></article>
-      <article class="guide-card"><h3>Polarized/diffuse</h3><p>Angular flexibility and long-range density: essential for bonding distortions, anions, Rydberg states, response properties.</p></article>
+    <p class="kicker">Level 3 · AO arena</p>
+    <h2>See how s, p, d, and f functions look</h2>
+    <p>Angular momentum is not decoration: it is how density bends into bonds, lone pairs, backbonding, and correlation holes.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>AO shape<select id="aoShape"><option value="s">s sphere</option><option value="p">p dumbbell</option><option value="d">d clover</option><option value="f">f higher-angular function</option></select></label>
+        <label>Orientation<select id="aoOrientation"><option value="z">z / π direction</option><option value="x">x / σ direction</option><option value="diag">diagonal mixed direction</option></select></label>
+        <label>Amplitude<input id="aoAmplitude" type="range" min="0.5" max="1.5" step="0.05" value="1"></label>
+        <div id="aoReadout" class="orbital-info"></div>
+      </div>
+      <figure class="basis-figure plot-card">
+        <div id="aoShapePlot" class="basis-svg" aria-label="Atomic orbital angular shape plot"></div>
+        <figcaption>Blue/orange lobes show opposite signs. Higher angular momentum gives orbitals extra nodal and directional freedom.</figcaption>
+      </figure>
     </div>
+    <button class="quest-complete" data-badge="AO cartographer" data-xp="90" type="button">Complete AO arena</button>
   </section>
 
   <section id="level-4" class="lesson-step card-panel" data-step="4">
-    <p class="kicker">Level 4</p>
-    <h2>How basis sets enter HF/DFT calculations</h2>
-    <p>After choosing \(\{\chi_\mu\}\), the continuum Schrödinger/Kohn–Sham problem becomes matrix algebra. Because atom-centered functions overlap, the eigenproblem is generalized:</p>
-    <div class="formula-line detail-formula">\[ \mathbf F\mathbf C=\mathbf S\mathbf C\boldsymbol\varepsilon, \quad S_{\mu\nu}=\langle\chi_\mu|\chi_\nu\rangle. \]</div>
-    <div class="matrix-flow" aria-label="Basis set calculation flow">
-      <div>basis functions</div><span>→</span><div>overlap \(S\), kinetic \(T\), nuclear \(V\)</div><span>→</span><div>two-electron integrals / grids</div><span>→</span><div>SCF orbitals and density</div>
+    <p class="kicker">Level 4 · Contraction forge</p>
+    <h2>Forge primitives into a contracted basis</h2>
+    <p>A practical basis function is often a contraction:</p>
+    <div class="formula-line">\[ \chi_\mu(\mathbf r)=\sum_p d_{p\mu} g_p(\mathbf r). \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Number of primitives<input id="primitiveCount" type="range" min="1" max="8" step="1" value="4"></label>
+        <label>Split-valence shells<input id="splitValence" type="range" min="1" max="4" step="1" value="2"></label>
+        <label>Contraction tightness<input id="contractTightness" type="range" min="0" max="1" step="0.05" value="0.55"></label>
+        <div id="forgeReadout" class="orbital-info"></div>
+      </div>
+      <figure class="basis-figure plot-card">
+        <div id="contractionPlot" class="basis-svg" aria-label="Primitive to contracted basis plot"></div>
+        <figcaption>Contractions reduce integral cost; split valence adds chemically useful radial flexibility.</figcaption>
+      </figure>
     </div>
-    <p>At PhD level, basis choice is not decoration: it controls variational flexibility, basis-set superposition error, integral conditioning, density response, and extrapolation to the complete-basis-set limit.</p>
+    <button class="quest-complete" data-badge="Contraction smith" data-xp="95" type="button">Complete forge</button>
   </section>
 
   <section id="level-5" class="lesson-step card-panel" data-step="5">
-    <p class="kicker">Level 5 · Field guide</p>
-    <h2>Families you will actually use</h2>
-    <table class="meta-table wide-table">
-      <thead><tr><th>Family</th><th>Meaning</th><th>Use it when</th><th>Watch out</th></tr></thead>
-      <tbody>
-        <tr><th>STO-nG, 3-21G, 6-31G*</th><td>Pople-style historical contracted bases.</td><td>Teaching, legacy comparisons, quick qualitative checks.</td><td>Uneven modern performance; naming is not systematic across elements.</td></tr>
-        <tr><th>cc-pVXZ, aug-cc-pVXZ</th><td>Dunning correlation-consistent cardinal series.</td><td>Wavefunction correlation, CBS extrapolation, benchmark thermochemistry/spectroscopy.</td><td>Cost grows quickly; use aug for anions/Rydberg/noncovalent tails.</td></tr>
-        <tr><th>def2-SVP/TZVP/QZVP</th><td>Ahlrichs/Weigend segmented contracted family.</td><td>Routine DFT, broad periodic-table coverage, ECP-compatible workflows.</td><td>Add diffuse functions when the density is spatially extended.</td></tr>
-        <tr><th>ANO, uncontracted, core-valence</th><td>Flexible atomic natural orbital or core-correlation sets.</td><td>High-accuracy spectroscopy, transition metals, core-sensitive properties.</td><td>Need matching relativistic/core-correlation treatment.</td></tr>
-        <tr><th>RI/JKfit/CABS</th><td>Auxiliary basis sets, not orbital bases.</td><td>Density fitting, RI-MP2, local correlation, F12 methods.</td><td>Must match the orbital basis/method family.</td></tr>
-      </tbody>
-    </table>
-    <p><a class="button" href="https://www.basissetexchange.org/" target="_blank" rel="noopener">Open Basis Set Exchange</a> <a class="button secondary" href="https://www.basissetexchange.org/api/" target="_blank" rel="noopener">BSE API/docs</a></p>
+    <p class="kicker">Level 5 · Matrix dungeon</p>
+    <h2>Basis sets become matrices</h2>
+    <p>Because basis functions overlap, the orbital problem becomes a generalized eigenvalue problem:</p>
+    <div class="formula-line detail-formula">\[ \mathbf F\mathbf C=\mathbf S\mathbf C\boldsymbol\varepsilon, \quad S_{\mu\nu}=\langle\chi_\mu|\chi_\nu\rangle. \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Neighbor overlap<input id="overlapStrength" type="range" min="0.05" max="0.98" step="0.01" value="0.35"></label>
+        <label>Diffuse crowding<input id="diffuseCrowding" type="range" min="0" max="1" step="0.01" value="0.2"></label>
+        <div id="conditionReadout" class="orbital-info"></div>
+      </div>
+      <figure class="basis-figure plot-card">
+        <div id="overlapHeatmap" class="basis-svg" aria-label="Overlap matrix heatmap"></div>
+        <figcaption>Bright off-diagonal blocks mean functions overlap strongly; near-duplicate diffuse functions can make \(S\) nearly singular.</figcaption>
+      </figure>
+    </div>
+    <button class="quest-complete" data-badge="Matrix runner" data-xp="110" type="button">Complete matrix dungeon</button>
   </section>
 
   <section id="level-6" class="lesson-step card-panel" data-step="6">
-    <p class="kicker">Level 6</p>
-    <h2>Pathologies: how basis sets fail</h2>
-    <div class="guide-grid two">
-      <article class="guide-card"><h3>Linear dependence</h3><p>Two functions become almost the same; \(S\) has tiny eigenvalues, SCF becomes unstable, and diffuse-heavy sets can fail.</p></article>
-      <article class="guide-card"><h3>BSSE</h3><p>In dimers, monomer A borrows basis functions from monomer B, artificially stabilizing the complex. Use counterpoise or larger balanced bases.</p></article>
-      <article class="guide-card"><h3>Wrong tail</h3><p>No diffuse functions means bad electron affinities, Rydberg excitations, dipoles/polarizabilities, and weak interactions.</p></article>
-      <article class="guide-card"><h3>Wrong angular flexibility</h3><p>No polarization functions means bonds cannot bend electron density into chemically realistic shapes.</p></article>
-    </div>
+    <p class="kicker">Level 6 · Field atlas</p>
+    <h2>Basis-set families you will actually use</h2>
+    <table class="meta-table wide-table">
+      <thead><tr><th>Family</th><th>What it gives you</th><th>Good missions</th><th>Danger zone</th></tr></thead>
+      <tbody>
+        <tr><th>STO-nG, 3-21G, 6-31G*</th><td>Historical Pople-style contracted bases.</td><td>Teaching, legacy comparisons, quick sketches.</td><td>Not systematically balanced across the periodic table.</td></tr>
+        <tr><th>cc-pVXZ / aug-cc-pVXZ</th><td>Dunning correlation-consistent cardinal ladders.</td><td>Post-HF correlation, CBS extrapolation, benchmarks.</td><td>Expensive; diffuse augmentation matters for tails.</td></tr>
+        <tr><th>def2-SVP/TZVP/QZVP</th><td>Modern segmented contracted bases with broad coverage.</td><td>Routine DFT and broad periodic-table workflows.</td><td>Add diffuse functions for anions/Rydberg/weak binding.</td></tr>
+        <tr><th>ANO, core-valence, uncontracted</th><td>Flexible high-accuracy or core-sensitive bases.</td><td>Spectroscopy, transition metals, core properties.</td><td>Need matching relativistic/core-correlation treatment.</td></tr>
+        <tr><th>RI/JKfit/CABS</th><td>Auxiliary fitting bases, not orbital bases.</td><td>Density fitting, RI-MP2, F12, local correlation.</td><td>Must match orbital basis and method family.</td></tr>
+      </tbody>
+    </table>
+    <p><a class="button" href="https://www.basissetexchange.org/" target="_blank" rel="noopener">Open Basis Set Exchange</a> <a class="button secondary" href="https://www.basissetexchange.org/api/" target="_blank" rel="noopener">BSE API/docs</a></p>
+    <button class="quest-complete" data-badge="Family scout" data-xp="80" type="button">Complete family atlas</button>
   </section>
 
   <section id="level-7" class="lesson-step card-panel" data-step="7">
-    <p class="kicker">Level 7 · Decision game</p>
-    <h2>Choose the basis set strategy</h2>
-    <p>Select a scenario and a basis strategy. The score explains what the basis is missing.</p>
+    <p class="kicker">Level 7 · Kit builder</p>
+    <h2>Build a basis kit and watch the property radar</h2>
+    <p>Pick ingredients. The radar shows qualitative readiness for geometry, anions, Rydberg states, correlation, and weak interactions.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>ζ quality<select id="zetaQuality"><option value="1">single/minimal ζ</option><option value="2">double-ζ</option><option value="3" selected>triple-ζ</option><option value="4">quadruple-ζ</option></select></label>
+        <label><input id="hasPolarization" type="checkbox" checked> Add polarization functions</label>
+        <label><input id="hasDiffuse" type="checkbox"> Add diffuse functions</label>
+        <label><input id="hasCore" type="checkbox"> Add core-valence flexibility</label>
+        <label><input id="hasAux" type="checkbox" checked> Use matched RI/JKfit auxiliary basis</label>
+        <div id="kitReadout" class="orbital-info"></div>
+      </div>
+      <figure class="basis-figure plot-card">
+        <div id="basisRadar" class="basis-svg" aria-label="Basis readiness radar plot"></div>
+        <figcaption>Balanced bases are property-specific: no single ingredient wins every mission.</figcaption>
+      </figure>
+    </div>
+    <button class="quest-complete" data-badge="Basis loadout designer" data-xp="120" type="button">Complete kit builder</button>
+  </section>
+
+  <section id="level-8" class="lesson-step card-panel" data-step="8">
+    <p class="kicker">Level 8 · BSSE duel</p>
+    <h2>Fight basis-set superposition error</h2>
+    <p>In a dimer, monomer A can borrow monomer B's functions. That extra flexibility artificially stabilizes the complex.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Dimer distance<input id="dimerDistance" type="range" min="2.4" max="7.0" step="0.1" value="3.2"></label>
+        <label>Basis size<select id="bsseBasis"><option value="small">small double-ζ</option><option value="medium" selected>triple-ζ</option><option value="large">large augmented QZ</option></select></label>
+        <label><input id="counterpoise" type="checkbox"> Apply counterpoise correction</label>
+        <div id="bsseReadout" class="orbital-info"></div>
+      </div>
+      <figure class="basis-figure plot-card">
+        <div id="bssePlot" class="basis-svg" aria-label="BSSE interaction curve plot"></div>
+        <figcaption>Orange shows artificial overbinding. Counterpoise estimates the borrowing effect.</figcaption>
+      </figure>
+    </div>
+    <button class="quest-complete" data-badge="BSSE duelist" data-xp="120" type="button">Complete BSSE duel</button>
+  </section>
+
+  <section id="level-9" class="lesson-step card-panel" data-step="9">
+    <p class="kicker">Level 9 · Linear-dependence alarm</p>
+    <h2>Too many diffuse functions can break the game</h2>
+    <p>Diffuse functions are essential for tails, but if two functions become nearly identical, the smallest eigenvalue of \(S\) collapses.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Number of diffuse shells<input id="diffuseShells" type="range" min="0" max="6" step="1" value="2"></label>
+        <label>Exponent spacing<input id="exponentSpacing" type="range" min="1.15" max="3.2" step="0.05" value="2.0"></label>
+        <div id="alarmReadout" class="orbital-info"></div>
+      </div>
+      <figure class="basis-figure plot-card">
+        <div id="alarmGauge" class="basis-svg" aria-label="Linear dependence gauge"></div>
+        <figcaption>Large spacing separates functions; very tight spacing with many diffuse shells is dangerous.</figcaption>
+      </figure>
+    </div>
+    <button class="quest-complete" data-badge="Conditioning guardian" data-xp="100" type="button">Complete alarm</button>
+  </section>
+
+  <section id="level-10" class="lesson-step card-panel" data-step="10">
+    <p class="kicker">Level 10 · CBS extrapolation lab</p>
+    <h2>Estimate the complete-basis-set limit</h2>
+    <p>Correlation-consistent ladders let you fit convergence patterns, often using inverse powers of the cardinal number \(X\):</p>
+    <div class="formula-line">\[ E_X \approx E_\mathrm{CBS}+A X^{-3}. \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>True CBS energy offset<input id="cbsOffset" type="range" min="-1.4" max="-0.2" step="0.02" value="-0.82"></label>
+        <label>Convergence hardness<input id="cbsHardness" type="range" min="0.4" max="2.0" step="0.05" value="1.1"></label>
+        <label>Highest cardinal X<select id="cardinalMax"><option value="3">T only</option><option value="4" selected>T,Q</option><option value="5">T,Q,5</option></select></label>
+        <div id="cbsReadout" class="orbital-info"></div>
+      </div>
+      <figure class="basis-figure plot-card">
+        <div id="cbsPlot" class="basis-svg" aria-label="Complete basis set extrapolation plot"></div>
+        <figcaption>Using only small X can make the extrapolated limit look more certain than it really is.</figcaption>
+      </figure>
+    </div>
+    <button class="quest-complete" data-badge="CBS extrapolator" data-xp="120" type="button">Complete CBS lab</button>
+  </section>
+
+  <section id="level-11" class="lesson-step card-panel" data-step="11">
+    <p class="kicker">Level 11 · Cost boss</p>
+    <h2>Cost grows fast with basis size</h2>
+    <p>The number of basis functions \(K\) controls matrix size and integral counts. Method scaling makes “just add functions” dangerous.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Basis functions \(K\)<input id="basisCount" type="range" min="20" max="900" step="10" value="180"></label>
+        <label>Method<select id="methodScaling"><option value="3">DFT-ish \(K^3\)</option><option value="4">HF exchange-ish \(K^4\)</option><option value="5">MP2-ish \(K^5\)</option><option value="6">CCSD-ish \(K^6\)</option></select></label>
+        <div id="costReadout" class="orbital-info"></div>
+      </div>
+      <figure class="basis-figure plot-card">
+        <div id="costPlot" class="basis-svg" aria-label="Basis cost scaling plot"></div>
+        <figcaption>Doubling basis size can be mild for one method and catastrophic for another.</figcaption>
+      </figure>
+    </div>
+    <button class="quest-complete" data-badge="Scaling survivor" data-xp="100" type="button">Complete cost boss</button>
+  </section>
+
+  <section id="level-12" class="lesson-step card-panel" data-step="12">
+    <p class="kicker">Level 12 · Boss fight</p>
+    <h2>Choose the basis strategy</h2>
+    <p>Select a real research scenario and a basis strategy. The boss tells you what is missing and why.</p>
     <div class="game-grid">
       <label>Scenario
         <select id="scenarioSelect">
@@ -181,13 +311,14 @@
       </label>
     </div>
     <div id="basisGameResult" class="game-result" aria-live="polite"></div>
+    <button class="quest-complete" data-badge="Basis strategist" data-xp="185" type="button">Complete final boss</button>
   </section>
 
-  <section class="notice">
-    <strong>Practical rule:</strong> choose the smallest basis that is balanced for the property. Geometry may tolerate double-ζ/polarized; response properties, anions, Rydberg states, weak binding, and correlated benchmarks usually require diffuse, higher-ζ, and/or systematic extrapolation.
+  <section class="notice quest-finale">
+    <strong>Final rule:</strong> choose the smallest basis that is balanced for the property. Geometry may tolerate double-ζ/polarized; response properties, anions, Rydberg states, weak binding, and correlated benchmarks usually require diffuse functions, higher ζ, and/or systematic extrapolation.
   </section>
 </main>
-<footer class="footer"><p>Project XC Basis Set Academy links to Basis Set Exchange for production basis data and teaches the conceptual/mathematical layer needed to use those data responsibly.</p></footer>
+<footer class="footer"><p>Project XC Basis Set Quest links to Basis Set Exchange for production basis data and teaches the conceptual/mathematical layer needed to use those data responsibly.</p></footer>
 <script src="assets/basis-sets.js"></script>
 </body>
 </html>

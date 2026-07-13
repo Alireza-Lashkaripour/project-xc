@@ -4,7 +4,7 @@ A small static teaching/research site with three entry points:
 
 - XC Functional catalog: formulas, exact-exchange amounts, aliases, Libxc records, and citations.
 - MO Diagrams: browser-only qualitative MO diagram builder from XYZ geometry, with degeneracy and MO-shape visualization.
-- Basis Sets: step-by-step PhD-level basis-set academy with math, figures, mini-games, and links to Basis Set Exchange.
+- Basis Sets: quest-style PhD-level basis-set academy with math, figures, interactive plots, mini-games, and links to Basis Set Exchange.
 
 Live site: https://alireza-lashkaripour.github.io/project-xc/
 
