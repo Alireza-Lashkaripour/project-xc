@@ -925,6 +925,6 @@ Before any chapter changes from `in-development` to `live`:
 - [x] Quantum Foundations chapter created with 10 levels and 5 interactive laboratories.
 - [x] Deterministic scientific model tests created; 108 assertions pass locally.
 - [x] Local/browser/scientific QA completed, including desktop rendering, 390 px CDP emulation, accessibility semantics, 85 local-link checks, and progress persistence/reset recovery.
-- [ ] GitHub Pages launch verified.
+- [x] GitHub Pages launch verified on 2026-07-13 at launch commit `138daefcb82f45450eb42604fa6333022e3cbf0d`: validation run `29224964111` and Pages run `29224964119` succeeded; cache-busted static and dynamic browser readback passed for the homepage, gateway, curriculum JSON, chapter, MathJax, and all five laboratories.
 
 This status block must be updated as milestones are completed; do not use memory entries as a substitute for repository state.
