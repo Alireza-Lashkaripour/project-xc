@@ -106,7 +106,7 @@ The ordering below is dependency-aware. “Existing” means Project XC already 
 
 #### Chapter A1 — Quantum Foundations (`qc-foundations.html`)
 
-**Status:** first vertical slice.
+**Status:** live first vertical slice (10 levels, 5 deterministic laboratories).
 
 **Learning spine:** scale and units → state/amplitude → probability and normalization → complex phase → operators/eigenvalues → Schrödinger evolution → particle in a box → uncertainty/commutators → spin → bridge to many-electron antisymmetry.
 
@@ -123,6 +123,8 @@ The ordering below is dependency-aware. “Existing” means Project XC already 
 **Games:** normalization lab, phase/interference mixer, particle-in-a-box node explorer, uncertainty trade-off, spin measurement simulator.
 
 #### Chapter A2 — Mathematical Language (`qc-math-language.html`)
+
+**Status:** live (10 levels, 4 deterministic laboratories; source and convention ledger recorded).
 
 Vectors, inner products, basis changes, matrices, Hermitian/unitary operators, tensor products, complex numbers, Fourier pairs, variational calculus.
 
