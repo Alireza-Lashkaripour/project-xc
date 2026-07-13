@@ -131,6 +131,7 @@
     const state = $('academyLoadState');
     try {
       curriculum = await ProjectXCAcademy.loadCurriculum();
+      ProjectXCAcademy.reconcileCurriculumMissions(curriculum);
       renderTracks(curriculum);
       renderSummary();
       state.textContent = `Curriculum v${curriculum.version} loaded: ${curriculum.tracks.length} dependency-connected tracks.`;

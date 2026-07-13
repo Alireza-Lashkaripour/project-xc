@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -16,6 +17,7 @@ CURRICULUM = ROOT / "data" / "academy-curriculum.json"
 SITE = ROOT / "site"
 PLAN = ROOT / "docs" / "plans" / "2026-07-13-quantum-chemistry-academy-master-plan.md"
 WORKFLOW = ROOT / ".github" / "workflows" / "validate.yml"
+PAGES_WORKFLOW = ROOT / ".github" / "workflows" / "pages.yml"
 
 STATUS_VALUES = {"live", "in-development", "existing-tool", "planned"}
 PROGRESS_KINDS = {"academy-missions", "legacy-badges"}
@@ -43,23 +45,51 @@ def add(errors: list[str], message: str) -> None:
     errors.append(message)
 
 
-def responsive_table_counts(text: str) -> tuple[int, int, int]:
-    """Count wide tables, accessible scroll regions, and narrow-screen hints."""
-    wide_tables = len(re.findall(r'<table\b(?=[^>]*class="[^"]*\bwide-table\b[^"]*")[^>]*>', text))
-    scroll_regions = len(re.findall(
-        r'<div\b(?=[^>]*class="[^"]*\btable-scroll\b[^"]*")(?=[^>]*role="region")(?=[^>]*tabindex="0")[^>]*>',
-        text,
-    ))
-    scroll_hints = len(re.findall(r'<p\b(?=[^>]*class="[^"]*\btable-scroll-hint\b[^"]*")[^>]*>', text))
-    return wide_tables, scroll_regions, scroll_hints
+class AcademyHTMLInspector(HTMLParser):
+    """Collect structural Academy contracts without depending on attribute order."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.level_count = 0
+        self.mission_count = 0
+        self.mission_ids: list[str | None] = []
+        self.game_count = 0
+        self.html_ids: list[str] = []
+        self.wide_table_count = 0
+        self.scroll_region_count = 0
+        self.scroll_hint_count = 0
+        self.safe_external_link_count = 0
+        self.quest_complete_count = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        values = {name: value or "" for name, value in attrs}
+        classes = set(values.get("class", "").split())
+        if values.get("id"):
+            self.html_ids.append(values["id"])
+        if "academy-lesson" in classes:
+            self.level_count += 1
+        if tag == "button" and "academy-complete" in classes:
+            self.mission_count += 1
+            self.mission_ids.append(values.get("data-mission") or None)
+        if "lab-grid" in classes:
+            self.game_count += 1
+        if tag == "table" and "wide-table" in classes:
+            self.wide_table_count += 1
+        if tag == "div" and "table-scroll" in classes and values.get("role") == "region" and values.get("tabindex") == "0":
+            self.scroll_region_count += 1
+        if tag == "p" and "table-scroll-hint" in classes:
+            self.scroll_hint_count += 1
+        if tag == "a" and values.get("target") == "_blank" and "noopener" in set(values.get("rel", "").split()):
+            self.safe_external_link_count += 1
+        if "quest-complete" in classes:
+            self.quest_complete_count += 1
 
 
-def safe_external_link_count(text: str) -> int:
-    """Count new-tab links that protect window.opener, regardless of attribute order."""
-    return len(re.findall(
-        r'<a\b(?=[^>]*target="_blank")(?=[^>]*rel="[^"]*\bnoopener\b[^"]*")[^>]*>',
-        text,
-    ))
+def inspect_html(text: str) -> AcademyHTMLInspector:
+    inspector = AcademyHTMLInspector()
+    inspector.feed(text)
+    inspector.close()
+    return inspector
 
 
 def load_json(path: Path, errors: list[str]) -> dict | None:
@@ -181,8 +211,20 @@ def validate_curriculum(data: dict, errors: list[str]) -> tuple[dict[str, dict],
                         add(errors, f"{chapter_id} progress total must be a positive integer")
                     if not isinstance(label_text, str) or not label_text.strip():
                         add(errors, f"{chapter_id} progress label is required")
-                    if kind == "academy-missions" and status != "live":
-                        add(errors, f"{chapter_id} academy-missions progress requires live status")
+                    if kind == "academy-missions":
+                        if status != "live":
+                            add(errors, f"{chapter_id} academy-missions progress requires live status")
+                        mission_ids = progress.get("mission_ids")
+                        if not isinstance(mission_ids, list):
+                            add(errors, f"{chapter_id} academy-missions progress requires mission_ids")
+                        else:
+                            invalid_ids = [item for item in mission_ids if not isinstance(item, str) or not ID_RE.fullmatch(item)]
+                            if invalid_ids:
+                                add(errors, f"{chapter_id} has invalid progress mission ids: {invalid_ids!r}")
+                            if len(mission_ids) != len(set(item for item in mission_ids if isinstance(item, str))):
+                                add(errors, f"{chapter_id} progress mission_ids must be unique")
+                            if isinstance(total, int) and len(mission_ids) != total:
+                                add(errors, f"{chapter_id} progress mission_ids length {len(mission_ids)} != total {total}")
                     if kind == "legacy-badges":
                         if status != "existing-tool":
                             add(errors, f"{chapter_id} legacy-badges progress requires existing-tool status")
@@ -236,6 +278,7 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
     required = [
         PLAN,
         WORKFLOW,
+        PAGES_WORKFLOW,
         SITE / "quantum-chemistry.html",
         SITE / "assets" / "academy-core.js",
         SITE / "assets" / "academy-gateway.js",
@@ -278,7 +321,7 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
         add(errors, f"live chapter {chapter_id} has no validator rule")
 
     workflow_text = WORKFLOW.read_text(encoding="utf-8") if WORKFLOW.exists() else ""
-    class_token = r"(?<![A-Za-z0-9_-]){}(?![A-Za-z0-9_-])"
+    pages_workflow_text = PAGES_WORKFLOW.read_text(encoding="utf-8") if PAGES_WORKFLOW.exists() else ""
     for chapter_id, rule in LIVE_CHAPTER_RULES.items():
         chapter = chapters.get(chapter_id)
         if not chapter or chapter.get("status") != "live":
@@ -292,18 +335,22 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
                 add(errors, f"{chapter_id} missing required file: {path.relative_to(ROOT)}")
         if f"node scripts/{rule['test']}" not in workflow_text:
             add(errors, f"GitHub validation workflow does not run {rule['test']}")
+        if f"node scripts/{rule['test']}" not in pages_workflow_text:
+            add(errors, f"GitHub Pages workflow does not gate deployment on {rule['test']}")
         if not page.exists():
             continue
 
         text = page.read_text(encoding="utf-8")
-        level_count = len(re.findall(r'class="[^"]*' + class_token.format("academy-lesson") + r'[^"]*"', text))
-        mission_tags = re.findall(r'<button\b[^>]*class="[^"]*' + class_token.format("academy-complete") + r'[^"]*"[^>]*>', text)
-        mission_count = len(mission_tags)
-        mission_ids = [match.group(1) for tag in mission_tags if (match := re.search(r'\bdata-mission="([^"]+)"', tag))]
-        game_count = len(re.findall(r'class="[^"]*' + class_token.format("lab-grid") + r'[^"]*"', text))
-        html_ids = re.findall(r'\bid="([^"]+)"', text)
+        inspector = inspect_html(text)
+        level_count = inspector.level_count
+        mission_count = inspector.mission_count
+        mission_ids = [mission_id for mission_id in inspector.mission_ids if mission_id is not None]
+        game_count = inspector.game_count
+        html_ids = inspector.html_ids
         duplicate_ids = sorted({item for item in html_ids if html_ids.count(item) > 1})
-        wide_table_count, scroll_region_count, scroll_hint_count = responsive_table_counts(text)
+        wide_table_count = inspector.wide_table_count
+        scroll_region_count = inspector.scroll_region_count
+        scroll_hint_count = inspector.scroll_hint_count
         progress_contract = chapter.get("progress")
         mission_total = progress_contract.get("total", chapter.get("levels")) if isinstance(progress_contract, dict) else chapter.get("levels")
         if level_count != chapter.get("levels"):
@@ -316,13 +363,16 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
             add(errors, f"{chapter_id} completion controls must declare data-mission")
         elif len(mission_ids) != len(set(mission_ids)):
             add(errors, f"{chapter_id} mission ids must be unique")
+        contract_mission_ids = progress_contract.get("mission_ids", []) if isinstance(progress_contract, dict) else []
+        if mission_ids != contract_mission_ids:
+            add(errors, f"{chapter_id} page mission ids do not match curriculum progress mission_ids")
         if duplicate_ids:
             add(errors, f"{chapter_id} has duplicate HTML ids: {', '.join(duplicate_ids)}")
         if scroll_region_count < wide_table_count:
             add(errors, f"{chapter_id} has {wide_table_count} wide tables but only {scroll_region_count} accessible scroll regions")
         if scroll_hint_count < wide_table_count:
             add(errors, f"{chapter_id} has {wide_table_count} wide tables but only {scroll_hint_count} narrow-screen scroll hints")
-        if safe_external_link_count(text) < 3:
+        if inspector.safe_external_link_count < 3:
             add(errors, f"{chapter_id} must expose at least three safe external source links")
         for needle in (
             'assets/academy-core.js',
@@ -340,11 +390,14 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
     basis_progress = basis_expected.get("progress")
     if basis.exists() and isinstance(basis_progress, dict) and basis_progress.get("kind") == "legacy-badges":
         text = basis.read_text(encoding="utf-8")
-        badge_count = len(re.findall(r'class="[^"]*\bquest-complete\b[^"]*"', text))
+        inspector = inspect_html(text)
+        badge_count = inspector.quest_complete_count
         expected_total = basis_progress["total"]
         if badge_count != expected_total:
             add(errors, f"Basis Quest badge count {badge_count} != metadata progress total {expected_total}")
-        wide_table_count, scroll_region_count, scroll_hint_count = responsive_table_counts(text)
+        wide_table_count = inspector.wide_table_count
+        scroll_region_count = inspector.scroll_region_count
+        scroll_hint_count = inspector.scroll_hint_count
         if scroll_region_count < wide_table_count:
             add(errors, f"Basis Quest has {wide_table_count} wide tables but only {scroll_region_count} accessible scroll regions")
         if scroll_hint_count < wide_table_count:
@@ -353,8 +406,10 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
         if basis_progress["storage_key"] not in basis_js:
             add(errors, "Basis Quest progress storage_key does not match site/assets/basis-sets.js")
 
-    if WORKFLOW.exists() and "node scripts/test_academy_core.js" not in WORKFLOW.read_text(encoding="utf-8"):
+    if WORKFLOW.exists() and "node scripts/test_academy_core.js" not in workflow_text:
         add(errors, "GitHub validation workflow does not run Academy progress regression tests")
+    if PAGES_WORKFLOW.exists() and "node scripts/test_academy_core.js" not in pages_workflow_text:
+        add(errors, "GitHub Pages workflow does not gate deployment on Academy progress regression tests")
 
 
 def main() -> int:

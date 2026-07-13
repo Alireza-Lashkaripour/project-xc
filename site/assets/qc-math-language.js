@@ -114,6 +114,18 @@
     return { vector, transformed, rayleigh, residual, residualNorm: Math.hypot(...residual), spectrum };
   }
 
+  function nearestEigenvectorAngle(a, b, d, currentDegrees) {
+    const normalizedCurrent = ((currentDegrees % 180) + 180) % 180;
+    const spectrum = symmetricEigen2x2(a, b, d);
+    if (Math.abs(spectrum.values[1] - spectrum.values[0]) < 1e-12) return normalizedCurrent;
+    const current = radians(normalizedCurrent);
+    const distance = vector => Math.acos(Math.min(1, Math.abs(Math.cos(current) * vector[0] + Math.sin(current) * vector[1])));
+    const chosen = distance(spectrum.vectors[0]) <= distance(spectrum.vectors[1]) ? spectrum.vectors[0] : spectrum.vectors[1];
+    let angle = degrees(Math.atan2(chosen[1], chosen[0]));
+    if (angle < 0) angle += 180;
+    return angle;
+  }
+
   function normalDensity(x, mean, sigma) {
     return Math.exp(-0.5 * ((x - mean) / sigma) ** 2) / (Math.sqrt(2 * Math.PI) * sigma);
   }
@@ -165,9 +177,9 @@
     const body = `${coordinatePlane(width, height, cx, cy)}
       <line x1="${cx - guide[0] * scale}" y1="${cy + guide[1] * scale}" x2="${cx + guide[0] * scale}" y2="${cy - guide[1] * scale}" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="7 6"></line>
       ${vectorLine(cx, cy, scale, model.vector, '#174ea6', 'projection-arrow')}
-      ${vectorLine(cx, cy, scale, model.projection, '#7c3aed', 'projection-arrow')}
-      <line x1="${cx + model.projection[0] * scale}" y1="${cy - model.projection[1] * scale}" x2="${cx + vx * scale}" y2="${cy - vy * scale}" stroke="#f97316" stroke-width="4" stroke-dasharray="7 5"></line>
-      <text x="40" y="34" class="axis-label">blue v · violet projection · orange residual</text>`;
+      ${vectorLine(cx, cy, scale, model.projection, '#7c3aed', 'projection-arrow', '14 6')}
+      <line x1="${cx + model.projection[0] * scale}" y1="${cy - model.projection[1] * scale}" x2="${cx + vx * scale}" y2="${cy - vy * scale}" stroke="#f97316" stroke-width="4" stroke-linecap="round" stroke-dasharray="3 8"></line>
+      <text x="40" y="34" class="axis-label">solid v · long-dash projection · dotted residual</text>`;
     if ($('projectionPlot')) $('projectionPlot').innerHTML = svg(width, height, body, 'Vector projection and orthogonal residual', 'projection-arrow');
     if ($('projectionReadout')) $('projectionReadout').innerHTML = `<strong>Projection coefficient:</strong> θ=${angle.toFixed(1)}°; ⟨u|v⟩=${model.coefficient.toFixed(4)}. The residual is orthogonal within ${Math.abs(model.orthogonality).toExponential(2)}, and ‖v‖²=${model.normSquared.toFixed(4)}=${model.projectionNormSquared.toFixed(4)}+${model.residualNormSquared.toFixed(4)}.`;
   }
@@ -180,10 +192,10 @@
     const scale = 105 / Math.max(Math.hypot(vx, vy), 1);
     const [e1, e2] = model.basis;
     const body = `${coordinatePlane(width, height, cx, cy)}
-      <line x1="${cx - e1[0] * 145}" y1="${cy + e1[1] * 145}" x2="${cx + e1[0] * 145}" y2="${cy - e1[1] * 145}" stroke="#7c3aed" stroke-width="3"></line>
-      <line x1="${cx - e2[0] * 145}" y1="${cy + e2[1] * 145}" x2="${cx + e2[0] * 145}" y2="${cy - e2[1] * 145}" stroke="#f97316" stroke-width="3"></line>
+      <line x1="${cx - e1[0] * 145}" y1="${cy + e1[1] * 145}" x2="${cx + e1[0] * 145}" y2="${cy - e1[1] * 145}" stroke="#7c3aed" stroke-width="3" stroke-linecap="round" stroke-dasharray="14 6"></line>
+      <line x1="${cx - e2[0] * 145}" y1="${cy + e2[1] * 145}" x2="${cx + e2[0] * 145}" y2="${cy - e2[1] * 145}" stroke="#f97316" stroke-width="3" stroke-linecap="round" stroke-dasharray="3 8"></line>
       ${vectorLine(cx, cy, scale, [vx, vy], '#174ea6', 'rotation-arrow')}
-      <text x="40" y="34" class="axis-label">blue physical vector · violet e₁′ · orange e₂′</text>`;
+      <text x="40" y="34" class="axis-label">solid v · long-dash e₁′ · dotted e₂′</text>`;
     if ($('rotationPlot')) $('rotationPlot').innerHTML = svg(width, height, body, 'Passive rotation of coordinates for a fixed vector', 'rotation-arrow');
     if ($('rotationReadout')) $('rotationReadout').innerHTML = `<strong>Same vector, new coordinates:</strong> θ=${angle.toFixed(1)}°; (${vx.toFixed(3)}, ${vy.toFixed(3)}) → (${model.coordinates[0].toFixed(3)}, ${model.coordinates[1].toFixed(3)}). Reconstructing returns (${model.reconstructed[0].toFixed(3)}, ${model.reconstructed[1].toFixed(3)}); norm change=${Math.abs(model.normOriginal - model.normCoordinates).toExponential(2)}.`;
   }
@@ -210,9 +222,9 @@
     const rayleighVector = model.vector.map(value => model.rayleigh * value);
     const body = `${coordinatePlane(520, height, cx, cy)}
       ${vectorLine(cx, cy, scale, model.vector, '#174ea6', 'eigen-arrow')}
-      ${vectorLine(cx, cy, scale, model.transformed, '#f97316', 'eigen-arrow')}
-      ${vectorLine(cx, cy, scale, rayleighVector, '#7c3aed', 'eigen-arrow', '7 5')}
-      <text x="36" y="34" class="axis-label">blue v · orange Av · violet λ(v)v</text>
+      ${vectorLine(cx, cy, scale, model.transformed, '#f97316', 'eigen-arrow', '14 6')}
+      ${vectorLine(cx, cy, scale, rayleighVector, '#7c3aed', 'eigen-arrow', '3 8')}
+      <text x="36" y="34" class="axis-label">solid v · long-dash Av · dotted λ(v)v</text>
       <rect x="520" y="58" width="135" height="92" rx="12" fill="#eff6ff" stroke="#bfdbfe"></rect>
       <text x="536" y="87" class="axis-label">eigenvalues</text>
       <text x="536" y="116" class="metric-label">${model.spectrum.values[0].toFixed(4)}</text>
@@ -226,16 +238,8 @@
 
   function alignEigenvector() {
     const a = inputNumber('matrixA', 2), b = inputNumber('matrixB', 1), d = inputNumber('matrixD', 2);
-    const current = radians(inputNumber('eigenAngle', 18));
-    const spectrum = symmetricEigen2x2(a, b, d);
-    if (Math.abs(spectrum.values[1] - spectrum.values[0]) < 1e-12) {
-      updateEigenPuzzle();
-      return;
-    }
-    const distance = vector => Math.acos(Math.min(1, Math.abs(Math.cos(current) * vector[0] + Math.sin(current) * vector[1])));
-    const chosen = distance(spectrum.vectors[0]) <= distance(spectrum.vectors[1]) ? spectrum.vectors[0] : spectrum.vectors[1];
-    let angle = degrees(Math.atan2(chosen[1], chosen[0]));
-    if (angle < 0) angle += 180;
+    const current = inputNumber('eigenAngle', 18);
+    const angle = nearestEigenvectorAngle(a, b, d, current);
     if ($('eigenAngle')) $('eigenAngle').value = angle.toFixed(6);
     updateEigenPuzzle();
   }
@@ -307,6 +311,7 @@
     rotationModel,
     symmetricEigen2x2,
     eigenPuzzleModel,
+    nearestEigenvectorAngle,
     fourierGaussianModel,
     trapz
   });
