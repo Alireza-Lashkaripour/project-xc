@@ -194,7 +194,7 @@
     <div class="matrix-flow" aria-label="State to measurement flow">
       <div>prepare \(|\psi\rangle\)</div><span>→</span><div>choose observable \(\hat A\)</div><span>→</span><div>outcome \(a_k\)</div><span>→</span><div>repeat → distribution</div>
     </div>
-    <div class="table-scroll" role="region" aria-label="Quantum operator examples" tabindex="0">
+    <div class="table-scroll" role="region" aria-label="Quantum operator examples" aria-describedby="operator-table-hint" tabindex="0">
     <table class="meta-table wide-table">
       <thead><tr><th>Operator</th><th>One-dimensional form</th><th>What its eigenvalue represents</th></tr></thead>
       <tbody>
@@ -204,7 +204,7 @@
       </tbody>
     </table>
     </div>
-    <p class="table-scroll-hint">On a narrow screen, swipe the operator table horizontally.</p>
+    <p id="operator-table-hint" class="table-scroll-hint">On a narrow screen, swipe the operator table horizontally.</p>
     <div class="misconception-card"><strong>Expectation value ≠ guaranteed outcome:</strong> \(\langle A\rangle\) is the mean of many identically prepared measurements. It may lie between eigenvalues and need not appear in any single measurement.</div>
     <details class="professor-note"><summary>Professor mode · noncommuting observables</summary><p>If \([\hat A,\hat B]\ne0\), the operators need not share a complete eigenbasis. This algebraic incompatibility—not merely an imperfect instrument—is the source of the standard uncertainty lower bound.</p></details>
     <button class="academy-complete" data-mission="operators" data-badge="Operator translator" type="button">Complete Level 5</button>
@@ -343,7 +343,7 @@
   <section class="lesson-card academy-source-card" aria-labelledby="sources-title">
     <p class="kicker">Verified source spine</p>
     <h2 id="sources-title">Where to continue and verify</h2>
-    <div class="table-scroll" role="region" aria-label="Quantum Foundations source table" tabindex="0">
+    <div class="table-scroll" role="region" aria-label="Quantum Foundations source table" aria-describedby="foundations-source-table-hint" tabindex="0">
     <table class="meta-table wide-table">
       <thead><tr><th>Source</th><th>Role in this chapter</th><th>Link</th></tr></thead>
       <tbody>
@@ -356,7 +356,7 @@
       </tbody>
     </table>
     </div>
-    <p class="table-scroll-hint">On a narrow screen, swipe the source table horizontally.</p>
+    <p id="foundations-source-table-hint" class="table-scroll-hint">On a narrow screen, swipe the source table horizontally.</p>
     <p class="help-text">The repository source ledger records access checks and the exact conventions used by the five games.</p>
   </section>
 </main>

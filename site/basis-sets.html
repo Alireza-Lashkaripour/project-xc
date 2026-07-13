@@ -102,7 +102,7 @@
       <article class="quest-card"><span class="quest-icon">🎚️</span><h3>Coefficient</h3><p>The MO recipe: coefficients mix local shapes into bonding, antibonding, lone-pair, Rydberg, and diffuse states.</p></article>
       <article class="quest-card"><span class="quest-icon">⚖️</span><h3>Tradeoff</h3><p>More flexibility lowers variational error but increases cost, BSSE risk, and linear-dependence risk.</p></article>
     </div>
-    <button class="quest-complete" data-badge="Orbital alphabet" data-xp="80" type="button">Complete Level 1</button>
+    <button class="quest-complete" data-badge-id="orbital-alphabet" data-badge="Orbital alphabet" data-xp="80" type="button">Complete Level 1</button>
   </section>
 
   <section id="level-2" class="lesson-step card-panel" data-step="2">
@@ -123,7 +123,7 @@
         <figcaption>Goal: make one compact/core primitive and one diffuse/tail primitive. Watch overlap and radial diversity.</figcaption>
       </figure>
     </div>
-    <button class="quest-complete" data-badge="Gaussian sculptor" data-xp="100" type="button">Complete shape lab</button>
+    <button class="quest-complete" data-badge-id="gaussian-sculptor" data-badge="Gaussian sculptor" data-xp="100" type="button">Complete shape lab</button>
   </section>
 
   <section id="level-3" class="lesson-step card-panel" data-step="3">
@@ -142,7 +142,7 @@
         <figcaption>Blue/orange lobes show opposite signs. Higher angular momentum gives orbitals extra nodal and directional freedom.</figcaption>
       </figure>
     </div>
-    <button class="quest-complete" data-badge="AO cartographer" data-xp="90" type="button">Complete AO arena</button>
+    <button class="quest-complete" data-badge-id="ao-cartographer" data-badge="AO cartographer" data-xp="90" type="button">Complete AO arena</button>
   </section>
 
   <section id="level-4" class="lesson-step card-panel" data-step="4">
@@ -162,7 +162,7 @@
         <figcaption>Contractions reduce integral cost; split valence adds chemically useful radial flexibility.</figcaption>
       </figure>
     </div>
-    <button class="quest-complete" data-badge="Contraction smith" data-xp="95" type="button">Complete forge</button>
+    <button class="quest-complete" data-badge-id="contraction-smith" data-badge="Contraction smith" data-xp="95" type="button">Complete forge</button>
   </section>
 
   <section id="level-5" class="lesson-step card-panel" data-step="5">
@@ -181,14 +181,14 @@
         <figcaption>Bright off-diagonal blocks mean functions overlap strongly; near-duplicate diffuse functions can make \(S\) nearly singular.</figcaption>
       </figure>
     </div>
-    <button class="quest-complete" data-badge="Matrix runner" data-xp="110" type="button">Complete matrix dungeon</button>
+    <button class="quest-complete" data-badge-id="matrix-runner" data-badge="Matrix runner" data-xp="110" type="button">Complete matrix dungeon</button>
   </section>
 
   <section id="level-6" class="lesson-step card-panel" data-step="6">
     <p class="kicker">Level 6 · Field atlas</p>
     <h2>Basis-set families you will actually use</h2>
-    <p class="table-scroll-hint">Swipe horizontally to compare all columns →</p>
-    <div class="table-scroll" role="region" aria-label="Basis-set family comparison; scroll horizontally on narrow screens" tabindex="0">
+    <p id="basis-family-table-hint" class="table-scroll-hint">Swipe horizontally to compare all columns →</p>
+    <div class="table-scroll" role="region" aria-label="Basis-set family comparison; scroll horizontally on narrow screens" aria-describedby="basis-family-table-hint" tabindex="0">
     <table class="meta-table wide-table">
       <thead><tr><th>Family</th><th>What it gives you</th><th>Good missions</th><th>Danger zone</th></tr></thead>
       <tbody>
@@ -201,7 +201,7 @@
     </table>
     </div>
     <p><a class="button" href="https://www.basissetexchange.org/" target="_blank" rel="noopener">Open Basis Set Exchange</a> <a class="button secondary" href="https://www.basissetexchange.org/api/" target="_blank" rel="noopener">BSE API/docs</a></p>
-    <button class="quest-complete" data-badge="Family scout" data-xp="80" type="button">Complete family atlas</button>
+    <button class="quest-complete" data-badge-id="family-scout" data-badge="Family scout" data-xp="80" type="button">Complete family atlas</button>
   </section>
 
   <section id="level-7" class="lesson-step card-panel" data-step="7">
@@ -222,7 +222,7 @@
         <figcaption>Balanced bases are property-specific: no single ingredient wins every mission.</figcaption>
       </figure>
     </div>
-    <button class="quest-complete" data-badge="Basis loadout designer" data-xp="120" type="button">Complete kit builder</button>
+    <button class="quest-complete" data-badge-id="basis-loadout-designer" data-badge="Basis loadout designer" data-xp="120" type="button">Complete kit builder</button>
   </section>
 
   <section id="level-8" class="lesson-step card-panel" data-step="8">
@@ -241,7 +241,7 @@
         <figcaption>Orange shows artificial overbinding. Counterpoise estimates the borrowing effect.</figcaption>
       </figure>
     </div>
-    <button class="quest-complete" data-badge="BSSE duelist" data-xp="120" type="button">Complete BSSE duel</button>
+    <button class="quest-complete" data-badge-id="bsse-duelist" data-badge="BSSE duelist" data-xp="120" type="button">Complete BSSE duel</button>
   </section>
 
   <section id="level-9" class="lesson-step card-panel" data-step="9">
@@ -259,7 +259,7 @@
         <figcaption>Large spacing separates functions; very tight spacing with many diffuse shells is dangerous.</figcaption>
       </figure>
     </div>
-    <button class="quest-complete" data-badge="Conditioning guardian" data-xp="100" type="button">Complete alarm</button>
+    <button class="quest-complete" data-badge-id="conditioning-guardian" data-badge="Conditioning guardian" data-xp="100" type="button">Complete alarm</button>
   </section>
 
   <section id="level-10" class="lesson-step card-panel" data-step="10">
@@ -279,7 +279,7 @@
         <figcaption>Using only small X can make the extrapolated limit look more certain than it really is.</figcaption>
       </figure>
     </div>
-    <button class="quest-complete" data-badge="CBS extrapolator" data-xp="120" type="button">Complete CBS lab</button>
+    <button class="quest-complete" data-badge-id="cbs-extrapolator" data-badge="CBS extrapolator" data-xp="120" type="button">Complete CBS lab</button>
   </section>
 
   <section id="level-11" class="lesson-step card-panel" data-step="11">
@@ -297,7 +297,7 @@
         <figcaption>Doubling basis size can be mild for one method and catastrophic for another.</figcaption>
       </figure>
     </div>
-    <button class="quest-complete" data-badge="Scaling survivor" data-xp="100" type="button">Complete cost boss</button>
+    <button class="quest-complete" data-badge-id="scaling-survivor" data-badge="Scaling survivor" data-xp="100" type="button">Complete cost boss</button>
   </section>
 
   <section id="level-12" class="lesson-step card-panel" data-step="12">
@@ -326,7 +326,7 @@
       </label>
     </div>
     <div id="basisGameResult" class="game-result" aria-live="polite"></div>
-    <button class="quest-complete" data-badge="Basis strategist" data-xp="185" type="button">Complete final boss</button>
+    <button class="quest-complete" data-badge-id="basis-strategist" data-badge="Basis strategist" data-xp="185" type="button">Complete final boss</button>
   </section>
 
 
@@ -349,7 +349,7 @@
       <article class="quest-card"><span class="quest-icon">⚙️</span><h3>Algorithms</h3><p>Production codes use Gaussian product theorem, Boys functions, recurrences, quadrature, symmetry, Schwarz screening, and derivative recurrences.</p></article>
     </div>
     <div class="notice guide-callout"><strong>Toy-model caveat:</strong> the games below show correct qualitative structure and several exact s-Gaussian formulas, but they are not a replacement for production integral engines such as Libint/libcint or for a real quantum-chemistry calculation.</div>
-    <button class="quest-complete" data-badge="Integral engine unlocked" data-xp="150" type="button">Complete advanced unlock</button>
+    <button class="quest-complete" data-badge-id="integral-engine-unlocked" data-badge="Integral engine unlocked" data-xp="150" type="button">Complete advanced unlock</button>
   </section>
 
   <section id="level-14" class="lesson-step card-panel" data-step="14">
@@ -373,7 +373,7 @@
         <figcaption>The product center slides toward the tighter Gaussian. The prefactor kills overlap when tight functions are far apart.</figcaption>
       </figure>
     </div>
-    <button class="quest-complete" data-badge="Gaussian product wizard" data-xp="140" type="button">Complete product theorem game</button>
+    <button class="quest-complete" data-badge-id="gaussian-product-wizard" data-badge="Gaussian product wizard" data-xp="140" type="button">Complete product theorem game</button>
   </section>
 
   <section id="level-15" class="lesson-step card-panel" data-step="15">
@@ -394,7 +394,7 @@
         <figcaption>Bars are toy normalized s-Gaussian values. Watch how the same basis knobs alter \(S\), \(T\), and \(V\) differently.</figcaption>
       </figure>
     </div>
-    <button class="quest-complete" data-badge="One-electron operator tuner" data-xp="150" type="button">Complete one-electron lab</button>
+    <button class="quest-complete" data-badge-id="one-electron-operator-tuner" data-badge="One-electron operator tuner" data-xp="150" type="button">Complete one-electron lab</button>
   </section>
 
   <section id="level-16" class="lesson-step card-panel" data-step="16">
@@ -414,7 +414,7 @@
         <figcaption>Large \(T\) means separated product centers or tight combined exponents; the Coulomb coupling decays smoothly.</figcaption>
       </figure>
     </div>
-    <button class="quest-complete" data-badge="Boys function spelunker" data-xp="150" type="button">Complete Boys cavern</button>
+    <button class="quest-complete" data-badge-id="boys-function-spelunker" data-badge="Boys function spelunker" data-xp="150" type="button">Complete Boys cavern</button>
   </section>
 
   <section id="level-17" class="lesson-step card-panel" data-step="17">
@@ -435,7 +435,7 @@
         <figcaption>Symmetry and screening do not change the math; they decide which shell quartets are worth evaluating.</figcaption>
       </figure>
     </div>
-    <button class="quest-complete" data-badge="ERI tensor raider" data-xp="160" type="button">Complete ERI tensor raid</button>
+    <button class="quest-complete" data-badge-id="eri-tensor-raider" data-badge="ERI tensor raider" data-xp="160" type="button">Complete ERI tensor raid</button>
   </section>
 
   <section id="level-18" class="lesson-step card-panel" data-step="18">
@@ -467,8 +467,8 @@
       </figure>
     </div>
     <h3>Research anchors used for this advanced section</h3>
-    <p class="table-scroll-hint">Swipe horizontally to read every source column →</p>
-    <div class="table-scroll" role="region" aria-label="Advanced integral research sources; scroll horizontally on narrow screens" tabindex="0">
+    <p id="integral-source-table-hint" class="table-scroll-hint">Swipe horizontally to read every source column →</p>
+    <div class="table-scroll" role="region" aria-label="Advanced integral research sources; scroll horizontally on narrow screens" aria-describedby="integral-source-table-hint" tabindex="0">
     <table class="meta-table wide-table integral-source-table">
       <thead><tr><th>Topic</th><th>Source anchor</th><th>Why it matters here</th></tr></thead>
       <tbody>
@@ -482,7 +482,7 @@
       </tbody>
     </table>
     </div>
-    <button class="quest-complete" data-badge="Integral grandmaster" data-xp="190" type="button">Complete algorithm boss</button>
+    <button class="quest-complete" data-badge-id="integral-grandmaster" data-badge="Integral grandmaster" data-xp="190" type="button">Complete algorithm boss</button>
   </section>
 
   <section class="notice quest-finale">

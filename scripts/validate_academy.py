@@ -37,6 +37,7 @@ LIVE_CHAPTER_RULES = {
         "source": "qc-math-language.md",
         "boundary": "Interactive-model boundary",
         "challenge": "Chapter boss",
+        "plots": 4,
     },
 }
 
@@ -47,6 +48,8 @@ def add(errors: list[str], message: str) -> None:
 
 class AcademyHTMLInspector(HTMLParser):
     """Collect structural Academy contracts without depending on attribute order."""
+
+    VOID_TAGS = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
 
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
@@ -60,6 +63,14 @@ class AcademyHTMLInspector(HTMLParser):
         self.scroll_hint_count = 0
         self.safe_external_link_count = 0
         self.quest_complete_count = 0
+        self.plot_canvas_count = 0
+        self.accessible_plot_canvas_count = 0
+        self.plot_key_count = 0
+        self.quest_badge_ids: list[str | None] = []
+        self.quest_badge_labels: list[str | None] = []
+        self._stack: list[tuple[str, tuple[str, ...] | None]] = []
+        self._wide_table_regions: list[tuple[str, ...] | None] = []
+        self._scroll_hint_ids: set[str] = set()
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = {name: value or "" for name, value in attrs}
@@ -73,16 +84,62 @@ class AcademyHTMLInspector(HTMLParser):
             self.mission_ids.append(values.get("data-mission") or None)
         if "lab-grid" in classes:
             self.game_count += 1
+        if "academy-plot-canvas" in classes:
+            self.plot_canvas_count += 1
+            if (
+                values.get("role") == "region"
+                and values.get("tabindex") == "0"
+                and bool(values.get("aria-label"))
+                and len(values.get("aria-describedby", "").split()) >= 2
+            ):
+                self.accessible_plot_canvas_count += 1
+        if "academy-plot-key" in classes:
+            self.plot_key_count += 1
+        is_scroll_region = (
+            tag == "div"
+            and "table-scroll" in classes
+            and values.get("role") == "region"
+            and values.get("tabindex") == "0"
+            and bool(values.get("aria-label") or values.get("aria-labelledby"))
+        )
+        described_by = tuple(values.get("aria-describedby", "").split()) if is_scroll_region else None
         if tag == "table" and "wide-table" in classes:
             self.wide_table_count += 1
-        if tag == "div" and "table-scroll" in classes and values.get("role") == "region" and values.get("tabindex") == "0":
+            region = next((item[1] for item in reversed(self._stack) if item[1] is not None), None)
+            self._wide_table_regions.append(region)
+        if is_scroll_region:
             self.scroll_region_count += 1
         if tag == "p" and "table-scroll-hint" in classes:
             self.scroll_hint_count += 1
+            if values.get("id"):
+                self._scroll_hint_ids.add(values["id"])
         if tag == "a" and values.get("target") == "_blank" and "noopener" in set(values.get("rel", "").split()):
             self.safe_external_link_count += 1
         if "quest-complete" in classes:
             self.quest_complete_count += 1
+            self.quest_badge_ids.append(values.get("data-badge-id") or None)
+            self.quest_badge_labels.append(values.get("data-badge") or None)
+        if tag not in self.VOID_TAGS:
+            self._stack.append((tag, described_by))
+
+    def handle_endtag(self, tag: str) -> None:
+        for index in range(len(self._stack) - 1, -1, -1):
+            if self._stack[index][0] == tag:
+                del self._stack[index:]
+                return
+
+    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.handle_starttag(tag, attrs)
+        if tag not in self.VOID_TAGS:
+            self.handle_endtag(tag)
+
+    @property
+    def uncontained_wide_table_count(self) -> int:
+        return sum(region is None for region in self._wide_table_regions)
+
+    @property
+    def unhinted_wide_table_count(self) -> int:
+        return sum(region is None or not self._scroll_hint_ids.intersection(region) for region in self._wide_table_regions)
 
 
 def inspect_html(text: str) -> AcademyHTMLInspector:
@@ -231,6 +288,28 @@ def validate_curriculum(data: dict, errors: list[str]) -> tuple[dict[str, dict],
                         storage_key = progress.get("storage_key")
                         if not isinstance(storage_key, str) or not storage_key.startswith("project-xc-"):
                             add(errors, f"{chapter_id} legacy-badges progress requires a project-xc storage_key")
+                        badge_ids = progress.get("badge_ids")
+                        if not isinstance(badge_ids, list):
+                            add(errors, f"{chapter_id} legacy-badges progress requires badge_ids")
+                            badge_ids = []
+                        else:
+                            invalid_ids = [item for item in badge_ids if not isinstance(item, str) or not ID_RE.fullmatch(item)]
+                            if invalid_ids:
+                                add(errors, f"{chapter_id} has invalid legacy badge ids: {invalid_ids!r}")
+                            if len(badge_ids) != len(set(item for item in badge_ids if isinstance(item, str))):
+                                add(errors, f"{chapter_id} legacy badge_ids must be unique")
+                            if isinstance(total, int) and len(badge_ids) != total:
+                                add(errors, f"{chapter_id} legacy badge_ids length {len(badge_ids)} != total {total}")
+                        aliases = progress.get("legacy_badge_aliases")
+                        if not isinstance(aliases, dict):
+                            add(errors, f"{chapter_id} legacy-badges progress requires legacy_badge_aliases")
+                        else:
+                            invalid_aliases = {
+                                key: value for key, value in aliases.items()
+                                if not isinstance(key, str) or not key.strip() or value not in badge_ids
+                            }
+                            if invalid_aliases:
+                                add(errors, f"{chapter_id} has invalid legacy badge aliases: {invalid_aliases!r}")
             elif status == "live":
                 add(errors, f"{chapter_id} live chapter must define a progress contract")
 
@@ -348,9 +427,6 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
         game_count = inspector.game_count
         html_ids = inspector.html_ids
         duplicate_ids = sorted({item for item in html_ids if html_ids.count(item) > 1})
-        wide_table_count = inspector.wide_table_count
-        scroll_region_count = inspector.scroll_region_count
-        scroll_hint_count = inspector.scroll_hint_count
         progress_contract = chapter.get("progress")
         mission_total = progress_contract.get("total", chapter.get("levels")) if isinstance(progress_contract, dict) else chapter.get("levels")
         if level_count != chapter.get("levels"):
@@ -359,6 +435,14 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
             add(errors, f"{chapter_id} mission count {mission_count} != metadata progress total {mission_total}")
         if game_count != chapter.get("games"):
             add(errors, f"{chapter_id} game count {game_count} != metadata {chapter.get('games')}")
+        expected_plots = rule.get("plots")
+        if expected_plots is not None:
+            if inspector.plot_canvas_count != expected_plots:
+                add(errors, f"{chapter_id} scrollable plot count {inspector.plot_canvas_count} != contract {expected_plots}")
+            if inspector.accessible_plot_canvas_count != expected_plots:
+                add(errors, f"{chapter_id} accessible plot-region count {inspector.accessible_plot_canvas_count} != contract {expected_plots}")
+            if inspector.plot_key_count != expected_plots:
+                add(errors, f"{chapter_id} HTML plot-key count {inspector.plot_key_count} != contract {expected_plots}")
         if len(mission_ids) != mission_count:
             add(errors, f"{chapter_id} completion controls must declare data-mission")
         elif len(mission_ids) != len(set(mission_ids)):
@@ -368,10 +452,10 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
             add(errors, f"{chapter_id} page mission ids do not match curriculum progress mission_ids")
         if duplicate_ids:
             add(errors, f"{chapter_id} has duplicate HTML ids: {', '.join(duplicate_ids)}")
-        if scroll_region_count < wide_table_count:
-            add(errors, f"{chapter_id} has {wide_table_count} wide tables but only {scroll_region_count} accessible scroll regions")
-        if scroll_hint_count < wide_table_count:
-            add(errors, f"{chapter_id} has {wide_table_count} wide tables but only {scroll_hint_count} narrow-screen scroll hints")
+        if inspector.uncontained_wide_table_count:
+            add(errors, f"{chapter_id} has {inspector.uncontained_wide_table_count} wide tables outside accessible scroll regions")
+        if inspector.unhinted_wide_table_count:
+            add(errors, f"{chapter_id} has {inspector.unhinted_wide_table_count} wide tables without an associated narrow-screen hint")
         if inspector.safe_external_link_count < 3:
             add(errors, f"{chapter_id} must expose at least three safe external source links")
         for needle in (
@@ -395,13 +479,15 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
         expected_total = basis_progress["total"]
         if badge_count != expected_total:
             add(errors, f"Basis Quest badge count {badge_count} != metadata progress total {expected_total}")
-        wide_table_count = inspector.wide_table_count
-        scroll_region_count = inspector.scroll_region_count
-        scroll_hint_count = inspector.scroll_hint_count
-        if scroll_region_count < wide_table_count:
-            add(errors, f"Basis Quest has {wide_table_count} wide tables but only {scroll_region_count} accessible scroll regions")
-        if scroll_hint_count < wide_table_count:
-            add(errors, f"Basis Quest has {wide_table_count} wide tables but only {scroll_hint_count} narrow-screen scroll hints")
+        if inspector.quest_badge_ids != basis_progress.get("badge_ids"):
+            add(errors, "Basis Quest data-badge-id values do not match curriculum progress badge_ids")
+        expected_aliases = dict(zip(inspector.quest_badge_labels, inspector.quest_badge_ids))
+        if None in expected_aliases or expected_aliases != basis_progress.get("legacy_badge_aliases"):
+            add(errors, "Basis Quest data-badge labels do not match curriculum legacy_badge_aliases")
+        if inspector.uncontained_wide_table_count:
+            add(errors, f"Basis Quest has {inspector.uncontained_wide_table_count} wide tables outside accessible scroll regions")
+        if inspector.unhinted_wide_table_count:
+            add(errors, f"Basis Quest has {inspector.unhinted_wide_table_count} wide tables without an associated narrow-screen hint")
         basis_js = (SITE / "assets" / "basis-sets.js").read_text(encoding="utf-8")
         if basis_progress["storage_key"] not in basis_js:
             add(errors, "Basis Quest progress storage_key does not match site/assets/basis-sets.js")
@@ -410,6 +496,18 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
         add(errors, "GitHub validation workflow does not run Academy progress regression tests")
     if PAGES_WORKFLOW.exists() and "node scripts/test_academy_core.js" not in pages_workflow_text:
         add(errors, "GitHub Pages workflow does not gate deployment on Academy progress regression tests")
+    for path, text, label in (
+        (WORKFLOW, workflow_text, "GitHub validation workflow"),
+        (PAGES_WORKFLOW, pages_workflow_text, "GitHub Pages workflow"),
+    ):
+        if path.exists() and "node scripts/test_basis_progress.js" not in text:
+            add(errors, f"{label} does not run Basis Quest badge migration tests")
+    if PAGES_WORKFLOW.exists():
+        build_index = pages_workflow_text.find("python3 scripts/build_site.py")
+        link_index = pages_workflow_text.find("python3 scripts/check_site_links.py")
+        upload_index = pages_workflow_text.find("actions/upload-pages-artifact@")
+        if min(build_index, link_index, upload_index) < 0 or not build_index < link_index < upload_index:
+            add(errors, "GitHub Pages workflow must run built-site link checks after build and before artifact upload")
 
 
 def main() -> int:

@@ -52,6 +52,18 @@
       : [];
   }
 
+  function normalizeLegacyBadges(values, badgeIds, aliases = {}) {
+    const allowed = new Set(normalizeMissionIds(badgeIds));
+    const legacyAliases = aliases && typeof aliases === 'object' && !Array.isArray(aliases) ? aliases : {};
+    if (!Array.isArray(values) || !allowed.size) return [];
+    return [...new Set(values
+      .filter(item => typeof item === 'string')
+      .map(item => item.trim())
+      .filter(Boolean)
+      .map(item => allowed.has(item) ? item : legacyAliases[item])
+      .filter(item => allowed.has(item)))];
+  }
+
   function completedMissions(chapterId, validMissionIds = null) {
     const missions = loadProgress().chapters[chapterId]?.missions || [];
     if (!Array.isArray(validMissionIds)) return missions;
@@ -157,9 +169,7 @@
       let badges = [];
       try {
         const parsed = JSON.parse(window.localStorage.getItem(contract.storage_key) || '[]');
-        if (Array.isArray(parsed)) {
-          badges = [...new Set(parsed.filter(item => typeof item === 'string').map(item => item.trim()).filter(Boolean))];
-        }
+        badges = normalizeLegacyBadges(parsed, contract.badge_ids, contract.legacy_badge_aliases);
       } catch (_error) {
         badges = [];
       }
@@ -293,6 +303,7 @@
     saveProgress,
     completedMissions,
     setMission,
+    normalizeLegacyBadges,
     reconcileChapterMissions,
     reconcileCurriculumMissions,
     resetChapter,

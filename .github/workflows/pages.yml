@@ -31,8 +31,11 @@ jobs:
           node scripts/test_academy_models.js
           node scripts/test_qc_math_models.js
           node scripts/test_academy_core.js
+          node scripts/test_basis_progress.js
       - name: Build static site
         run: python3 scripts/build_site.py
+      - name: Check built site links and assets
+        run: python3 scripts/check_site_links.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

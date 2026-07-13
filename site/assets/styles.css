@@ -401,10 +401,20 @@ input[type="checkbox"] { width: auto; }
 .professor-note { margin: .8rem 0; padding: .85rem .95rem; border: 1px solid #ddd6fe; border-left: 5px solid #7c3aed; border-radius: .82rem; background: #f5f3ff; color: #3b0764; }
 .professor-note summary { cursor: pointer; font-weight: 900; }
 .misconception-card { margin: .8rem 0; padding: .85rem .95rem; border: 1px solid #fed7aa; border-left: 5px solid #f97316; border-radius: .82rem; background: #fff7ed; color: #7c2d12; }
-.academy-plot { min-height: 300px; }
+.academy-plot { min-width: 0; min-height: 300px; }
+.academy-plot-canvas { min-width: 0; max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; }
 .academy-plot > div > svg { display: block; width: 100%; height: auto; }
 .academy-plot > div > svg .axis-label,
 .academy-plot > div > svg .metric-label { font-size: 20px; }
+.academy-plot-key { display: flex; flex-wrap: wrap; gap: .45rem .9rem; margin: .65rem 0 .35rem; padding: 0; list-style: none; color: #344054; font-size: .84rem; font-weight: 750; }
+.academy-plot-key li { display: inline-flex; align-items: center; gap: .45rem; }
+.plot-key-line { position: relative; display: inline-block; flex: 0 0 2.5rem; height: 0; border-top: 3px solid currentColor; }
+.plot-key-line::after { position: absolute; right: -.1rem; top: -.32rem; display: block; content: ""; }
+.plot-key-line.solid::after { top: -.38rem; border-top: .32rem solid transparent; border-bottom: .32rem solid transparent; border-left: .55rem solid currentColor; }
+.plot-key-line.long-dash { border-top-style: dashed; }
+.plot-key-line.long-dash::after { width: .55rem; height: .55rem; border-radius: .08rem; background: currentColor; }
+.plot-key-line.dotted { border-top-style: dotted; }
+.plot-key-line.dotted::after { width: .58rem; height: .58rem; border-radius: 50%; background: currentColor; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -433,6 +443,8 @@ input[type="checkbox"] { width: auto; }
   .academy-progress-actions button { justify-self: stretch; }
   .academy-reset-note { justify-self: stretch; text-align: left; }
   .table-scroll-hint { display: block; margin: .35rem 0 .2rem; color: var(--muted); font-size: .76rem; font-weight: 750; }
+  .academy-plot > .academy-plot-canvas > svg { width: 560px; max-width: none; }
+  .academy-plot-key { display: grid; grid-template-columns: 1fr; font-size: .82rem; }
   .xp-panel { flex-direction: column; align-items: stretch; }
   main, .intro { padding-left: .9rem; padding-right: .9rem; }
   .choice-main { padding-left: .9rem; padding-right: .9rem; }

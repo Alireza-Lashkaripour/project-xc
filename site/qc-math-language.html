@@ -116,7 +116,7 @@
         \|\psi\|&amp;=\sqrt{\langle\psi|\psi\rangle}.
       \end{aligned}
     \]</div>
-    <div class="table-scroll" role="region" aria-label="Mathematical Language notation table" tabindex="0">
+    <div class="table-scroll" role="region" aria-label="Mathematical Language notation table" aria-describedby="math-notation-table-hint" tabindex="0">
       <table class="meta-table wide-table">
         <thead><tr><th>Symbol</th><th>Name</th><th>Role in quantum chemistry</th><th>Convention check</th></tr></thead>
         <tbody>
@@ -129,7 +129,7 @@
         </tbody>
       </table>
     </div>
-    <p class="table-scroll-hint">On a narrow screen, swipe the notation table horizontally.</p>
+    <p id="math-notation-table-hint" class="table-scroll-hint">On a narrow screen, swipe the notation table horizontally.</p>
     <div class="misconception-card"><strong>Coordinate list ≠ physical vector:</strong> changing an orthonormal basis changes the coefficients while preserving the represented state, norm, and basis-independent predictions.</div>
     <button class="academy-complete" data-mission="vector-coordinates" data-badge="Vector translator" type="button">Complete Level 2</button>
   </section>
@@ -154,7 +154,13 @@
         <div id="projectionReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
       </div>
       <figure class="basis-figure academy-plot">
-        <div id="projectionPlot" aria-label="Vector, projection, and orthogonal residual plot"></div>
+        <div id="projectionPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Vector, projection, and orthogonal residual plot" aria-describedby="projectionPlotKey projectionPlotHint"></div>
+        <ul id="projectionPlotKey" class="academy-plot-key" aria-label="Projection plot key">
+          <li><span class="plot-key-line solid" aria-hidden="true"></span><span>Vector \(v\): solid, arrow</span></li>
+          <li><span class="plot-key-line long-dash" aria-hidden="true"></span><span>Projection \(P_uv\): long-dashed, square</span></li>
+          <li><span class="plot-key-line dotted" aria-hidden="true"></span><span>Residual \(r\): dotted, circle</span></li>
+        </ul>
+        <p id="projectionPlotHint" class="table-scroll-hint">On a narrow screen, swipe the plot horizontally; the text key remains fixed.</p>
         <figcaption>The laboratory is real and two-dimensional so the geometry is visible. The same projector formula works in complex spaces when the bra includes complex conjugation.</figcaption>
       </figure>
     </div>
@@ -182,7 +188,13 @@
         <div id="rotationReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
       </div>
       <figure class="basis-figure academy-plot">
-        <div id="rotationPlot" aria-label="Fixed vector shown in a rotating orthonormal basis"></div>
+        <div id="rotationPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Fixed vector shown in a rotating orthonormal basis" aria-describedby="rotationPlotKey rotationPlotHint"></div>
+        <ul id="rotationPlotKey" class="academy-plot-key" aria-label="Basis-rotation plot key">
+          <li><span class="plot-key-line solid" aria-hidden="true"></span><span>Fixed vector \(v\): solid, arrow</span></li>
+          <li><span class="plot-key-line long-dash" aria-hidden="true"></span><span>First basis axis \(e_1'\): long-dashed</span></li>
+          <li><span class="plot-key-line dotted" aria-hidden="true"></span><span>Second basis axis \(e_2'\): dotted</span></li>
+        </ul>
+        <p id="rotationPlotHint" class="table-scroll-hint">On a narrow screen, swipe the plot horizontally; the text key remains fixed.</p>
         <figcaption>The solid physical-vector arrow stays fixed while the long-dashed and dotted coordinate axes rotate. Its coordinates change, but its length and reconstruction do not.</figcaption>
       </figure>
     </div>
@@ -251,7 +263,13 @@
         <div id="eigenReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
       </div>
       <figure class="basis-figure academy-plot">
-        <div id="eigenPlot" aria-label="Candidate vector, transformed vector, Rayleigh direction, eigenvalues, and residual"></div>
+        <div id="eigenPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Candidate vector, transformed vector, Rayleigh direction, eigenvalues, and residual" aria-describedby="eigenPlotKey eigenPlotHint"></div>
+        <ul id="eigenPlotKey" class="academy-plot-key" aria-label="Eigensystem plot key">
+          <li><span class="plot-key-line solid" aria-hidden="true"></span><span>Candidate \(v\): solid, arrow</span></li>
+          <li><span class="plot-key-line long-dash" aria-hidden="true"></span><span>Transformed \(Av\): long-dashed, square</span></li>
+          <li><span class="plot-key-line dotted" aria-hidden="true"></span><span>Rayleigh direction \(\lambda(v)v\): dotted, circle</span></li>
+        </ul>
+        <p id="eigenPlotHint" class="table-scroll-hint">On a narrow screen, swipe the plot horizontally; the text key and numerical readout remain fixed.</p>
         <figcaption>Turn the solid candidate \(v\) until the long-dashed \(Av\) lies on the same line. The dotted \(\lambda(v)v\) direction exposes the residual as a reproducible numerical diagnostic—not a color or visual guess.</figcaption>
       </figure>
     </div>
@@ -319,7 +337,12 @@
         <div id="fourierReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
       </div>
       <figure class="basis-figure academy-plot">
-        <div id="fourierPlot" aria-label="Gaussian position and Fourier-space density plots"></div>
+        <div id="fourierPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Gaussian position and Fourier-space density plots" aria-describedby="fourierPlotKey fourierPlotHint"></div>
+        <ul id="fourierPlotKey" class="academy-plot-key" aria-label="Fourier plot key">
+          <li><span class="plot-key-line solid" aria-hidden="true"></span><span>Position density: left \(x\) panel</span></li>
+          <li><span class="plot-key-line solid" aria-hidden="true"></span><span>Wave-number density: right \(k\) panel</span></li>
+        </ul>
+        <p id="fourierPlotHint" class="table-scroll-hint">On a narrow screen, swipe the two-panel plot horizontally; the text key remains fixed.</p>
         <figcaption>Both panels are normalized analytic Gaussian densities. Their horizontal axes and vertical scales are independent; the plotted width is a standard deviation, not a decorative envelope parameter.</figcaption>
       </figure>
     </div>
@@ -368,7 +391,7 @@
   <section class="lesson-card academy-source-card" aria-labelledby="sources-title">
     <p class="kicker">Verified source spine</p>
     <h2 id="sources-title">Where to continue and verify</h2>
-    <div class="table-scroll" role="region" aria-label="Mathematical Language source table" tabindex="0">
+    <div class="table-scroll" role="region" aria-label="Mathematical Language source table" aria-describedby="math-source-table-hint" tabindex="0">
       <table class="meta-table wide-table">
         <thead><tr><th>Source</th><th>Role in this chapter</th><th>Link</th></tr></thead>
         <tbody>
@@ -381,7 +404,7 @@
         </tbody>
       </table>
     </div>
-    <p class="table-scroll-hint">On a narrow screen, swipe the source table horizontally.</p>
+    <p id="math-source-table-hint" class="table-scroll-hint">On a narrow screen, swipe the source table horizontally.</p>
     <p class="help-text">The repository source ledger records access checks, exact inner-product and Fourier conventions, model boundaries, and the deterministic test contract.</p>
   </section>
 </main>

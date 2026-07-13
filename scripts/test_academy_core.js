@@ -56,6 +56,32 @@ function loadCore(initialStorage = {}) {
 const BASIS_KEY = 'project-xc-basis-quest-badges-v2';
 const FOUNDATION_MISSION_IDS = ['scale', 'state', 'probability', 'phase', 'operators', 'schrodinger', 'box', 'uncertainty', 'spin', 'many-electron-bridge'];
 const MATH_MISSION_IDS = ['complex-amplitudes', 'vector-coordinates', 'projection', 'basis-rotation', 'matrix-representation', 'eigensystem', 'hermitian-unitary', 'tensor-products', 'fourier-pairs', 'variational-bridge'];
+const BASIS_BADGE_IDS = [
+  'orbital-alphabet', 'gaussian-sculptor', 'ao-cartographer', 'contraction-smith', 'matrix-runner', 'family-scout',
+  'basis-loadout-designer', 'bsse-duelist', 'conditioning-guardian', 'cbs-extrapolator', 'scaling-survivor',
+  'basis-strategist', 'integral-engine-unlocked', 'gaussian-product-wizard', 'one-electron-operator-tuner',
+  'boys-function-spelunker', 'eri-tensor-raider', 'integral-grandmaster'
+];
+const BASIS_LEGACY_BADGE_ALIASES = Object.freeze({
+  'Orbital alphabet': 'orbital-alphabet',
+  'Gaussian sculptor': 'gaussian-sculptor',
+  'AO cartographer': 'ao-cartographer',
+  'Contraction smith': 'contraction-smith',
+  'Matrix runner': 'matrix-runner',
+  'Family scout': 'family-scout',
+  'Basis loadout designer': 'basis-loadout-designer',
+  'BSSE duelist': 'bsse-duelist',
+  'Conditioning guardian': 'conditioning-guardian',
+  'CBS extrapolator': 'cbs-extrapolator',
+  'Scaling survivor': 'scaling-survivor',
+  'Basis strategist': 'basis-strategist',
+  'Integral engine unlocked': 'integral-engine-unlocked',
+  'Gaussian product wizard': 'gaussian-product-wizard',
+  'One-electron operator tuner': 'one-electron-operator-tuner',
+  'Boys function spelunker': 'boys-function-spelunker',
+  'ERI tensor raider': 'eri-tensor-raider',
+  'Integral grandmaster': 'integral-grandmaster'
+});
 const liveChapter = {
   id: 'qc-foundations',
   status: 'live',
@@ -76,14 +102,22 @@ const basisChapter = {
     kind: 'legacy-badges',
     storage_key: BASIS_KEY,
     total: 18,
+    badge_ids: BASIS_BADGE_IDS,
+    legacy_badge_aliases: BASIS_LEGACY_BADGE_ALIASES,
     label: 'Basis Quest missions'
   }
 };
 
-const initialBadges = JSON.stringify(['Orbital alphabet', 'Gaussian sculptor', 'Orbital alphabet', '', 42]);
+const initialBadges = JSON.stringify(['Orbital alphabet', 'gaussian-sculptor', 'Orbital alphabet', 'retired-badge', '', 42]);
 const { academy, localStorage, events } = loadCore({ [BASIS_KEY]: initialBadges });
 assert(academy, 'ProjectXCAcademy must be exported');
 assert(typeof academy.chapterProgress === 'function', 'chapterProgress API must be exported');
+assert(typeof academy.normalizeLegacyBadges === 'function', 'legacy badge normalization API must be exported');
+equal(
+  Array.from(academy.normalizeLegacyBadges(JSON.parse(initialBadges), BASIS_BADGE_IDS, BASIS_LEGACY_BADGE_ALIASES)).join(','),
+  'orbital-alphabet,gaussian-sculptor',
+  'legacy labels must migrate in memory to stable ids while unknown badges are filtered'
+);
 
 academy.setMission('qc-foundations', 'scale', true);
 academy.setMission('qc-math-language', 'complex-amplitudes', true);
@@ -106,6 +140,10 @@ equal(basisProgress.total, 18, 'legacy Basis mission total');
 equal(basisProgress.kind, 'legacy-badges', 'legacy progress kind');
 equal(basisProgress.label, 'Basis Quest missions', 'legacy progress label');
 equal(basisProgress.readOnly, true, 'legacy bridge must be read-only');
+localStorage.setItem(BASIS_KEY, JSON.stringify(['retired-badge']));
+equal(academy.chapterProgress(basisChapter).completed, 0, 'unknown legacy badges must not inflate Academy progress');
+equal(localStorage.getItem(BASIS_KEY), JSON.stringify(['retired-badge']), 'Academy legacy bridge must remain read-only while filtering');
+localStorage.setItem(BASIS_KEY, initialBadges);
 
 const beforeReset = localStorage.getItem(BASIS_KEY);
 academy.resetChapter('qc-foundations');
@@ -140,8 +178,8 @@ equal(summary.fraction, 4 / 38, 'combined progress fraction');
 
 localStorage.setItem(BASIS_KEY, '{malformed json');
 equal(academy.chapterProgress(basisChapter).completed, 0, 'malformed legacy storage must recover safely');
-localStorage.setItem(BASIS_KEY, JSON.stringify(Array.from({ length: 30 }, (_, index) => `Badge ${index}`)));
-equal(academy.chapterProgress(basisChapter).completed, 18, 'legacy completion must be capped at metadata total');
+localStorage.setItem(BASIS_KEY, JSON.stringify([...BASIS_BADGE_IDS, 'retired-badge']));
+equal(academy.chapterProgress(basisChapter).completed, 18, 'all authoritative legacy badge ids must count while unknown ids remain filtered');
 
 equal(academy.chapterProgress({ id: 'qc-molecular-orbitals', status: 'existing-tool', levels: 12 }), null, 'tool without a progress contract must not invent progress');
 
