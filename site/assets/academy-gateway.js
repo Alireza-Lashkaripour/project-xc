@@ -50,15 +50,19 @@
 
     card.append(top, title, summary, metrics, renderPrerequisites(chapter, labels));
 
-    if (chapter.status === 'live') {
-      const done = ProjectXCAcademy.completedMissions(chapter.id).length;
+    const chapterProgress = ProjectXCAcademy.chapterProgress(chapter);
+    if (chapterProgress) {
       const progress = el('div', 'chapter-inline-progress');
-      progress.setAttribute('aria-label', `${chapter.title} progress`);
+      progress.setAttribute('aria-label', `${chapter.title}: ${chapterProgress.completed} of ${chapterProgress.total} ${chapterProgress.label}`);
       const bar = el('span', 'chapter-inline-progress-bar');
       const fill = el('span', 'chapter-inline-progress-fill');
-      fill.style.width = `${chapter.levels ? Math.min(100, 100 * done / chapter.levels) : 0}%`;
+      fill.style.width = `${100 * chapterProgress.fraction}%`;
       bar.append(fill);
-      progress.append(bar, el('strong', '', `${Math.min(done, chapter.levels)} / ${chapter.levels} missions`));
+      progress.append(
+        bar,
+        el('strong', '', `${chapterProgress.completed} / ${chapterProgress.total}`),
+        el('small', 'chapter-progress-source', `${chapterProgress.label}${chapterProgress.readOnly ? ' · read-only bridge' : ''}`)
+      );
       card.append(progress);
     }
 
@@ -119,7 +123,7 @@
     $('academyChapterCount').textContent = String(chapters.length);
     $('academyLiveCount').textContent = String(live + existing);
     $('academyPlannedCount').textContent = String(planned);
-    $('academyProgressText').textContent = `${summary.completed} / ${summary.available} live Academy missions`;
+    $('academyProgressText').textContent = `${summary.completed} / ${summary.available} available learning missions`;
     $('academyProgressFill').style.width = `${summary.fraction * 100}%`;
   }
 

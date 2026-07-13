@@ -926,5 +926,6 @@ Before any chapter changes from `in-development` to `live`:
 - [x] Deterministic scientific model tests created; 108 assertions pass locally.
 - [x] Local/browser/scientific QA completed, including desktop rendering, 390 px CDP emulation, accessibility semantics, 85 local-link checks, and progress persistence/reset recovery.
 - [x] GitHub Pages launch verified on 2026-07-13 at launch commit `138daefcb82f45450eb42604fa6333022e3cbf0d`: validation run `29224964111` and Pages run `29224964119` succeeded; cache-busted static and dynamic browser readback passed for the homepage, gateway, curriculum JSON, chapter, MathJax, and all five laboratories.
+- [x] Milestone 3 expert-tool integration completed: Academy backlinks cover the Basis, MO, XC, functional-detail, and methodology pages; the gateway reads all 18 existing Basis Quest badges through a metadata-declared, read-only compatibility bridge; Academy reset preserves the legacy badge key; and 20 deterministic progress assertions cover persistence, malformed recovery, combined summaries, capping, and reset isolation.
 
 This status block must be updated as milestones are completed; do not use memory entries as a substitute for repository state.

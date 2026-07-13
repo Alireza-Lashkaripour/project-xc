@@ -24,6 +24,7 @@ Local checks:
 python3 scripts/validate_data.py
 python3 scripts/validate_academy.py
 node scripts/test_academy_models.js
+node scripts/test_academy_core.js
 python3 scripts/build_site.py
 python3 scripts/check_site_links.py
 ```
@@ -37,3 +38,4 @@ Academy implementation roadmap:
 
 - Unified visual system: elegant scientific cockpit presentation with stronger typography, first-screen module summaries, and polished cards across all pages.
 - Advanced Integrals: Basis Set Quest now includes Gaussian product theorem, one-electron integrals, Boys functions, ERI tensor scaling/screening, recurrence algorithms, and derivative/gradient games.
+- Progress compatibility: the Academy gateway reads existing Basis Quest badges through a read-only bridge; resetting Academy chapter progress never deletes those badges.
