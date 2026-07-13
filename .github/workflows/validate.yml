@@ -14,9 +14,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Validate data
         run: python3 scripts/validate_data.py
+      - name: Validate Quantum Chemistry Academy
+        run: python3 scripts/validate_academy.py
+      - name: Test Quantum Foundations numerical models
+        run: node scripts/test_academy_models.js
       - name: Validate harness queue
         run: python3 scripts/harness_status.py
       - name: Build site
         run: python3 scripts/build_site.py
+      - name: Check built-site links and assets
+        run: python3 scripts/check_site_links.py

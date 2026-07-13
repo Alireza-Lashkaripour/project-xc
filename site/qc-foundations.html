@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project XC Academy — Quantum Foundations</title>
+  <meta name="description" content="Ten interactive levels introducing quantum states, probability, phase, operators, the Schrödinger equation, a particle in a box, uncertainty, spin, and many-electron chemistry.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      svg: { fontCache: 'global' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="academy-body">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header compact">
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="index.html">Project XC</a>
+    <a href="quantum-chemistry.html">Academy</a>
+    <a href="xc-functionals.html">XC Functionals</a>
+    <a href="mo-builder.html">MO Diagrams</a>
+    <a href="basis-sets.html">Basis Sets</a>
+  </nav>
+</header>
+<main id="main" class="prose guide-page academy-chapter-page">
+  <section class="academy-chapter-hero">
+    <div>
+      <p class="kicker">Academy A1 · Quantum Foundations</p>
+      <h1>From amplitudes to the quantum rules behind chemistry</h1>
+      <p class="lead">Build the language that every later electronic-structure method assumes: states, probability, phase, operators, eigenvalues, stationary states, uncertainty, spin, and indistinguishable electrons. Five laboratories make the equations visible without pretending that a toy model is a molecule.</p>
+      <div class="module-snapshot" aria-label="Quantum Foundations summary">
+        <div class="snapshot-card"><span>Interpret</span><strong>State → amplitude → probability</strong></div>
+        <div class="snapshot-card"><span>Calculate</span><strong>Operators, energies, uncertainty</strong></div>
+        <div class="snapshot-card"><span>Connect</span><strong>Spin and many-electron chemistry</strong></div>
+      </div>
+      <div class="quest-actions">
+        <a class="button" href="#level-1">Begin Level 1</a>
+        <a class="button secondary" href="quantum-chemistry.html">Academy roadmap</a>
+      </div>
+    </div>
+    <div class="quest-hud" aria-label="Chapter status">
+      <div><span>Levels</span><strong>10</strong></div>
+      <div><span>Interactive labs</span><strong>5</strong></div>
+      <div><span>Depth</span><strong>3 modes</strong></div>
+      <div><span>Goal</span><strong>Quantum sense</strong></div>
+    </div>
+  </section>
+
+  <section class="notice guide-callout">
+    <strong>Toy-model boundary:</strong> the games are exact only inside their declared simplified models—for example, a one-dimensional infinite well or an ideal two-state spin measurement. They are not molecular electronic-structure calculations and do not replace experimental evidence, a quantum-chemistry program, or a program manual.
+  </section>
+
+  <section class="card-panel chapter-progress-panel" aria-label="Quantum Foundations progress">
+    <div class="section-title">
+      <div>
+        <p class="kicker">Chapter map</p>
+        <h2>Ten missions from scale to antisymmetry</h2>
+      </div>
+      <strong id="chapterProgressText" class="results-meta">0 / 10 missions</strong>
+    </div>
+    <div class="xp-panel">
+      <div><strong>Browser-local progress</strong><span>Complete a mission after you can explain its central rule in your own words.</span></div>
+      <button id="resetChapterProgress" type="button" class="secondary">Reset this chapter</button>
+    </div>
+    <div class="basis-progress-bar" aria-hidden="true"><span id="chapterProgressFill"></span></div>
+    <div id="chapterBadgeShelf" class="badge-shelf" aria-live="polite"></div>
+    <div class="button-row academy-lesson-nav" aria-label="Jump to a Quantum Foundations level">
+      <button type="button" data-step="1">1 · Scale</button>
+      <button type="button" data-step="2">2 · State</button>
+      <button type="button" data-step="3">3 · Probability</button>
+      <button type="button" data-step="4">4 · Phase</button>
+      <button type="button" data-step="5">5 · Operators</button>
+      <button type="button" data-step="6">6 · Schrödinger</button>
+      <button type="button" data-step="7">7 · Box</button>
+      <button type="button" data-step="8">8 · Uncertainty</button>
+      <button type="button" data-step="9">9 · Spin</button>
+      <button type="button" data-step="10">10 · Electrons</button>
+    </div>
+  </section>
+
+  <section id="level-1" class="academy-lesson card-panel" data-step="1">
+    <p class="kicker">Level 1 · Change the scale</p>
+    <h2>Quantum chemistry begins where classical trajectories stop being enough</h2>
+    <p>A molecule contains nuclei and electrons. Classical mechanics remains useful for many nuclear motions, but an electron bound to a nucleus cannot be assigned a tiny planetary path that simultaneously explains atomic stability, discrete spectra, interference, and chemical bonding. Quantum mechanics replaces a definite microscopic path with a <strong>state</strong> and rules for predicting measurement probabilities.</p>
+    <div class="quest-grid three">
+      <article class="quest-card"><span class="quest-icon">10⁻¹⁰</span><h3>Atomic scale</h3><p>Typical bond lengths are measured in ångströms, while electronic energies are naturally compared in electronvolts or hartrees.</p></article>
+      <article class="quest-card"><span class="quest-icon">ℏ</span><h3>Quantum action</h3><p>Planck’s reduced constant sets the scale connecting wavelength, momentum, frequency, and energy.</p></article>
+      <article class="quest-card"><span class="quest-icon">a₀</span><h3>Atomic units</h3><p>Electronic-structure equations become compact when electron charge, electron mass, \(\hbar\), and the Coulomb constant are set to one.</p></article>
+    </div>
+    <div class="formula-line detail-formula">\[
+      e=m_e=\hbar=4\pi\varepsilon_0=1
+      \quad\Longrightarrow\quad
+      \hat H_\mathrm{electronic}=-\frac12\sum_i\nabla_i^2-\sum_{iA}\frac{Z_A}{r_{iA}}+\sum_{i&lt;j}\frac{1}{r_{ij}}+E_\mathrm{NN}.
+    \]</div>
+    <div class="misconception-card"><strong>Misconception warning:</strong> “quantum” does not mean that every macroscopic object visibly behaves randomly. It means the state and measurement rules are quantum; classical behavior can emerge through scale, environment, averaging, and decoherence.</div>
+    <details class="professor-note"><summary>Professor mode · what has already been assumed?</summary><p>The displayed molecular Hamiltonian is nonrelativistic, uses the Coulomb interaction, and treats clamped nuclei in the Born–Oppenheimer electronic problem. Spin, external fields, finite nuclear mass, relativity, and quantum electrodynamic corrections require additional structure.</p></details>
+    <button class="academy-complete" data-mission="scale" data-badge="Scale shifter" type="button">Complete Level 1</button>
+  </section>
+
+  <section id="level-2" class="academy-lesson card-panel" data-step="2">
+    <p class="kicker">Level 2 · State before picture</p>
+    <h2>A wavefunction is a state representation—not an electron’s drawn path</h2>
+    <p>A pure quantum state is written abstractly as \(|\psi\rangle\). In the position representation, the same state is the complex amplitude \(\psi(\mathbf r)=\langle\mathbf r|\psi\rangle\). A different basis gives different coefficients for the same physical state.</p>
+    <div class="formula-line detail-formula">\[
+      |\psi\rangle=\sum_k c_k|k\rangle,
+      \qquad c_k=\langle k|\psi\rangle,
+      \qquad \sum_k |c_k|^2=1.
+    \]</div>
+    <div class="definition-grid">
+      <div class="science-cell"><span>State</span><strong>\(|\psi\rangle\)</strong><small>The basis-independent physical ray for a pure state.</small></div>
+      <div class="science-cell"><span>Amplitude</span><strong>\(c_k\) or \(\psi(\mathbf r)\)</strong><small>A generally complex coefficient in a chosen representation.</small></div>
+      <div class="science-cell"><span>Probability</span><strong>\(|c_k|^2\)</strong><small>The Born-rule probability for an orthonormal outcome \(|k\rangle\).</small></div>
+      <div class="science-cell"><span>Phase</span><strong>\(e^{i\phi}\)</strong><small>Global phase is unobservable; relative phase controls interference.</small></div>
+    </div>
+    <div class="misconception-card"><strong>Do not say:</strong> “the wavefunction is the electron cloud.” The one-electron density is related to \(|\psi|^2\), while a many-electron wavefunction depends on all electron coordinates and spin labels simultaneously.</div>
+    <details class="professor-note"><summary>Professor mode · rays, mixed states, and representation</summary><p>Normalized vectors differing only by a global phase represent the same pure physical state. Statistical mixtures require a density operator \(\hat\rho\), not a single state vector. Later electronic-structure chapters will also distinguish many-electron wavefunctions, one-particle densities, natural orbitals, and Kohn–Sham orbitals.</p></details>
+    <button class="academy-complete" data-mission="state" data-badge="State interpreter" type="button">Complete Level 2</button>
+  </section>
+
+  <section id="level-3" class="academy-lesson card-panel" data-step="3">
+    <p class="kicker">Level 3 · Interactive lab 1</p>
+    <h2>Probability and normalization: make the total chance equal one</h2>
+    <p>The probability of detecting a particle in a region is obtained from the squared magnitude. A trial amplitude must be normalizable before it can represent a bound-state probability distribution:</p>
+    <div class="formula-line">\[
+      P(a\le x\le b)=\int_a^b |\psi(x)|^2\,dx,
+      \qquad \int_{-\infty}^{\infty}|\psi(x)|^2\,dx=1.
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Trial shape
+          <select id="normShape">
+            <option value="gaussian">Gaussian packet</option>
+            <option value="exponential">Two-sided exponential</option>
+            <option value="two-lobe">Antisymmetric two-lobe state</option>
+          </select>
+        </label>
+        <label>Width parameter<input id="normWidth" type="range" min="0.35" max="2.6" step="0.05" value="1.0"></label>
+        <label>Raw amplitude scale<input id="normScale" type="range" min="0.25" max="2.5" step="0.05" value="1.45"></label>
+        <div id="normalizationReadout" class="orbital-info" aria-live="polite"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="normalizationPlot" aria-label="Raw and normalized probability density plot"></div>
+        <figcaption>Orange is the raw \(|\psi|^2\); blue is the numerically normalized density. The vertical scale is recomputed when the shape changes.</figcaption>
+      </figure>
+    </div>
+    <div class="misconception-card"><strong>Misconception warning:</strong> normalization does not determine the shape. It fixes one overall magnitude after the Hamiltonian, boundary conditions, or a chosen trial model determines the form.</div>
+    <button class="academy-complete" data-mission="probability" data-badge="Normalization keeper" type="button">Complete Level 3</button>
+  </section>
+
+  <section id="level-4" class="academy-lesson card-panel" data-step="4">
+    <p class="kicker">Level 4 · Interactive lab 2</p>
+    <h2>Phase: invisible globally, decisive relatively</h2>
+    <p>Multiplying the entire state by \(e^{i\phi}\) changes no probability. Placing a phase between two alternatives changes their cross term and therefore their interference:</p>
+    <div class="formula-line">\[
+      |e^{i\phi}\psi|^2=|\psi|^2,
+      \qquad
+      |\phi_A+e^{i\delta}\phi_B|^2=|\phi_A|^2+|\phi_B|^2+2\operatorname{Re}\!\left[e^{i\delta}\phi_A^*\phi_B\right].
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Phase experiment
+          <select id="phaseMode">
+            <option value="global">Global phase: density must not change</option>
+            <option value="relative">Relative phase: interference changes</option>
+          </select>
+        </label>
+        <label>Phase angle \(\phi\) or \(\delta\)<input id="phaseAngle" type="range" min="0" max="6.283185" step="0.02" value="0"></label>
+        <label>Opposing wave number \(k\)<input id="phaseWaveNumber" type="range" min="0.5" max="5" step="0.05" value="2.1"></label>
+        <div id="phaseReadout" class="orbital-info" aria-live="polite"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="phasePlot" aria-label="Global and relative phase interference plot"></div>
+        <figcaption>The reference density is dashed. In global mode it lies exactly under the current density; in relative mode the fringes shift.</figcaption>
+      </figure>
+    </div>
+    <details class="professor-note"><summary>Professor mode · why phase still matters when orbitals can change sign</summary><p>An isolated orbital’s overall sign is a convention, but relative phases among basis functions, determinants, or coupled pathways determine interference and matrix elements. Orbital rotations within an occupied or degenerate subspace can change pictures without changing the represented many-electron state or invariant observables.</p></details>
+    <button class="academy-complete" data-mission="phase" data-badge="Phase navigator" type="button">Complete Level 4</button>
+  </section>
+
+  <section id="level-5" class="academy-lesson card-panel" data-step="5">
+    <p class="kicker">Level 5 · Measurement language</p>
+    <h2>Operators connect states to possible measurement outcomes</h2>
+    <p>An observable is represented by a Hermitian operator. Its eigenvalues are possible outcomes. A general state need not be an eigenstate, so one measurement can yield different eigenvalues with probabilities set by the expansion coefficients.</p>
+    <div class="formula-line detail-formula">\[
+      \hat A|a_k\rangle=a_k|a_k\rangle,
+      \qquad |\psi\rangle=\sum_k c_k|a_k\rangle,
+      \qquad P(a_k)=|c_k|^2,
+      \qquad \langle A\rangle=\langle\psi|\hat A|\psi\rangle.
+    \]</div>
+    <div class="matrix-flow" aria-label="State to measurement flow">
+      <div>prepare \(|\psi\rangle\)</div><span>→</span><div>choose observable \(\hat A\)</div><span>→</span><div>outcome \(a_k\)</div><span>→</span><div>repeat → distribution</div>
+    </div>
+    <table class="meta-table wide-table">
+      <thead><tr><th>Operator</th><th>One-dimensional form</th><th>What its eigenvalue represents</th></tr></thead>
+      <tbody>
+        <tr><th>Position</th><td>\(\hat x=x\)</td><td>A position outcome.</td></tr>
+        <tr><th>Momentum</th><td>\(\hat p_x=-i\hbar\,d/dx\)</td><td>A momentum outcome.</td></tr>
+        <tr><th>Hamiltonian</th><td>\(\hat H=\hat T+\hat V\)</td><td>An energy outcome for a time-independent system.</td></tr>
+      </tbody>
+    </table>
+    <div class="misconception-card"><strong>Expectation value ≠ guaranteed outcome:</strong> \(\langle A\rangle\) is the mean of many identically prepared measurements. It may lie between eigenvalues and need not appear in any single measurement.</div>
+    <details class="professor-note"><summary>Professor mode · noncommuting observables</summary><p>If \([\hat A,\hat B]\ne0\), the operators need not share a complete eigenbasis. This algebraic incompatibility—not merely an imperfect instrument—is the source of the standard uncertainty lower bound.</p></details>
+    <button class="academy-complete" data-mission="operators" data-badge="Operator translator" type="button">Complete Level 5</button>
+  </section>
+
+  <section id="level-6" class="academy-lesson card-panel" data-step="6">
+    <p class="kicker">Level 6 · Dynamics and stationary states</p>
+    <h2>The Schrödinger equation tells amplitudes how to evolve</h2>
+    <div class="formula-line detail-formula">\[
+      i\hbar\frac{\partial}{\partial t}|\Psi(t)\rangle=\hat H(t)|\Psi(t)\rangle.
+    \]</div>
+    <p>For a time-independent Hamiltonian, an energy eigenstate has a spatial part \(\psi_n\) and a pure phase time factor. Its probability density is stationary even though the state carries time-dependent phase:</p>
+    <div class="formula-line">\[
+      \hat H\psi_n=E_n\psi_n,
+      \qquad \Psi_n(\mathbf r,t)=\psi_n(\mathbf r)e^{-iE_nt/\hbar},
+      \qquad |\Psi_n(\mathbf r,t)|^2=|\psi_n(\mathbf r)|^2.
+    \]</div>
+    <div class="quest-grid three">
+      <article class="quest-card"><span class="quest-icon">H</span><h3>Hamiltonian</h3><p>Encodes kinetic energy, interactions, fields, constraints, and the model boundary.</p></article>
+      <article class="quest-card"><span class="quest-icon">E</span><h3>Stationary state</h3><p>An energy eigenstate changes by phase while its probability density remains fixed.</p></article>
+      <article class="quest-card"><span class="quest-icon">Σ</span><h3>Superposition</h3><p>A mixture of different energies accumulates relative phases and can produce time-dependent observables.</p></article>
+    </div>
+    <div class="misconception-card"><strong>“Stationary” does not mean classical stillness.</strong> It means the probability distribution and time-independent observables do not change for an energy eigenstate of a time-independent Hamiltonian.</div>
+    <details class="professor-note"><summary>Professor mode · time dependence and electronic structure</summary><p>Ground-state quantum chemistry usually solves a stationary electronic eigenproblem under clamped nuclei. Spectroscopy, response, nonadiabatic dynamics, and explicitly driven systems require time dependence or response equations, and approximate electronic states may not be eigenstates of the exact Hamiltonian.</p></details>
+    <button class="academy-complete" data-mission="schrodinger" data-badge="Schrödinger reader" type="button">Complete Level 6</button>
+  </section>
+
+  <section id="level-7" class="academy-lesson card-panel" data-step="7">
+    <p class="kicker">Level 7 · Interactive lab 3</p>
+    <h2>Particle in a box: boundary conditions quantize energy</h2>
+    <p>Inside an infinite one-dimensional well from \(0\) to \(L\), the wavefunction vanishes at both walls. Only standing waves with an integer number of half-wavelengths satisfy both boundaries:</p>
+    <div class="formula-line">\[
+      \psi_n(x)=\sqrt{\frac{2}{L}}\sin\!\left(\frac{n\pi x}{L}\right),
+      \qquad E_n=\frac{n^2\pi^2\hbar^2}{2mL^2},
+      \qquad n=1,2,3,\ldots
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Quantum number \(n\)<input id="boxN" type="range" min="1" max="7" step="1" value="1"></label>
+        <label>Box length \(L\) in relative units<input id="boxLength" type="range" min="0.5" max="3" step="0.05" value="1"></label>
+        <label>Plot
+          <select id="boxDisplay"><option value="both">Wavefunction and density</option><option value="wave">Wavefunction only</option><option value="density">Probability density only</option></select>
+        </label>
+        <div id="boxReadout" class="orbital-info" aria-live="polite"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="boxPlot" aria-label="Particle in a one-dimensional infinite box plot"></div>
+        <figcaption>Blue is \(\psi_n\), orange is a visually rescaled \(|\psi_n|^2\), and vertical marks identify interior nodes. Energy is reported relative to \(E_1\) for \(L=1\).</figcaption>
+      </figure>
+    </div>
+    <div class="misconception-card"><strong>Quantization is not an arbitrary rule pasted onto classical mechanics.</strong> Here it follows from the wave equation plus boundary conditions. Different potentials produce different spectra and eigenfunctions.</div>
+    <button class="academy-complete" data-mission="box" data-badge="Boundary-condition solver" type="button">Complete Level 7</button>
+  </section>
+
+  <section id="level-8" class="academy-lesson card-panel" data-step="8">
+    <p class="kicker">Level 8 · Interactive lab 4</p>
+    <h2>Uncertainty is a width trade-off, not just measurement clumsiness</h2>
+    <p>For any state, the standard deviations of two observables obey the Robertson relation. Position and momentum satisfy:</p>
+    <div class="formula-line detail-formula">\[
+      \sigma_A\sigma_B\ge\frac12\left|\langle[\hat A,\hat B]\rangle\right|,
+      \qquad [\hat x,\hat p_x]=i\hbar,
+      \qquad \sigma_x\sigma_p\ge\frac{\hbar}{2}.
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Position standard deviation \(\sigma_x\)<input id="uncertaintySigma" type="range" min="0.25" max="2.8" step="0.05" value="0.8"></label>
+        <label>Packet center \(x_0\)<input id="uncertaintyCenter" type="range" min="-2" max="2" step="0.05" value="0"></label>
+        <label>Mean wave number \(k_0\)<input id="uncertaintyK" type="range" min="-4" max="4" step="0.1" value="1.2"></label>
+        <div id="uncertaintyReadout" class="orbital-info" aria-live="polite"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="uncertaintyPlot" aria-label="Gaussian position and momentum uncertainty plots"></div>
+        <figcaption>This minimum-uncertainty Gaussian uses \(\hbar=1\). The two panels use their own horizontal coordinates and normalized vertical scales.</figcaption>
+      </figure>
+    </div>
+    <div class="misconception-card"><strong>Convention warning:</strong> width parameters, variance, standard deviation, and full width at half maximum are not interchangeable. This game defines \(\sigma_x\) as the standard deviation of \(|\psi(x)|^2\).</div>
+    <details class="professor-note"><summary>Professor mode · equality is special</summary><p>The lower bound follows from operator algebra, but equality is not automatic. The displayed Gaussian is chosen to saturate \(\sigma_x\sigma_p=\hbar/2\). Excited, truncated, multimodal, or otherwise non-Gaussian states generally have a larger product.</p></details>
+    <button class="academy-complete" data-mission="uncertainty" data-badge="Uncertainty balancer" type="button">Complete Level 8</button>
+  </section>
+
+  <section id="level-9" class="academy-lesson card-panel" data-step="9">
+    <p class="kicker">Level 9 · Interactive lab 5</p>
+    <h2>Spin-1/2 is a two-state quantum degree of freedom</h2>
+    <p>An electron spin state can be expressed in the \(z\)-measurement basis as a normalized two-component state:</p>
+    <div class="formula-line">\[
+      |\psi\rangle=\cos\!\left(\frac{\theta}{2}\right)|\uparrow_z\rangle+e^{i\phi}\sin\!\left(\frac{\theta}{2}\right)|\downarrow_z\rangle.
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Polar angle \(\theta\)<input id="spinTheta" type="range" min="0" max="180" step="1" value="55"></label>
+        <label>Azimuthal phase \(\phi\)<input id="spinPhi" type="range" min="0" max="360" step="1" value="35"></label>
+        <label>Measurement axis
+          <select id="spinAxis"><option value="z">z axis</option><option value="x">x axis</option><option value="y">y axis</option></select>
+        </label>
+        <label>Repeated preparations<input id="spinTrials" type="range" min="20" max="1000" step="20" value="200"></label>
+        <div id="spinReadout" class="orbital-info" aria-live="polite"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="spinPlot" aria-label="Spin state and measurement probability plot"></div>
+        <figcaption>The circle is a Bloch-sphere projection; bars are ideal measurement probabilities. Expected counts are probabilities multiplied by the selected number of repeated preparations, not fabricated random experimental data.</figcaption>
+      </figure>
+    </div>
+    <div class="misconception-card"><strong>Spin is not literally a tiny charged ball rotating in ordinary space.</strong> It is intrinsic angular momentum with quantum transformation and measurement rules. The Bloch sphere represents a two-state space, not the electron’s physical surface.</div>
+    <details class="professor-note"><summary>Professor mode · chemistry connection</summary><p>Many-electron spin adaptation, restricted/open-shell references, spin contamination, exchange, intersystem crossing, and spin–orbit coupling all build on this degree of freedom. A single spinor’s phase conventions must not be confused with observable many-electron spin populations.</p></details>
+    <button class="academy-complete" data-mission="spin" data-badge="Spin navigator" type="button">Complete Level 9</button>
+  </section>
+
+  <section id="level-10" class="academy-lesson card-panel" data-step="10">
+    <p class="kicker">Level 10 · Bridge to quantum chemistry</p>
+    <h2>Electrons are indistinguishable fermions, so the many-electron state must be antisymmetric</h2>
+    <p>For two electron labels, exchanging all spatial and spin coordinates reverses the wavefunction sign:</p>
+    <div class="formula-line detail-formula">\[
+      \Psi(1,2)=-\Psi(2,1).
+    \]</div>
+    <p>A Slater determinant enforces this rule automatically. The Pauli exclusion principle follows because a determinant vanishes if two columns—or two occupied spin orbitals—are identical.</p>
+    <div class="formula-line">\[
+      \Psi(x_1,\ldots,x_N)=\frac{1}{\sqrt{N!}}
+      \det\!\left[\chi_p(x_q)\right].
+    \]</div>
+    <div class="equation-roadmap quest-grid three">
+      <article class="quest-card"><span class="quest-icon">1</span><h3>One electron</h3><p>States, probability, phase, operators, and solvable potentials establish the language.</p></article>
+      <article class="quest-card"><span class="quest-icon">N</span><h3>Many electrons</h3><p>Antisymmetry, electron repulsion, spin, and combinatorial state spaces create the electronic-structure problem.</p></article>
+      <article class="quest-card"><span class="quest-icon">≈</span><h3>Methods</h3><p>Basis sets, Hartree–Fock, DFT, correlation, multireference, and excited-state theories are controlled approximations to that problem.</p></article>
+    </div>
+    <div class="notice quest-finale"><strong>Final rule:</strong> never judge a quantum-chemistry method by a single attractive orbital picture or energy. Ask what state, Hamiltonian, basis, approximation, observable, convention, and validation evidence produced the result.</div>
+    <details class="professor-note"><summary>Professor mode · what this chapter intentionally postponed</summary><p>Rigged Hilbert spaces, continuous spectra, self-adjoint domains, identical-particle Fock space, second quantization, relativistic spinors, density operators, open-system dynamics, and measurement theory all require deeper treatment. The Academy roadmap introduces those ideas only when their mathematical role becomes necessary.</p></details>
+    <div class="quest-actions">
+      <a class="button secondary" href="basis-sets.html">Continue to Basis Sets and Integrals</a>
+      <a class="button secondary" href="mo-diagrams.html">Open the MO theory guide</a>
+      <a class="button secondary" href="quantum-chemistry.html">Return to the roadmap</a>
+    </div>
+    <button class="academy-complete" data-mission="many-electron-bridge" data-badge="Many-electron bridge" type="button">Complete Level 10</button>
+  </section>
+
+  <section class="lesson-card academy-source-card" aria-labelledby="sources-title">
+    <p class="kicker">Verified source spine</p>
+    <h2 id="sources-title">Where to continue and verify</h2>
+    <div class="table-scroll" role="region" aria-label="Quantum Foundations source table" tabindex="0">
+    <table class="meta-table wide-table">
+      <thead><tr><th>Source</th><th>Role in this chapter</th><th>Link</th></tr></thead>
+      <tbody>
+        <tr><th>NIST / CODATA constants</th><td>Physical constants and atomic-unit anchor.</td><td><a href="https://physics.nist.gov/cuu/Constants/index.html" target="_blank" rel="noopener">physics.nist.gov/cuu/Constants</a></td></tr>
+        <tr><th>OpenStax University Physics 3, Chapter 7</th><td>Open introductory route through quantum probability, uncertainty, and solvable models.</td><td><a href="https://openstax.org/books/university-physics-volume-3/pages/7-introduction" target="_blank" rel="noopener">Chapter 7 introduction</a></td></tr>
+        <tr><th>OpenStax particle in a box</th><td>Infinite-well model and quantized energies.</td><td><a href="https://openstax.org/books/university-physics-volume-3/pages/7-4-the-quantum-particle-in-a-box" target="_blank" rel="noopener">Section 7.4</a></td></tr>
+        <tr><th>OpenStax electron spin</th><td>Spin-1/2 measurement foundation.</td><td><a href="https://openstax.org/books/university-physics-volume-3/pages/8-3-electron-spin" target="_blank" rel="noopener">Section 8.3</a></td></tr>
+        <tr><th>IUPAC Gold Book</th><td>Chemistry terminology anchor for wavefunction.</td><td><a href="https://goldbook.iupac.org/terms/view/W06686" target="_blank" rel="noopener">Wavefunction entry</a></td></tr>
+        <tr><th>MIT OpenCourseWare 5.61</th><td>Open deeper physical-chemistry course route.</td><td><a href="https://ocw.mit.edu/courses/5-61-physical-chemistry-fall-2017/" target="_blank" rel="noopener">5.61 Physical Chemistry</a></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="help-text">The repository source ledger records access checks and the exact conventions used by the five games.</p>
+  </section>
+</main>
+<footer class="footer"><p>Project XC Academy · Quantum Foundations. Mission progress is stored only in this browser and is not a certification of mastery.</p></footer>
+<script src="assets/academy-core.js"></script>
+<script src="assets/qc-foundations.js"></script>
+</body>
+</html>

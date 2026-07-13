@@ -14,9 +14,10 @@ SITE = ROOT / "site"
 
 
 def main() -> int:
-    result = subprocess.run([sys.executable, str(ROOT / "scripts" / "validate_data.py")], cwd=ROOT, text=True)
-    if result.returncode != 0:
-        return result.returncode
+    for validator in ("validate_data.py", "validate_academy.py"):
+        result = subprocess.run([sys.executable, str(ROOT / "scripts" / validator)], cwd=ROOT, text=True)
+        if result.returncode != 0:
+            return result.returncode
     if PUBLIC.exists():
         shutil.rmtree(PUBLIC)
     shutil.copytree(SITE, PUBLIC)
@@ -27,6 +28,9 @@ def main() -> int:
         snapshot = json.load(handle)
     with open(ROOT / "data" / "functionals.seed.json", encoding="utf-8") as handle:
         seed = json.load(handle)
+    with open(ROOT / "data" / "academy-curriculum.json", encoding="utf-8") as handle:
+        academy = json.load(handle)
+    academy_chapters = [chapter for track in academy["tracks"] for chapter in track["chapters"]]
     summary = {
         "libxc_snapshot_count": len(snapshot),
         "curated_seed_count": len(seed),
@@ -37,6 +41,9 @@ def main() -> int:
         "formula_count": sum(1 for e in snapshot if e.get("formula")) + sum(1 for e in seed if e.get("formula")),
         "curated_formula_count": sum(1 for e in seed if e.get("formula")),
         "libxc_alias_count": sum(len(e.get("aliases", [])) for e in snapshot),
+        "academy_track_count": len(academy["tracks"]),
+        "academy_chapter_count": len(academy_chapters),
+        "academy_available_count": sum(chapter["status"] in {"live", "existing-tool"} for chapter in academy_chapters),
     }
     with open(PUBLIC / "generated" / "summary.json", "w", encoding="utf-8") as handle:
         json.dump(summary, handle, indent=2, ensure_ascii=False)
@@ -47,6 +54,7 @@ def main() -> int:
     print(f"Built Project XC site into {PUBLIC}")
     print(f"- curated records: {len(seed)}")
     print(f"- Libxc snapshot records: {len(snapshot)}")
+    print(f"- Academy tracks/chapters: {len(academy['tracks'])}/{len(academy_chapters)}")
     return 0
 
 

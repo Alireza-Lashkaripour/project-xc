@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project XC — Quantum Chemistry Academy</title>
+  <meta name="description" content="An interactive, source-grounded Quantum Chemistry Academy from first principles through professor-level electronic-structure theory.">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="academy-body">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header compact">
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="index.html">Project XC</a>
+    <a href="quantum-chemistry.html" aria-current="page">Academy</a>
+    <a href="xc-functionals.html">XC Functionals</a>
+    <a href="mo-builder.html">MO Diagrams</a>
+    <a href="basis-sets.html">Basis Sets</a>
+  </nav>
+</header>
+<main id="main" class="academy-page">
+  <section class="academy-hero">
+    <div>
+      <p class="kicker">Project XC Quantum Chemistry Academy</p>
+      <h1>Learn quantum chemistry from the first amplitude to research-level methods</h1>
+      <p class="lead">A connected curriculum of visual explanations, equations, derivations, scientific games, diagnostic challenges, and professor-mode caveats. Start with no quantum background, then build toward electronic-structure research without hiding the mathematics.</p>
+      <div class="quest-actions">
+        <a class="button" href="qc-foundations.html">Start Quantum Foundations</a>
+        <a class="button secondary" href="#curriculum">Explore all tracks</a>
+        <a class="button secondary" href="methodology.html">Scientific methodology</a>
+      </div>
+      <p class="academy-privacy-note"><strong>Local progress, not certification:</strong> mission completion is saved only in this browser. It is a navigation aid, not a degree, grade, or claim of mastery.</p>
+    </div>
+    <div class="academy-hud" aria-label="Academy status summary">
+      <div><span>Curriculum</span><strong id="academyChapterCount">27</strong><small>connected chapters</small></div>
+      <div><span>Available now</span><strong id="academyLiveCount">4</strong><small>chapter/tool routes</small></div>
+      <div><span>Roadmap</span><strong id="academyPlannedCount">23</strong><small>planned chapters</small></div>
+      <div><span>Depth</span><strong>3 modes</strong><small>starter · practitioner · professor</small></div>
+    </div>
+  </section>
+
+  <section class="academy-start-grid" aria-labelledby="start-title">
+    <div class="section-title">
+      <div>
+        <p class="kicker">Choose your entry point</p>
+        <h2 id="start-title">Start at the beginning or open an existing expert tool</h2>
+      </div>
+    </div>
+    <div class="academy-entry-grid">
+      <a class="academy-entry-card primary" href="qc-foundations.html">
+        <span class="choice-label">Start here</span>
+        <strong>Quantum Foundations</strong>
+        <span>Probability, phase, operators, the Schrödinger equation, uncertainty, spin, and five interactive laboratories.</span>
+      </a>
+      <a class="academy-entry-card" href="basis-sets.html">
+        <span class="choice-label">Existing 18-level quest</span>
+        <strong>Basis Sets and Integrals</strong>
+        <span>Gaussian functions, conditioning, basis choice, one- and two-electron integrals, screening, and recurrences.</span>
+      </a>
+      <a class="academy-entry-card" href="mo-builder.html">
+        <span class="choice-label">Interactive builder</span>
+        <strong>Molecular Orbitals</strong>
+        <span>Construct, rotate, inspect, and diagnose molecular-orbital diagrams with symmetry and active-space guidance.</span>
+      </a>
+      <a class="academy-entry-card" href="xc-functionals.html">
+        <span class="choice-label">Evidence catalog</span>
+        <strong>XC Functionals</strong>
+        <span>Search functional ingredients, formulas, aliases, references, provenance, and known ambiguities.</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="card-panel academy-progress-panel" aria-labelledby="progress-title">
+    <div>
+      <p class="kicker">Your browser-local journey</p>
+      <h2 id="progress-title">Academy progress</h2>
+      <p id="academyProgressText">0 / 10 live Academy missions</p>
+    </div>
+    <div class="academy-progress-actions">
+      <div class="basis-progress-bar" aria-hidden="true"><span id="academyProgressFill"></span></div>
+      <button id="resetAcademyProgress" type="button" class="secondary">Reset Academy progress</button>
+    </div>
+  </section>
+
+  <section class="notice guide-callout academy-boundary">
+    <strong>Scientific boundary:</strong> the Academy uses exact formulas where a model permits them and clearly labeled qualitative models where it does not. Interactive plots are teaching instruments—not replacements for a production quantum-chemistry calculation, a program manual, or peer-reviewed evidence.
+  </section>
+
+  <section id="curriculum" aria-labelledby="curriculum-title">
+    <div class="academy-curriculum-intro">
+      <div>
+        <p class="kicker">Dependency-aware roadmap</p>
+        <h2 id="curriculum-title">Eight tracks from foundations to the research frontier</h2>
+        <p>Live and existing-tool chapters open directly. Planned routes are shown without links until their equations, interactions, sources, scientific checks, accessibility, and deployment gates pass.</p>
+      </div>
+      <a class="button secondary" href="https://github.com/Alireza-Lashkaripour/project-xc/blob/main/docs/plans/2026-07-13-quantum-chemistry-academy-master-plan.md" target="_blank" rel="noopener">Read the full master plan</a>
+    </div>
+    <p id="academyLoadState" class="academy-load-state" role="status">Loading the audited curriculum map…</p>
+    <div id="academyTracks" class="academy-track-grid" aria-live="polite">
+      <section class="academy-track academy-fallback">
+        <h2>Curriculum map requires JavaScript</h2>
+        <p>The primary start links above remain usable. Enable JavaScript to display all planned tracks, prerequisites, chapter counts, and browser-local progress.</p>
+      </section>
+    </div>
+  </section>
+
+  <section class="academy-release-logic card-panel" aria-labelledby="release-title">
+    <p class="kicker">Release logic</p>
+    <h2 id="release-title">What “live” means in this Academy</h2>
+    <div class="quest-grid three">
+      <article class="quest-card"><span class="quest-icon">∑</span><h3>Scientific gate</h3><p>Symbols, assumptions, conventions, toy boundaries, numerical sanity checks, and source ledgers are reviewed.</p></article>
+      <article class="quest-card"><span class="quest-icon">⌨</span><h3>Interaction gate</h3><p>Controls, SVGs, progress, keyboard behavior, mobile layout, reduced motion, and browser console checks pass.</p></article>
+      <article class="quest-card"><span class="quest-icon">✓</span><h3>Deployment gate</h3><p>Validation, static build, GitHub Actions, live readback, and cache-busted interaction checks all pass.</p></article>
+    </div>
+  </section>
+</main>
+<footer class="footer"><p>Project XC Quantum Chemistry Academy — an open, auditable learning roadmap connected to Project XC’s functional catalog, MO tools, Basis Set Quest, and scientific methodology.</p></footer>
+<script src="assets/academy-core.js"></script>
+<script src="assets/academy-gateway.js"></script>
+</body>
+</html>

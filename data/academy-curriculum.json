@@ -1,0 +1,524 @@
+{
+  "version": 1,
+  "title": "Project XC Quantum Chemistry Academy",
+  "description": "A source-grounded, interactive path from first quantum ideas to professor-level electronic-structure theory and research practice.",
+  "progress_notice": "Local progress, not certification",
+  "tracks": [
+    {
+      "id": "foundations",
+      "title": "Foundations",
+      "description": "Build the mathematical and physical language required by every later electronic-structure method.",
+      "chapters": [
+        {
+          "id": "qc-foundations",
+          "order": 1,
+          "title": "Quantum Foundations",
+          "route": "qc-foundations.html",
+          "status": "live",
+          "level": "Starter to professor bridge",
+          "levels": 10,
+          "games": 5,
+          "prerequisites": [],
+          "summary": "Learn states, probability, phase, operators, stationary states, uncertainty, spin, and the bridge to many-electron quantum chemistry.",
+          "outcomes": [
+            "Interpret a wavefunction without treating it as a classical trajectory",
+            "Connect operators and eigenvalues to measurable quantities",
+            "Use simple solvable models while stating their limitations"
+          ]
+        },
+        {
+          "id": "qc-math-language",
+          "order": 2,
+          "title": "Mathematical Language",
+          "route": "qc-math-language.html",
+          "status": "planned",
+          "level": "Starter to graduate",
+          "levels": 10,
+          "games": 4,
+          "prerequisites": ["qc-foundations"],
+          "summary": "Master complex vectors, inner products, matrices, basis changes, tensor products, Fourier pairs, and variational calculus through visual problems.",
+          "outcomes": [
+            "Translate between vector, function, and matrix representations",
+            "Recognize Hermitian and unitary transformations",
+            "Follow the linear algebra used by electronic-structure algorithms"
+          ]
+        },
+        {
+          "id": "qc-approximations",
+          "order": 3,
+          "title": "Approximation and Variational Thinking",
+          "route": "qc-approximations.html",
+          "status": "planned",
+          "level": "Undergraduate to graduate",
+          "levels": 9,
+          "games": 3,
+          "prerequisites": ["qc-foundations", "qc-math-language"],
+          "summary": "Learn how variational bounds, perturbative corrections, finite representations, dimensional analysis, and explicit error budgets make difficult quantum problems solvable.",
+          "outcomes": [
+            "Choose an approximation based on its assumptions",
+            "Distinguish truncation error from model error",
+            "Use variational and perturbative reasoning responsibly"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "orbitals-representations",
+      "title": "Atoms, Orbitals, and Representations",
+      "description": "Move from one-electron atoms to finite basis representations, symmetry, and molecular-orbital construction.",
+      "chapters": [
+        {
+          "id": "qc-atoms",
+          "order": 1,
+          "title": "Atomic Structure",
+          "route": "qc-atoms.html",
+          "status": "planned",
+          "level": "Starter to graduate",
+          "levels": 11,
+          "games": 4,
+          "prerequisites": ["qc-foundations", "qc-math-language"],
+          "summary": "Explore hydrogenic orbitals, quantum numbers, radial and angular nodes, degeneracy, many-electron shells, and the periodic structure of atoms.",
+          "outcomes": [
+            "Relate quantum numbers to orbital structure",
+            "Count and interpret radial and angular nodes",
+            "Separate exact hydrogenic results from many-electron models"
+          ]
+        },
+        {
+          "id": "qc-basis-sets",
+          "order": 2,
+          "title": "Basis Sets and Integral Engines",
+          "route": "basis-sets.html",
+          "status": "existing-tool",
+          "level": "Starter to professor",
+          "levels": 18,
+          "games": 13,
+          "prerequisites": ["qc-atoms"],
+          "summary": "Use the existing Basis Set Quest to learn Gaussian functions, contractions, conditioning, basis strategy, analytic integrals, screening, recurrences, and derivatives.",
+          "outcomes": [
+            "Connect basis flexibility to chemical accuracy and cost",
+            "Diagnose diffuse-function and linear-dependence risks",
+            "Explain how Gaussian integral engines build Hamiltonian matrices"
+          ]
+        },
+        {
+          "id": "qc-molecular-orbitals",
+          "order": 3,
+          "title": "Molecular Orbitals and Symmetry",
+          "route": "mo-diagrams.html",
+          "companion_routes": ["mo-builder.html"],
+          "status": "existing-tool",
+          "level": "Starter to research practice",
+          "levels": 12,
+          "games": 2,
+          "prerequisites": ["qc-atoms", "qc-basis-sets"],
+          "summary": "Use the existing MO theory guide and builder to study LCAO mixing, symmetry, phase, degeneracy, active spaces, and chemically meaningful orbital interpretation.",
+          "outcomes": [
+            "Construct qualitative MO diagrams from symmetry and energy",
+            "Treat degenerate orbitals as rotatable subspaces",
+            "Choose active orbitals using character rather than picture alone"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mean-field",
+      "title": "Many-Electron and Mean-Field Theory",
+      "description": "Build antisymmetric many-electron states and derive the Hartree–Fock and self-consistent-field machinery used throughout quantum chemistry.",
+      "chapters": [
+        {
+          "id": "qc-many-electron",
+          "order": 1,
+          "title": "Many-Electron Wavefunctions",
+          "route": "qc-many-electron.html",
+          "status": "planned",
+          "level": "Undergraduate to graduate",
+          "levels": 10,
+          "games": 3,
+          "prerequisites": ["qc-foundations", "qc-math-language", "qc-atoms"],
+          "summary": "Learn indistinguishability, antisymmetry, spin orbitals, Slater determinants, selection rules, and reduced density matrices before using mean-field approximations.",
+          "outcomes": [
+            "Apply antisymmetry under electron exchange",
+            "Build and compare Slater determinants",
+            "Connect determinant matrix elements to selection rules"
+          ]
+        },
+        {
+          "id": "qc-hartree-fock",
+          "order": 2,
+          "title": "Hartree–Fock and SCF",
+          "route": "qc-hartree-fock.html",
+          "status": "planned",
+          "level": "Undergraduate to professor",
+          "levels": 12,
+          "games": 5,
+          "prerequisites": ["qc-many-electron", "qc-molecular-orbitals", "qc-basis-sets"],
+          "summary": "Derive Coulomb and exchange, the Fock operator, Roothaan–Hall equations, density matrices, SCF convergence strategies, and restricted or open-shell reference choices.",
+          "outcomes": [
+            "Derive the self-consistent Hartree–Fock equations",
+            "Diagnose common SCF convergence failures",
+            "Distinguish orbital representations from observables"
+          ]
+        },
+        {
+          "id": "qc-geometry",
+          "order": 3,
+          "title": "Geometry, Gradients, and Frequencies",
+          "route": "qc-geometry.html",
+          "status": "planned",
+          "level": "Practitioner to professor",
+          "levels": 10,
+          "games": 4,
+          "prerequisites": ["qc-hartree-fock", "qc-approximations"],
+          "summary": "Connect electronic energies to analytic gradients, Pulay terms, optimization algorithms, Hessians, normal modes, transition states, and reaction paths.",
+          "outcomes": [
+            "Interpret gradients and Hessian eigenvectors",
+            "Choose an optimization method for the surface topology",
+            "Distinguish minima, transition states, and numerical artifacts"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "density-functional-theory",
+      "title": "Density-Functional Theory",
+      "description": "Understand why density methods work, how Kohn–Sham equations are constructed, and where approximate functionals succeed or fail.",
+      "chapters": [
+        {
+          "id": "qc-dft",
+          "order": 1,
+          "title": "Density and Kohn–Sham DFT",
+          "route": "qc-dft.html",
+          "status": "planned",
+          "level": "Undergraduate to professor",
+          "levels": 11,
+          "games": 4,
+          "prerequisites": ["qc-hartree-fock"],
+          "summary": "Follow the density-based logic from Hohenberg–Kohn ideas through the Kohn–Sham construction, exchange-correlation energy, potentials, and density self-consistency.",
+          "outcomes": [
+            "Distinguish interacting density theory from its Kohn–Sham representation",
+            "Explain the role of the exchange-correlation functional",
+            "Recognize density-driven and functional-driven errors"
+          ]
+        },
+        {
+          "id": "qc-functional-families",
+          "order": 2,
+          "title": "Functional Families and Failures",
+          "route": "xc-functionals.html",
+          "status": "existing-tool",
+          "level": "Practitioner to research",
+          "levels": 10,
+          "games": 4,
+          "prerequisites": ["qc-dft"],
+          "summary": "Connect Project XC’s live catalog to Jacob’s ladder, exact exchange, range separation, dispersion, self-interaction, delocalization error, and method-selection diagnostics.",
+          "outcomes": [
+            "Compare functional ingredients rather than names alone",
+            "Identify major qualitative DFT failure modes",
+            "Trace a functional claim to its source and implementation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "electron-correlation",
+      "title": "Electron Correlation",
+      "description": "Progress from correlation holes and determinant spaces through perturbation, coupled cluster, and multireference electronic structure.",
+      "chapters": [
+        {
+          "id": "qc-correlation",
+          "order": 1,
+          "title": "Correlation Foundations",
+          "route": "qc-correlation.html",
+          "status": "planned",
+          "level": "Undergraduate to graduate",
+          "levels": 9,
+          "games": 3,
+          "prerequisites": ["qc-hartree-fock"],
+          "summary": "Learn correlation holes, dynamic versus static correlation, excitation spaces, size consistency, size extensivity, and basis convergence before choosing a correlated method.",
+          "outcomes": [
+            "Distinguish dynamic and static correlation regimes",
+            "Explain size consistency and size extensivity",
+            "Diagnose when a single determinant is inadequate"
+          ]
+        },
+        {
+          "id": "qc-mp-ci",
+          "order": 2,
+          "title": "Perturbation Theory and Configuration Interaction",
+          "route": "qc-mp-ci.html",
+          "status": "planned",
+          "level": "Graduate to professor",
+          "levels": 11,
+          "games": 4,
+          "prerequisites": ["qc-correlation", "qc-math-language"],
+          "summary": "Build MP and CI approximations from excitation ranks, amplitudes, denominators, determinant dimensions, intruder-state risks, and size-consistency behavior.",
+          "outcomes": [
+            "Construct excitation spaces by rank",
+            "Recognize dangerous perturbative denominators",
+            "Explain why truncated CI is not size consistent"
+          ]
+        },
+        {
+          "id": "qc-coupled-cluster",
+          "order": 3,
+          "title": "Coupled-Cluster Theory",
+          "route": "qc-coupled-cluster.html",
+          "status": "planned",
+          "level": "Graduate to professor",
+          "levels": 10,
+          "games": 3,
+          "prerequisites": ["qc-mp-ci"],
+          "summary": "Understand the exponential ansatz, connected terms, CCSD, perturbative triples, equation-of-motion extensions, diagnostics, and computational scaling.",
+          "outcomes": [
+            "Relate exponential amplitudes to disconnected products",
+            "Explain size-extensive coupled-cluster behavior",
+            "Use diagnostics without treating them as universal verdicts"
+          ]
+        },
+        {
+          "id": "qc-multireference",
+          "order": 4,
+          "title": "Multireference Methods",
+          "route": "qc-multireference.html",
+          "status": "planned",
+          "level": "Graduate to professor",
+          "levels": 12,
+          "games": 4,
+          "prerequisites": ["qc-mp-ci", "qc-hartree-fock"],
+          "summary": "Learn active spaces, CASSCF orbital and configuration optimization, state averaging, CASPT2, NEVPT2, MRCI, intruder states, and active-space diagnostics.",
+          "outcomes": [
+            "Choose an active space from orbital and state character",
+            "Distinguish state-specific and state-averaged optimization",
+            "Recognize intruder and root-tracking problems"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "excited-dynamics",
+      "title": "Excited States and Dynamics",
+      "description": "Treat electronic excitation, state character, conical intersections, nonadiabatic coupling, and time-dependent molecular behavior.",
+      "chapters": [
+        {
+          "id": "qc-excited-states",
+          "order": 1,
+          "title": "Excited-State Methods",
+          "route": "qc-excited-states.html",
+          "status": "planned",
+          "level": "Practitioner to professor",
+          "levels": 11,
+          "games": 4,
+          "prerequisites": ["qc-hartree-fock", "qc-dft", "qc-correlation"],
+          "summary": "Compare CIS, TDDFT, TDA, EOM methods, spin-flip ideas, transition properties, state character, and known limitations for double or charge-transfer excitations.",
+          "outcomes": [
+            "Match an excited-state method to state character",
+            "Interpret transition moments and oscillator strengths",
+            "Track states by character rather than energy order alone"
+          ]
+        },
+        {
+          "id": "qc-nonadiabatic",
+          "order": 2,
+          "title": "Conical Intersections and Nonadiabatic Coupling",
+          "route": "qc-nonadiabatic.html",
+          "status": "planned",
+          "level": "Graduate to professor",
+          "levels": 10,
+          "games": 4,
+          "prerequisites": ["qc-excited-states", "qc-geometry"],
+          "summary": "Explore adiabatic and diabatic representations, avoided crossings, branching planes, derivative couplings, Berry phase, and nonadiabatic transition models.",
+          "outcomes": [
+            "Distinguish avoided crossings from conical intersections",
+            "Interpret the branching plane and derivative couplings",
+            "Recognize representation and phase-convention issues"
+          ]
+        },
+        {
+          "id": "qc-dynamics",
+          "order": 3,
+          "title": "Quantum and Nonadiabatic Dynamics",
+          "route": "qc-dynamics.html",
+          "status": "planned",
+          "level": "Graduate to professor",
+          "levels": 10,
+          "games": 3,
+          "prerequisites": ["qc-foundations", "qc-excited-states", "qc-nonadiabatic"],
+          "summary": "Connect time propagation, wavepackets, autocorrelation spectra, Ehrenfest dynamics, surface hopping, decoherence, and higher-dimensional quantum dynamics.",
+          "outcomes": [
+            "Relate time correlation functions to spectra",
+            "Compare mean-field and trajectory hopping approximations",
+            "Identify when decoherence and nuclear quantum effects matter"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "environment-properties",
+      "title": "Environment and Molecular Properties",
+      "description": "Connect electronic structure to solvent response, spectroscopy, magnetic properties, and analytic response observables.",
+      "chapters": [
+        {
+          "id": "qc-solvation",
+          "order": 1,
+          "title": "Solvation and Embedding",
+          "route": "qc-solvation.html",
+          "status": "planned",
+          "level": "Practitioner to professor",
+          "levels": 10,
+          "games": 4,
+          "prerequisites": ["qc-hartree-fock", "qc-dft"],
+          "summary": "Learn continuum electrostatics, cavity construction, PCM and COSMO ideas, explicit solvent, QM/MM, polarizable embedding, and equilibrium or nonequilibrium response.",
+          "outcomes": [
+            "Separate electrostatic, cavitation, and specific-solvent effects",
+            "Choose an environment model for the target property",
+            "Recognize cavity and response-model sensitivity"
+          ]
+        },
+        {
+          "id": "qc-spectroscopy",
+          "order": 2,
+          "title": "Spectroscopy",
+          "route": "qc-spectroscopy.html",
+          "status": "planned",
+          "level": "Undergraduate to professor",
+          "levels": 12,
+          "games": 5,
+          "prerequisites": ["qc-geometry", "qc-excited-states"],
+          "summary": "Connect calculated states and response properties to IR, Raman, UV–visible, fluorescence, phosphorescence, vibronic structure, EPR, and nonlinear spectroscopy.",
+          "outcomes": [
+            "Apply electric-dipole and vibrational selection rules",
+            "Relate potential surfaces to vibronic structure",
+            "Distinguish vertical, adiabatic, and emission energies"
+          ]
+        },
+        {
+          "id": "qc-response",
+          "order": 3,
+          "title": "Magnetic and Response Properties",
+          "route": "qc-response.html",
+          "status": "planned",
+          "level": "Graduate to professor",
+          "levels": 11,
+          "games": 4,
+          "prerequisites": ["qc-hartree-fock", "qc-math-language"],
+          "summary": "Develop perturbation response, polarizabilities, hyperpolarizabilities, NMR shielding, gauge-origin handling, EPR tensors, and analytic response equations.",
+          "outcomes": [
+            "Connect property derivatives to response equations",
+            "Explain gauge-origin problems and GIAO strategies",
+            "Distinguish relaxed and unrelaxed electronic response"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "professor-frontier",
+      "title": "Professor and Research Frontier",
+      "description": "Study relativistic Hamiltonians, electronic-structure algorithms, Green’s functions, advanced correlation, quantum computing, and rigorous research practice.",
+      "chapters": [
+        {
+          "id": "qc-relativity",
+          "order": 1,
+          "title": "Relativistic Quantum Chemistry",
+          "route": "qc-relativity.html",
+          "status": "planned",
+          "level": "Graduate to professor",
+          "levels": 10,
+          "games": 3,
+          "prerequisites": ["qc-atoms", "qc-hartree-fock"],
+          "summary": "Understand scalar relativistic effects, spin–orbit coupling, effective core potentials, DKH and X2C transformations, four-component theory, and picture-change effects.",
+          "outcomes": [
+            "Identify chemical signatures of scalar and spin–orbit effects",
+            "Choose a relativistic Hamiltonian at an appropriate cost",
+            "Recognize picture-change and basis compatibility issues"
+          ]
+        },
+        {
+          "id": "qc-algorithms",
+          "order": 2,
+          "title": "Electronic-Structure Algorithms",
+          "route": "qc-algorithms.html",
+          "status": "planned",
+          "level": "Graduate to research developer",
+          "levels": 12,
+          "games": 4,
+          "prerequisites": ["qc-basis-sets", "qc-hartree-fock", "qc-correlation"],
+          "summary": "Learn integral-direct methods, DIIS and Davidson solvers, sparse and local approximations, density fitting, tensor contractions, parallelism, and memory-versus-flop trade-offs.",
+          "outcomes": [
+            "Estimate memory and operation scaling",
+            "Choose iterative eigensolver and SCF acceleration strategies",
+            "Connect mathematical sparsity to software implementation"
+          ]
+        },
+        {
+          "id": "qc-greens-functions",
+          "order": 3,
+          "title": "Green’s Functions and Quasiparticles",
+          "route": "qc-greens-functions.html",
+          "status": "planned",
+          "level": "Graduate to professor",
+          "levels": 11,
+          "games": 3,
+          "prerequisites": ["qc-many-electron", "qc-correlation"],
+          "summary": "Explore propagators, poles, Dyson equations and orbitals, self-energies, spectral functions, GW, ADC, and electron addition or removal pictures.",
+          "outcomes": [
+            "Interpret spectral poles and quasiparticle weights",
+            "Connect self-energy structure to electron correlation",
+            "Distinguish orbital coefficients from Dyson amplitudes"
+          ]
+        },
+        {
+          "id": "qc-advanced-correlation",
+          "order": 4,
+          "title": "Local Correlation, F12, and Embedding",
+          "route": "qc-advanced-correlation.html",
+          "status": "planned",
+          "level": "Graduate to research",
+          "levels": 10,
+          "games": 4,
+          "prerequisites": ["qc-coupled-cluster", "qc-multireference"],
+          "summary": "Study orbital domains, pair natural orbitals, explicit-correlation cusp repair, fragment embedding, and the thresholds controlling modern reduced-scaling methods.",
+          "outcomes": [
+            "Explain how locality reduces correlated-method cost",
+            "Connect F12 terms to electron-electron cusp behavior",
+            "Audit threshold and fragment errors separately"
+          ]
+        },
+        {
+          "id": "qc-quantum-computing",
+          "order": 5,
+          "title": "Quantum Computing for Chemistry",
+          "route": "qc-quantum-computing.html",
+          "status": "planned",
+          "level": "Graduate to research",
+          "levels": 10,
+          "games": 4,
+          "prerequisites": ["qc-many-electron", "qc-math-language"],
+          "summary": "Connect second quantization to qubit mappings, ansätze, VQE, phase estimation, Pauli measurement cost, error mitigation, and realistic hardware resource limits.",
+          "outcomes": [
+            "Map simple fermionic operators to qubit operators",
+            "Separate algorithmic scaling from hardware overhead",
+            "Evaluate quantum advantage claims using explicit resources"
+          ]
+        },
+        {
+          "id": "qc-research-practice",
+          "order": 6,
+          "title": "Research Practice and Benchmark Design",
+          "route": "qc-research-practice.html",
+          "status": "planned",
+          "level": "Practitioner to professor",
+          "levels": 12,
+          "games": 4,
+          "prerequisites": ["qc-approximations", "qc-dft", "qc-correlation"],
+          "summary": "Design reproducible benchmarks, match states and roots, separate error sources, preserve provenance, report uncertainty, diagnose failed calculations, and publish negative results honestly.",
+          "outcomes": [
+            "Design a benchmark with defensible references",
+            "Separate numerical, model, and assignment errors",
+            "Report calculations with reproducible provenance"
+          ]
+        }
+      ]
+    }
+  ]
+}

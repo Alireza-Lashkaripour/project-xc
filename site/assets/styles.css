@@ -100,7 +100,7 @@ a:hover { color: var(--accent-dark); text-decoration: underline; text-underline-
 }
 .hero-point span, .snapshot-card span { display: block; color: var(--muted); font-size: .72rem; font-weight: 850; text-transform: uppercase; letter-spacing: .095em; }
 .hero-point strong, .snapshot-card strong { display: block; margin-top: .12rem; font-weight: 900; letter-spacing: -.03em; }
-.choice-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .95rem; margin-top: 1.35rem; }
+.choice-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .95rem; margin-top: 1.35rem; }
 .choice-card {
   position: relative;
   display: grid;
@@ -119,6 +119,7 @@ a:hover { color: var(--accent-dark); text-decoration: underline; text-underline-
 .choice-card::after { content: ""; position: absolute; right: -3.2rem; bottom: -3.4rem; width: 8.5rem; height: 8.5rem; border-radius: 50%; background: rgba(24,90,188,.08); }
 .choice-card:nth-child(2)::after { background: rgba(109,40,217,.09); }
 .choice-card:nth-child(3)::after { background: rgba(249,115,22,.10); }
+.choice-card:nth-child(4)::after { background: rgba(4,120,87,.10); }
 .choice-card:hover { transform: translateY(-4px); text-decoration: none; border-color: #93c5fd; box-shadow: var(--shadow-blue); }
 .choice-card strong { position: relative; z-index: 1; font-family: var(--display); font-size: clamp(1.35rem, 2.2vw, 1.85rem); letter-spacing: -.045em; line-height: 1.03; }
 .choice-card span:last-child { position: relative; z-index: 1; color: var(--muted); font-weight: 500; }
@@ -221,6 +222,13 @@ button.secondary, .button.secondary { background: #eef4ff; color: #174ea6; box-s
 .guide-card h3 { margin-bottom: .3rem; }
 .guide-card p { margin: 0; color: #344054; }
 .wide-table th, .wide-table td { font-size: .88rem; }
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  border-radius: 12px;
+}
+.table-scroll:focus-visible { outline: 3px solid #60a5fa; outline-offset: 3px; }
 
 .mo-figure { margin: .9rem 0 1rem; background: #fbfdff; border: 1px solid #dbeafe; border-radius: 1rem; padding: .8rem; box-shadow: var(--shadow-sm); }
 .mo-figure svg { width: 100%; height: auto; display: block; }
@@ -303,13 +311,111 @@ input[type="checkbox"] { width: auto; }
 .integral-source-table a { overflow-wrap: anywhere; }
 .basis-page .lesson-step h3 { margin-top: .6rem; }
 
+/* Quantum Chemistry Academy */
+.academy-body {
+  background:
+    radial-gradient(circle at 5% 3%, rgba(37,99,235,.20), transparent 28rem),
+    radial-gradient(circle at 95% 8%, rgba(109,40,217,.14), transparent 26rem),
+    linear-gradient(180deg, #f8fbff 0, #f4f7fb 44%, #faf7ff 100%);
+}
+.academy-page { max-width: 1180px; display: grid; gap: 1.1rem; }
+.academy-hero {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(260px, .45fr);
+  gap: 1rem;
+  padding: clamp(1.2rem, 3vw, 2rem);
+  border: 1px solid #bfdbfe;
+  border-radius: 1.35rem;
+  background: radial-gradient(circle at top left, rgba(219,234,254,.92), transparent 38%), linear-gradient(135deg, rgba(255,255,255,.98), rgba(255,247,237,.92));
+  box-shadow: var(--shadow-blue);
+}
+.academy-hero::after { content: "Ψ"; position: absolute; right: -1rem; bottom: -5.5rem; color: rgba(24,90,188,.055); font-family: var(--display); font-size: 23rem; line-height: 1; pointer-events: none; }
+.academy-hero > * { position: relative; z-index: 1; }
+.academy-hero h1 { max-width: 850px; font-size: clamp(2.3rem, 5vw, 4.9rem); }
+.academy-privacy-note { max-width: 850px; margin: .9rem 0 0; color: #344054; font-size: .86rem; }
+.academy-hud { display: grid; grid-template-columns: 1fr 1fr; gap: .62rem; align-content: stretch; }
+.academy-hud div { display: grid; align-content: center; gap: .08rem; min-height: 112px; padding: .85rem; border: 1px solid rgba(191,219,254,.95); border-radius: .95rem; background: rgba(255,255,255,.82); box-shadow: var(--shadow-sm); }
+.academy-hud span { color: var(--muted); font-size: .7rem; font-weight: 900; letter-spacing: .085em; text-transform: uppercase; }
+.academy-hud strong { font-size: 1.32rem; letter-spacing: -.035em; }
+.academy-hud small { color: var(--muted); }
+.academy-start-grid { padding: 1rem 0 .1rem; }
+.academy-entry-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; }
+.academy-entry-card { display: grid; align-content: start; gap: .48rem; min-height: 175px; padding: .95rem; border: 1px solid var(--line); border-radius: 1rem; background: linear-gradient(180deg, #fff, #f8fbff); color: var(--text); box-shadow: var(--shadow-sm); transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease; }
+.academy-entry-card.primary { border-color: #93c5fd; background: linear-gradient(145deg, #eff6ff, #fff); }
+.academy-entry-card:hover, .academy-entry-card:focus-visible { transform: translateY(-3px); border-color: #93c5fd; text-decoration: none; box-shadow: var(--shadow-blue); }
+.academy-entry-card strong { font-family: var(--display); font-size: 1.22rem; line-height: 1.05; letter-spacing: -.035em; }
+.academy-entry-card span:last-child { color: var(--muted); font-size: .9rem; }
+.academy-progress-panel { display: grid; grid-template-columns: minmax(230px, .55fr) minmax(0, 1.45fr); gap: 1rem; align-items: center; }
+.academy-progress-panel h2, .academy-progress-panel p { margin-bottom: .18rem; }
+.academy-progress-actions { display: grid; gap: .5rem; }
+.academy-progress-actions button { justify-self: end; }
+.academy-boundary { margin: 0; }
+.academy-curriculum-intro { display: flex; justify-content: space-between; gap: 1rem; align-items: end; padding: .6rem 0 .3rem; }
+.academy-curriculum-intro p { max-width: 850px; color: var(--muted); }
+.academy-load-state { margin: .5rem 0; padding: .58rem .72rem; border: 1px solid var(--line); border-radius: .75rem; background: rgba(255,255,255,.7); color: var(--muted); font-size: .86rem; }
+.academy-load-state.loaded { border-color: #bbf7d0; color: #065f46; background: #f0fdf4; }
+.academy-load-state.failed { border-color: #fecaca; color: #991b1b; background: #fef2f2; }
+.academy-track-grid { display: grid; gap: 1rem; }
+.academy-track { padding: 1rem; border: 1px solid rgba(195,212,236,.92); border-radius: 1.15rem; background: rgba(255,255,255,.86); box-shadow: var(--shadow-sm); scroll-margin-top: 1rem; }
+.academy-track-header { display: flex; justify-content: space-between; gap: 1rem; align-items: end; margin-bottom: .8rem; }
+.academy-track-description { max-width: 800px; margin: .2rem 0 0; color: var(--muted); }
+.academy-track-counts { display: flex; gap: .4rem; flex-wrap: wrap; justify-content: flex-end; }
+.academy-track-counts span, .chapter-metrics span { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: .18rem .48rem; background: #f8fafc; color: #475467; font-size: .72rem; font-weight: 800; white-space: nowrap; }
+.chapter-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .72rem; }
+.chapter-card { display: grid; align-content: start; gap: .5rem; min-height: 245px; padding: .85rem; border: 1px solid #dbeafe; border-radius: .92rem; background: linear-gradient(180deg, #fff, #f9fbff); }
+.chapter-card[data-status="planned"] { border-style: dashed; background: linear-gradient(180deg, #fcfcfd, #f8fafc); }
+.chapter-card-top { display: flex; justify-content: space-between; gap: .4rem; align-items: start; }
+.chapter-status { display: inline-flex; width: fit-content; border-radius: 999px; padding: .16rem .45rem; font-size: .65rem; font-weight: 900; letter-spacing: .055em; text-transform: uppercase; }
+.chapter-status.live { background: #ecfdf3; color: #047857; border: 1px solid #bbf7d0; }
+.chapter-status.existing { background: #eff6ff; color: #174ea6; border: 1px solid #bfdbfe; }
+.chapter-status.building { background: #fff7ed; color: #9a3412; border: 1px solid #fed7aa; }
+.chapter-status.planned { background: #f2f4f7; color: #667085; border: 1px solid #d0d5dd; }
+.chapter-depth { color: var(--muted); font-size: .68rem; text-align: right; }
+.chapter-card h3 { font-family: var(--display); font-size: 1.2rem; line-height: 1.05; }
+.chapter-summary { margin: 0; color: #344054; font-size: .87rem; }
+.chapter-metrics, .prerequisite-list, .chapter-companions { display: flex; gap: .35rem; flex-wrap: wrap; align-items: center; }
+.chapter-meta-label { color: var(--muted); font-size: .69rem; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; }
+.prerequisite-chip { border-radius: 999px; padding: .13rem .4rem; background: #f5f3ff; color: #5b21b6; font-size: .68rem; font-weight: 750; }
+.chapter-inline-progress { display: grid; grid-template-columns: minmax(80px, 1fr) auto; gap: .5rem; align-items: center; margin-top: auto; }
+.chapter-inline-progress-bar { display: block; height: .52rem; overflow: hidden; border-radius: 999px; background: #e5e7eb; }
+.chapter-inline-progress-fill { display: block; height: 100%; background: linear-gradient(90deg, #174ea6, #6d28d9); }
+.chapter-inline-progress strong { color: var(--muted); font-size: .7rem; }
+.chapter-companions a { font-size: .78rem; }
+.chapter-planned-note { margin: auto 0 0; color: var(--muted); font-size: .75rem; font-style: italic; }
+.academy-release-logic { margin-top: .4rem; }
+.academy-fallback { border-style: dashed; }
+
+/* Reusable Academy chapter components */
+.academy-chapter-page { max-width: 1120px; }
+.academy-chapter-hero { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(250px, .55fr); gap: 1rem; padding: 1.25rem; border: 1px solid #c7d2fe; border-radius: 1.2rem; background: radial-gradient(circle at top left, #e0e7ff 0, transparent 36%), linear-gradient(135deg, #f8fbff, #fff7ed); box-shadow: var(--shadow-blue); }
+.academy-chapter-hero > * { position: relative; }
+.chapter-progress-panel { margin: .8rem 0; }
+.academy-lesson { scroll-margin-top: 1rem; }
+.academy-lesson-nav button.active { background: #123a7a; color: #fff; }
+.academy-complete.done { background: #047857; }
+.professor-note { margin: .8rem 0; padding: .85rem .95rem; border: 1px solid #ddd6fe; border-left: 5px solid #7c3aed; border-radius: .82rem; background: #f5f3ff; color: #3b0764; }
+.professor-note summary { cursor: pointer; font-weight: 900; }
+.misconception-card { margin: .8rem 0; padding: .85rem .95rem; border: 1px solid #fed7aa; border-left: 5px solid #f97316; border-radius: .82rem; background: #fff7ed; color: #7c2d12; }
+.academy-plot { min-height: 300px; }
+.academy-plot > svg { display: block; width: 100%; height: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+
 .footer { max-width: 1160px; margin: 0 auto; padding: 1.8rem 1.25rem; color: var(--muted); border-top: 1px solid rgba(195,212,236,.8); }
 
 @media (max-width: 900px) {
   h1 { font-size: clamp(2rem, 7vw, 3.4rem); }
   .stats, .filters, .compact-metrics, .definition-grid, .guide-grid, .guide-grid.two, .builder-layout, .mo-output-grid, .lab-grid, .game-grid, .quest-grid.three, .hero-points, .module-snapshot { grid-template-columns: 1fr 1fr; }
-  .choice-grid { grid-template-columns: 1fr; }
-  .basis-quest-hero { grid-template-columns: 1fr; }
+  .choice-grid, .academy-entry-grid, .chapter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .basis-quest-hero, .academy-hero, .academy-chapter-hero { grid-template-columns: 1fr; }
+  .academy-progress-panel { grid-template-columns: 1fr; }
+  .academy-track-header, .academy-curriculum-intro { align-items: stretch; flex-direction: column; }
+  .academy-track-counts { justify-content: flex-start; }
   .matrix-flow { grid-template-columns: 1fr; }
   .matrix-flow span { transform: rotate(90deg); justify-self: center; }
   .section-title, .record-topline { flex-direction: column; align-items: stretch; }
@@ -318,7 +424,8 @@ input[type="checkbox"] { width: auto; }
 @media (max-width: 620px) {
   .nav { flex-wrap: wrap; }
   .nav a:not(.brand) { padding: .32rem .48rem; }
-  .stats, .filters, .compact-metrics, .definition-grid, .guide-grid, .guide-grid.two, .builder-layout, .mo-output-grid, .choice-grid, .lab-grid, .game-grid, .quest-grid.three, .quest-hud, .hero-points, .module-snapshot { grid-template-columns: 1fr; }
+  .stats, .filters, .compact-metrics, .definition-grid, .guide-grid, .guide-grid.two, .builder-layout, .mo-output-grid, .choice-grid, .lab-grid, .game-grid, .quest-grid.three, .quest-hud, .hero-points, .module-snapshot, .academy-entry-grid, .chapter-grid, .academy-hud { grid-template-columns: 1fr; }
+  .academy-progress-actions button { justify-self: stretch; }
   .xp-panel { flex-direction: column; align-items: stretch; }
   main, .intro { padding-left: .9rem; padding-right: .9rem; }
   .choice-main { padding-left: .9rem; padding-right: .9rem; }

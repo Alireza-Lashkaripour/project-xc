@@ -1,7 +1,8 @@
 # Project XC
 
-A small static teaching/research site with three entry points:
+A static, source-grounded teaching/research site with four connected entry points:
 
+- Quantum Chemistry Academy: dependency-aware learning from first amplitudes through professor-level methods, with equations, games, visual laboratories, caveats, and browser-local progress.
 - XC Functional catalog: formulas, exact-exchange amounts, aliases, Libxc records, and citations.
 - MO Diagrams: browser-only qualitative MO diagram builder from XYZ geometry, with degeneracy and MO-shape visualization.
 - Basis Sets: quest-style PhD-level basis-set academy with math, figures, interactive plots, mini-games, and links to Basis Set Exchange.
@@ -10,6 +11,8 @@ Live site: https://alireza-lashkaripour.github.io/project-xc/
 
 Direct pages:
 
+- Academy gateway: https://alireza-lashkaripour.github.io/project-xc/quantum-chemistry.html
+- Quantum Foundations: https://alireza-lashkaripour.github.io/project-xc/qc-foundations.html
 - XC Functional: https://alireza-lashkaripour.github.io/project-xc/xc-functionals.html
 - MO Diagrams: https://alireza-lashkaripour.github.io/project-xc/mo-builder.html
 - Basis Sets: https://alireza-lashkaripour.github.io/project-xc/basis-sets.html
@@ -19,10 +22,18 @@ Local checks:
 
 ```bash
 python3 scripts/validate_data.py
+python3 scripts/validate_academy.py
+node scripts/test_academy_models.js
 python3 scripts/build_site.py
+python3 scripts/check_site_links.py
 ```
 
-Caveat: the MO builder and basis-set lab are qualitative teaching tools; use real quantum-chemistry calculations and Basis Set Exchange data for production work.
+Caveat: Academy games, the MO builder, and the basis-set laboratory are teaching tools with explicit model boundaries. Use real quantum-chemistry calculations, program documentation, source data, and validated references for production work.
+
+Academy implementation roadmap:
+
+- `docs/plans/2026-07-13-quantum-chemistry-academy-master-plan.md`
+- `docs/academy/sources/qc-foundations.md`
 
 - Unified visual system: elegant scientific cockpit presentation with stronger typography, first-screen module summaries, and polished cards across all pages.
 - Advanced Integrals: Basis Set Quest now includes Gaussian product theorem, one-electron integrals, Boys functions, ERI tensor scaling/screening, recurrence algorithms, and derivative/gradient games.
