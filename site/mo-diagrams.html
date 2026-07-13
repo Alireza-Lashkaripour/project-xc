@@ -20,8 +20,13 @@
 </header>
 <main id="main" class="prose guide-page">
   <p class="kicker">MO diagrams for active-space intuition</p>
-  <h1>How to draw molecular-orbital diagrams without fooling yourself</h1>
-  <p class="lead">A useful MO diagram is not a decorative energy ladder. It is a symmetry-, overlap-, and energy-matching argument that predicts which occupied, virtual, lone-pair, π, σ, Rydberg, charge-transfer, and metal-centered orbitals can change occupation. That is exactly the information needed before choosing a CASSCF/CASCI/DMRG active space.</p>
+  <h1>Draw MO diagrams that reveal the chemistry, not just lines.</h1>
+  <p class="lead">A useful MO diagram is a symmetry-, overlap-, and energy-matching argument. This guide turns that argument into a clean active-space checklist for occupied, virtual, lone-pair, π, σ, Rydberg, charge-transfer, and metal-centered orbitals.</p>
+  <div class="module-snapshot" aria-label="MO guide quick summary">
+    <div class="snapshot-card"><span>Rule</span><strong>Same symmetry + overlap + energy match</strong></div>
+    <div class="snapshot-card"><span>Active space</span><strong>Include complete bonding/antibonding partners</strong></div>
+    <div class="snapshot-card"><span>Guardrail</span><strong>Validate hand diagrams with computed orbitals</strong></div>
+  </div>
 
   <section class="notice">
     <strong>Core rule.</strong> There is no single universal hand-drawn MO diagram for “any molecule.” The reliable workflow is: choose a geometry and fragments, classify fragment orbitals by symmetry, mix only same-symmetry orbitals with meaningful overlap and comparable energy, fill electrons for the target spin/state, and then verify the frontier shapes with computed orbitals or natural orbitals.

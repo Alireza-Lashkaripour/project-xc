@@ -20,8 +20,13 @@
 </header>
 <main id="main" class="prose guide-page mo-builder-page">
   <p class="kicker">Interactive orbital sketcher</p>
-  <h1>Paste a geometry and draw a qualitative MO diagram</h1>
-  <p class="lead">This browser-only tool parses an XYZ geometry, infers bonds, builds a simple qualitative LCAO/Hückel Hamiltonian, diagonalizes it in JavaScript, and overlays each MO state on the molecular skeleton. It is designed for active-space intuition: which atoms/fragments carry the frontier orbitals, which bonding/antibonding partners appear, and what orbitals should be inspected in a real calculation.</p>
+  <h1>Paste XYZ, get a frontier-orbital story.</h1>
+  <p class="lead">A browser-only qualitative MO cockpit: infer bonds, build a simple LCAO/Hückel model, diagonalize it in JavaScript, and overlay each orbital on the molecule so active-space candidates become visible immediately.</p>
+  <div class="module-snapshot" aria-label="MO builder quick summary">
+    <div class="snapshot-card"><span>Input</span><strong>XYZ geometry or hard examples</strong></div>
+    <div class="snapshot-card"><span>Model</span><strong>π-Hückel or atom-graph sketch</strong></div>
+    <div class="snapshot-card"><span>Output</span><strong>Energy levels, phases, degeneracies</strong></div>
+  </div>
 
   <section class="notice">
     <strong>Scientific caveat.</strong> This is not Hartree–Fock, DFT, CASSCF, or a substitute for a quantum-chemistry calculation. The π model is a Hückel-style p-orbital graph; the atom-graph model is an intentionally crude one-orbital-per-atom LCAO sketch. Use it to form a hypothesis, then verify with computed canonical, localized, or natural orbitals and occupations.

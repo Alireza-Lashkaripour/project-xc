@@ -23,3 +23,5 @@ python3 scripts/build_site.py
 ```
 
 Caveat: the MO builder and basis-set lab are qualitative teaching tools; use real quantum-chemistry calculations and Basis Set Exchange data for production work.
+
+- Unified visual system: elegant scientific cockpit presentation with stronger typography, first-screen module summaries, and polished cards across all pages.
