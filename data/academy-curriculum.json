@@ -18,6 +18,11 @@
           "level": "Starter to professor bridge",
           "levels": 10,
           "games": 5,
+          "progress": {
+            "kind": "academy-missions",
+            "total": 10,
+            "label": "Academy missions"
+          },
           "prerequisites": [],
           "summary": "Learn states, probability, phase, operators, stationary states, uncertainty, spin, and the bridge to many-electron quantum chemistry.",
           "outcomes": [
@@ -93,6 +98,12 @@
           "level": "Starter to professor",
           "levels": 18,
           "games": 13,
+          "progress": {
+            "kind": "legacy-badges",
+            "storage_key": "project-xc-basis-quest-badges-v2",
+            "total": 18,
+            "label": "Basis Quest missions"
+          },
           "prerequisites": ["qc-atoms"],
           "summary": "Use the existing Basis Set Quest to learn Gaussian functions, contractions, conditioning, basis strategy, analytic integrals, screening, recurrences, and derivatives.",
           "outcomes": [

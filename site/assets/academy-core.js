@@ -87,16 +87,59 @@
     return curriculum.tracks.flatMap(track => Array.isArray(track.chapters) ? track.chapters : []);
   }
 
+  function chapterProgress(chapter) {
+    if (!chapter || typeof chapter !== 'object') return null;
+    const contract = chapter.progress && typeof chapter.progress === 'object' ? chapter.progress : null;
+    const kind = contract?.kind || (chapter.status === 'live' ? 'academy-missions' : null);
+    const totalValue = Number(contract?.total ?? chapter.levels);
+    const total = Number.isInteger(totalValue) && totalValue > 0 ? totalValue : 0;
+    if (!kind || !total) return null;
+
+    if (kind === 'academy-missions') {
+      const completed = Math.min(total, completedMissions(chapter.id).length);
+      return {
+        completed,
+        total,
+        fraction: completed / total,
+        kind,
+        label: contract?.label || 'Academy missions',
+        readOnly: false
+      };
+    }
+
+    if (kind === 'legacy-badges' && typeof contract?.storage_key === 'string' && contract.storage_key) {
+      let badges = [];
+      try {
+        const parsed = JSON.parse(window.localStorage.getItem(contract.storage_key) || '[]');
+        if (Array.isArray(parsed)) {
+          badges = [...new Set(parsed.filter(item => typeof item === 'string').map(item => item.trim()).filter(Boolean))];
+        }
+      } catch (_error) {
+        badges = [];
+      }
+      const completed = Math.min(total, badges.length);
+      return {
+        completed,
+        total,
+        fraction: completed / total,
+        kind,
+        label: contract.label || 'Existing tool missions',
+        readOnly: true
+      };
+    }
+
+    return null;
+  }
+
   function summarizeCurriculum(curriculum) {
-    const progress = loadProgress();
     const chapters = flattenChapters(curriculum);
     let completed = 0;
     let available = 0;
     chapters.forEach(chapter => {
-      if (chapter.status !== 'live') return;
-      const total = Number(chapter.levels) || 0;
-      available += total;
-      completed += Math.min(total, progress.chapters[chapter.id]?.missions?.length || 0);
+      const progress = chapterProgress(chapter);
+      if (!progress) return;
+      available += progress.total;
+      completed += progress.completed;
     });
     return { completed, available, fraction: available ? completed / available : 0 };
   }
@@ -205,6 +248,7 @@
     resetChapter,
     resetAll,
     flattenChapters,
+    chapterProgress,
     summarizeCurriculum,
     loadCurriculum,
     statusLabel,

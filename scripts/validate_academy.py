@@ -15,8 +15,10 @@ ROOT = Path(__file__).resolve().parents[1]
 CURRICULUM = ROOT / "data" / "academy-curriculum.json"
 SITE = ROOT / "site"
 PLAN = ROOT / "docs" / "plans" / "2026-07-13-quantum-chemistry-academy-master-plan.md"
+WORKFLOW = ROOT / ".github" / "workflows" / "validate.yml"
 
 STATUS_VALUES = {"live", "in-development", "existing-tool", "planned"}
+PROGRESS_KINDS = {"academy-missions", "legacy-badges"}
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 ROUTE_RE = re.compile(r"^[a-z0-9][a-z0-9-]*\.html$")
 
@@ -130,6 +132,31 @@ def validate_curriculum(data: dict, errors: list[str]) -> tuple[dict[str, dict],
                 if not isinstance(count, int) or count < 0:
                     add(errors, f"{chapter_id} {count_key} must be a nonnegative integer")
 
+            progress = chapter.get("progress")
+            if progress is not None:
+                if not isinstance(progress, dict):
+                    add(errors, f"{chapter_id} progress must be an object")
+                else:
+                    kind = progress.get("kind")
+                    total = progress.get("total")
+                    label_text = progress.get("label")
+                    if kind not in PROGRESS_KINDS:
+                        add(errors, f"{chapter_id} has invalid progress kind {kind!r}")
+                    if not isinstance(total, int) or total < 1:
+                        add(errors, f"{chapter_id} progress total must be a positive integer")
+                    if not isinstance(label_text, str) or not label_text.strip():
+                        add(errors, f"{chapter_id} progress label is required")
+                    if kind == "academy-missions" and status != "live":
+                        add(errors, f"{chapter_id} academy-missions progress requires live status")
+                    if kind == "legacy-badges":
+                        if status != "existing-tool":
+                            add(errors, f"{chapter_id} legacy-badges progress requires existing-tool status")
+                        storage_key = progress.get("storage_key")
+                        if not isinstance(storage_key, str) or not storage_key.startswith("project-xc-"):
+                            add(errors, f"{chapter_id} legacy-badges progress requires a project-xc storage_key")
+            elif status == "live":
+                add(errors, f"{chapter_id} live chapter must define a progress contract")
+
             prereqs = chapter.get("prerequisites")
             if not isinstance(prereqs, list) or any(not isinstance(x, str) for x in prereqs):
                 add(errors, f"{chapter_id} prerequisites must be a list of chapter ids")
@@ -173,6 +200,7 @@ def validate_curriculum(data: dict, errors: list[str]) -> tuple[dict[str, dict],
 def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None:
     required = [
         PLAN,
+        WORKFLOW,
         SITE / "quantum-chemistry.html",
         SITE / "qc-foundations.html",
         SITE / "assets" / "academy-core.js",
@@ -190,6 +218,11 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
             add(errors, "homepage does not link to quantum-chemistry.html")
         if "Quantum Chemistry Academy" not in text:
             add(errors, "homepage does not name Quantum Chemistry Academy")
+
+    for name in ("basis-sets.html", "mo-diagrams.html", "mo-builder.html", "xc-functionals.html", "functional.html", "methodology.html"):
+        page = SITE / name
+        if page.exists() and 'href="quantum-chemistry.html"' not in page.read_text(encoding="utf-8"):
+            add(errors, f"site/{name} does not link back to the Academy")
 
     gateway = SITE / "quantum-chemistry.html"
     if gateway.exists():
@@ -211,10 +244,12 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
         mission_count = len(re.findall(r'class="[^"]*' + class_token.format("academy-complete") + r'[^"]*"', text))
         expected = chapters.get("qc-foundations", {})
         if expected:
+            progress_contract = expected.get("progress")
+            mission_total = progress_contract.get("total", expected.get("levels")) if isinstance(progress_contract, dict) else expected.get("levels")
             if level_count != expected.get("levels"):
                 add(errors, f"qc-foundations level count {level_count} != metadata {expected.get('levels')}")
-            if mission_count != expected.get("levels"):
-                add(errors, f"qc-foundations mission count {mission_count} != metadata levels {expected.get('levels')}")
+            if mission_count != mission_total:
+                add(errors, f"qc-foundations mission count {mission_count} != metadata progress total {mission_total}")
         for needle in (
             'assets/academy-core.js',
             'assets/qc-foundations.js',
@@ -223,6 +258,29 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
         ):
             if needle not in text:
                 add(errors, f"Quantum Foundations missing contract text: {needle}")
+
+    basis = SITE / "basis-sets.html"
+    basis_expected = chapters.get("qc-basis-sets", {})
+    basis_progress = basis_expected.get("progress")
+    if basis.exists() and isinstance(basis_progress, dict) and basis_progress.get("kind") == "legacy-badges":
+        text = basis.read_text(encoding="utf-8")
+        badge_count = len(re.findall(r'class="[^"]*\bquest-complete\b[^"]*"', text))
+        expected_total = basis_progress["total"]
+        if badge_count != expected_total:
+            add(errors, f"Basis Quest badge count {badge_count} != metadata progress total {expected_total}")
+        wide_table_count = len(re.findall(r'<table\s+class="[^"]*\bwide-table\b[^"]*"', text))
+        scroll_region_count = len(re.findall(r'<div\s+class="table-scroll"[^>]*role="region"[^>]*tabindex="0"', text))
+        scroll_hint_count = len(re.findall(r'<p\s+class="table-scroll-hint"', text))
+        if scroll_region_count < wide_table_count:
+            add(errors, f"Basis Quest has {wide_table_count} wide tables but only {scroll_region_count} accessible scroll regions")
+        if scroll_hint_count < wide_table_count:
+            add(errors, f"Basis Quest has {wide_table_count} wide tables but only {scroll_hint_count} narrow-screen scroll hints")
+        basis_js = (SITE / "assets" / "basis-sets.js").read_text(encoding="utf-8")
+        if basis_progress["storage_key"] not in basis_js:
+            add(errors, "Basis Quest progress storage_key does not match site/assets/basis-sets.js")
+
+    if WORKFLOW.exists() and "node scripts/test_academy_core.js" not in WORKFLOW.read_text(encoding="utf-8"):
+        add(errors, "GitHub validation workflow does not run Academy progress regression tests")
 
 
 def main() -> int:
