@@ -58,8 +58,8 @@ Therefore `|ψ|²` has position standard deviation `σ_x`, the momentum standard
 
 The interactive models are exact only within their declared simplified systems (for example, an infinite one-dimensional well or an ideal two-state spin measurement). They are not electronic-structure calculations and do not include electron correlation, nuclei, finite basis sets, relativity, environment, or measurement apparatus dynamics unless explicitly stated.
 
-## Future review items
+## Review status and future items
 
 - Add an open primary/standards source for complex phase conventions when the Mathematical Language chapter is implemented.
 - Add exact CODATA constant values only through a generated data record with edition/date metadata.
-- Add deterministic numerical unit tests for all five games before changing the chapter status from the launch vertical slice to a versioned stable release.
+- Deterministic numerical coverage is active in `scripts/test_academy_models.js`: 108 assertions currently verify normalization, global/relative phase, particle-in-a-box, Gaussian uncertainty, and spin models. Keep these checks green and extend them whenever a game convention or model changes.
