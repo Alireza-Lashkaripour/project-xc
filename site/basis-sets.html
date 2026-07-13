@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Project XC — Basis Set Quest</title>
-  <meta name="description" content="A game-like PhD-level basis-set academy with interactive plots, figures, quests, and Basis Set Exchange links.">
+  <meta name="description" content="A game-like PhD-level basis-set academy with advanced quantum-chemistry integral labs, interactive plots, figures, quests, and Basis Set Exchange links.">
   <link rel="stylesheet" href="assets/styles.css">
   <script>
     window.MathJax = {
@@ -31,11 +31,11 @@
     <div>
       <p class="kicker">Basis Set Quest</p>
       <h1>Play your way from atomic shapes to PhD-level basis-set strategy</h1>
-      <p class="lead">Basis sets are the playable “shape inventory” of quantum chemistry. Unlock levels, tune Gaussian primitives, forge contractions, fight BSSE, extrapolate to CBS, and learn why production calculations need balanced basis choices.</p>
+      <p class="lead">Basis sets are the playable “shape inventory” of quantum chemistry. Unlock levels, tune Gaussian primitives, forge contractions, fight BSSE, extrapolate to CBS, then enter the advanced integral engine where overlap, kinetic, nuclear-attraction, and electron-repulsion integrals actually come from.</p>
       <div class="module-snapshot" aria-label="Basis quest quick summary">
         <div class="snapshot-card"><span>Shape</span><strong>Gaussian primitives and AO lobes</strong></div>
         <div class="snapshot-card"><span>Quality</span><strong>ζ, polarization, diffuse, core</strong></div>
-        <div class="snapshot-card"><span>Risk</span><strong>BSSE, linear dependence, cost</strong></div>
+        <div class="snapshot-card"><span>Integrals</span><strong>S, T, V, ERI, Boys, screening</strong></div>
       </div>
       <div class="quest-actions">
         <a class="button" href="#level-2">Start shape lab</a>
@@ -43,10 +43,10 @@
       </div>
     </div>
     <div class="quest-hud" aria-label="Basis quest status">
-      <div><span>Levels</span><strong>12</strong></div>
-      <div><span>Games</span><strong>6</strong></div>
-      <div><span>Plots</span><strong>8+</strong></div>
-      <div><span>Goal</span><strong>CBS sense</strong></div>
+      <div><span>Levels</span><strong>18</strong></div>
+      <div><span>Games</span><strong>13</strong></div>
+      <div><span>Plots</span><strong>16+</strong></div>
+      <div><span>Goal</span><strong>Integral sense</strong></div>
     </div>
   </section>
 
@@ -58,12 +58,12 @@
     <div class="section-title">
       <div>
         <p class="kicker">Quest map</p>
-        <h2>Twelve levels, six playable missions</h2>
+        <h2>Eighteen levels, thirteen playable missions</h2>
       </div>
-      <div id="basisProgressText" class="results-meta">Level 1 / 12</div>
+      <div id="basisProgressText" class="results-meta">Level 1 / 18</div>
     </div>
     <div class="xp-panel">
-      <div><strong id="xpText">XP 0 / 1200</strong><span>Complete mission buttons to fill the bar.</span></div>
+      <div><strong id="xpText">XP 0 / 2190</strong><span>Complete mission buttons to fill the bar.</span></div>
       <button id="resetBasisQuest" type="button" class="secondary">Reset quest</button>
     </div>
     <div class="basis-progress-bar" aria-hidden="true"><span id="basisProgressFill"></span></div>
@@ -81,6 +81,12 @@
       <button type="button" data-step="10">10 · CBS lab</button>
       <button type="button" data-step="11">11 · Cost boss</button>
       <button type="button" data-step="12">12 · Strategy</button>
+      <button type="button" data-step="13">13 · Advanced</button>
+      <button type="button" data-step="14">14 · Product</button>
+      <button type="button" data-step="15">15 · 1e integrals</button>
+      <button type="button" data-step="16">16 · Boys</button>
+      <button type="button" data-step="17">17 · ERI tensor</button>
+      <button type="button" data-step="18">18 · Algorithms</button>
     </div>
   </section>
 
@@ -319,11 +325,164 @@
     <button class="quest-complete" data-badge="Basis strategist" data-xp="185" type="button">Complete final boss</button>
   </section>
 
+
+  <section id="level-13" class="lesson-step card-panel advanced-integrals" data-step="13">
+    <p class="kicker">Advanced level · Integral engine</p>
+    <h2>Where basis sets become the Hamiltonian</h2>
+    <p>At the advanced level, a basis set is not only a list of shapes. It is an instruction set for building every matrix element in quantum chemistry. Once you choose exponents, centers, angular momenta, and contractions, the computer must evaluate millions to trillions of integrals:</p>
+    <div class="formula-line detail-formula">\[
+      S_{\mu\nu}=\langle \chi_\mu|\chi_\nu\rangle,\quad
+      T_{\mu\nu}=\left\langle \chi_\mu\left|-\tfrac12\nabla^2\right|\chi_\nu\right\rangle,\quad
+      V_{\mu\nu}=\left\langle \chi_\mu\left|-\sum_A\frac{Z_A}{r_A}\right|\chi_\nu\right\rangle,
+    \]</div>
+    <div class="formula-line detail-formula">\[
+      (\mu\nu|\lambda\sigma)=\iint
+      \frac{\chi_\mu(\mathbf r_1)\chi_\nu(\mathbf r_1)\chi_\lambda(\mathbf r_2)\chi_\sigma(\mathbf r_2)}{r_{12}}\,d\mathbf r_1\,d\mathbf r_2.
+    \]</div>
+    <div class="quest-grid three">
+      <article class="quest-card"><span class="quest-icon">🧮</span><h3>Integral type</h3><p>Overlap \(S\) controls conditioning; kinetic \(T\) punishes tight curvature; nuclear attraction \(V\) pulls density to nuclei; ERIs build Coulomb and exchange.</p></article>
+      <article class="quest-card"><span class="quest-icon">ζ</span><h3>Basis knobs</h3><p>Exponents, contraction length, angular momentum, diffuse tails, and shell layout decide which integrals are large, tiny, numerous, or unstable.</p></article>
+      <article class="quest-card"><span class="quest-icon">⚙️</span><h3>Algorithms</h3><p>Production codes use Gaussian product theorem, Boys functions, recurrences, quadrature, symmetry, Schwarz screening, and derivative recurrences.</p></article>
+    </div>
+    <div class="notice guide-callout"><strong>Toy-model caveat:</strong> the games below show correct qualitative structure and several exact s-Gaussian formulas, but they are not a replacement for production integral engines such as Libint/libcint or for a real quantum-chemistry calculation.</div>
+    <button class="quest-complete" data-badge="Integral engine unlocked" data-xp="150" type="button">Complete advanced unlock</button>
+  </section>
+
+  <section id="level-14" class="lesson-step card-panel" data-step="14">
+    <p class="kicker">Level 14 · Gaussian product theorem game</p>
+    <h2>The trick that makes Gaussian basis sets computationally powerful</h2>
+    <p>Two primitive Gaussians on different centers multiply into one new Gaussian on a product center \(\mathbf P\), times a distance penalty. This is why Gaussian integrals are tractable while Slater-type tails are chemically nicer but computationally harder.</p>
+    <div class="formula-line">\[
+      e^{-\alpha|\mathbf r-\mathbf A|^2}e^{-\beta|\mathbf r-\mathbf B|^2}
+      = e^{-\mu |\mathbf A-\mathbf B|^2}e^{-p|\mathbf r-\mathbf P|^2},\quad
+      p=\alpha+\beta,\;\mu=\frac{\alpha\beta}{p},\;\mathbf P=\frac{\alpha\mathbf A+\beta\mathbf B}{p}.
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Exponent on center A \(\alpha\)<input id="gpAlpha" type="range" min="0.10" max="5.00" step="0.05" value="0.70"></label>
+        <label>Exponent on center B \(\beta\)<input id="gpBeta" type="range" min="0.10" max="5.00" step="0.05" value="1.80"></label>
+        <label>Center distance \(R_{AB}\)<input id="gpDistance" type="range" min="0.0" max="6.0" step="0.05" value="2.0"></label>
+        <div id="productReadout" class="orbital-info"></div>
+      </div>
+      <figure class="basis-figure plot-card">
+        <div id="productTheoremPlot" class="basis-svg" aria-label="Gaussian product theorem plot"></div>
+        <figcaption>The product center slides toward the tighter Gaussian. The prefactor kills overlap when tight functions are far apart.</figcaption>
+      </figure>
+    </div>
+    <button class="quest-complete" data-badge="Gaussian product wizard" data-xp="140" type="button">Complete product theorem game</button>
+  </section>
+
+  <section id="level-15" class="lesson-step card-panel" data-step="15">
+    <p class="kicker">Level 15 · One-electron integral lab</p>
+    <h2>Overlap, kinetic energy, and nuclear attraction are basis-set measurements</h2>
+    <p>For two normalized s-type Gaussian primitives, the overlap and kinetic integrals already show the deep basis connection: diffuse functions overlap far away; tight functions have large curvature and therefore large kinetic energy; nuclear attraction depends on where the product center lands relative to the nucleus.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>\(\alpha\) on A<input id="oneAlpha" type="range" min="0.10" max="6.00" step="0.05" value="0.90"></label>
+        <label>\(\beta\) on B<input id="oneBeta" type="range" min="0.10" max="6.00" step="0.05" value="1.25"></label>
+        <label>Distance \(R_{AB}\)<input id="oneDistance" type="range" min="0.0" max="6.0" step="0.05" value="1.4"></label>
+        <label>Nuclear charge \(Z_C\)<input id="nuclearZ" type="range" min="1" max="12" step="1" value="6"></label>
+        <label>Nucleus position between A and B<input id="nucleusOffset" type="range" min="-1.0" max="2.0" step="0.02" value="0.50"></label>
+        <div id="oneElectronReadout" class="orbital-info"></div>
+      </div>
+      <figure class="basis-figure plot-card">
+        <div id="oneElectronPlot" class="basis-svg" aria-label="One-electron integral bar plot"></div>
+        <figcaption>Bars are toy normalized s-Gaussian values. Watch how the same basis knobs alter \(S\), \(T\), and \(V\) differently.</figcaption>
+      </figure>
+    </div>
+    <button class="quest-complete" data-badge="One-electron operator tuner" data-xp="150" type="button">Complete one-electron lab</button>
+  </section>
+
+  <section id="level-16" class="lesson-step card-panel" data-step="16">
+    <p class="kicker">Level 16 · Boys function cavern</p>
+    <h2>The Coulomb singularity becomes a Boys function</h2>
+    <p>Nuclear attraction and electron-repulsion integrals over Gaussians reduce to special functions after Gaussian products are formed. The central object is the Boys function:</p>
+    <div class="formula-line">\[ F_m(T)=\int_0^1 u^{2m}e^{-Tu^2}\,du. \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Boys order \(m\)<select id="boysOrder"><option value="0">m = 0</option><option value="1">m = 1</option><option value="2">m = 2</option><option value="3">m = 3</option><option value="4">m = 4</option></select></label>
+        <label>Argument \(T\)<input id="boysT" type="range" min="0" max="24" step="0.05" value="2.4"></label>
+        <label>Product-center distance proxy<input id="coulombDistance" type="range" min="0" max="5" step="0.05" value="1.2"></label>
+        <div id="boysReadout" class="orbital-info"></div>
+      </div>
+      <figure class="basis-figure plot-card">
+        <div id="boysPlot" class="basis-svg" aria-label="Boys function plot"></div>
+        <figcaption>Large \(T\) means separated product centers or tight combined exponents; the Coulomb coupling decays smoothly.</figcaption>
+      </figure>
+    </div>
+    <button class="quest-complete" data-badge="Boys function spelunker" data-xp="150" type="button">Complete Boys cavern</button>
+  </section>
+
+  <section id="level-17" class="lesson-step card-panel" data-step="17">
+    <p class="kicker">Level 17 · Four-index ERI tensor raid</p>
+    <h2>The expensive object: \((\mu\nu|\lambda\sigma)\)</h2>
+    <p>Electron-repulsion integrals couple two basis-function products. If you have \(K\) basis functions, the naive count scales like \(K^4\). Real codes survive by using shell structure, permutational symmetry, contraction strategies, density fitting, locality, and Schwarz screening.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Atoms<input id="eriAtoms" type="range" min="2" max="80" step="1" value="18"></label>
+        <label>Shells per atom<input id="eriShells" type="range" min="1" max="10" step="1" value="4"></label>
+        <label>Maximum angular momentum<select id="eriL"><option value="0">s only</option><option value="1">through p</option><option value="2" selected>through d</option><option value="3">through f</option><option value="4">through g</option></select></label>
+        <label>Average contraction length<input id="eriContract" type="range" min="1" max="12" step="1" value="4"></label>
+        <label>Schwarz threshold \(10^x\)<input id="eriThreshold" type="range" min="-14" max="-4" step="1" value="-10"></label>
+        <div id="eriReadout" class="orbital-info"></div>
+      </div>
+      <figure class="basis-figure plot-card">
+        <div id="eriTensorPlot" class="basis-svg" aria-label="ERI tensor and screening plot"></div>
+        <figcaption>Symmetry and screening do not change the math; they decide which shell quartets are worth evaluating.</figcaption>
+      </figure>
+    </div>
+    <button class="quest-complete" data-badge="ERI tensor raider" data-xp="160" type="button">Complete ERI tensor raid</button>
+  </section>
+
+  <section id="level-18" class="lesson-step card-panel" data-step="18">
+    <p class="kicker">Level 18 · Algorithm and derivative boss</p>
+    <h2>Recurrences, quadrature, screening, and gradients</h2>
+    <p>Advanced integral engines do not evaluate every Cartesian polynomial from scratch. They climb recurrence ladders, transform Cartesian/spherical components, screen shell quartets, and differentiate integrals analytically for forces, Hessians, response, and basis optimization.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Integral engine strategy<select id="recurAlgorithm"><option value="md">McMurchie–Davidson Hermite expansion</option><option value="os" selected>Obara–Saika vertical/horizontal recurrences</option><option value="rys">Rys quadrature roots/weights</option><option value="df">Density fitting / RI factorization</option></select></label>
+        <label>Maximum angular momentum \(L\)<input id="recurL" type="range" min="0" max="6" step="1" value="3"></label>
+        <label>Derivative order<input id="derivativeOrder" type="range" min="0" max="3" step="1" value="1"></label>
+        <div id="recurrenceReadout" class="orbital-info"></div>
+      </div>
+      <figure class="basis-figure plot-card">
+        <div id="recurrencePlot" class="basis-svg" aria-label="Integral recurrence strategy plot"></div>
+        <figcaption>Higher angular momentum and derivatives climb larger recurrence ladders; screening and factorization decide how much of the ladder is needed.</figcaption>
+      </figure>
+    </div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Derivative Gaussian exponent<input id="derivAlpha" type="range" min="0.15" max="5.00" step="0.05" value="1.10"></label>
+        <label>Center displacement<input id="derivShift" type="range" min="-2.0" max="2.0" step="0.05" value="0.35"></label>
+        <label>Derivative target<select id="derivTarget"><option value="center">nuclear-gradient / center derivative</option><option value="exponent">exponent sensitivity</option><option value="basis">basis-optimization intuition</option></select></label>
+        <div id="derivativeReadout" class="orbital-info"></div>
+      </div>
+      <figure class="basis-figure plot-card">
+        <div id="derivativePlot" class="basis-svg" aria-label="Gaussian derivative plot"></div>
+        <figcaption>A derivative of a Gaussian generates polynomial-weighted Gaussians. This is why gradient integrals are connected to angular-momentum recurrences.</figcaption>
+      </figure>
+    </div>
+    <h3>Research anchors used for this advanced section</h3>
+    <table class="meta-table wide-table integral-source-table">
+      <thead><tr><th>Topic</th><th>Source anchor</th><th>Why it matters here</th></tr></thead>
+      <tbody>
+        <tr><th>Gaussian basis functions and Boys idea</th><td>S. F. Boys, Proc. R. Soc. A 1950, DOI <a href="https://doi.org/10.1098/rspa.1950.0036" target="_blank" rel="noopener">10.1098/rspa.1950.0036</a></td><td>Popularized Gaussian expansions that make analytic molecular integrals practical.</td></tr>
+        <tr><th>Hermite Gaussian integral recurrence</th><td>McMurchie and Davidson, J. Comput. Phys. 1978, DOI <a href="https://doi.org/10.1016/0021-9991(78)90092-X" target="_blank" rel="noopener">10.1016/0021-9991(78)90092-X</a></td><td>Classic one- and two-electron Cartesian Gaussian integral framework.</td></tr>
+        <tr><th>Recursive Cartesian integrals</th><td>Obara and Saika, J. Chem. Phys. 1986, DOI <a href="https://doi.org/10.1063/1.450106" target="_blank" rel="noopener">10.1063/1.450106</a></td><td>Core recurrence strategy behind many Gaussian integral algorithms.</td></tr>
+        <tr><th>Rys quadrature</th><td>Dupuis, Rys, and King, J. Comput. Chem. 1983, DOI <a href="https://doi.org/10.1002/jcc.540040206" target="_blank" rel="noopener">10.1002/jcc.540040206</a></td><td>Transforms ERI evaluation into quadrature roots/weights for efficient computation.</td></tr>
+        <tr><th>Production integral engine</th><td>Libint project documentation, <a href="https://evaleev.github.io/libint/" target="_blank" rel="noopener">evaleev.github.io/libint</a></td><td>Shows how modern codes package many-body Gaussian integrals into reusable libraries.</td></tr>
+        <tr><th>Real code interface and basis notation</th><td>PySCF molecular structure/GTO documentation, <a href="https://pyscf.org/user/gto.html" target="_blank" rel="noopener">pyscf.org/user/gto.html</a></td><td>Connects basis-set definitions to actual integral labels and molecular calculations.</td></tr>
+        <tr><th>Production basis data</th><td>Basis Set Exchange documentation, <a href="https://molssi-bse.github.io/basis_set_exchange/" target="_blank" rel="noopener">molssi-bse.github.io/basis_set_exchange</a></td><td>Provides curated published basis definitions; the integral engine consumes those exponents/contractions.</td></tr>
+      </tbody>
+    </table>
+    <button class="quest-complete" data-badge="Integral grandmaster" data-xp="190" type="button">Complete algorithm boss</button>
+  </section>
+
   <section class="notice quest-finale">
-    <strong>Final rule:</strong> choose the smallest basis that is balanced for the property. Geometry may tolerate double-ζ/polarized; response properties, anions, Rydberg states, weak binding, and correlated benchmarks usually require diffuse functions, higher ζ, and/or systematic extrapolation.
+    <strong>Final rule:</strong> basis-set choice is also integral-engine choice: choose the smallest basis that is balanced for the property and computationally stable for the integral problem. Geometry may tolerate double-ζ/polarized; response properties, anions, Rydberg states, weak binding, and correlated benchmarks usually require diffuse functions, higher ζ, and/or systematic extrapolation.
   </section>
 </main>
-<footer class="footer"><p>Project XC Basis Set Quest links to Basis Set Exchange for production basis data and teaches the conceptual/mathematical layer needed to use those data responsibly.</p></footer>
+<footer class="footer"><p>Project XC Basis Set Quest links to Basis Set Exchange for production basis data and teaches both the conceptual basis-set layer and the advanced Gaussian-integral machinery needed to use those data responsibly.</p></footer>
 <script src="assets/basis-sets.js"></script>
 </body>
 </html>

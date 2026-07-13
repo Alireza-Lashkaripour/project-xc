@@ -1,9 +1,9 @@
 (() => {
   const $ = id => document.getElementById(id);
   const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
-  const TOTAL_LEVELS = 12;
+  const TOTAL_LEVELS = 18;
   const STORAGE_KEY = 'project-xc-basis-quest-badges-v2';
-  const XP_TOTAL = 1200;
+  const XP_TOTAL = 2190;
 
   function esc(v) { return String(v ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch])); }
   function getBadges() {
@@ -160,6 +160,127 @@
     if ($('costReadout')) $('costReadout').innerHTML=`<strong>Cost boss:</strong> K=${K}, scaling K^${p}, relative cost vs K=100 is ${rel.toFixed(1)}×. Doubling K multiplies cost by ${Math.pow(2,p).toFixed(0)}×.`;
   }
 
+
+  function erfApprox(x) {
+    const sign = x < 0 ? -1 : 1;
+    x = Math.abs(x);
+    const a1=0.254829592, a2=-0.284496736, a3=1.421413741, a4=-1.453152027, a5=1.061405429, p=0.3275911;
+    const t = 1 / (1 + p*x);
+    const y = 1 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*Math.exp(-x*x);
+    return sign*y;
+  }
+  function boys(m, T) {
+    T = Math.max(0, Number(T) || 0);
+    m = Math.max(0, Math.floor(Number(m) || 0));
+    if (T < 1e-8) return 1 / (2*m + 1);
+    if (m === 0) return 0.5 * Math.sqrt(Math.PI / T) * erfApprox(Math.sqrt(T));
+    // Small deterministic Simpson quadrature is accurate enough for the teaching widget.
+    const n = 160, h = 1/n;
+    let sum = 0;
+    for (let i=0; i<=n; i++) {
+      const u = i*h;
+      const w = (i===0 || i===n) ? 1 : (i%2 ? 4 : 2);
+      sum += w * Math.pow(u, 2*m) * Math.exp(-T*u*u);
+    }
+    return sum*h/3;
+  }
+  function sci(x) {
+    if (!Number.isFinite(x)) return '—';
+    const ax = Math.abs(x);
+    if (ax && (ax < 0.001 || ax > 9999)) return x.toExponential(2);
+    return x.toFixed(ax < 10 ? 3 : 1);
+  }
+
+  function updateProductTheorem() {
+    const alpha=Number($('gpAlpha')?.value||0.7), beta=Number($('gpBeta')?.value||1.8), R=Number($('gpDistance')?.value||2);
+    const p=alpha+beta, mu=alpha*beta/p, P=beta*R/p, pref=Math.exp(-mu*R*R);
+    const W=700,H=300,pad=42, xmin=-2, xmax=Math.max(6,R+2);
+    const xmap=x=>pad+(x-xmin)/(xmax-xmin)*(W-2*pad), ymap=y=>H-pad-y*(H-2*pad);
+    const pts=[]; let max=0;
+    for(let i=0;i<=180;i++){ const x=xmin+i*(xmax-xmin)/180; const gA=Math.exp(-alpha*x*x), gB=Math.exp(-beta*(x-R)*(x-R)), prod=gA*gB; max=Math.max(max,gA,gB,prod); pts.push([x,gA,gB,prod]); }
+    const path = k => pts.map((row,i)=>`${i?'L':'M'} ${xmap(row[0]).toFixed(1)} ${ymap(row[k]/max).toFixed(1)}`).join(' ');
+    const body=`${axis(W,H,pad)}<line x1="${xmap(0)}" x2="${xmap(0)}" y1="${pad}" y2="${H-pad}" stroke="#93c5fd" stroke-dasharray="5 5"></line><line x1="${xmap(R)}" x2="${xmap(R)}" y1="${pad}" y2="${H-pad}" stroke="#fb923c" stroke-dasharray="5 5"></line><line x1="${xmap(P)}" x2="${xmap(P)}" y1="${pad}" y2="${H-pad}" stroke="#6d28d9" stroke-dasharray="3 5"></line><path d="${path(1)}" fill="none" stroke="#2563eb" stroke-width="3"></path><path d="${path(2)}" fill="none" stroke="#f97316" stroke-width="3"></path><path d="${path(3)}" fill="none" stroke="#6d28d9" stroke-width="5" stroke-linecap="round"></path><text x="${pad+8}" y="28" class="axis-label">blue=A, orange=B, purple=product Gaussian at P</text><text x="${xmap(P)+6}" y="${pad+18}" class="axis-label">P</text>`;
+    if($('productTheoremPlot')) $('productTheoremPlot').innerHTML=svgWrap(W,H,body,'Gaussian product theorem plot');
+    if($('productReadout')) $('productReadout').innerHTML=`<strong>Product center:</strong> P=${P.toFixed(2)} on the A→B axis, p=α+β=${p.toFixed(2)}, μ=${mu.toFixed(3)}, distance prefactor exp(−μR²)=${pref.toFixed(3)}. ${pref<0.05?'These primitives barely see each other.':'The product has enough amplitude to matter.'}`;
+  }
+
+  function updateOneElectronLab() {
+    const a=Number($('oneAlpha')?.value||0.9), b=Number($('oneBeta')?.value||1.25), R=Number($('oneDistance')?.value||1.4), Z=Number($('nuclearZ')?.value||6), cFrac=Number($('nucleusOffset')?.value||0.5);
+    const p=a+b, mu=a*b/p, S=Math.pow((2*Math.sqrt(a*b))/p,1.5)*Math.exp(-mu*R*R);
+    const T=mu*(3-2*mu*R*R)*S;
+    const P=b*R/p, C=cFrac*R, boysArg=p*(P-C)*(P-C), V=-Z*S*2*Math.sqrt(p/Math.PI)*boys(0,boysArg);
+    const vals=[['Overlap S',S,'#174ea6'],['Kinetic T',T,'#6d28d9'],['|Nuclear V|',Math.abs(V),'#f97316']];
+    const W=620,H=300,pad=48,max=Math.max(...vals.map(v=>Math.abs(v[1])),0.001);
+    const bars=vals.map(([name,val,col],i)=>{ const h=Math.abs(val)/max*(H-2*pad); const x=pad+70+i*155; return `<rect x="${x}" y="${H-pad-h}" width="70" height="${h}" rx="8" fill="${col}" opacity=".82"></rect><text x="${x-28}" y="${H-18}" class="axis-label">${name}</text><text x="${x-4}" y="${H-pad-h-8}" class="axis-label">${sci(val)}</text>`; }).join('');
+    const geometry=`<line x1="${pad}" x2="${W-pad}" y1="46" y2="46" stroke="#d0d5dd"></line><circle cx="${pad+100}" cy="46" r="7" fill="#2563eb"></circle><text x="${pad+88}" y="30" class="axis-label">A</text><circle cx="${pad+100+R/6*(W-2*pad-200)}" cy="46" r="7" fill="#f97316"></circle><text x="${pad+92+R/6*(W-2*pad-200)}" y="30" class="axis-label">B</text><circle cx="${pad+100+cFrac*R/6*(W-2*pad-200)}" cy="46" r="8" fill="#111827"></circle><text x="${pad+88+cFrac*R/6*(W-2*pad-200)}" y="70" class="axis-label">Z</text>`;
+    if($('oneElectronPlot')) $('oneElectronPlot').innerHTML=svgWrap(W,H,`<rect x="0" y="0" width="${W}" height="${H}" rx="16" fill="#fbfdff"></rect>${geometry}<line x1="${pad}" x2="${W-pad}" y1="${H-pad}" y2="${H-pad}" stroke="#d0d5dd"></line>${bars}<text x="${pad+8}" y="105" class="axis-label">toy normalized s-Gaussian one-electron integrals</text>`,'One-electron integrals');
+    if($('oneElectronReadout')) $('oneElectronReadout').innerHTML=`<strong>Integral readout:</strong> S=${sci(S)}, T=${sci(T)}, V=${sci(V)}. Product center P=${P.toFixed(2)}, nucleus coordinate C=${C.toFixed(2)}, Boys argument p|P−C|²=${boysArg.toFixed(3)}.`;
+  }
+
+  function updateBoysLab() {
+    const m=Number($('boysOrder')?.value||0), T=Number($('boysT')?.value||2.4), dist=Number($('coulombDistance')?.value||1.2);
+    const W=650,H=300,pad=45; const samples=[]; let max=0;
+    for(let i=0;i<=160;i++){ const t=i*24/160; const v=boys(m,t); max=Math.max(max,v); samples.push([t,v]); }
+    const x=t=>pad+t/24*(W-2*pad), y=v=>H-pad-v/max*(H-2*pad);
+    const path=samples.map(([t,v],i)=>`${i?'L':'M'} ${x(t).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
+    const val=boys(m,T), proxyT=T*dist*dist/1.44;
+    const body=`${axis(W,H,pad)}<path d="${path}" fill="none" stroke="#174ea6" stroke-width="4" stroke-linecap="round"></path><line x1="${x(T)}" x2="${x(T)}" y1="${pad}" y2="${H-pad}" stroke="#f97316" stroke-dasharray="5 5"></line><circle cx="${x(T)}" cy="${y(val)}" r="7" fill="#f97316"></circle><text x="${pad+8}" y="28" class="axis-label">F_${m}(T) decreases as product centers separate or exponents tighten</text><text x="${W-95}" y="${H-15}" class="axis-label">T →</text>`;
+    if($('boysPlot')) $('boysPlot').innerHTML=svgWrap(W,H,body,'Boys function plot');
+    if($('boysReadout')) $('boysReadout').innerHTML=`<strong>Boys value:</strong> F_${m}(${T.toFixed(2)})=${val.toFixed(6)}. Distance proxy changes the effective Coulomb argument to about ${proxyT.toFixed(2)}: larger separation means weaker attraction/repulsion integrals.`;
+  }
+
+  function updateEriTensor() {
+    const atoms=Number($('eriAtoms')?.value||18), shells=Number($('eriShells')?.value||4), L=Number($('eriL')?.value||2), contract=Number($('eriContract')?.value||4), logThr=Number($('eriThreshold')?.value||-10);
+    const funcsPerShellFamily=(L+1)*(L+1); // spherical count through L: sum_l (2l+1)
+    const K=atoms*shells*funcsPerShellFamily;
+    const shellCount=atoms*shells*(L+1);
+    const raw=Math.pow(K,4)/8;
+    const shellQuartets=Math.pow(shellCount,4)/8;
+    const primitiveQuartets=shellQuartets*Math.pow(contract,4);
+    const strictness=(-logThr-4)/10;
+    const kept=clamp(0.02 + 0.72*Math.exp(-2.6*strictness)/(1+0.18*L),0.005,0.95);
+    const screened=shellQuartets*kept;
+    const W=660,H=330,pad=50;
+    const vals=[['K⁴ raw',raw,'#94a3b8'],['shell symmetry',shellQuartets,'#60a5fa'],['primitive work',primitiveQuartets,'#f97316'],['after Schwarz',screened,'#047857']];
+    const logs=vals.map(v=>Math.log10(Math.max(1,v[1]))); const max=Math.max(...logs), min=Math.min(...logs,0);
+    const bars=vals.map(([name,val,col],i)=>{ const h=(Math.log10(Math.max(1,val))-min)/(max-min||1)*(H-2*pad); const x=pad+25+i*140; return `<rect x="${x}" y="${H-pad-h}" width="78" height="${h}" rx="9" fill="${col}" opacity=".86"></rect><text x="${x-12}" y="${H-18}" class="axis-label">${name}</text><text x="${x-2}" y="${H-pad-h-8}" class="axis-label">10^${Math.log10(Math.max(1,val)).toFixed(1)}</text>`; }).join('');
+    const gridN=8, cell=16; let heat='';
+    for(let i=0;i<gridN;i++) for(let j=0;j<gridN;j++){ const bound=Math.exp(-0.28*Math.abs(i-j)*(1+0.2*L))*Math.exp(-0.05*(i+j)); const active=bound>Math.pow(10,logThr+6); heat += `<rect x="${W-190+j*(cell+2)}" y="${55+i*(cell+2)}" width="${cell}" height="${cell}" rx="3" fill="${active?'#174ea6':'#dbeafe'}" opacity="${active?0.85:0.45}"></rect>`; }
+    if($('eriTensorPlot')) $('eriTensorPlot').innerHTML=svgWrap(W,H,`${axis(W,H,pad)}${bars}<text x="${pad+8}" y="28" class="axis-label">log-scale estimated ERI workload</text><text x="${W-190}" y="40" class="axis-label">screening map</text>${heat}`,'ERI tensor scaling and screening');
+    if($('eriReadout')) $('eriReadout').innerHTML=`<strong>ERI estimate:</strong> K≈${K.toLocaleString()} basis functions; shell quartets ≈ ${sci(shellQuartets)}; primitive contraction work ≈ ${sci(primitiveQuartets)}; Schwarz threshold 10^${logThr} keeps roughly ${(100*kept).toFixed(1)}% in this toy model.`;
+  }
+
+  function updateRecurrenceBoss() {
+    const alg=$('recurAlgorithm')?.value||'os', L=Number($('recurL')?.value||3), d=Number($('derivativeOrder')?.value||1);
+    const labels={md:'McMurchie–Davidson: expand products in Hermite Gaussians, then reuse Hermite Coulomb integrals.', os:'Obara–Saika: climb vertical/horizontal recurrence relations over angular momentum.', rys:'Rys quadrature: reduce ERIs to roots and weights of a one-dimensional quadrature.', df:'Density fitting / RI: replace four-index ERIs by lower-rank three-index objects.'};
+    const W=650,H=330,pad=44; let nodes='';
+    for(let l=0;l<=L;l++){
+      const y=H-pad-l*(H-2*pad)/Math.max(1,L+1);
+      for(let k=0;k<=l+d;k++){
+        const x=pad+60+k*(W-2*pad-120)/Math.max(1,L+d);
+        const col=k<=l?'#174ea6': '#f97316';
+        nodes += `<circle cx="${x}" cy="${y}" r="${5+1.5*l}" fill="${col}" opacity=".78"></circle>`;
+        if(k>0) nodes += `<line x1="${x-((W-2*pad-120)/Math.max(1,L+d))}" y1="${y}" x2="${x}" y2="${y}" stroke="#d0d5dd"></line>`;
+      }
+      nodes += `<text x="${pad}" y="${y+4}" class="axis-label">L=${l}</text>`;
+    }
+    const factor={md:1.15,os:1.0,rys:0.82,df:0.32}[alg];
+    const work=Math.pow(L+1,4)*Math.pow(d+1,2)*factor;
+    if($('recurrencePlot')) $('recurrencePlot').innerHTML=svgWrap(W,H,`<rect x="0" y="0" width="${W}" height="${H}" rx="16" fill="#fbfdff"></rect><text x="${pad}" y="30" class="axis-label">recurrence/derivative ladder: blue angular nodes, orange derivative nodes</text>${nodes}<text x="${W-220}" y="${H-18}" class="axis-label">relative work ${work.toFixed(0)}</text>`,'Integral recurrence ladder');
+    if($('recurrenceReadout')) $('recurrenceReadout').innerHTML=`<strong>${labels[alg]}</strong> With maximum L=${L} and derivative order ${d}, toy relative work is ${work.toFixed(0)}. Basis sets with higher polarization functions push this ladder upward; gradients/Hessians add derivative branches.`;
+  }
+
+  function updateDerivativePlot() {
+    const a=Number($('derivAlpha')?.value||1.1), shift=Number($('derivShift')?.value||0.35), target=$('derivTarget')?.value||'center';
+    const W=650,H=300,pad=45,xmin=-3,xmax=3; const pts=[]; let max=0;
+    for(let i=0;i<=180;i++){ const x=xmin+i*(xmax-xmin)/180; const g=Math.exp(-a*(x-shift)*(x-shift)); const centerDer=2*a*(x-shift)*g; const expDer=-(x-shift)*(x-shift)*g; const val=target==='exponent'?expDer:centerDer; max=Math.max(max,Math.abs(g),Math.abs(val)); pts.push([x,g,val]); }
+    const xmap=x=>pad+(x-xmin)/(xmax-xmin)*(W-2*pad), ymap=v=>H/2-v/max*(H/2-pad);
+    const path=k=>pts.map((row,i)=>`${i?'L':'M'} ${xmap(row[0]).toFixed(1)} ${ymap(row[k]).toFixed(1)}`).join(' ');
+    if($('derivativePlot')) $('derivativePlot').innerHTML=svgWrap(W,H,`<rect x="0" y="0" width="${W}" height="${H}" rx="16" fill="#fbfdff"></rect><line x1="${pad}" x2="${W-pad}" y1="${H/2}" y2="${H/2}" stroke="#d0d5dd"></line><path d="${path(1)}" fill="none" stroke="#174ea6" stroke-width="4"></path><path d="${path(2)}" fill="none" stroke="#f97316" stroke-width="4"></path><text x="${pad+8}" y="28" class="axis-label">blue Gaussian, orange ${target==='exponent'?'∂g/∂α':'∂g/∂A_x'} shape</text>`,'Gaussian derivative plot');
+    const msg={center:'Center derivatives create p-like polynomial factors; this is the analytic-gradient link between nuclear motion and angular-momentum recurrences.', exponent:'Exponent derivatives show why tight/diffuse optimization changes radial moments and integral conditioning.', basis:'Basis optimization combines center/exponent/contraction sensitivities; integrals must be differentiated with respect to basis parameters.'}[target];
+    if($('derivativeReadout')) $('derivativeReadout').innerHTML=`<strong>Derivative lesson:</strong> α=${a.toFixed(2)}, center shift=${shift.toFixed(2)}. ${msg}`;
+  }
+
   const advice = {
     'neutral-dft': { minimal:['Low','Too cramped for reliable bonding. Use at least polarized double-ζ.'], svp:['Good starter','Reasonable for quick DFT geometries; confirm energies with triple-ζ.'], tzvp:['Strong','A balanced routine choice for geometry and many trends.'], 'aug-tz':['Overkill but safe','Diffuse functions may be unnecessary unless tails/response matter.'], 'qz-extrap':['Benchmark','More than needed for routine geometry, useful for reference data.'] },
     anion: { minimal:['Fail','No diffuse tail: the extra electron is artificially confined.'], svp:['Risky','Still usually lacks diffuse functions.'], tzvp:['Incomplete','Triple-ζ helps but diffuse functions are the key missing ingredient.'], 'aug-tz':['Good','Augmentation gives the density a physical tail.'], 'qz-extrap':['Excellent','Use augmented cardinal sets and check convergence.'] },
@@ -184,7 +305,13 @@
     ['cbsOffset','cbsHardness','cardinalMax'].forEach(id => $(id)?.addEventListener('input', updateCbs));
     ['basisCount','methodScaling'].forEach(id => $(id)?.addEventListener('input', updateCost));
     ['scenarioSelect','basisChoice'].forEach(id => $(id)?.addEventListener('input', updateGame));
-    [updateGaussianLab, updateAoShape, updateContractionForge, updateOverlapDungeon, updateBasisRadar, updateBsseDuel, updateAlarm, updateCbs, updateCost, updateGame, renderBadges].forEach(fn => fn());
+    ['gpAlpha','gpBeta','gpDistance'].forEach(id => $(id)?.addEventListener('input', updateProductTheorem));
+    ['oneAlpha','oneBeta','oneDistance','nuclearZ','nucleusOffset'].forEach(id => $(id)?.addEventListener('input', updateOneElectronLab));
+    ['boysOrder','boysT','coulombDistance'].forEach(id => $(id)?.addEventListener('input', updateBoysLab));
+    ['eriAtoms','eriShells','eriL','eriContract','eriThreshold'].forEach(id => $(id)?.addEventListener('input', updateEriTensor));
+    ['recurAlgorithm','recurL','derivativeOrder'].forEach(id => $(id)?.addEventListener('input', updateRecurrenceBoss));
+    ['derivAlpha','derivShift','derivTarget'].forEach(id => $(id)?.addEventListener('input', updateDerivativePlot));
+    [updateGaussianLab, updateAoShape, updateContractionForge, updateOverlapDungeon, updateBasisRadar, updateBsseDuel, updateAlarm, updateCbs, updateCost, updateGame, updateProductTheorem, updateOneElectronLab, updateBoysLab, updateEriTensor, updateRecurrenceBoss, updateDerivativePlot, renderBadges].forEach(fn => fn());
     document.querySelector('.lesson-nav button[data-step="1"]')?.classList.add('active');
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();

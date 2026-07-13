@@ -25,3 +25,4 @@ python3 scripts/build_site.py
 Caveat: the MO builder and basis-set lab are qualitative teaching tools; use real quantum-chemistry calculations and Basis Set Exchange data for production work.
 
 - Unified visual system: elegant scientific cockpit presentation with stronger typography, first-screen module summaries, and polished cards across all pages.
+- Advanced Integrals: Basis Set Quest now includes Gaussian product theorem, one-electron integrals, Boys functions, ERI tensor scaling/screening, recurrence algorithms, and derivative/gradient games.

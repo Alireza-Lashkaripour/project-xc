@@ -295,6 +295,14 @@ input[type="checkbox"] { width: auto; }
 .game-result { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: .82rem; padding: .9rem; color: #064e3b; }
 .game-result p { margin: .25rem 0 0; }
 .quest-finale { background: #fff7ed; border-color: #fed7aa; color: #7c2d12; }
+
+.advanced-integrals { background: radial-gradient(circle at top left, rgba(109,40,217,.10), transparent 32%), linear-gradient(180deg, #ffffff, #f8fbff); border-color: #c7d2fe; }
+.advanced-integrals .notice { margin: .7rem 0 .9rem; }
+.integral-source-table th:first-child { width: 185px; }
+.integral-source-table td { font-size: .86rem; }
+.integral-source-table a { overflow-wrap: anywhere; }
+.basis-page .lesson-step h3 { margin-top: .6rem; }
+
 .footer { max-width: 1160px; margin: 0 auto; padding: 1.8rem 1.25rem; color: var(--muted); border-top: 1px solid rgba(195,212,236,.8); }
 
 @media (max-width: 900px) {
