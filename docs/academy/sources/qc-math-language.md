@@ -46,6 +46,14 @@ and the residual is orthogonal to `|u⟩`. The projection game uses real two-dim
 - Complex generalization: `c' = U† c` and `c = U c'` when `U†U = I`.
 - Rotating coordinates is not the same operation as actively rotating the physical vector, although the same matrix family can describe either when the convention is changed consistently.
 
+### Operator matrices and nonorthogonal coordinates
+
+For an orthonormal basis, covariant matrix elements `A_ij = ⟨e_i|Â|e_j⟩` act on coefficient columns by `d=Ac`, and ordinary matrix products represent composed operators. For a nonorthogonal basis `{χ_μ}` with `S_μν=⟨χ_μ|χ_ν⟩`, the same covariant definition instead gives
+
+`S d = A c`, hence `d = S⁻¹ A c` when `S` is invertible.
+
+Equivalently, one may introduce a dual basis or mixed-index matrix, but that convention must be stated. Covariant AO matrices cannot silently be treated as though `S=I`.
+
 ### Matrices, eigensystems, and Rayleigh residuals
 
 The game matrix is the real-symmetric subset
@@ -88,11 +96,15 @@ The two browser panels use independent symmetric display windows. Each window is
 
 ### Variational and functional language
 
-For a Hermitian matrix or suitable self-adjoint Hamiltonian,
+For an orthonormal coefficient representation of a Hermitian matrix or suitable self-adjoint Hamiltonian,
 
-`R[c] = (c†Hc)/(c†c)`.
+`R[c] = (c†Hc)/(c†c)`, and stationarity gives `Hc=λc`.
 
-Stationary directions satisfy the eigenvalue equation. The ground-state upper-bound statement additionally requires an admissible normalized trial state in the operator domain and a Hamiltonian bounded from below. A stationary point need not be the ground state; higher eigenvectors are stationary too.
+For a nonorthogonal basis with positive-definite overlap matrix `S`,
+
+`R_S[c] = (c†Hc)/(c†Sc)`, with `c†Sc=1`, and stationarity gives the generalized eigenproblem `Hc=λSc`.
+
+The ground-state upper-bound statement additionally requires an admissible normalized trial state in the operator domain and a Hamiltonian bounded from below. A stationary point need not be the ground state; higher eigenvectors are stationary too.
 
 ## Interactive-model boundary
 
@@ -104,8 +116,8 @@ The four laboratories use exact two-dimensional linear algebra or an analytic Ga
 
 - polar/Cartesian complex-number identities;
 - projection reconstruction, orthogonality, and Pythagorean norm decomposition;
-- passive basis-change round trips, norm preservation, and orthogonality;
-- analytic `2×2` eigenvalues, trace/determinant invariants, orthogonal eigenvectors, Rayleigh quotients, and residuals;
+- passive basis-change round trips, direct basis-vector dot products, the advertised 90° sign convention, norm preservation, and orthogonality;
+- analytic `2×2` eigenvalues, trace/determinant invariants, orthogonal eigenvectors, Rayleigh quotients, residuals, and degenerate reveal behavior;
 - Gaussian Fourier normalization, means, variances, and `σ_xσ_k=1/2`.
 
 Any change to a convention, model equation, or mission count requires updating this ledger, the tests, and the on-page caveat together.

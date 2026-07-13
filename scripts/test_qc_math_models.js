@@ -72,7 +72,12 @@ for (const [vx, vy, angle] of [
   near(model.normOriginal, model.normCoordinates, 1e-12, 'basis-change norm invariance');
   near(model.determinant, 1, 1e-12, 'rotation determinant');
   near(model.orthogonalityError, 0, 1e-12, 'rotation orthogonality');
+  near(model.coordinates[0], vx * model.basis[0][0] + vy * model.basis[0][1], 1e-12, 'first passive coordinate is the e1-prime dot product');
+  near(model.coordinates[1], vx * model.basis[1][0] + vy * model.basis[1][1], 1e-12, 'second passive coordinate is the e2-prime dot product');
 }
+
+const quarterTurn = models.rotationModel(1, 0, 90);
+vectorNear(quarterTurn.coordinates, [0, -1], 1e-12, 'advertised passive 90-degree sign convention');
 
 for (const [a, b, d, expected] of [
   [2, 0, 5, [2, 5]],
@@ -113,6 +118,9 @@ near(degenerateSpectrum.values[1], 1, 1e-12, 'degenerate upper eigenvalue');
 const degenerateDirection = models.eigenPuzzleModel(1, 0, 1, 37);
 near(degenerateDirection.rayleigh, 1, 1e-12, 'degenerate-space Rayleigh quotient');
 near(degenerateDirection.residualNorm, 0, 1e-12, 'every direction is an eigenvector of a scalar matrix');
+assert(typeof models.nearestEigenvectorAngle === 'function', 'nearestEigenvectorAngle model must be exported for deterministic UI testing');
+near(models.nearestEigenvectorAngle(2, 0, 2, 18), 18, 1e-12, 'degenerate reveal keeps the already-valid candidate direction');
+near(models.nearestEigenvectorAngle(2, 1, 2, 18), 45, 1e-10, 'nondegenerate reveal chooses the nearest eigendirection');
 
 const puzzleAtEigenvector = models.eigenPuzzleModel(2, 1, 2, 45);
 near(puzzleAtEigenvector.rayleigh, 3, 1e-12, '45° coupled-matrix Rayleigh quotient');

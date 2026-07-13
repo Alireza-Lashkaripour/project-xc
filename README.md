@@ -24,6 +24,7 @@ Local checks:
 ```bash
 python3 scripts/validate_data.py
 python3 scripts/validate_academy.py
+python3 scripts/test_academy_validator.py
 node scripts/test_academy_models.js
 node scripts/test_qc_math_models.js
 node scripts/test_academy_core.js

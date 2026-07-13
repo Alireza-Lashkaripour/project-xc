@@ -54,17 +54,19 @@ function loadCore(initialStorage = {}) {
 }
 
 const BASIS_KEY = 'project-xc-basis-quest-badges-v2';
+const FOUNDATION_MISSION_IDS = ['scale', 'state', 'probability', 'phase', 'operators', 'schrodinger', 'box', 'uncertainty', 'spin', 'many-electron-bridge'];
+const MATH_MISSION_IDS = ['complex-amplitudes', 'vector-coordinates', 'projection', 'basis-rotation', 'matrix-representation', 'eigensystem', 'hermitian-unitary', 'tensor-products', 'fourier-pairs', 'variational-bridge'];
 const liveChapter = {
   id: 'qc-foundations',
   status: 'live',
   levels: 10,
-  progress: { kind: 'academy-missions', total: 10, label: 'Academy missions' }
+  progress: { kind: 'academy-missions', total: 10, mission_ids: FOUNDATION_MISSION_IDS, label: 'Academy missions' }
 };
 const mathChapter = {
   id: 'qc-math-language',
   status: 'live',
   levels: 10,
-  progress: { kind: 'academy-missions', total: 10, label: 'Academy missions' }
+  progress: { kind: 'academy-missions', total: 10, mission_ids: MATH_MISSION_IDS, label: 'Academy missions' }
 };
 const basisChapter = {
   id: 'qc-basis-sets',
@@ -85,14 +87,18 @@ assert(typeof academy.chapterProgress === 'function', 'chapterProgress API must 
 
 academy.setMission('qc-foundations', 'scale', true);
 academy.setMission('qc-math-language', 'complex-amplitudes', true);
+academy.setMission('qc-foundations', 'retired-mission', true);
 const liveProgress = academy.chapterProgress(liveChapter);
-equal(liveProgress.completed, 1, 'live Academy mission count');
+equal(liveProgress.completed, 1, 'stale mission ids must not inflate live Academy progress');
 equal(liveProgress.total, 10, 'live Academy mission total');
 equal(liveProgress.kind, 'academy-missions', 'live progress kind');
 equal(liveProgress.readOnly, false, 'live progress must be writable');
 const mathProgress = academy.chapterProgress(mathChapter);
 equal(mathProgress.completed, 1, 'second live chapter mission count');
 equal(mathProgress.total, 10, 'second live chapter mission total');
+assert(typeof academy.reconcileChapterMissions === 'function', 'mission reconciliation API must be exported');
+academy.reconcileChapterMissions('qc-foundations', FOUNDATION_MISSION_IDS);
+assert(!academy.completedMissions('qc-foundations').includes('retired-mission'), 'chapter reconciliation must migrate stale mission ids out of durable state');
 
 const basisProgress = academy.chapterProgress(basisChapter);
 equal(basisProgress.completed, 2, 'legacy Basis badges must be filtered and deduplicated');
@@ -114,7 +120,20 @@ assert(events.length >= 4, 'progress operations must dispatch update events');
 
 academy.setMission('qc-foundations', 'scale', true);
 academy.setMission('qc-math-language', 'complex-amplitudes', true);
-const summary = academy.summarizeCurriculum({ tracks: [{ chapters: [liveChapter, mathChapter, basisChapter] }] });
+academy.setMission('qc-math-language', 'renamed-away-mission', true);
+equal(academy.chapterProgress(mathChapter).completed, 1, 'stale mission ids must remain excluded before curriculum migration');
+assert(typeof academy.reconcileCurriculumMissions === 'function', 'curriculum-wide mission reconciliation API must be exported');
+const curriculum = { tracks: [{ chapters: [liveChapter, mathChapter, basisChapter] }] };
+academy.reconcileCurriculumMissions(curriculum);
+assert(!academy.completedMissions('qc-math-language').includes('renamed-away-mission'), 'gateway reconciliation must migrate stale ids for every contracted chapter');
+let rejectedUnknownMission = false;
+try {
+  academy.setMission('qc-foundations', 'not-in-contract', true, FOUNDATION_MISSION_IDS);
+} catch (_error) {
+  rejectedUnknownMission = true;
+}
+assert(rejectedUnknownMission, 'chapter-bound writes must reject mission ids outside the authoritative contract');
+const summary = academy.summarizeCurriculum(curriculum);
 equal(summary.completed, 4, 'combined available-mission completion count');
 equal(summary.available, 38, 'combined available-mission total');
 equal(summary.fraction, 4 / 38, 'combined progress fraction');

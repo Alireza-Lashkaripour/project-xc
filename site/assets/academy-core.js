@@ -46,13 +46,25 @@
     return clean;
   }
 
-  function completedMissions(chapterId) {
-    return loadProgress().chapters[chapterId]?.missions || [];
+  function normalizeMissionIds(values) {
+    return Array.isArray(values)
+      ? [...new Set(values.filter(item => typeof item === 'string' && /^[a-z0-9][a-z0-9-]*$/.test(item)))]
+      : [];
   }
 
-  function setMission(chapterId, missionId, complete = true) {
+  function completedMissions(chapterId, validMissionIds = null) {
+    const missions = loadProgress().chapters[chapterId]?.missions || [];
+    if (!Array.isArray(validMissionIds)) return missions;
+    const allowed = new Set(normalizeMissionIds(validMissionIds));
+    return missions.filter(missionId => allowed.has(missionId));
+  }
+
+  function setMission(chapterId, missionId, complete = true, validMissionIds = null) {
     if (!/^[a-z0-9][a-z0-9-]*$/.test(chapterId) || !/^[a-z0-9][a-z0-9-]*$/.test(missionId)) {
       throw new Error('Invalid Academy chapter or mission id');
+    }
+    if (Array.isArray(validMissionIds) && !normalizeMissionIds(validMissionIds).includes(missionId)) {
+      throw new Error(`Mission ${missionId} is not part of chapter ${chapterId}`);
     }
     const state = loadProgress();
     const chapter = state.chapters[chapterId] || { missions: [], updatedAt: null };
@@ -63,6 +75,39 @@
       updatedAt: new Date().toISOString()
     };
     return saveProgress(state);
+  }
+
+  function reconcileChapterMissions(chapterId, validMissionIds) {
+    if (!/^[a-z0-9][a-z0-9-]*$/.test(chapterId) || !Array.isArray(validMissionIds)) {
+      throw new Error('Mission reconciliation requires a valid chapter id and mission-id list');
+    }
+    const allowed = new Set(normalizeMissionIds(validMissionIds));
+    const state = loadProgress();
+    const chapter = state.chapters[chapterId];
+    if (!chapter) return state;
+    const missions = chapter.missions.filter(missionId => allowed.has(missionId));
+    if (missions.length === chapter.missions.length) return state;
+    if (missions.length) state.chapters[chapterId] = { ...chapter, missions };
+    else delete state.chapters[chapterId];
+    return saveProgress(state);
+  }
+
+  function reconcileCurriculumMissions(curriculum) {
+    const state = loadProgress();
+    let changed = false;
+    flattenChapters(curriculum).forEach(chapter => {
+      const contract = chapter?.progress;
+      if (contract?.kind !== 'academy-missions' || !Array.isArray(contract.mission_ids)) return;
+      const stored = state.chapters[chapter.id];
+      if (!stored) return;
+      const allowed = new Set(normalizeMissionIds(contract.mission_ids));
+      const missions = stored.missions.filter(missionId => allowed.has(missionId));
+      if (missions.length === stored.missions.length) return;
+      changed = true;
+      if (missions.length) state.chapters[chapter.id] = { ...stored, missions };
+      else delete state.chapters[chapter.id];
+    });
+    return changed ? saveProgress(state) : state;
   }
 
   function resetChapter(chapterId) {
@@ -96,7 +141,8 @@
     if (!kind || !total) return null;
 
     if (kind === 'academy-missions') {
-      const completed = Math.min(total, completedMissions(chapter.id).length);
+      const missionIds = Array.isArray(contract?.mission_ids) ? contract.mission_ids : null;
+      const completed = Math.min(total, completedMissions(chapter.id, missionIds).length);
       return {
         completed,
         total,
@@ -175,15 +221,17 @@
   function bindChapter({ chapterId, totalMissions = null } = {}) {
     if (!chapterId) throw new Error('bindChapter requires chapterId');
     const missionButtons = [...document.querySelectorAll('.academy-complete[data-mission]')];
+    const missionIds = normalizeMissionIds(missionButtons.map(button => button.dataset.mission));
     const navigation = [...document.querySelectorAll('.academy-lesson-nav [data-step]')];
     const total = Number(totalMissions) || missionButtons.length;
+    reconcileChapterMissions(chapterId, missionIds);
 
     missionButtons.forEach(button => {
       button.dataset.originalText ||= button.textContent.trim();
       button.addEventListener('click', () => {
         const missionId = button.dataset.mission;
-        const done = completedMissions(chapterId).includes(missionId);
-        setMission(chapterId, missionId, !done);
+        const done = completedMissions(chapterId, missionIds).includes(missionId);
+        setMission(chapterId, missionId, !done, missionIds);
         render();
       });
     });
@@ -202,7 +250,7 @@
     });
 
     function render() {
-      const completed = new Set(completedMissions(chapterId));
+      const completed = new Set(completedMissions(chapterId, missionIds));
       missionButtons.forEach(button => {
         const done = completed.has(button.dataset.mission);
         button.classList.toggle('done', done);
@@ -245,6 +293,8 @@
     saveProgress,
     completedMissions,
     setMission,
+    reconcileChapterMissions,
+    reconcileCurriculumMissions,
     resetChapter,
     resetAll,
     flattenChapters,

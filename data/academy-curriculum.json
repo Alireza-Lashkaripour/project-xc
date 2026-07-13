@@ -21,6 +21,18 @@
           "progress": {
             "kind": "academy-missions",
             "total": 10,
+            "mission_ids": [
+              "scale",
+              "state",
+              "probability",
+              "phase",
+              "operators",
+              "schrodinger",
+              "box",
+              "uncertainty",
+              "spin",
+              "many-electron-bridge"
+            ],
             "label": "Academy missions"
           },
           "prerequisites": [],
@@ -43,6 +55,18 @@
           "progress": {
             "kind": "academy-missions",
             "total": 10,
+            "mission_ids": [
+              "complex-amplitudes",
+              "vector-coordinates",
+              "projection",
+              "basis-rotation",
+              "matrix-representation",
+              "eigensystem",
+              "hermitian-unitary",
+              "tensor-products",
+              "fourier-pairs",
+              "variational-bridge"
+            ],
             "label": "Academy missions"
           },
           "prerequisites": ["qc-foundations"],

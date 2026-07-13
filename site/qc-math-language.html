@@ -183,7 +183,7 @@
       </div>
       <figure class="basis-figure academy-plot">
         <div id="rotationPlot" aria-label="Fixed vector shown in a rotating orthonormal basis"></div>
-        <figcaption>The blue physical vector stays fixed while the violet and orange coordinate axes rotate. Its coordinates change, but its length and reconstruction do not.</figcaption>
+        <figcaption>The solid physical-vector arrow stays fixed while the long-dashed and dotted coordinate axes rotate. Its coordinates change, but its length and reconstruction do not.</figcaption>
       </figure>
     </div>
     <div class="misconception-card"><strong>Convention warning:</strong> an active rotation of the vector and a passive rotation of its coordinate basis use closely related matrices but are not the same statement. Name what is held fixed before writing the transformation.</div>
@@ -194,7 +194,7 @@
   <section id="level-5" class="academy-lesson card-panel" data-step="5">
     <p class="kicker">Level 5 · Linear maps</p>
     <h2>A matrix is an operator representation after a basis has been chosen</h2>
-    <p>For \(|\psi\rangle=\sum_j c_j|e_j\rangle\), the matrix elements of \(\hat A\) are \(A_{ij}=\langle e_i|\hat A|e_j\rangle\). If \(|\eta\rangle=\hat A|\psi\rangle\), matrix multiplication gives the output coefficients \(d_i\):</p>
+    <p>For an orthonormal basis, \(|\psi\rangle=\sum_j c_j|e_j\rangle\) and \(A_{ij}=\langle e_i|\hat A|e_j\rangle\). If \(|\eta\rangle=\hat A|\psi\rangle\), ordinary matrix multiplication gives the output coefficients \(d_i\):</p>
     <div class="formula-line detail-formula">\[
       \begin{aligned}
         d_i&amp;=\sum_j A_{ij}c_j,\\
@@ -203,8 +203,16 @@
       \end{aligned}
     \]</div>
     <div class="matrix-flow" aria-label="Operator representation flow">
-      <div>abstract state \(|\psi\rangle\)</div><span>→</span><div>choose basis</div><span>→</span><div>coordinate vector \(c\)</div><span>→</span><div>output coordinates \(d=Ac\)</div>
+      <div>abstract state \(|\psi\rangle\)</div><span>→</span><div>choose basis</div><span>→</span><div>coordinate vector \(c\)</div><span>→</span><div>output coordinates \(d=Ac\) when \(S=I\)</div>
     </div>
+    <p>In a nonorthogonal basis \(\{\chi_\mu\}\), the covariant elements \(A_{\mu\nu}=\langle\chi_\mu|\hat A|\chi_\nu\rangle\) do not act as \(d=Ac\). With \(S_{\mu\nu}=\langle\chi_\mu|\chi_\nu\rangle\), the coefficients of the output satisfy</p>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        Sd&amp;=Ac,\\
+        d&amp;=S^{-1}Ac,\\
+        S&amp;\text{ invertible}.
+      \end{aligned}
+    \]</div>
     <div class="quest-grid three">
       <article class="quest-card"><span class="quest-icon">S</span><h3>Overlap matrix</h3><p>In a nonorthogonal atomic-orbital basis, \(S_{\mu\nu}=\langle\chi_\mu|\chi_\nu\rangle\) and the metric is not the identity.</p></article>
       <article class="quest-card"><span class="quest-icon">F</span><h3>Fock/Kohn–Sham matrix</h3><p>A basis representation of an effective one-electron operator that depends on the current density or orbitals.</p></article>
@@ -244,7 +252,7 @@
       </div>
       <figure class="basis-figure academy-plot">
         <div id="eigenPlot" aria-label="Candidate vector, transformed vector, Rayleigh direction, eigenvalues, and residual"></div>
-        <figcaption>Turn the blue candidate until orange \(Av\) lies on the same line. The residual is a reproducible numerical diagnostic—not a visual guess.</figcaption>
+        <figcaption>Turn the solid candidate \(v\) until the long-dashed \(Av\) lies on the same line. The dotted \(\lambda(v)v\) direction exposes the residual as a reproducible numerical diagnostic—not a color or visual guess.</figcaption>
       </figure>
     </div>
     <details class="professor-note"><summary>Professor mode · degeneracy and generalized eigenproblems</summary><p>A degenerate eigenspace does not select unique eigenvectors: any orthonormal rotation inside it remains valid. Atomic-orbital calculations commonly solve \(FC=SC\varepsilon\), a generalized Hermitian eigenproblem with overlap metric \(S\), rather than the standard \(Av=\lambda v\) game shown here.</p></details>
@@ -323,7 +331,7 @@
   <section id="level-10" class="academy-lesson card-panel" data-step="10">
     <p class="kicker">Level 10 · Variational bridge and chapter boss</p>
     <h2>A functional maps a whole trial object to a number</h2>
-    <p>The Rayleigh quotient assigns a scalar to every nonzero coefficient vector. Requiring stationarity under admissible coefficient variations leads to an eigenvalue equation:</p>
+    <p>In an orthonormal coefficient representation, the Rayleigh quotient assigns a scalar to every nonzero coefficient vector. Requiring stationarity under admissible coefficient variations leads to an ordinary eigenvalue equation:</p>
     <div class="formula-line detail-formula">\[
       \begin{aligned}
         R[c]&amp;=\frac{c^\dagger Hc}{c^\dagger c},\\
@@ -332,7 +340,15 @@
         &amp;\Longrightarrow Hc=\lambda c.
       \end{aligned}
     \]</div>
-    <details class="professor-note" open><summary>Derivation path · vary bra and ket consistently</summary><p>For a finite Hermitian matrix, treat the complex coefficients and their conjugates as independent variation variables. Variation with respect to \(c^*\) gives \(Hc-\lambda c=0\); variation with respect to \(c\) gives its conjugate. The lowest Rayleigh quotient is the lowest eigenvalue. Higher eigenvectors are stationary points too, so “stationary” does not automatically mean “minimum.”</p></details>
+    <p>For a nonorthogonal basis with positive-definite overlap matrix \(S\), normalization and stationarity use the metric explicitly:</p>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        R_S[c]&amp;=\frac{c^\dagger Hc}{c^\dagger Sc},\\
+        c^\dagger Sc&amp;=1,\\
+        &amp;\Longrightarrow Hc=\lambda Sc.
+      \end{aligned}
+    \]</div>
+    <details class="professor-note" open><summary>Derivation path · vary bra and ket consistently</summary><p>For the finite orthonormal case, treat the complex coefficients and their conjugates as independent variation variables. Variation with respect to \(c^*\) gives \(Hc-\lambda c=0\); with a fixed nonorthogonal metric it instead gives \(Hc-\lambda Sc=0\). Variation with respect to \(c\) gives the conjugate equation. The lowest admissible Rayleigh quotient is the lowest eigenvalue. Higher eigenvectors are stationary points too, so “stationary” does not automatically mean “minimum.”</p></details>
     <div class="quest-grid three" aria-label="Mathematical Language chapter challenge">
       <article class="quest-card"><span class="quest-icon">1</span><h3>Name the space and metric</h3><p>Are coefficients real or complex? Is the basis orthonormal, or does an overlap matrix define the metric?</p></article>
       <article class="quest-card"><span class="quest-icon">2</span><h3>Name the representation</h3><p>Which basis, ordering, units, Fourier convention, and active/passive transformation convention produced the numbers?</p></article>
