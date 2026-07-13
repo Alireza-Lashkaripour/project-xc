@@ -6,25 +6,47 @@
   const XP_TOTAL = 2190;
 
   function esc(v) { return String(v ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch])); }
-  function getBadges() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; }
+  function badgeButtons() { return [...document.querySelectorAll('.quest-complete[data-badge-id][data-badge]')]; }
+  function normalizeBadges(items) {
+    if (!Array.isArray(items)) return [];
+    const buttons = badgeButtons();
+    const ids = new Set(buttons.map(button => button.dataset.badgeId));
+    const aliases = new Map(buttons.map(button => [button.dataset.badge, button.dataset.badgeId]));
+    return [...new Set(items
+      .filter(item => typeof item === 'string')
+      .map(item => item.trim())
+      .filter(Boolean)
+      .map(item => ids.has(item) ? item : aliases.get(item))
+      .filter(item => ids.has(item)))];
   }
-  function setBadges(items) { localStorage.setItem(STORAGE_KEY, JSON.stringify([...new Set(items)])); }
-  function xpForBadge(name) {
-    const btn = [...document.querySelectorAll('.quest-complete')].find(b => b.dataset.badge === name);
+  function getBadges() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      if (!Array.isArray(parsed)) return [];
+      const badges = normalizeBadges(parsed);
+      if (JSON.stringify(parsed) !== JSON.stringify(badges)) setBadges(badges);
+      return badges;
+    } catch {
+      return [];
+    }
+  }
+  function setBadges(items) { localStorage.setItem(STORAGE_KEY, JSON.stringify(normalizeBadges(items))); }
+  function badgeLabel(id) { return badgeButtons().find(button => button.dataset.badgeId === id)?.dataset.badge || id; }
+  function xpForBadge(id) {
+    const btn = badgeButtons().find(button => button.dataset.badgeId === id);
     return Number(btn?.dataset.xp || 0);
   }
   function renderBadges() {
     const badges = getBadges();
-    const xp = badges.reduce((sum, b) => sum + xpForBadge(b), 0);
+    const xp = badges.reduce((sum, id) => sum + xpForBadge(id), 0);
     const xpText = $('xpText');
     if (xpText) xpText.textContent = `XP ${Math.min(xp, XP_TOTAL)} / ${XP_TOTAL}`;
     const fill = $('basisProgressFill');
     if (fill) fill.style.width = `${clamp(xp / XP_TOTAL, 0, 1) * 100}%`;
     const shelf = $('badgeShelf');
-    if (shelf) shelf.innerHTML = badges.length ? badges.map(b => `<span class="quest-badge">✓ ${esc(b)}</span>`).join('') : '<span class="quest-badge muted">No badges yet — complete a mission.</span>';
-    document.querySelectorAll('.quest-complete').forEach(btn => {
-      const done = badges.includes(btn.dataset.badge);
+    if (shelf) shelf.innerHTML = badges.length ? badges.map(id => `<span class="quest-badge">✓ ${esc(badgeLabel(id))}</span>`).join('') : '<span class="quest-badge muted">No badges yet — complete a mission.</span>';
+    badgeButtons().forEach(btn => {
+      const done = badges.includes(btn.dataset.badgeId);
       btn.classList.toggle('done', done);
       btn.textContent = done ? `Completed: ${btn.dataset.badge}` : btn.dataset.originalText || btn.textContent;
     });
@@ -33,7 +55,7 @@
   function completeMission(btn) {
     if (!btn.dataset.originalText) btn.dataset.originalText = btn.textContent;
     const badges = getBadges();
-    if (!badges.includes(btn.dataset.badge)) badges.push(btn.dataset.badge);
+    if (!badges.includes(btn.dataset.badgeId)) badges.push(btn.dataset.badgeId);
     setBadges(badges);
     renderBadges();
   }
@@ -314,5 +336,6 @@
     [updateGaussianLab, updateAoShape, updateContractionForge, updateOverlapDungeon, updateBasisRadar, updateBsseDuel, updateAlarm, updateCbs, updateCost, updateGame, updateProductTheorem, updateOneElectronLab, updateBoysLab, updateEriTensor, updateRecurrenceBoss, updateDerivativePlot, renderBadges].forEach(fn => fn());
     document.querySelector('.lesson-nav button[data-step="1"]')?.classList.add('active');
   }
+  window.ProjectXCBasisQuestProgress = Object.freeze({ normalizeBadges, loadAndMigrateBadges: getBadges });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

@@ -154,13 +154,17 @@
   }
 
   function svg(width, height, body, label, markerId) {
-    const marker = markerId ? `<defs><marker id="${markerId}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"></path></marker></defs>` : '';
-    return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(label)}">${marker}<rect width="${width}" height="${height}" rx="16" fill="#fbfdff"></rect>${body}</svg>`;
+    const markers = markerId ? `<defs>
+      <marker id="${markerId}-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"></path></marker>
+      <marker id="${markerId}-square" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8"><rect x="1.5" y="1.5" width="7" height="7" rx="1" fill="context-stroke"></rect></marker>
+      <marker id="${markerId}-circle" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8"><circle cx="5" cy="5" r="3.7" fill="context-stroke"></circle></marker>
+    </defs>` : '';
+    return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(label)}">${markers}<rect width="${width}" height="${height}" rx="16" fill="#fbfdff"></rect>${body}</svg>`;
   }
 
-  function vectorLine(cx, cy, scale, vector, color, markerId, dash = '') {
+  function vectorLine(cx, cy, scale, vector, color, markerId, dash = '', endMarker = 'arrow') {
     const x = cx + scale * vector[0], y = cy - scale * vector[1];
-    return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="${color}" stroke-width="5" stroke-linecap="round" marker-end="url(#${markerId})" ${dash ? `stroke-dasharray="${dash}"` : ''}></line>`;
+    return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="${color}" stroke-width="5" stroke-linecap="round" marker-end="url(#${markerId}-${endMarker})" ${dash ? `stroke-dasharray="${dash}"` : ''}></line>`;
   }
 
   function coordinatePlane(width, height, cx, cy) {
@@ -174,13 +178,16 @@
     const width = 680, height = 360, cx = 330, cy = 185;
     const scale = 105 / Math.max(Math.hypot(vx, vy), 1);
     const guide = [model.basis[0] * 3.2, model.basis[1] * 3.2];
+    const projectionPoint = [cx + model.projection[0] * scale, cy - model.projection[1] * scale];
+    const vectorPoint = [cx + vx * scale, cy - vy * scale];
+    const residualMidpoint = [(projectionPoint[0] + vectorPoint[0]) / 2, (projectionPoint[1] + vectorPoint[1]) / 2];
     const body = `${coordinatePlane(width, height, cx, cy)}
       <line x1="${cx - guide[0] * scale}" y1="${cy + guide[1] * scale}" x2="${cx + guide[0] * scale}" y2="${cy - guide[1] * scale}" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="7 6"></line>
-      ${vectorLine(cx, cy, scale, model.vector, '#174ea6', 'projection-arrow')}
-      ${vectorLine(cx, cy, scale, model.projection, '#7c3aed', 'projection-arrow', '14 6')}
-      <line x1="${cx + model.projection[0] * scale}" y1="${cy - model.projection[1] * scale}" x2="${cx + vx * scale}" y2="${cy - vy * scale}" stroke="#f97316" stroke-width="4" stroke-linecap="round" stroke-dasharray="3 8"></line>
-      <text x="40" y="34" class="axis-label">solid v · long-dash projection · dotted residual</text>`;
-    if ($('projectionPlot')) $('projectionPlot').innerHTML = svg(width, height, body, 'Vector projection and orthogonal residual', 'projection-arrow');
+      ${vectorLine(cx, cy, scale, model.vector, '#174ea6', 'projection')}
+      ${vectorLine(cx, cy, scale, model.projection, '#7c3aed', 'projection', '14 6', 'square')}
+      <line x1="${projectionPoint[0]}" y1="${projectionPoint[1]}" x2="${vectorPoint[0]}" y2="${vectorPoint[1]}" stroke="#f97316" stroke-width="4" stroke-linecap="round" stroke-dasharray="3 8"></line>
+      <circle cx="${residualMidpoint[0]}" cy="${residualMidpoint[1]}" r="7" fill="#f97316"></circle>`;
+    if ($('projectionPlot')) $('projectionPlot').innerHTML = svg(width, height, body, 'Vector projection and orthogonal residual', 'projection');
     if ($('projectionReadout')) $('projectionReadout').innerHTML = `<strong>Projection coefficient:</strong> θ=${angle.toFixed(1)}°; ⟨u|v⟩=${model.coefficient.toFixed(4)}. The residual is orthogonal within ${Math.abs(model.orthogonality).toExponential(2)}, and ‖v‖²=${model.normSquared.toFixed(4)}=${model.projectionNormSquared.toFixed(4)}+${model.residualNormSquared.toFixed(4)}.`;
   }
 
@@ -194,9 +201,8 @@
     const body = `${coordinatePlane(width, height, cx, cy)}
       <line x1="${cx - e1[0] * 145}" y1="${cy + e1[1] * 145}" x2="${cx + e1[0] * 145}" y2="${cy - e1[1] * 145}" stroke="#7c3aed" stroke-width="3" stroke-linecap="round" stroke-dasharray="14 6"></line>
       <line x1="${cx - e2[0] * 145}" y1="${cy + e2[1] * 145}" x2="${cx + e2[0] * 145}" y2="${cy - e2[1] * 145}" stroke="#f97316" stroke-width="3" stroke-linecap="round" stroke-dasharray="3 8"></line>
-      ${vectorLine(cx, cy, scale, [vx, vy], '#174ea6', 'rotation-arrow')}
-      <text x="40" y="34" class="axis-label">solid v · long-dash e₁′ · dotted e₂′</text>`;
-    if ($('rotationPlot')) $('rotationPlot').innerHTML = svg(width, height, body, 'Passive rotation of coordinates for a fixed vector', 'rotation-arrow');
+      ${vectorLine(cx, cy, scale, [vx, vy], '#174ea6', 'rotation')}`;
+    if ($('rotationPlot')) $('rotationPlot').innerHTML = svg(width, height, body, 'Passive rotation of coordinates for a fixed vector', 'rotation');
     if ($('rotationReadout')) $('rotationReadout').innerHTML = `<strong>Same vector, new coordinates:</strong> θ=${angle.toFixed(1)}°; (${vx.toFixed(3)}, ${vy.toFixed(3)}) → (${model.coordinates[0].toFixed(3)}, ${model.coordinates[1].toFixed(3)}). Reconstructing returns (${model.reconstructed[0].toFixed(3)}, ${model.reconstructed[1].toFixed(3)}); norm change=${Math.abs(model.normOriginal - model.normCoordinates).toExponential(2)}.`;
   }
 
@@ -221,10 +227,9 @@
     const scale = 105 / maxLength;
     const rayleighVector = model.vector.map(value => model.rayleigh * value);
     const body = `${coordinatePlane(520, height, cx, cy)}
-      ${vectorLine(cx, cy, scale, model.vector, '#174ea6', 'eigen-arrow')}
-      ${vectorLine(cx, cy, scale, model.transformed, '#f97316', 'eigen-arrow', '14 6')}
-      ${vectorLine(cx, cy, scale, rayleighVector, '#7c3aed', 'eigen-arrow', '3 8')}
-      <text x="36" y="34" class="axis-label">solid v · long-dash Av · dotted λ(v)v</text>
+      ${vectorLine(cx, cy, scale, model.vector, '#174ea6', 'eigen')}
+      ${vectorLine(cx, cy, scale, model.transformed, '#f97316', 'eigen', '14 6', 'square')}
+      ${vectorLine(cx, cy, scale, rayleighVector, '#7c3aed', 'eigen', '3 8', 'circle')}
       <rect x="520" y="58" width="135" height="92" rx="12" fill="#eff6ff" stroke="#bfdbfe"></rect>
       <text x="536" y="87" class="axis-label">eigenvalues</text>
       <text x="536" y="116" class="metric-label">${model.spectrum.values[0].toFixed(4)}</text>
@@ -232,7 +237,7 @@
       <rect x="520" y="178" width="135" height="92" rx="12" fill="#fff7ed" stroke="#fed7aa"></rect>
       <text x="536" y="207" class="axis-label">residual ‖r‖</text>
       <text x="536" y="244" class="metric-label">${model.residualNorm.toFixed(5)}</text>`;
-    if ($('eigenPlot')) $('eigenPlot').innerHTML = svg(width, height, body, 'Symmetric matrix eigenvector residual puzzle', 'eigen-arrow');
+    if ($('eigenPlot')) $('eigenPlot').innerHTML = svg(width, height, body, 'Symmetric matrix eigenvector residual puzzle', 'eigen');
     if ($('eigenReadout')) $('eigenReadout').innerHTML = `<strong>Rayleigh quotient:</strong> θ=${angle.toFixed(2)}°; λ(v)=${model.rayleigh.toFixed(6)}; residual ‖Av−λv‖=${model.residualNorm.toExponential(3)}. ${model.residualNorm < 1e-7 ? 'This direction is an eigenvector.' : 'Rotate v until Av and v become parallel.'}`;
   }
 
