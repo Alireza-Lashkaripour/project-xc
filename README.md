@@ -28,6 +28,8 @@ python3 scripts/validate_academy.py
 python3 scripts/test_academy_validator.py
 node scripts/test_academy_models.js
 node scripts/test_qc_math_models.js
+node scripts/test_qc_atomic_models.js
+node scripts/test_qc_atomic_interactions.js
 node scripts/test_academy_core.js
 node scripts/test_basis_progress.js
 python3 scripts/build_site.py

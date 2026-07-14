@@ -2,11 +2,11 @@
 
 > **For Hermes:** Execute this plan task-by-task with focused TDD, independent scientific/integration review, and browser QA before publication.
 
-**Goal:** Publish a beautiful, source-grounded Atomic Structure chapter that takes a learner from hydrogenic quantum numbers to many-electron configurations, LS terms, and an explicitly bounded fine-structure model through 12 levels and 11 substantial games.
+**Goal:** Publish a beautiful, source-grounded Atomic Structure chapter that takes a learner from hydrogenic quantum numbers to many-electron configurations, LS terms, and an explicitly bounded fine-structure model through 12 levels and 12 substantial games.
 
-**Architecture:** Add one independent static chapter (`qc-atoms.html`) backed by one production JavaScript model/UI module and one Node oracle test that loads the production module directly. Integrate it through the existing curriculum, shared Academy progress, homepage, validators, CI, Pages gate, README, and source ledger without changing existing chapter storage or routes.
+**Architecture:** Add one independent static chapter (`qc-atoms.html`) backed by one production JavaScript model/UI module, a Node oracle test that loads the production module directly, and a dependency-free Chrome/Chromium interaction regression. Integrate it through the existing curriculum, shared Academy progress, homepage, validators, CI, Pages gate, README, and source ledger without changing existing chapter storage or routes.
 
-**Tech Stack:** Static HTML, existing Project XC CSS, vanilla JavaScript, MathJax, inline SVG, Node `vm` tests, Python standard-library structural validators, GitHub Pages.
+**Tech Stack:** Static HTML, existing Project XC CSS, vanilla JavaScript, MathJax, inline SVG, Node `vm` tests, Chrome DevTools Protocol browser tests, Python standard-library structural validators, GitHub Pages.
 
 ---
 
@@ -89,8 +89,8 @@ Every result must identify its scope:
 
 **Steps:**
 1. Mark `qc-atoms` live with 12 levels, 12 games, and the 12 mission IDs.
-2. Add a live-chapter validator rule requiring `qc-atoms.js`, `test_qc_atomic_models.js`, source ledger, model-boundary text, final boss, and the declared accessible plots.
-3. Require the atomic model test in both validation and Pages pre-upload gates.
+2. Add a live-chapter validator rule requiring `qc-atoms.js`, `test_qc_atomic_models.js`, `test_qc_atomic_interactions.js`, source ledger, model-boundary text, final boss, and the declared accessible plots.
+3. Require both atomic tests in validation and Pages pre-upload gates.
 4. Add progress tests proving only the 12 authoritative atomic mission IDs count and chapter reset does not touch Foundations, Math, or Basis storage.
 5. Run focused tests and confirm the missing page/script/test fail before implementation.
 
@@ -141,7 +141,7 @@ Run red first, implement minimally, then refactor shared sampling, combinatorics
 3. Use a restrained “spectral instrument” visual motif: warm paper cards, dark indigo energy rails, amber spectral lines, violet phase sign, and diagram grids. Color is supplementary to text, patterns, marker shapes, and signs.
 4. Put wide plots/tables inside focusable contained horizontal scroll regions with visible mobile hints and normal-HTML keys.
 5. Ensure reduced motion, keyboard use, and no page-level horizontal overflow.
-6. Bind progress through `ProjectXCAcademy.bindChapter('qc-atoms', 12)`.
+6. Bind progress through `ProjectXCAcademy.bindChapter({ chapterId: 'qc-atoms', totalMissions: 12 })`.
 
 ## Task 5: Integrate discoverability and documentation
 
@@ -164,6 +164,7 @@ Run red first, implement minimally, then refactor shared sampling, combinatorics
 ```bash
 node --check site/assets/qc-atoms.js
 node scripts/test_qc_atomic_models.js
+node scripts/test_qc_atomic_interactions.js
 python3 scripts/test_academy_validator.py
 python3 scripts/validate_academy.py
 node scripts/test_academy_core.js
@@ -184,11 +185,12 @@ git diff --check
 **True mobile:** CDP emulation `390×844`, device scale factor 1, mobile/touch enabled.
 
 **Acceptance:**
-- all 11 labs initialize and react to controls;
+- all 12 labs initialize and react to controls;
 - no console/page errors except a documented external-renderer condition if independently checked;
 - formulas do not overflow the document;
 - scrollable plots/tables have `scrollWidth>clientWidth` where intended and the document remains 390 px wide;
-- keyboard focus and scroll work;
+- orbital-box focus remains on the same control after each Space/Enter activation, and keyboard focus/scroll work elsewhere;
+- `A=0` and `⁴S` fine-structure states use one true-energy line with separate stacked labels, an explicit `same E` bracket, and a non-overlapping barycenter annotation;
 - phase/nodes/series remain distinguishable without color;
 - progress reaches 12/12, persists on reload, and chapter reset is isolated;
 - desktop has no new clipping or awkward forced scroll.

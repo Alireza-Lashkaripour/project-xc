@@ -6,6 +6,7 @@
   const ORBITAL_LETTERS = ['s', 'p', 'd', 'f', 'g', 'h'];
   const TERM_LETTERS = ['S', 'P', 'D', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'O', 'Q'];
   const BOX_STATES = Object.freeze({ empty: 0, up: 1, down: 1, pair: 2, upup: 2, downdown: 2 });
+  const BOX_CYCLE = Object.freeze(['empty', 'up', 'down', 'pair', 'upup', 'downdown']);
   const PAULI_INVALID_STATES = new Set(['upup', 'downdown']);
   const ELEMENTS = [
     null,
@@ -39,6 +40,10 @@
   const $ = id => document.getElementById(id);
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const hasBoxState = state => Object.prototype.hasOwnProperty.call(BOX_STATES, state);
+  const nextBoxState = state => {
+    if (!hasBoxState(state)) throw new RangeError(`unknown orbital-box state: ${state}`);
+    return BOX_CYCLE[(BOX_CYCLE.indexOf(state) + 1) % BOX_CYCLE.length];
+  };
   const esc = value => String(value ?? '').replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
   const factorial = value => {
     let result = 1;
@@ -420,6 +425,27 @@
     return { L, S, S2, A, label: `${S2 + 1}${TERM_LETTERS[L]}`, levels, weightedBarycenter };
   }
 
+  function groupFineStructureLevels(levels, tolerance = 1e-9) {
+    if (!Array.isArray(levels) || !levels.length || !Number.isFinite(tolerance) || tolerance < 0) {
+      throw new RangeError('fine-structure grouping requires levels and a nonnegative tolerance');
+    }
+    const ordered = [...levels].sort((left, right) => left.shift - right.shift || left.J - right.J);
+    const groups = [];
+    for (const level of ordered) {
+      if (!Number.isFinite(level.shift) || !Number.isFinite(level.J) || !Number.isFinite(level.degeneracy)) {
+        throw new RangeError('invalid fine-structure level');
+      }
+      const prior = groups.at(-1);
+      if (prior && Math.abs(level.shift - prior.shift) <= tolerance) {
+        prior.levels.push(level);
+        prior.degeneracy += level.degeneracy;
+      } else {
+        groups.push({ shift: level.shift, levels: [level], degeneracy: level.degeneracy });
+      }
+    }
+    return groups;
+  }
+
   function evaluateAtomicCase(caseId, answers = {}) {
     const caseFile = ATOMIC_CASES[caseId];
     if (!caseFile) throw new RangeError(`unknown atomic case: ${caseId}`);
@@ -447,10 +473,12 @@
     groundConfiguration,
     slaterEffectiveCharge,
     configurationAudit,
+    nextBoxState,
     atomDiagnostic,
     enumerateMicrostates,
     decomposeLSTerms,
     fineStructureLevels,
+    groupFineStructureLevels,
     evaluateAtomicCase
   });
   window.QCAtomicModels = models;
@@ -624,20 +652,42 @@
     renderForge();
   }
 
+  function paintForgeButton(button, shellKey, boxIndex, state) {
+    button.className = `electron-box state-${state}`;
+    button.setAttribute('aria-label', `${shellKey} orbital ${boxIndex + 1}: ${boxLabel(state)}`);
+    button.textContent = boxSymbol(state);
+  }
+
+  function updateForgeReadout(z, configuration) {
+    const electronCount = Object.values(forgeState).flat().reduce((sum, state) => sum + BOX_STATES[state], 0);
+    if ($('configurationReadout')) $('configurationReadout').innerHTML = `<strong>${configuration.symbol} challenge:</strong> place ${z} electrons. Current count ${electronCount}. Cycle through empty, one-electron, valid ↑↓, and deliberately invalid ↑↑/↓↓ states; then audit Pauli, Hund, and ledger order.`;
+  }
+
   function renderForge() {
     const z = Number($('configurationElement')?.value || 6);
     const configuration = groundConfiguration(z);
-    if ($('configurationForge')) {
-      $('configurationForge').innerHTML = configuration.availableSubshells.map(shell => `<div class="atomic-subshell"><strong>${shell.key}</strong><div class="atomic-box-row">${forgeState[shell.key].map((state, index) => `<button type="button" class="electron-box state-${state}" data-shell="${shell.key}" data-box="${index}" aria-label="${shell.key} orbital ${index + 1}: ${boxLabel(state)}">${boxSymbol(state)}</button>`).join('')}</div></div>`).join('');
-      $('configurationForge').querySelectorAll('.electron-box').forEach(button => button.addEventListener('click', () => {
-        const cycle = ['empty', 'up', 'down', 'pair', 'upup', 'downdown'];
-        const current = forgeState[button.dataset.shell][Number(button.dataset.box)];
-        forgeState[button.dataset.shell][Number(button.dataset.box)] = cycle[(cycle.indexOf(current) + 1) % cycle.length];
-        renderForge();
-      }));
+    const forge = $('configurationForge');
+    if (forge) {
+      forge.innerHTML = configuration.availableSubshells.map(shell => `<div class="atomic-subshell"><strong>${shell.key}</strong><div class="atomic-box-row">${forgeState[shell.key].map((state, index) => `<button type="button" class="electron-box state-${state}" data-shell="${shell.key}" data-box="${index}" aria-label="${shell.key} orbital ${index + 1}: ${boxLabel(state)}">${boxSymbol(state)}</button>`).join('')}</div></div>`).join('');
+      const advanceButton = button => {
+        const shellKey = button.dataset.shell;
+        const boxIndex = Number(button.dataset.box);
+        const next = nextBoxState(forgeState[shellKey][boxIndex]);
+        forgeState[shellKey][boxIndex] = next;
+        paintForgeButton(button, shellKey, boxIndex, next);
+        updateForgeReadout(z, configuration);
+      };
+      forge.querySelectorAll('.electron-box').forEach(button => {
+        button.addEventListener('click', () => advanceButton(button));
+        button.addEventListener('keydown', event => {
+          if ((event.key === ' ' || event.key === 'Enter') && !event.repeat) {
+            event.preventDefault();
+            advanceButton(button);
+          }
+        });
+      });
     }
-    const electronCount = Object.values(forgeState).flat().reduce((sum, state) => sum + BOX_STATES[state], 0);
-    if ($('configurationReadout')) $('configurationReadout').innerHTML = `<strong>${configuration.symbol} challenge:</strong> place ${z} electrons. Current count ${electronCount}. Cycle through empty, one-electron, valid ↑↓, and deliberately invalid ↑↑/↓↓ states; then audit Pauli, Hund, and ledger order.`;
+    updateForgeReadout(z, configuration);
   }
 
   function auditForge() {
@@ -702,20 +752,38 @@
     const [L, S2] = term.split(',').map(Number);
     const A = Number($('fineA')?.value || 100);
     const model = fineStructureLevels(L, S2, A);
-    const width = 700, height = 380, left = 115, right = 590, top = 55, bottom = 320;
-    const values = model.levels.map(level => level.shift);
+    const groups = groupFineStructureLevels(model.levels);
+    const width = 700, height = 380, left = 105, right = 590, top = 70, bottom = 320;
+    const values = groups.map(group => group.shift);
     const min = Math.min(...values), max = Math.max(...values);
-    const span = Math.max(max - min, 1);
-    const yMap = value => bottom - (value - min) / span * (bottom - top);
-    let body = `<line x1="${left}" x2="${right}" y1="${yMap(0)}" y2="${yMap(0)}" stroke="#64748b" stroke-dasharray="3 6"></line><text x="${left}" y="${yMap(0) - 7}" class="axis-label">term barycenter</text>`;
-    model.levels.forEach((level, index) => {
-      const y = yMap(level.shift);
-      body += `<line x1="${left + 80 * index}" x2="${right}" y1="${y}" y2="${y}" stroke="#4338ca" stroke-width="${3 + level.degeneracy / 2}" stroke-dasharray="${index % 2 ? '12 6' : 'none'}"></line><circle cx="${right + 18}" cy="${y}" r="${4 + level.J}" fill="#fff" stroke="#9a3412" stroke-width="3"></circle><text x="${left + 8}" y="${y - 8}" class="axis-label">J=${level.J} · g=${level.degeneracy} · Δ=${level.shift.toFixed(2)}</text>`;
+    const span = max - min;
+    const yMap = value => span <= 1e-9 ? (top + bottom) / 2 : bottom - (value - min) / span * (bottom - top);
+    const barycenterY = yMap(0);
+    const zeroGroup = groups.find(group => Math.abs(group.shift) <= 1e-9);
+    let body = zeroGroup
+      ? `<path data-barycenter-guide="coincident" d="M ${right - 75} ${barycenterY - 74} V ${barycenterY - 4} h 8" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="3 4"></path><text x="${right - 81}" y="${barycenterY - 80}" text-anchor="end" class="axis-label">term barycenter = same E</text>`
+      : `<line data-barycenter-guide="distinct" x1="${left}" x2="${right}" y1="${barycenterY}" y2="${barycenterY}" stroke="#64748b" stroke-dasharray="3 6"></line><text x="${left}" y="${barycenterY - 8}" class="axis-label">term barycenter</text>`;
+    groups.forEach((group, groupIndex) => {
+      const y = yMap(group.shift);
+      const labelStep = 36;
+      const firstLabelY = y - (group.levels.length - 1) * labelStep / 2;
+      const lineStart = left + 245;
+      body += `<line data-energy-group="${groupIndex}" x1="${lineStart}" x2="${right}" y1="${y}" y2="${y}" stroke="#4338ca" stroke-width="4" stroke-dasharray="${groupIndex % 2 ? '12 6' : 'none'}"></line>`;
+      group.levels.forEach((level, levelIndex) => {
+        const labelY = firstLabelY + levelIndex * labelStep;
+        const markerX = right + 18 - (group.levels.length - 1 - levelIndex) * 34;
+        body += `<text data-j-label="${level.J}" x="${left + 8}" y="${labelY + 5}" class="axis-label">J=${level.J} · g=${level.degeneracy} · Δ=${level.shift.toFixed(2)}</text><circle cx="${markerX}" cy="${y}" r="${4 + level.J}" fill="#fff" stroke="#9a3412" stroke-width="3"><title>J=${level.J}, g=${level.degeneracy}${group.levels.length > 1 ? ', same energy' : ''}</title></circle>`;
+      });
+      if (group.levels.length > 1) {
+        const bracketTop = firstLabelY - 9;
+        const bracketBottom = firstLabelY + (group.levels.length - 1) * labelStep + 9;
+        body += `<path d="M ${left + 198} ${bracketTop} h 10 V ${bracketBottom} h -10 M ${left + 208} ${y} H ${lineStart}" fill="none" stroke="#9a3412" stroke-width="2" stroke-dasharray="4 3"></path><text x="${left + 216}" y="${bracketTop - 5}" class="metric-label">same E ×${group.levels.length}</text>`;
+      }
     });
     body += `<text x="${left}" y="30" class="axis-label">${model.label} · ideal A L·S · A=${A.toFixed(1)} cm⁻¹</text>`;
-    if ($('finePlot')) $('finePlot').innerHTML = svg(width, height, body, `${model.label} ideal LS fine-structure ladder`);
+    if ($('finePlot')) $('finePlot').innerHTML = svg(width, height, body, `${model.label} ideal LS fine-structure ladder; coincident J values share one energy line`);
     const intervals = model.levels.slice(1).map((level, index) => level.shift - model.levels[index].shift);
-    if ($('fineReadout')) $('fineReadout').innerHTML = `<strong><sup>${S2 + 1}</sup>${TERM_LETTERS[L]} ladder:</strong> J=${model.levels.map(level => level.J).join(', ')}; intervals ${intervals.length ? intervals.map(value => value.toFixed(2)).join(', ') : 'none'} cm⁻¹; degeneracy-weighted barycenter ${model.weightedBarycenter.toExponential(2)}. A is supplied, not predicted.`;
+    if ($('fineReadout')) $('fineReadout').innerHTML = `<strong><sup>${S2 + 1}</sup>${TERM_LETTERS[L]} ladder:</strong> J=${model.levels.map(level => level.J).join(', ')}; intervals ${intervals.length ? intervals.map(value => value.toFixed(2)).join(', ') : 'none'} cm⁻¹; degeneracy-weighted barycenter ${model.weightedBarycenter.toExponential(2)}. ${groups.length < model.levels.length ? `${model.levels.length} J labels share ${groups.length} true-energy line${groups.length === 1 ? '' : 's'}. ` : ''}A is supplied, not predicted.`;
   }
 
   function syncBossFields() {
