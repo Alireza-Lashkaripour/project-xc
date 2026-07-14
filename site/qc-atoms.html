@@ -439,9 +439,10 @@
       <figure class="basis-figure academy-plot">
         <div id="finePlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Ideal LS fine-structure energy ladder" aria-describedby="finePlotKey finePlotHint"></div>
         <ul id="finePlotKey" class="academy-plot-key" aria-label="Fine-structure plot key">
-          <li><span class="plot-key-line solid" aria-hidden="true"></span><span>Alternating J levels: solid/long-dashed lines with J text</span></li>
+          <li><span class="plot-key-line solid" aria-hidden="true"></span><span>One line per distinct energy; groups alternate solid and long-dashed</span></li>
           <li><span class="atomic-key-shape circle" aria-hidden="true"></span><span>Right marker size follows degeneracy 2J+1</span></li>
-          <li><span class="plot-key-line dotted" aria-hidden="true"></span><span>Zero: degeneracy-weighted term barycenter</span></li>
+          <li><span class="atomic-key-shape bracket" aria-hidden="true">≡</span><span>Stacked J labels and a “same E” bracket share one true-energy line</span></li>
+          <li><span class="plot-key-line dotted" aria-hidden="true"></span><span>Zero: dotted barycenter line, or a separate labeled leader when it shares a level</span></li>
         </ul>
         <p id="finePlotHint" class="table-scroll-hint">On a narrow screen, swipe the ladder horizontally; J values, degeneracies, shifts, and intervals remain textual.</p>
         <figcaption>Reverse the sign of A to reverse the ideal ordering. The laboratory calculates splittings from A; it does not predict A from an atomic Hamiltonian.</figcaption>

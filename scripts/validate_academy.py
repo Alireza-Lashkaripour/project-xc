@@ -42,6 +42,7 @@ LIVE_CHAPTER_RULES = {
     "qc-atoms": {
         "script": "qc-atoms.js",
         "test": "test_qc_atomic_models.js",
+        "interaction_test": "test_qc_atomic_interactions.js",
         "source": "qc-atoms.md",
         "boundary": "Atomic-model boundary",
         "challenge": "Atomic case-file boss",
@@ -444,13 +445,20 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
         script = SITE / "assets" / rule["script"]
         test = ROOT / "scripts" / rule["test"]
         source = ROOT / "docs" / "academy" / "sources" / rule["source"]
-        for path in (page, script, test, source):
+        required_paths = [page, script, test, source]
+        if rule.get("interaction_test"):
+            required_paths.append(ROOT / "scripts" / rule["interaction_test"])
+        for path in required_paths:
             if not path.exists():
                 add(errors, f"{chapter_id} missing required file: {path.relative_to(ROOT)}")
-        if f"node scripts/{rule['test']}" not in workflow_text:
-            add(errors, f"GitHub validation workflow does not run {rule['test']}")
-        if f"node scripts/{rule['test']}" not in pages_workflow_text:
-            add(errors, f"GitHub Pages workflow does not gate deployment on {rule['test']}")
+        required_tests = [rule["test"]]
+        if rule.get("interaction_test"):
+            required_tests.append(rule["interaction_test"])
+        for test_name in required_tests:
+            if f"node scripts/{test_name}" not in workflow_text:
+                add(errors, f"GitHub validation workflow does not run {test_name}")
+            if f"node scripts/{test_name}" not in pages_workflow_text:
+                add(errors, f"GitHub Pages workflow does not gate deployment on {test_name}")
         if not page.exists():
             continue
 

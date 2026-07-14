@@ -128,7 +128,7 @@ For a selected `^(2S+1)L` term in the pedagogical first-order model
 
 `ΔE_J = A/2 [J(J+1)-L(L+1)-S(S+1)]`.
 
-The model verifies `Σ_J(2J+1)ΔE_J=0` and the Landé interval rule `E_J-E_(J-1)=AJ`. The sign/magnitude of `A` is user supplied; the game does not derive `A`, handle term mixing, or replace a Dirac/Breit/relativistic calculation.
+The model verifies `Σ_J(2J+1)ΔE_J=0` and the Landé interval rule `E_J-E_(J-1)=AJ`. The sign/magnitude of `A` is user supplied; the game does not derive `A`, handle term mixing, or replace a Dirac/Breit/relativistic calculation. Exactly coincident shifts—including every level at `A=0` and the sole `⁴S_(3/2)` level for any `A`—are drawn on one true-energy line. Their `J` labels are stacked beside an explicit `same E` bracket, while the barycenter annotation is placed separately; annotation spacing must never imply a physical splitting.
 
 ## Interactive-model boundary
 
@@ -147,7 +147,9 @@ The 12 games mix exact one-electron Coulomb results, exact finite combinatorics,
 - all neutral H–Kr electron counts, subshell capacities, Cr/Cu exceptions, orbital-box audits, and a deliberately same-spin Pauli violation that preserves electron count;
 - Slater examples C `2p: Z_eff=3.25`, Na `3s: 2.20`, Fe `3d: 6.25`;
 - microstate determinant totals and term-dimension sums for every exposed `p¹…p⁵` and `d¹…d⁹` occupancy, named `p²`/`p³`/`d²` term oracles, electron-hole symmetry, and zero residual subtraction;
-- fine-structure `J` ranges, `³P` shifts, degeneracy-weighted barycenter, and Landé intervals;
+- fine-structure `J` ranges, `³P` shifts, degeneracy-weighted barycenter, Landé intervals, and grouping of coincident `A=0`/`⁴S` energies;
 - final case-file scoring and model-category feedback.
+
+`scripts/test_qc_atomic_interactions.js` launches the production page in headless Chrome/Chromium. It verifies that Space and Enter advance an orbital box without replacing the focused control, and pixel-bounding-box checks prove that `A=0`, `⁴S`, and ordinary `³P` labels remain separate while coincident markers stay on one physical energy line. Both GitHub validation and the Pages pre-upload gate run this browser contract.
 
 Any change to a formula, constant, configuration ledger, mission count, or model category requires updating this ledger, production tests, curriculum metadata, and on-page boundary together.

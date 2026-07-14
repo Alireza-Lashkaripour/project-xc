@@ -42,8 +42,8 @@ function choose(n, k) {
 const expectedApi = [
   'evaluateModelPassport', 'quantumState', 'hydrogenicEnergy', 'associatedLaguerre', 'radialNodes', 'radialModel',
   'angularAmplitude', 'angularSlice', 'transitionModel', 'groundConfiguration',
-  'slaterEffectiveCharge', 'configurationAudit', 'atomDiagnostic', 'enumerateMicrostates',
-  'decomposeLSTerms', 'fineStructureLevels', 'evaluateAtomicCase'
+  'slaterEffectiveCharge', 'configurationAudit', 'nextBoxState', 'atomDiagnostic', 'enumerateMicrostates',
+  'decomposeLSTerms', 'fineStructureLevels', 'groupFineStructureLevels', 'evaluateAtomicCase'
 ];
 for (const name of expectedApi) assert(typeof models[name] === 'function', `${name} production API must be exported`);
 
@@ -180,6 +180,10 @@ pauliHelium['1s'] = ['upup'];
 const pauliAudit = models.configurationAudit(2, pauliHelium);
 assert(!pauliAudit.ok && pauliAudit.issues.length === 1 && pauliAudit.issues[0] === 'pauli', 'same-spin helium pair must fail only Pauli while preserving electron count');
 equal(pauliAudit.electronCount, 2, 'same-spin Pauli violation still carries two electrons');
+equal(['empty', 'up', 'down', 'pair', 'upup', 'downdown'].map(models.nextBoxState).join(','), 'up,down,pair,upup,downdown,empty', 'orbital-box state cycle');
+let invalidBoxStateRejected = false;
+try { models.nextBoxState('retired-state'); } catch (error) { invalidBoxStateRejected = error instanceof RangeError; }
+assert(invalidBoxStateRejected, 'unknown orbital-box state must be rejected');
 
 // Equivalent-electron microstates and LS decomposition across every p/d occupancy exposed by the game.
 const termCases = [
@@ -219,6 +223,16 @@ near(tripletP.levels[2].shift - tripletP.levels[1].shift, 2, 1e-14, '3P second L
 const doubletD = models.fineStructureLevels(2, 1, 2.5);
 equal(doubletD.levels.map(level => level.J).join(','), '1.5,2.5', '2D J values');
 near(doubletD.weightedBarycenter, 0, 1e-14, '2D barycenter');
+const ordinaryGroups = models.groupFineStructureLevels(tripletP.levels);
+equal(ordinaryGroups.length, 3, 'nondegenerate 3P ladder has three distinct energy groups');
+const zeroCouplingTriplet = models.fineStructureLevels(1, 2, 0);
+const zeroCouplingGroups = models.groupFineStructureLevels(zeroCouplingTriplet.levels);
+equal(zeroCouplingGroups.length, 1, 'A=0 3P ladder has one true-energy group');
+equal(zeroCouplingGroups[0].levels.map(level => level.J).join(','), '0,1,2', 'A=0 group retains all J labels');
+equal(zeroCouplingGroups[0].degeneracy, 9, 'A=0 group retains summed degeneracy');
+const quartetSGroup = models.groupFineStructureLevels(models.fineStructureLevels(0, 3, 100).levels);
+equal(quartetSGroup.length, 1, '4S has one energy group for any supplied A');
+equal(quartetSGroup[0].levels[0].J, 1.5, '4S energy group retains J=3/2');
 
 // Final case-file feedback is deterministic and field-specific.
 const perfectCase = models.evaluateAtomicCase('oxygen-file', {
