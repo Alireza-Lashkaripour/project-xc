@@ -147,8 +147,8 @@ function connectCdp(webSocketDebuggerUrl) {
   });
 }
 
-async function press(call, key, code, keyCode) {
-  const down = { type: 'rawKeyDown', key, code, windowsVirtualKeyCode: keyCode, nativeVirtualKeyCode: keyCode };
+async function press(call, key, code, keyCode, { autoRepeat = false } = {}) {
+  const down = { type: 'rawKeyDown', key, code, windowsVirtualKeyCode: keyCode, nativeVirtualKeyCode: keyCode, autoRepeat };
   if (key === 'Enter') Object.assign(down, { text: '\r', unmodifiedText: '\r' });
   await call('Input.dispatchKeyEvent', down);
   await call('Input.dispatchKeyEvent', { type: 'keyUp', key, code, windowsVirtualKeyCode: keyCode, nativeVirtualKeyCode: keyCode });
@@ -208,6 +208,22 @@ async function main() {
     })()`);
     assert(afterEnter.isBox && afterEnter.identity === initial.identity, 'Enter activation must retain focus on the same orbital box');
     assert(afterEnter.state === '↓', `Enter activation must advance exactly one orbital-box state: ${JSON.stringify({ initial, afterSpace, afterEnter })}`);
+    await cdp.evaluate(`(() => {
+      window.__forgeRepeatProbe = { seen: false, defaultPrevented: false };
+      document.activeElement.addEventListener('keydown', event => {
+        if (event.key === 'Enter' && event.repeat) window.__forgeRepeatProbe = { seen: true, defaultPrevented: event.defaultPrevented };
+      });
+      return true;
+    })()`);
+    await press(cdp.call, 'Enter', 'Enter', 13, { autoRepeat: true });
+    await new Promise(resolve => setTimeout(resolve, 50));
+    const afterHeldEnter = await cdp.evaluate(`(() => {
+      const active = document.activeElement;
+      return { identity: active?.dataset?.shell + ':' + active?.dataset?.box, state: active?.textContent, isBox: active?.classList?.contains('electron-box') || false, repeatProbe: window.__forgeRepeatProbe };
+    })()`);
+    assert(afterHeldEnter.isBox && afterHeldEnter.identity === initial.identity, 'held Enter must retain focus on the same orbital box');
+    assert(afterHeldEnter.state === afterEnter.state, `auto-repeated Enter must not advance the orbital-box state: ${JSON.stringify({ afterEnter, afterHeldEnter })}`);
+    assert(afterHeldEnter.repeatProbe.seen && afterHeldEnter.repeatProbe.defaultPrevented, `auto-repeated Enter must always suppress native button activation: ${JSON.stringify(afterHeldEnter)}`);
 
     const inspectFinePlot = await cdp.evaluate(`(() => {
       const intersects = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
@@ -264,9 +280,46 @@ async function main() {
     assert(ordinary.baryGuideKind === 'distinct', 'ordinary 3P must retain its distinct dotted barycenter line');
     assert(ordinary.documentOverflow <= 1, 'interaction regressions must not introduce page-level horizontal overflow');
 
+    await cdp.call('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
+    await cdp.call('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
+    await cdp.call('Page.reload', { ignoreCache: true });
+    let mobileInitialized = false;
+    for (let attempt = 0; attempt < 120; attempt += 1) {
+      mobileInitialized = await cdp.evaluate("document.readyState === 'complete' && !!window.QCAtomicModels && !!document.querySelector('#finePlot svg')");
+      if (mobileInitialized) break;
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    assert(mobileInitialized, 'Atomic Structure page must initialize at the canonical 390×844 mobile viewport');
+    const mobile = await cdp.evaluate(`(() => {
+      const plot = document.getElementById('finePlot');
+      const bounds = plot.getBoundingClientRect();
+      const style = getComputedStyle(plot);
+      plot.focus();
+      plot.scrollLeft = plot.scrollWidth;
+      return {
+        innerWidth: window.innerWidth,
+        innerHeight: window.innerHeight,
+        documentClientWidth: document.documentElement.clientWidth,
+        documentScrollWidth: document.documentElement.scrollWidth,
+        plotClientWidth: plot.clientWidth,
+        plotScrollWidth: plot.scrollWidth,
+        plotScrollLeft: plot.scrollLeft,
+        plotLeft: bounds.left,
+        plotRight: bounds.right,
+        overflowX: style.overflowX,
+        focused: document.activeElement === plot,
+        maxTouchPoints: navigator.maxTouchPoints
+      };
+    })()`);
+    assert(mobile.innerWidth === 390 && mobile.innerHeight === 844 && mobile.documentClientWidth === 390, `mobile emulation must expose the canonical 390×844 viewport: ${JSON.stringify(mobile)}`);
+    assert(mobile.documentScrollWidth - mobile.documentClientWidth <= 1, `mobile plot must not create document-level horizontal overflow: ${JSON.stringify(mobile)}`);
+    assert(mobile.plotScrollWidth > mobile.plotClientWidth && mobile.plotScrollLeft > 0, `mobile fine-structure plot must retain intentional internal horizontal scrolling: ${JSON.stringify(mobile)}`);
+    assert(mobile.plotLeft >= 0 && mobile.plotRight <= mobile.innerWidth && ['auto', 'scroll'].includes(mobile.overflowX), `mobile plot scroller must remain contained in the viewport: ${JSON.stringify(mobile)}`);
+    assert(mobile.focused && mobile.maxTouchPoints > 0, `mobile plot scroller must stay keyboard-focusable with touch emulation enabled: ${JSON.stringify(mobile)}`);
+
     console.log('Project XC Atomic Structure interaction tests OK');
     console.log(`- browser assertions: ${checks}`);
-    console.log('- keyboard focus continuity, A=0/4S same-energy grouping, label separation, and ordinary ladder: OK');
+    console.log('- repeat-safe keyboard focus, A=0/4S grouping, ordinary ladder, and 390×844 internal plot scrolling: OK');
   } catch (error) {
     if (stderr) console.error(`Chrome stderr (tail):\n${stderr}`);
     throw error;

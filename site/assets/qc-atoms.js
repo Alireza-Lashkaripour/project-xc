@@ -680,9 +680,9 @@
       forge.querySelectorAll('.electron-box').forEach(button => {
         button.addEventListener('click', () => advanceButton(button));
         button.addEventListener('keydown', event => {
-          if ((event.key === ' ' || event.key === 'Enter') && !event.repeat) {
+          if (event.key === ' ' || event.key === 'Enter') {
             event.preventDefault();
-            advanceButton(button);
+            if (!event.repeat) advanceButton(button);
           }
         });
       });
