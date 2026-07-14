@@ -150,6 +150,6 @@ The 12 games mix exact one-electron Coulomb results, exact finite combinatorics,
 - fine-structure `J` ranges, `³P` shifts, degeneracy-weighted barycenter, Landé intervals, and grouping of coincident `A=0`/`⁴S` energies;
 - final case-file scoring and model-category feedback.
 
-`scripts/test_qc_atomic_interactions.js` launches the production page in headless Chrome/Chromium. It verifies that Space and Enter advance an orbital box without replacing the focused control, and pixel-bounding-box checks prove that `A=0`, `⁴S`, and ordinary `³P` labels remain separate while coincident markers stay on one physical energy line. Both GitHub validation and the Pages pre-upload gate run this browser contract.
+`scripts/test_qc_atomic_interactions.js` launches the production page in headless Chrome/Chromium. It verifies that Space and Enter advance an orbital box without replacing the focused control, that auto-repeated Enter is default-suppressed without advancing again, and that `A=0`, `⁴S`, and ordinary `³P` labels remain separate while coincident markers stay on one physical energy line. The same canonical test reloads with CDP mobile/touch emulation at `390×844` and proves document containment, a focusable plot region, and positive internal horizontal scrolling. Both GitHub validation and the Pages pre-upload gate run this browser contract.
 
 Any change to a formula, constant, configuration ledger, mission count, or model category requires updating this ledger, production tests, curriculum metadata, and on-page boundary together.
