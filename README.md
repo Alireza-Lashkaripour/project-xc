@@ -14,6 +14,7 @@ Direct pages:
 - Academy gateway: https://alireza-lashkaripour.github.io/project-xc/quantum-chemistry.html
 - Quantum Foundations: https://alireza-lashkaripour.github.io/project-xc/qc-foundations.html
 - Mathematical Language: https://alireza-lashkaripour.github.io/project-xc/qc-math-language.html
+- Atomic Structure: https://alireza-lashkaripour.github.io/project-xc/qc-atoms.html
 - XC Functional: https://alireza-lashkaripour.github.io/project-xc/xc-functionals.html
 - MO Diagrams: https://alireza-lashkaripour.github.io/project-xc/mo-builder.html
 - Basis Sets: https://alireza-lashkaripour.github.io/project-xc/basis-sets.html
@@ -40,6 +41,8 @@ Academy implementation roadmap:
 - `docs/plans/2026-07-13-quantum-chemistry-academy-master-plan.md`
 - `docs/academy/sources/qc-foundations.md`
 - `docs/academy/sources/qc-math-language.md`
+- `docs/plans/2026-07-14-atomic-structure-chapter-plan.md`
+- `docs/academy/sources/qc-atoms.md`
 
 - Unified visual system: elegant scientific cockpit presentation with stronger typography, first-screen module summaries, and polished cards across all pages.
 - Advanced Integrals: Basis Set Quest now includes Gaussian product theorem, one-electron integrals, Boys functions, ERI tensor scaling/screening, recurrence algorithms, and derivative/gradient games.

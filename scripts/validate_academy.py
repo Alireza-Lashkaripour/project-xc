@@ -39,6 +39,14 @@ LIVE_CHAPTER_RULES = {
         "challenge": "Chapter boss",
         "plots": 4,
     },
+    "qc-atoms": {
+        "script": "qc-atoms.js",
+        "test": "test_qc_atomic_models.js",
+        "source": "qc-atoms.md",
+        "boundary": "Atomic-model boundary",
+        "challenge": "Atomic case-file boss",
+        "plots": 6,
+    },
 }
 
 
