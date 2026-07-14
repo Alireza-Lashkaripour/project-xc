@@ -39,6 +39,14 @@ LIVE_CHAPTER_RULES = {
         "challenge": "Chapter boss",
         "plots": 4,
     },
+    "qc-atoms": {
+        "script": "qc-atoms.js",
+        "test": "test_qc_atomic_models.js",
+        "source": "qc-atoms.md",
+        "boundary": "Atomic-model boundary",
+        "challenge": "Atomic case-file boss",
+        "plots": 6,
+    },
 }
 
 
@@ -147,6 +155,16 @@ def inspect_html(text: str) -> AcademyHTMLInspector:
     inspector.feed(text)
     inspector.close()
     return inspector
+
+
+def extract_static_hud_count(text: str, element_id: str) -> int | None:
+    """Read a numeric fallback from a strong element without assuming attribute order."""
+    match = re.search(
+        rf'<strong\b[^>]*\bid=["\']{re.escape(element_id)}["\'][^>]*>\s*([0-9]+)\s*</strong>',
+        text,
+        flags=re.IGNORECASE,
+    )
+    return int(match.group(1)) if match else None
 
 
 def load_json(path: Path, errors: list[str]) -> dict | None:
@@ -393,6 +411,23 @@ def validate_site_contract(chapters: dict[str, dict], errors: list[str]) -> None
         ):
             if needle not in text:
                 add(errors, f"Academy gateway missing contract text: {needle}")
+        expected_hud_counts = {
+            "academyChapterCount": len(chapters),
+            "academyLiveCount": sum(
+                chapter.get("status") in {"live", "existing-tool"}
+                for chapter in chapters.values()
+            ),
+            "academyPlannedCount": sum(
+                chapter.get("status") in {"planned", "in-development"}
+                for chapter in chapters.values()
+            ),
+        }
+        for element_id, expected in expected_hud_counts.items():
+            actual = extract_static_hud_count(text, element_id)
+            if actual is None:
+                add(errors, f"Academy gateway missing numeric fallback for {element_id}")
+            elif actual != expected:
+                add(errors, f"Academy gateway {element_id} fallback {actual} != curriculum-derived {expected}")
 
     live_chapters = {chapter_id for chapter_id, chapter in chapters.items() if chapter.get("status") == "live"}
     missing_rules = live_chapters - LIVE_CHAPTER_RULES.keys()

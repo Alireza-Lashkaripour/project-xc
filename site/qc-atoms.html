@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project XC Academy — Atomic Structure</title>
+  <meta name="description" content="Twelve deep, deterministic games build atomic structure from quantum numbers and exact hydrogenic orbitals through spectroscopy, screening, electron configurations, LS terms, and ideal fine structure.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      svg: { fontCache: 'global' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="academy-body atomic-chapter-body">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header compact">
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="index.html">Project XC</a>
+    <a href="quantum-chemistry.html">Academy</a>
+    <a href="xc-functionals.html">XC Functionals</a>
+    <a href="mo-builder.html">MO Diagrams</a>
+    <a href="basis-sets.html">Basis Sets</a>
+  </nav>
+</header>
+<main id="main" class="prose guide-page academy-chapter-page">
+  <section class="academy-chapter-hero atomic-chapter-hero">
+    <div>
+      <p class="kicker">Academy B1 · Atomic Structure</p>
+      <h1>Build the atom—then interrogate every approximation</h1>
+      <p class="lead">Start with the exactly solvable one-electron Coulomb atom. Then cross, visibly and honestly, into screening rules, empirical neutral configurations, equivalent-electron terms, and ideal LS fine structure. Every one of the twelve levels contains a deterministic game; six include auditable scientific plots.</p>
+      <div class="module-snapshot" aria-label="Atomic Structure learning modes">
+        <div class="snapshot-card"><span>Starter</span><strong>Forge valid states and see nodes</strong></div>
+        <div class="snapshot-card"><span>Practitioner</span><strong>Build spectra and configurations</strong></div>
+        <div class="snapshot-card"><span>Professor</span><strong>Count microstates and police models</strong></div>
+      </div>
+      <div class="quest-actions">
+        <a class="button" href="#level-1">Enter the Model Passport office</a>
+        <a class="button secondary" href="qc-math-language.html">Prerequisite: Mathematical Language</a>
+        <a class="button secondary" href="quantum-chemistry.html">Academy roadmap</a>
+      </div>
+    </div>
+    <div class="quest-hud" aria-label="Atomic Structure chapter status">
+      <div><span>Levels</span><strong>12</strong></div>
+      <div><span>Deep games</span><strong>12</strong></div>
+      <div><span>Plot labs</span><strong>6</strong></div>
+      <div><span>Arc</span><strong>Exact → model</strong></div>
+    </div>
+  </section>
+
+  <section class="notice guide-callout atomic-boundary">
+    <strong>Atomic-model boundary:</strong> Levels 2–6 use the nonrelativistic, infinite-nuclear-mass, point-nucleus, one-electron Coulomb Hamiltonian unless a narrower label says otherwise. Levels 7–11 deliberately change models: Slater screening is approximate, the H–Kr neutral configuration ledger contains empirical exceptions, term decomposition assumes equivalent electrons and pure LS coupling, and the fine-structure game requires a supplied constant. Experimental lines belong in NIST ASD—not in a Coulomb-model plot.
+  </section>
+
+  <section class="card-panel chapter-progress-panel" aria-label="Atomic Structure progress">
+    <div class="section-title">
+      <div><p class="kicker">Chapter map</p><h2>Twelve missions, twelve laboratories</h2></div>
+      <strong id="chapterProgressText" class="results-meta">0 / 12 missions</strong>
+    </div>
+    <div class="xp-panel">
+      <div><strong>Browser-local progress</strong><span>Completion records your route through the chapter; it is not a mastery certificate.</span></div>
+      <button id="resetChapterProgress" type="button" class="secondary">Reset this chapter</button>
+    </div>
+    <div class="basis-progress-bar" aria-hidden="true"><span id="chapterProgressFill"></span></div>
+    <div id="chapterBadgeShelf" class="badge-shelf" aria-live="polite"></div>
+    <div class="button-row academy-lesson-nav atomic-lesson-nav" aria-label="Jump to an Atomic Structure level">
+      <button type="button" data-step="1">1 · Models</button>
+      <button type="button" data-step="2">2 · Quantum</button>
+      <button type="button" data-step="3">3 · Energy</button>
+      <button type="button" data-step="4">4 · Radial</button>
+      <button type="button" data-step="5">5 · Angular</button>
+      <button type="button" data-step="6">6 · Spectra</button>
+      <button type="button" data-step="7">7 · Shielding</button>
+      <button type="button" data-step="8">8 · Configure</button>
+      <button type="button" data-step="9">9 · Periodic</button>
+      <button type="button" data-step="10">10 · Terms</button>
+      <button type="button" data-step="11">11 · Fine</button>
+      <button type="button" data-step="12">12 · Boss</button>
+    </div>
+  </section>
+
+  <section id="level-1" class="academy-lesson card-panel" data-step="1">
+    <p class="kicker">Level 1 · Deep game 1 · Model Passport</p>
+    <h2>An atomic answer is meaningless until its model has a passport</h2>
+    <p>“The atom” is not one universal equation at every level. A point-nucleus Coulomb Hamiltonian can be exact for its stated one-electron world; a neutral configuration ledger can be useful without being a first-principles derivation; a screening rule can be transparent while remaining approximate.</p>
+    <div class="atomic-model-ribbon" aria-label="Atomic model hierarchy">
+      <article><span>1e⁻</span><strong>Coulomb exact</strong><small>Analytic energies and orbitals under explicit assumptions</small></article>
+      <article><span>many e⁻</span><strong>Configuration ledger</strong><small>Observed ground patterns plus named rules and exceptions</small></article>
+      <article><span>Z<sub>eff</sub></span><strong>Slater estimate</strong><small>Rule-based screening, not an observable orbital energy</small></article>
+      <article><span>LSJ</span><strong>Coupling model</strong><small>Equivalent electrons, pure LS labels, supplied spin–orbit constant</small></article>
+    </div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Case to classify
+          <select id="passportCase">
+            <option value="h-like-energy">Nonrelativistic H-like energy</option>
+            <option value="neutral-configuration">Neutral Cr ground configuration</option>
+            <option value="carbon-screening">Carbon 2p effective charge</option>
+            <option value="triplet-p-ladder">Supplied-A triplet-P ladder</option>
+          </select>
+        </label>
+        <label>Model passport
+          <select id="passportModel">
+            <option value="coulomb-exact">Coulomb exact</option>
+            <option value="configuration-ledger">Configuration ledger</option>
+            <option value="slater-approximation">Slater approximation</option>
+            <option value="ls-coupling-model">LS-coupling model</option>
+          </select>
+        </label>
+        <button id="passportAudit" type="button">Stamp or reject passport</button>
+        <div id="passportReadout" class="orbital-info" role="status" aria-live="polite">Choose a case and identify which model is allowed to speak.</div>
+      </div>
+      <div class="atomic-game-brief card-panel">
+        <p class="kicker">Win condition</p>
+        <h3>Classify the claim—not the vocabulary</h3>
+        <ol>
+          <li>Name the Hamiltonian or rule set.</li>
+          <li>Name what is supplied versus predicted.</li>
+          <li>Name the effects that were left outside.</li>
+        </ol>
+        <p class="help-text">Replay all four files. The same word “energy” can belong to different models and need different caveats.</p>
+      </div>
+    </div>
+    <details class="professor-note"><summary>Professor mode · exact within a model is not exact for nature</summary><p>An analytic eigenpair may exactly solve a simplified Hamiltonian while that Hamiltonian omits finite nuclear mass, relativistic, radiative, external-field, and many-electron effects. Numerical error and model error are different axes; neither should be hidden inside the word “exact.”</p></details>
+    <button class="academy-complete" data-mission="model-map" data-badge="Model passport officer" type="button">Complete Level 1</button>
+  </section>
+
+  <section id="level-2" class="academy-lesson card-panel" data-step="2">
+    <p class="kicker">Level 2 · Deep game 2 · Quantum Number Gate</p>
+    <h2>Three integers organize one-electron spatial states</h2>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        n&amp;=1,2,\ldots,\\
+        l&amp;=0,\ldots,n-1,\\
+        m&amp;=-l,\ldots,+l.
+      \end{aligned}
+    \]</div>
+    <p>The Coulomb eigenfunction separates as \(\psi_{nlm}(r,\theta,\phi)=R_{nl}(r)Y_l^m(\theta,\phi)\). The node ledger is exact for these eigenfunctions: radial nodes \(n-l-1\), angular nodes \(l\), and total nodes \(n-1\).</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Principal quantum number n<input id="quantumN" type="range" min="1" max="6" step="1" value="3"></label>
+        <label>Orbital angular momentum l<input id="quantumL" type="range" min="0" max="2" step="1" value="1"></label>
+        <label>Magnetic quantum number m<input id="quantumM" type="range" min="-1" max="1" step="1" value="0"></label>
+        <div id="quantumReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <div class="atomic-gate-stage card-panel">
+        <p class="kicker">Degenerate m corridor</p>
+        <div id="quantumOrbitals" class="atomic-quantum-chips" aria-label="Allowed magnetic quantum numbers"></div>
+        <p>Each spatial orbital can hold two electrons only after spin is included. The \(2n^2\) shell capacity is therefore not the number of spatial wavefunctions; the spatial degeneracy is \(n^2\).</p>
+      </div>
+    </div>
+    <div class="misconception-card"><strong>Picture warning:</strong> a familiar real \(p_x\) or \(d_{xy}\) picture is generally a real combination of complex \(m\) eigenfunctions. Do not assign a unique nonzero \(m\) to a real lobe drawing.</div>
+    <details class="professor-note"><summary>Professor mode · degeneracy is a subspace statement</summary><p>For the ideal Coulomb Hamiltonian, energy depends only on \(n\), so all \(l,m\) values inside one shell are degenerate. The Hamiltonian does not prefer one basis inside an exactly degenerate subspace. External fields, fine structure, or many-electron interactions can reduce that degeneracy.</p></details>
+    <button class="academy-complete" data-mission="quantum-numbers" data-badge="Quantum gatekeeper" type="button">Complete Level 2</button>
+  </section>
+
+  <section id="level-3" class="academy-lesson card-panel" data-step="3">
+    <p class="kicker">Level 3 · Deep game 3 · Coulomb Energy Ladder</p>
+    <h2>Hydrogenic energy knows n and Z—but not l or m</h2>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        \hat H&amp;=-\frac12\nabla^2-\frac{Z}{r},\\
+        E_n&amp;=-\frac{Z^2}{2n^2}\ E_{\mathrm h}.
+      \end{aligned}
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Nuclear charge Z<input id="energyZ" type="range" min="1" max="6" step="1" value="1"></label>
+        <label>Highest shell displayed<input id="energyNMax" type="range" min="2" max="7" step="1" value="5"></label>
+        <label>Shell to interrogate<input id="energyHighlight" type="range" min="1" max="5" step="1" value="2"></label>
+        <div id="energyReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="energyPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Hydrogenic Coulomb energy ladder" aria-describedby="energyPlotKey energyPlotHint"></div>
+        <ul id="energyPlotKey" class="academy-plot-key" aria-label="Coulomb energy plot key">
+          <li><span class="plot-key-line solid" aria-hidden="true"></span><span>Selected n: thick solid line, filled circle</span></li>
+          <li><span class="plot-key-line long-dash" aria-hidden="true"></span><span>Other n: dashed line, open circle</span></li>
+          <li><span class="plot-key-line dotted" aria-hidden="true"></span><span>Ionization limit: dotted line with text</span></li>
+        </ul>
+        <p id="energyPlotHint" class="table-scroll-hint">On a narrow screen, swipe the ladder horizontally; the text key remains fixed.</p>
+        <figcaption>Increase Z to expose the \(Z^2\) scaling; increase n to see bound levels accumulate below the zero-energy ionization limit.</figcaption>
+      </figure>
+    </div>
+    <details class="professor-note"><summary>Professor mode · what breaks same-n degeneracy</summary><p>The accidental Coulomb degeneracy reflects more symmetry than ordinary rotational invariance. Finite nuclear mass changes the scale; relativistic and radiative corrections distinguish some states; electron–electron interactions and screening create strong l dependence in many-electron atoms.</p></details>
+    <button class="academy-complete" data-mission="coulomb-spectrum" data-badge="Coulomb ladder cartographer" type="button">Complete Level 3</button>
+  </section>
+
+  <section id="level-4" class="academy-lesson card-panel" data-step="4">
+    <p class="kicker">Level 4 · Deep game 4 · Radial Expedition</p>
+    <h2>A radial wavefunction can change sign while probability stays nonnegative</h2>
+    <p>In atomic units, with \(r\) measured in \(a_0\) and \(\rho=2Zr/n\), the normalized radial function is</p>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        \rho&amp;=\frac{2Zr}{n},\\
+        \mathcal N_{nl}^{2}&amp;=\left(\frac{2Z}{n}\right)^3\\
+          &amp;\quad\times\frac{(n-l-1)!}{2n(n+l)!},\\
+        R_{nl}(r)&amp;=\mathcal N_{nl}e^{-\rho/2}\rho^lL_{n-l-1}^{2l+1}(\rho),\\
+        P(r)&amp;=r^2|R_{nl}(r)|^2.
+      \end{aligned}
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Principal quantum number n<input id="radialN" type="range" min="1" max="6" step="1" value="3"></label>
+        <label>Orbital angular momentum l<input id="radialL" type="range" min="0" max="2" step="1" value="1"></label>
+        <label>Nuclear charge Z<input id="radialZ" type="range" min="1" max="6" step="0.25" value="1"></label>
+        <label>Curves displayed
+          <select id="radialDisplay"><option value="both">R and radial probability</option><option value="radial">Signed R only</option><option value="probability">Probability only</option></select>
+        </label>
+        <div id="radialReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="radialPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Hydrogenic radial wavefunction and radial probability" aria-describedby="radialPlotKey radialPlotHint"></div>
+        <ul id="radialPlotKey" class="academy-plot-key" aria-label="Radial plot key">
+          <li><span class="plot-key-line solid" aria-hidden="true"></span><span>Signed \(R_{nl}\): solid upper trace</span></li>
+          <li><span class="plot-key-line long-dash" aria-hidden="true"></span><span>\(r^2|R_{nl}|^2\): dashed lower trace</span></li>
+          <li><span class="plot-key-line dotted" aria-hidden="true"></span><span>Radial nodes: vertical dotted lines, r labels</span></li>
+        </ul>
+        <p id="radialPlotHint" class="table-scroll-hint">On a narrow screen, swipe the two-band radial plot horizontally; normalization and node positions stay in the text readout.</p>
+        <figcaption>The upper and lower bands use independent display scales. Their ordinates are different quantities; the browser integrates the lower curve over a finite, explicitly chosen radial domain.</figcaption>
+      </figure>
+    </div>
+    <div class="misconception-card"><strong>Density warning:</strong> \(|R(r)|^2\) alone is not the radial probability density. The spherical volume element contributes \(r^2\), so the probability of finding the electron between \(r\) and \(r+dr\) is \(r^2|R(r)|^2dr\).</div>
+    <details class="professor-note"><summary>Professor mode · numerical audit</summary><p>The production model evaluates generalized Laguerre polynomials by recurrence, brackets every positive Laguerre zero, and checks a trapezoidal finite-domain normalization. Node counts are analytic; displayed node radii and normalization are deterministic numerical diagnostics.</p></details>
+    <button class="academy-complete" data-mission="radial-structure" data-badge="Radial expedition leader" type="button">Complete Level 4</button>
+  </section>
+
+  <section id="level-5" class="academy-lesson card-panel" data-step="5">
+    <p class="kicker">Level 5 · Deep game 5 · Orbital Node Studio</p>
+    <h2>Orbital pictures encode phase sign and nodes—not little electron balloons</h2>
+    <p>For visual chemistry, real tesseral combinations are often more useful than complex \(Y_l^m\). The studio draws sign and exact angular zeros of functions proportional to \(x/r\), \(xy/r^2\), \((x^2-y^2)/r^2\), or \((2z^2-x^2-y^2)/r^2\).</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Real orbital shape
+          <select id="angularKind">
+            <option value="s">s</option><option value="px">pₓ</option><option value="py">pᵧ</option><option value="pz" selected>p_z</option>
+            <option value="dxy">d_xy</option><option value="dxz">d_xz</option><option value="dyz">d_yz</option><option value="dx2y2">d_x²−y²</option><option value="dz2">d_z²</option>
+          </select>
+        </label>
+        <label>Slice plane<select id="angularPlane"><option value="xz">xz</option><option value="xy">xy</option><option value="yz">yz</option></select></label>
+        <label>Rotate orbital about z<input id="angularAngle" type="range" min="0" max="180" step="5" value="0"></label>
+        <div id="angularReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="angularPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Real orbital angular sign and node map" aria-describedby="angularPlotKey angularPlotHint"></div>
+        <ul id="angularPlotKey" class="academy-plot-key" aria-label="Angular sign plot key">
+          <li><span class="atomic-key-shape circle" aria-hidden="true"></span><span>Positive phase: circles, + class</span></li>
+          <li><span class="atomic-key-shape diamond" aria-hidden="true"></span><span>Negative phase: diamonds, − class</span></li>
+          <li><span class="atomic-key-shape cross" aria-hidden="true">×</span><span>Near a node: crosses and axis lines</span></li>
+        </ul>
+        <p id="angularPlotHint" class="table-scroll-hint">On a narrow screen, swipe the sign map horizontally; shapes and text carry meaning without color.</p>
+        <figcaption>The glyph radius encodes absolute angular amplitude. This is an angular sign map on a unit-direction slice, not a full three-dimensional electron-density isosurface.</figcaption>
+      </figure>
+    </div>
+    <details class="professor-note"><summary>Professor mode · rotations inside degenerate subspaces</summary><p>Real p and d orbitals are basis choices in degenerate angular subspaces. Rotating those shapes changes the basis, not the Coulomb energy. In a molecule or external field, the surrounding Hamiltonian can select preferred combinations and orientations.</p></details>
+    <button class="academy-complete" data-mission="angular-structure" data-badge="Orbital node sculptor" type="button">Complete Level 5</button>
+  </section>
+
+  <section id="level-6" class="academy-lesson card-panel" data-step="6">
+    <p class="kicker">Level 6 · Deep game 6 · Spectral Detective</p>
+    <h2>A line needs an energy difference and a transition mechanism</h2>
+    <p>For an electric-dipole angular factor in the orbital-only model, the familiar rules are \(\Delta l=\pm1\) and \(\Delta m=0,\pm1\). The game separately reports the Coulomb energy difference and this angular filter:</p>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        \Delta E&amp;=E_f-E_i,\\
+        \lambda&amp;=\frac{hc}{|\Delta E|}.
+      \end{aligned}
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel atomic-transition-controls">
+        <fieldset><legend>Initial state</legend>
+          <label>n<sub>i</sub><input id="transitionFromN" type="range" min="1" max="6" step="1" value="2"></label>
+          <label>l<sub>i</sub><input id="transitionFromL" type="range" min="0" max="1" step="1" value="1"></label>
+          <label>m<sub>i</sub><input id="transitionFromM" type="range" min="-1" max="1" step="1" value="0"></label>
+        </fieldset>
+        <fieldset><legend>Final state</legend>
+          <label>n<sub>f</sub><input id="transitionToN" type="range" min="1" max="6" step="1" value="1"></label>
+          <label>l<sub>f</sub><input id="transitionToL" type="range" min="0" max="0" step="1" value="0"></label>
+          <label>m<sub>f</sub><input id="transitionToM" type="range" min="0" max="0" step="1" value="0"></label>
+        </fieldset>
+        <label>Nuclear charge Z<input id="transitionZ" type="range" min="1" max="6" step="1" value="1"></label>
+        <div id="transitionReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="transitionPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Hydrogenic transition and electric-dipole angular filter" aria-describedby="transitionPlotKey transitionPlotHint"></div>
+        <ul id="transitionPlotKey" class="academy-plot-key" aria-label="Transition plot key">
+          <li><span class="plot-key-line solid" aria-hidden="true"></span><span>Angularly allowed: solid arrow</span></li>
+          <li><span class="plot-key-line long-dash" aria-hidden="true"></span><span>Angularly forbidden: dashed arrow with ×</span></li>
+          <li><span class="plot-key-line dotted" aria-hidden="true"></span><span>Coulomb n levels: dashed horizontal lines</span></li>
+        </ul>
+        <p id="transitionPlotHint" class="table-scroll-hint">On a narrow screen, swipe the spectrum horizontally; rule outcome, ΔE, and wavelength remain in text.</p>
+        <figcaption>Try 2s→1s, Δm=2, and same-n 2p→2s cases. “Passes the angular rule” does not by itself calculate radial strength, polarization-resolved intensity, lifetime, or an experimental line.</figcaption>
+      </figure>
+    </div>
+    <div class="misconception-card"><strong>Selection-rule warning:</strong> “forbidden” means absent in the stated lowest-order mechanism, not impossible under every interaction. Magnetic dipole, electric quadrupole, mixing, collisions, and fields can open weaker channels.</div>
+    <details class="professor-note"><summary>Professor mode · why model and experiment differ</summary><p>The chapter uses infinite-mass Coulomb differences. Reduced mass shifts even hydrogenic wavelengths; fine, hyperfine, Lamb, isotope, and field effects add structure. Use NIST ASD for evaluated lines and transition probabilities.</p></details>
+    <button class="academy-complete" data-mission="dipole-transitions" data-badge="Spectral detective" type="button">Complete Level 6</button>
+  </section>
+
+  <section id="level-7" class="academy-lesson card-panel" data-step="7">
+    <p class="kicker">Level 7 · Deep game 7 · Shielding Arena</p>
+    <h2>Electron–electron repulsion destroys the simple Coulomb shell story</h2>
+    <p>A many-electron atomic Hamiltonian contains pair repulsions \(1/r_{ij}\). No independent \(-Z_{\mathrm{eff}}/r\) potential is exact for the interacting problem. Slater’s historical rules instead provide a transparent, named screening estimate:</p>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        Z_{\mathrm{eff}}&amp;=Z-S,\\
+        E_{\mathrm{screened}}^{\mathrm{toy}}&amp;=-\frac{Z_{\mathrm{eff}}^2}{2n^2}.
+      \end{aligned}
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Neutral atom H–Kr<select id="screeningElement"></select></label>
+        <label>Occupied target subshell<select id="screeningTarget"></select></label>
+        <div id="screeningReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <div class="atomic-game-brief card-panel">
+        <p class="kicker">Every contribution exposed</p>
+        <div id="screeningBreakdown" aria-label="Slater screening contribution ledger"></div>
+        <p class="help-text">Compare C 2p, Na 3s, and Fe 3d. The rule groups electrons differently for s/p and d targets; the numbers are an approximation with a provenance, not fitted browser decoration.</p>
+      </div>
+    </div>
+    <div class="misconception-card"><strong>Do not over-interpret Z<sub>eff</sub>:</strong> the displayed toy energy is neither a measured ionization energy nor a generally valid Hartree–Fock or Kohn–Sham orbital energy. Electron correlation and orbital relaxation are outside this scalar rule.</div>
+    <details class="professor-note"><summary>Professor mode · central fields and antisymmetry</summary><p>Useful independent-particle pictures replace the pair problem by effective one-electron equations, but the total wavefunction must still satisfy fermionic antisymmetry. Mean fields, exchange, correlation, and configuration interaction are distinct layers—not synonyms for “shielding.”</p></details>
+    <button class="academy-complete" data-mission="screening" data-badge="Shielding rule auditor" type="button">Complete Level 7</button>
+  </section>
+
+  <section id="level-8" class="academy-lesson card-panel" data-step="8">
+    <p class="kicker">Level 8 · Deep game 8 · Configuration Forge</p>
+    <h2>Place every electron—and let three rule checks challenge the build</h2>
+    <div class="quest-grid three">
+      <article class="quest-card"><span class="quest-icon">P</span><h3>Pauli</h3><p>One spatial orbital holds at most two electrons, with opposite spin labels in an occupied pair.</p></article>
+      <article class="quest-card"><span class="quest-icon">H</span><h3>Hund</h3><p>Within a degenerate subshell, maximize parallel single occupancies before pairing.</p></article>
+      <article class="quest-card"><span class="quest-icon">↗</span><h3>Ledger order</h3><p>The chapter’s neutral H–Kr ground ledger uses the usual filling order plus explicit Cr and Cu exceptions.</p></article>
+    </div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Neutral atom challenge<select id="configurationElement"></select></label>
+        <div class="button-row">
+          <button id="configurationReset" type="button" class="secondary">Empty the forge</button>
+          <button id="configurationReveal" type="button" class="secondary">Reveal ledger target</button>
+          <button id="configurationAudit" type="button">Audit boxes</button>
+        </div>
+        <div id="configurationReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <div class="atomic-game-brief card-panel">
+        <p class="kicker">Click each spatial box</p>
+        <div id="configurationForge" class="atomic-configuration-forge" aria-label="Interactive orbital-box configuration forge"></div>
+        <div class="atomic-box-key" aria-label="Orbital-box state key"><span>· empty</span><span>↑ one spin-up</span><span>↓ one spin-down</span><span>↑↓ valid opposite-spin pair</span><span class="invalid">↑↑ / ↓↓ invalid same-spin pair</span></div>
+      </div>
+    </div>
+    <div class="misconception-card"><strong>Removal-order warning:</strong> this game builds neutral ground configurations only. Ion formation is not modeled by blindly reversing the neutral Madelung filling list; orbital ordering and relaxation change with charge state.</div>
+    <details class="professor-note"><summary>Professor mode · configuration is not a wavefunction solution</summary><p>A configuration specifies occupations of chosen one-electron orbitals. It can support many determinants, spin-adapted functions, and terms. A single occupation string does not provide radial orbitals, energies, mixing coefficients, correlation, or a unique many-electron state.</p></details>
+    <button class="academy-complete" data-mission="configurations" data-badge="Configuration forge master" type="button">Complete Level 8</button>
+  </section>
+
+  <section id="level-9" class="academy-lesson card-panel" data-step="9">
+    <p class="kicker">Level 9 · Deep game 9 · Periodic Pattern Detective</p>
+    <h2>Recover period, block, and unpaired-electron patterns from the ledger</h2>
+    <p>Periodic trends begin with shell structure but do not end there. This game asks only claims that the stated neutral H–Kr configuration model can audit. It does not manufacture smooth radius or ionization-energy curves from a simple rule.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Unknown neutral atom<select id="periodicElement"></select></label>
+        <label>Your period prediction<select id="periodicPeriod"><option>1</option><option>2</option><option selected>3</option><option>4</option></select></label>
+        <label>Your block prediction<select id="periodicBlock"><option value="s">s</option><option value="p" selected>p</option><option value="d">d</option></select></label>
+        <label>Your unpaired-electron count<input id="periodicUnpaired" type="number" min="0" max="6" step="1" value="2"></label>
+        <label>Your magnetic class<select id="periodicMagnetic"><option value="diamagnetic">Diamagnetic</option><option value="paramagnetic" selected>Paramagnetic</option></select></label>
+        <button id="periodicCheck" type="button">Open configuration evidence</button>
+      </div>
+      <div class="atomic-game-brief card-panel">
+        <p class="kicker">Four-part diagnosis</p>
+        <div id="periodicReadout" class="orbital-info" role="status" aria-live="polite">Predict first. The evidence ledger appears only after you open the case.</div>
+        <div class="atomic-pattern-cards">
+          <span><strong>Period</strong>highest occupied principal shell</span>
+          <span><strong>Block</strong>differentiating occupied subshell in the ledger</span>
+          <span><strong>Unpaired</strong>Hund-pattern box count</span>
+          <span><strong>Magnetic class</strong>configuration-level consequence</span>
+        </div>
+      </div>
+    </div>
+    <div class="misconception-card"><strong>Trend warning:</strong> statements such as “ionization energy always increases across a period” are not exact laws. Subshell changes, pairing, relaxation, correlation, and measured-state definitions produce important exceptions.</div>
+    <details class="professor-note"><summary>Professor mode · what an experiment measures</summary><p>Atomic radii depend on operational definition, and ionization energies compare total energies of different charge states. Neither observable is exactly a one-orbital picture. Use evaluated data and report the definition before interpreting a periodic trend.</p></details>
+    <button class="academy-complete" data-mission="periodic-patterns" data-badge="Periodic pattern detective" type="button">Complete Level 9</button>
+  </section>
+
+  <section id="level-10" class="academy-lesson card-panel" data-step="10">
+    <p class="kicker">Level 10 · Deep game 10 · Microstate Foundry</p>
+    <h2>Term symbols emerge by exhausting the determinant microstate table</h2>
+    <p>For \(q\) equivalent electrons in a subshell \(l\), choose \(q\) spin orbitals from \(2(2l+1)\). Every determinant contributes one \((M_L,M_S)\) cell. The foundry repeatedly removes complete LS rectangles to obtain allowed terms \(^{2S+1}L\).</p>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        g&amp;=2(2l+1),\\
+        N_{\mathrm{det}}&amp;=\binom{g}{q},\\
+        \dim({}^{2S+1}L)&amp;=(2S+1)(2L+1).
+      \end{aligned}
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Equivalent-electron subshell<select id="microL"><option value="1">p</option><option value="2">d</option></select></label>
+        <label>Electron count q<input id="microQ" type="range" min="1" max="5" step="1" value="2"></label>
+        <div id="termReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="microstatePlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Equivalent-electron ML MS microstate count table" aria-describedby="microstatePlotKey microstatePlotHint"></div>
+        <ul id="microstatePlotKey" class="academy-plot-key" aria-label="Microstate plot key">
+          <li><span class="atomic-key-cell filled" aria-hidden="true">2</span><span>Occupied cell: printed determinant count</span></li>
+          <li><span class="atomic-key-cell empty" aria-hidden="true">·</span><span>Empty cell: dotted border and centered dot</span></li>
+          <li><span class="atomic-key-shape cross" aria-hidden="true">Σ</span><span>Every printed cell contributes to the total audit</span></li>
+        </ul>
+        <p id="microstatePlotHint" class="table-scroll-hint">On a narrow screen, swipe the full M<sub>L</sub>/M<sub>S</sub> grid horizontally; term labels and dimension checks remain in normal HTML.</p>
+        <figcaption>The grid is enumerated from antisymmetric determinant choices. The term decomposition is exact within the equivalent-electron, nonrelativistic pure-LS model—not a spectrum or energy ordering.</figcaption>
+      </figure>
+    </div>
+    <div class="misconception-card"><strong>Term warning:</strong> \(^{2S+1}L\) is a many-electron angular-momentum label, not an orbital label. A p² configuration can produce several terms because different antisymmetrized combinations have different total L and S.</div>
+    <details class="professor-note"><summary>Professor mode · repeated terms and parentage</summary><p>For larger equivalent-electron configurations, the same LS label can occur more than once. The production decomposition reports multiplicity of repeated labels, but does not assign seniority, coefficients of fractional parentage, electrostatic energies, or level mixing.</p></details>
+    <button class="academy-complete" data-mission="term-symbols" data-badge="Microstate foundry master" type="button">Complete Level 10</button>
+  </section>
+
+  <section id="level-11" class="academy-lesson card-panel" data-step="11">
+    <p class="kicker">Level 11 · Deep game 11 · Fine-Structure Ladder</p>
+    <h2>Couple L and S, then audit every J level and its barycenter</h2>
+    <p>In the ideal pure-LS model with a supplied constant \(A\),</p>
+    <div class="formula-line detail-formula">\[
+      \begin{aligned}
+        J&amp;=|L-S|,\ldots,L+S,\\
+        \Delta E_J&amp;=\frac{A}{2}\left[J(J+1)\right.\\
+          &amp;\qquad\left.-L(L+1)-S(S+1)\right].
+      \end{aligned}
+    \]</div>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Parent LS term
+          <select id="fineTerm"><option value="1,2">³P</option><option value="2,1">²D</option><option value="3,2">³F</option><option value="0,3">⁴S</option></select>
+        </label>
+        <label>Supplied A / cm⁻¹<input id="fineA" type="range" min="-300" max="300" step="5" value="100"></label>
+        <div id="fineReadout" class="orbital-info" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <figure class="basis-figure academy-plot">
+        <div id="finePlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Ideal LS fine-structure energy ladder" aria-describedby="finePlotKey finePlotHint"></div>
+        <ul id="finePlotKey" class="academy-plot-key" aria-label="Fine-structure plot key">
+          <li><span class="plot-key-line solid" aria-hidden="true"></span><span>Alternating J levels: solid/long-dashed lines with J text</span></li>
+          <li><span class="atomic-key-shape circle" aria-hidden="true"></span><span>Right marker size follows degeneracy 2J+1</span></li>
+          <li><span class="plot-key-line dotted" aria-hidden="true"></span><span>Zero: degeneracy-weighted term barycenter</span></li>
+        </ul>
+        <p id="finePlotHint" class="table-scroll-hint">On a narrow screen, swipe the ladder horizontally; J values, degeneracies, shifts, and intervals remain textual.</p>
+        <figcaption>Reverse the sign of A to reverse the ideal ordering. The laboratory calculates splittings from A; it does not predict A from an atomic Hamiltonian.</figcaption>
+      </figure>
+    </div>
+    <div class="misconception-card"><strong>Coupling warning:</strong> LS coupling is a regime, not a universal identity. Intermediate coupling and configuration interaction can mix labels; hyperfine structure and external fields require additional angular momenta and Hamiltonian terms.</div>
+    <details class="professor-note"><summary>Professor mode · Landé interval rule and audit</summary><p>Adjacent ideal levels satisfy \(E_J-E_{J-1}=AJ\). The degeneracy-weighted shift must sum to zero over the complete J manifold. Both identities are tested directly against the production function.</p></details>
+    <button class="academy-complete" data-mission="fine-structure" data-badge="Fine-structure ladder keeper" type="button">Complete Level 11</button>
+  </section>
+
+  <section id="level-12" class="academy-lesson card-panel" data-step="12">
+    <p class="kicker">Level 12 · Deep game 12 · Integrated final</p>
+    <h2>Atomic case-file boss: evidence, answer, boundary, caveat</h2>
+    <p>Close a case only when all four claims agree. The boss scores each field separately so a correct numerical answer cannot hide a wrong model or an overclaim.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Case file<select id="bossCase"><option value="oxygen-file">Oxygen neutral configuration</option><option value="lyman-file">Hydrogenic 2p → 1s</option></select></label>
+        <label>Model<select id="bossModel"><option value="">Choose the model…</option><option value="configuration-ledger">Configuration ledger</option><option value="coulomb-exact">Coulomb exact</option><option value="slater-approximation">Slater approximation</option><option value="ls-coupling-model">LS coupling</option></select></label>
+        <label><span id="bossAnswerOneLabel">How many unpaired electrons?</span><select id="bossAnswerOne"></select></label>
+        <label><span id="bossAnswerTwoLabel">Configuration magnetic class</span><select id="bossAnswerTwo"></select></label>
+        <label>Required caveat<select id="bossCaveat"></select></label>
+        <button id="bossAudit" type="button">Audit complete case file</button>
+      </div>
+      <div class="atomic-game-brief card-panel atomic-case-file">
+        <p class="kicker">Four seals required</p>
+        <div class="atomic-seals" aria-hidden="true"><span>MODEL</span><span>VALUE</span><span>MEANING</span><span>LIMIT</span></div>
+        <div id="bossFeedback" class="orbital-info" role="status" aria-live="polite" aria-atomic="true">Choose all four claims, then audit the case file.</div>
+        <p class="help-text">Replay both files. One belongs to a neutral configuration ledger; the other belongs to the exact stated Coulomb model but not to a complete experimental spectrum.</p>
+      </div>
+    </div>
+    <div class="notice quest-finale"><strong>Atomic case-file boss:</strong> an atomic result is auditable only when it states the system, Hamiltonian or rule set, quantum labels, units, numerical/analytic check, omitted effects, and experimental-data boundary.</div>
+    <details class="professor-note" open><summary>Professor mode · the bridge to electronic structure</summary><p>Real quantum chemistry replaces isolated-atom labels by molecular orbitals, basis expansions, antisymmetric many-electron states, approximate Hamiltonians or density functionals, and numerical solvers. Atomic quantum numbers remain invaluable for basis design, interpretation, spectroscopy, and asymptotic fragments—but molecular symmetry and state mixing decide what survives exactly.</p></details>
+    <div class="quest-actions">
+      <a class="button secondary" href="qc-math-language.html">Revisit Mathematical Language</a>
+      <a class="button secondary" href="basis-sets.html">Continue into Basis Set Quest</a>
+      <a class="button secondary" href="mo-builder.html">Build molecular orbitals</a>
+      <a class="button secondary" href="quantum-chemistry.html">Return to the roadmap</a>
+    </div>
+    <button class="academy-complete" data-mission="atomic-case-file" data-badge="Atomic case-file closer" type="button">Complete Level 12</button>
+  </section>
+
+  <section class="lesson-card academy-source-card" aria-labelledby="atomic-sources-title">
+    <p class="kicker">Verified source spine</p>
+    <h2 id="atomic-sources-title">Continue with authoritative definitions, derivations, and data</h2>
+    <div class="table-scroll" role="region" aria-label="Atomic Structure source table" aria-describedby="atomic-source-table-hint" tabindex="0">
+      <table class="meta-table wide-table">
+        <thead><tr><th>Source</th><th>Role in this chapter</th><th>Link</th></tr></thead>
+        <tbody>
+          <tr><th>MIT OCW 5.61 Physical Chemistry</th><td>Hydrogenic states, angular momentum, spectroscopy, and many-electron continuation.</td><td><a href="https://ocw.mit.edu/courses/5-61-physical-chemistry-fall-2017/" target="_blank" rel="noopener">5.61 course</a></td></tr>
+          <tr><th>NIST DLMF Chapter 18</th><td>Generalized Laguerre recurrence and positive-zero structure used by the radial model.</td><td><a href="https://dlmf.nist.gov/18" target="_blank" rel="noopener">Orthogonal polynomials</a></td></tr>
+          <tr><th>NIST Atomic Spectra Database</th><td>Evaluated levels, wavelengths, transition probabilities, ground states, and ionization energies beyond the browser model.</td><td><a href="https://physics.nist.gov/PhysRefData/ASD/" target="_blank" rel="noopener">NIST ASD</a></td></tr>
+          <tr><th>NIST Atomic Spectroscopy Compendium</th><td>Configurations, shells, LS coupling, terms, levels, and selection-rule notation.</td><td><a href="https://physics.nist.gov/Pubs/AtSpec/index.html" target="_blank" rel="noopener">Compendium</a></td></tr>
+          <tr><th>NIST 2022 CODATA</th><td>Hartree-energy conversion used in every eV readout.</td><td><a href="https://physics.nist.gov/cgi-bin/cuu/Value?hrev" target="_blank" rel="noopener">Hartree in eV</a></td></tr>
+          <tr><th>OpenStax Chemistry 2e, Chapter 6</th><td>Starter route through quantum numbers, configurations, and periodic structure.</td><td><a href="https://openstax.org/books/chemistry-2e/pages/6-introduction" target="_blank" rel="noopener">Electronic structure</a></td></tr>
+          <tr><th>IUPAC Gold Book</th><td>Atomic-orbital terminology boundary.</td><td><a href="https://goldbook.iupac.org/terms/view/A00500" target="_blank" rel="noopener">Atomic orbital</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p id="atomic-source-table-hint" class="table-scroll-hint">On a narrow screen, swipe the source table horizontally.</p>
+    <p class="help-text">The repository ledger records access checks, constants, model equations, approximation boundaries, deterministic oracles, and the exact H–Kr configuration scope.</p>
+  </section>
+</main>
+<footer class="footer"><p>Project XC Academy · Atomic Structure. Progress is browser-local; model labels and caveats are part of every scientific answer.</p></footer>
+<script src="assets/academy-core.js"></script>
+<script src="assets/qc-atoms.js"></script>
+</body>
+</html>

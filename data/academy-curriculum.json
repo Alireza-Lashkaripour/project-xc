@@ -106,16 +106,35 @@
           "order": 1,
           "title": "Atomic Structure",
           "route": "qc-atoms.html",
-          "status": "planned",
+          "status": "live",
           "level": "Starter to graduate",
-          "levels": 11,
-          "games": 4,
+          "levels": 12,
+          "games": 12,
+          "progress": {
+            "kind": "academy-missions",
+            "total": 12,
+            "mission_ids": [
+              "model-map",
+              "quantum-numbers",
+              "coulomb-spectrum",
+              "radial-structure",
+              "angular-structure",
+              "dipole-transitions",
+              "screening",
+              "configurations",
+              "periodic-patterns",
+              "term-symbols",
+              "fine-structure",
+              "atomic-case-file"
+            ],
+            "label": "Atomic Structure missions"
+          },
           "prerequisites": ["qc-foundations", "qc-math-language"],
-          "summary": "Explore hydrogenic orbitals, quantum numbers, radial and angular nodes, degeneracy, many-electron shells, and the periodic structure of atoms.",
+          "summary": "Build exact hydrogenic orbitals and spectra, then cross the model boundary into screening, configurations, periodic patterns, LS terms, and ideal fine structure through twelve deep laboratories.",
           "outcomes": [
-            "Relate quantum numbers to orbital structure",
-            "Count and interpret radial and angular nodes",
-            "Separate exact hydrogenic results from many-electron models"
+            "Relate quantum numbers, degeneracy, and radial and angular nodes to orbital structure",
+            "Separate exact one-electron Coulomb results from approximate and empirical many-electron models",
+            "Construct and audit neutral-atom configurations, equivalent-electron terms, and ideal LS fine-structure ladders"
           ]
         },
         {

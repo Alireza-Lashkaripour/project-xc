@@ -416,6 +416,62 @@ input[type="checkbox"] { width: auto; }
 .plot-key-line.dotted { border-top-style: dotted; }
 .plot-key-line.dotted::after { width: .58rem; height: .58rem; border-radius: 50%; background: currentColor; }
 
+/* Atomic Structure chapter */
+.atomic-chapter-body {
+  background:
+    radial-gradient(circle at 8% 5%, rgba(14,116,144,.16), transparent 26rem),
+    radial-gradient(circle at 92% 10%, rgba(180,83,9,.12), transparent 25rem),
+    linear-gradient(180deg, #f7fcff 0, #f7f8fc 45%, #fffaf3 100%);
+}
+.atomic-chapter-hero { border-color: #a5d8e6; background: radial-gradient(circle at 10% 8%, rgba(207,250,254,.95), transparent 38%), linear-gradient(135deg, #f8fdff, #fff7ed); }
+.atomic-chapter-hero::after { content: "1s"; position: absolute; right: -1.4rem; bottom: -4.5rem; color: rgba(14,116,144,.055); font-family: var(--display); font-size: 15rem; line-height: 1; pointer-events: none; }
+.atomic-boundary { border-left-color: #0e7490; background: linear-gradient(90deg, #ecfeff, #fff7ed); }
+.atomic-lesson-nav { gap: .38rem; }
+.atomic-lesson-nav button { padding: .52rem .62rem; }
+.atomic-model-ribbon { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .65rem; margin: .9rem 0; }
+.atomic-model-ribbon article { display: grid; gap: .2rem; min-height: 130px; padding: .82rem; border: 1px solid #bae6fd; border-radius: .9rem; background: linear-gradient(155deg, #f0fdfa, #fff); box-shadow: var(--shadow-sm); }
+.atomic-model-ribbon span { color: #0e7490; font-family: var(--display); font-size: 1.25rem; font-weight: 900; }
+.atomic-model-ribbon strong { font-family: var(--display); font-size: 1.06rem; }
+.atomic-model-ribbon small { color: var(--muted); line-height: 1.45; }
+.atomic-game-brief, .atomic-gate-stage { display: grid; align-content: start; gap: .65rem; border-color: #bae6fd; background: linear-gradient(155deg, #fff, #f0fdfa); }
+.atomic-game-brief h3 { margin: 0; }
+.atomic-game-brief ol { margin: 0; padding-left: 1.2rem; color: #344054; }
+.atomic-game-brief li + li { margin-top: .45rem; }
+.atomic-quantum-chips { display: flex; flex-wrap: wrap; gap: .55rem; align-items: center; min-height: 95px; }
+.atomic-quantum-chip { display: inline-flex; align-items: center; justify-content: center; min-width: 4.1rem; min-height: 3.1rem; border: 2px dashed #0e7490; border-radius: 999px; background: #fff; color: #155e75; font-weight: 900; }
+.atomic-quantum-chip.active { border-style: solid; background: #cffafe; box-shadow: 0 0 0 4px rgba(14,116,144,.13); }
+.atomic-key-shape { display: inline-flex; flex: 0 0 1.05rem; width: 1.05rem; height: 1.05rem; align-items: center; justify-content: center; color: #3b0764; font-weight: 950; }
+.atomic-key-shape.circle { border: 3px solid #78350f; border-radius: 50%; background: #fbbf24; }
+.atomic-key-shape.diamond { transform: rotate(45deg); border: 3px solid #3b0764; background: #8b5cf6; }
+.atomic-key-shape.cross { font-size: 1.05rem; }
+.atomic-key-cell { display: inline-flex; width: 1.65rem; height: 1.65rem; align-items: center; justify-content: center; border: 2px solid #64748b; font-weight: 900; }
+.atomic-key-cell.filled { background: #ede9fe; }
+.atomic-key-cell.empty { border-style: dotted; background: #fff; }
+.atomic-transition-controls fieldset { display: grid; gap: .52rem; padding: .65rem; border: 1px solid #cbd5e1; border-radius: .8rem; }
+.atomic-transition-controls legend { padding: 0 .3rem; color: #155e75; font-weight: 900; }
+.atomic-breakdown { display: grid; gap: .35rem; }
+.atomic-breakdown > div { display: flex; justify-content: space-between; gap: .8rem; padding: .52rem .62rem; border: 1px solid #cbd5e1; border-radius: .65rem; background: #fff; }
+.atomic-breakdown > div.total { border-color: #67e8f9; background: #ecfeff; }
+.atomic-breakdown span { color: #475467; }
+.atomic-configuration-forge { display: grid; gap: .55rem; }
+.atomic-subshell { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: .6rem; align-items: center; }
+.atomic-box-row { display: flex; flex-wrap: wrap; gap: .38rem; }
+.electron-box { display: inline-flex; min-width: 2.75rem; min-height: 2.75rem; align-items: center; justify-content: center; padding: .35rem; border: 2px solid #475569; border-radius: .4rem; background: #fff; color: #111827; font-size: 1rem; font-weight: 950; }
+.electron-box.state-up, .electron-box.state-down { border-color: #0e7490; background: #ecfeff; }
+.electron-box.state-pair { border-color: #6d28d9; background: #f5f3ff; }
+.electron-box.state-upup, .electron-box.state-downdown { border-color: #b42318; background: #fff1f0; color: #912018; box-shadow: inset 0 0 0 2px #fda29b; }
+.electron-box:focus-visible { outline: 4px solid #f59e0b; outline-offset: 2px; }
+.atomic-box-key { display: flex; flex-wrap: wrap; gap: .38rem; margin-top: .75rem; }
+.atomic-box-key span { padding: .24rem .48rem; border: 1px solid #cbd5e1; border-radius: 999px; background: #fff; color: #475467; font-size: .74rem; font-weight: 800; }
+.atomic-box-key span.invalid { border-color: #fda29b; background: #fff1f0; color: #912018; }
+.atomic-pattern-cards { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.atomic-pattern-cards span { display: grid; gap: .16rem; padding: .65rem; border: 1px solid #a5f3fc; border-radius: .72rem; background: #fff; color: #475467; font-size: .78rem; }
+.atomic-pattern-cards strong { color: #155e75; font-size: .9rem; }
+.atomic-term-chip { display: inline-flex; margin: .12rem; padding: .18rem .46rem; border: 1px solid #c4b5fd; border-radius: 999px; background: #f5f3ff; color: #4c1d95; font-weight: 900; }
+.atomic-case-file { border: 2px solid #0e7490; background: linear-gradient(145deg, #ecfeff, #fff7ed); }
+.atomic-seals { display: grid; grid-template-columns: repeat(4, 1fr); gap: .45rem; }
+.atomic-seals span { display: flex; min-height: 4.4rem; align-items: center; justify-content: center; border: 2px dashed #9a3412; border-radius: 50%; background: rgba(255,255,255,.7); color: #7c2d12; font-size: .68rem; font-weight: 950; letter-spacing: .06em; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
@@ -425,7 +481,7 @@ input[type="checkbox"] { width: auto; }
 
 @media (max-width: 900px) {
   h1 { font-size: clamp(2rem, 7vw, 3.4rem); }
-  .stats, .filters, .compact-metrics, .definition-grid, .guide-grid, .guide-grid.two, .builder-layout, .mo-output-grid, .lab-grid, .game-grid, .quest-grid.three, .hero-points, .module-snapshot { grid-template-columns: 1fr 1fr; }
+  .stats, .filters, .compact-metrics, .definition-grid, .guide-grid, .guide-grid.two, .builder-layout, .mo-output-grid, .lab-grid, .game-grid, .quest-grid.three, .hero-points, .module-snapshot, .atomic-model-ribbon { grid-template-columns: 1fr 1fr; }
   .choice-grid, .academy-entry-grid, .chapter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .basis-quest-hero, .academy-hero, .academy-chapter-hero { grid-template-columns: 1fr; }
   .academy-progress-panel { grid-template-columns: 1fr; }
@@ -439,7 +495,8 @@ input[type="checkbox"] { width: auto; }
 @media (max-width: 620px) {
   .nav { flex-wrap: wrap; }
   .nav a:not(.brand) { padding: .32rem .48rem; }
-  .stats, .filters, .compact-metrics, .definition-grid, .guide-grid, .guide-grid.two, .builder-layout, .mo-output-grid, .choice-grid, .lab-grid, .game-grid, .quest-grid.three, .quest-hud, .hero-points, .module-snapshot, .academy-entry-grid, .chapter-grid, .academy-hud { grid-template-columns: 1fr; }
+  .stats, .filters, .compact-metrics, .definition-grid, .guide-grid, .guide-grid.two, .builder-layout, .mo-output-grid, .choice-grid, .lab-grid, .game-grid, .quest-grid.three, .quest-hud, .hero-points, .module-snapshot, .academy-entry-grid, .chapter-grid, .academy-hud, .atomic-model-ribbon, .atomic-pattern-cards { grid-template-columns: 1fr; }
+  .atomic-seals { grid-template-columns: 1fr 1fr; }
   .academy-progress-actions button { justify-self: stretch; }
   .academy-reset-note { justify-self: stretch; text-align: left; }
   .table-scroll-hint { display: block; margin: .35rem 0 .2rem; color: var(--muted); font-size: .76rem; font-weight: 750; }
