@@ -2,7 +2,7 @@
 """Focused regression tests for Academy HTML contract parsing."""
 from __future__ import annotations
 
-from validate_academy import inspect_html
+from validate_academy import extract_static_hud_count, inspect_html
 
 checks = 0
 
@@ -40,6 +40,9 @@ assert_equal(inspector.quest_complete_count, 1, 'legacy completion-control count
 assert_equal(inspector.html_ids, ['level-1', 'complete-one', 'results-table', 'scroll-help'], 'id extraction')
 assert_equal(inspector.uncontained_wide_table_count, 0, 'wide table is nested in its accessible scroll region')
 assert_equal(inspector.unhinted_wide_table_count, 0, 'wide-table region references its visible hint')
+assert_equal(extract_static_hud_count('<strong class="metric" id="academyLiveCount"> 6 </strong>', 'academyLiveCount'), 6, 'static HUD count with id after class')
+assert_equal(extract_static_hud_count("<strong id='academyPlannedCount' data-kind='fallback'>21</strong>", 'academyPlannedCount'), 21, 'static HUD count with attributes after id')
+assert_equal(extract_static_hud_count('<strong id="academyLiveCount">six</strong>', 'academyLiveCount'), None, 'static HUD fallback must be numeric')
 
 misassociated = """
 <table class='wide-table'></table>
@@ -74,4 +77,4 @@ assert_equal(invalid.unhinted_wide_table_count, 1, 'aria-describedby must target
 
 print('Project XC Academy HTML parser tests OK')
 print(f'- deterministic assertions: {checks}')
-print('- Attribute order, exact class tokens, nested table regions, associated hints, links, missions, and ids: OK')
+print('- Attribute order, exact class tokens, nested table regions, associated hints, links, missions, ids, and static HUD counts: OK')
