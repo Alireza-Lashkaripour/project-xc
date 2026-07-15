@@ -560,6 +560,74 @@ input[type="checkbox"] { width: auto; }
 .approximation-key-bracket.amber { border-color: #d97706; }
 .approximation-key-zero { display: inline-block; flex: 0 0 1.35rem; width: 1.35rem; height: 1rem; border-left: 3px solid #64748b; }
 
+/* Many-Electron Wavefunctions chapter */
+.many-electron-chapter-body { background: radial-gradient(circle at 8% 9%, rgba(79,70,229,.09), transparent 28rem), radial-gradient(circle at 94% 28%, rgba(234,88,12,.07), transparent 26rem), var(--paper); }
+.many-electron-chapter-hero { border-color: #818cf8; background: linear-gradient(145deg, rgba(238,242,255,.98), rgba(255,255,255,.97) 55%, rgba(240,253,250,.95)); box-shadow: 0 22px 55px rgba(49,46,129,.12); }
+.many-electron-chapter-hero .quest-hud { border-color: #99f6e4; background: linear-gradient(160deg, #fff, #f0fdfa); }
+.many-electron-boundary { border-left-color: #4338ca; background: linear-gradient(90deg, #eef2ff, #fff); }
+.many-electron-lesson-nav button { border-color: #c7d2fe; background: #eef2ff; color: #312e81; }
+.many-electron-lesson-nav button:hover, .many-electron-lesson-nav button:focus-visible { border-color: #4f46e5; background: #fff; }
+.many-electron-notebook { margin: .9rem 0; border-color: #99f6e4; background: linear-gradient(145deg, #f0fdfa, #fff, #eef2ff); }
+.many-electron-notebook h2 { margin-bottom: .25rem; }
+.many-electron-notebook-list { display: grid; gap: .48rem; margin-top: .65rem; }
+.many-electron-notebook-list article { display: grid; grid-template-columns: 1.1fr repeat(4, minmax(0, 1fr)); gap: .42rem; padding: .58rem; border: 1px solid #a5b4fc; border-radius: .7rem; background: #fff; font-size: .73rem; }
+.many-electron-notebook-list strong { color: #312e81; text-transform: capitalize; }
+.many-electron-notebook-list span { padding-left: .42rem; border-left: 2px solid #99f6e4; color: #475569; }
+.many-electron-plot { border-color: #a5b4fc; background: linear-gradient(180deg, #fff, #fafaff); }
+.many-electron-plot .academy-plot-canvas { scrollbar-color: #4f46e5 #e2e8f0; }
+.many-electron-plot .academy-plot-canvas:focus-visible { outline: 4px solid #f97316; outline-offset: 3px; border-radius: .65rem; }
+.many-electron-plot svg text { font-family: Inter, ui-sans-serif, system-ui, sans-serif; fill: #334155; font-size: 14px; }
+.many-electron-plot svg .many-axis { stroke: #64748b; stroke-width: 2; }
+.many-electron-plot svg .many-muted { fill: #64748b; font-size: 13px; font-weight: 700; }
+.many-electron-plot svg .many-plot-oracle { fill: #0f766e; font-weight: 950; }
+.many-electron-plot svg .many-point { stroke: #fff; stroke-width: 4; }
+.many-electron-plot svg .many-point.indigo { fill: #4f46e5; }
+.many-electron-plot svg .many-point.coral { fill: #e11d48; }
+.many-electron-plot svg .many-point.teal { fill: #0f766e; }
+.many-electron-plot svg .many-orbital { fill: #fff; stroke: #64748b; stroke-width: 2; }
+.many-electron-plot svg .many-orbital.occupied { fill: #c7d2fe; stroke: #4338ca; }
+.many-electron-plot svg .many-orbital.changed { stroke: #e11d48; stroke-width: 4; stroke-dasharray: 7 4; }
+.many-electron-plot svg .many-bit { fill: #1e1b4b; font-size: 19px; font-weight: 950; }
+.many-electron-plot svg .many-permutation-line { stroke: #4f46e5; stroke-width: 4; stroke-linecap: round; opacity: .84; }
+.many-electron-plot svg .many-matrix { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; fill: #312e81; font-weight: 800; }
+.many-electron-plot svg .many-spectrum-bar { fill: #0f766e; }
+.many-electron-plot svg .many-spectrum-bar.secondary { fill: #f59e0b; }
+.many-electron-plot svg .many-energy-bar.indigo, .many-electron-plot svg .many-coefficient.indigo { fill: #4f46e5; }
+.many-electron-plot svg .many-energy-bar.amber { fill: #f59e0b; }
+.many-electron-plot svg .many-energy-bar.hatched { fill: url(#many-hatch); stroke: #ea580c; stroke-width: 2; }
+.many-electron-plot svg .many-coefficient.coral { fill: #e11d48; }
+.many-electron-plot svg .many-total-line { stroke: #0f766e; stroke-width: 5; }
+.many-electron-plot svg .many-weight.singlet { fill: #0f766e; }
+.many-electron-plot svg .many-weight.triplet { fill: #f59e0b; }
+.many-electron-plot svg .many-pauli-line { stroke: #e11d48; stroke-width: 3; stroke-dasharray: 9 6; }
+.many-electron-plot svg .many-certificate { stroke-width: 3; }
+.many-electron-plot svg .many-certificate.supplied { fill: #ccfbf1; stroke: #0f766e; }
+.many-electron-plot svg .many-certificate.missing { fill: #fff1f2; stroke: #e11d48; stroke-dasharray: 8 5; }
+.many-electron-plot svg .many-contract-arrow { fill: none; stroke: #4f46e5; stroke-width: 5; marker-end: none; }
+.many-key-dot, .many-key-box, .many-key-line, .many-key-bracket { display: inline-block; flex: 0 0 auto; }
+.many-key-dot { width: .82rem; height: .82rem; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 0 0 2px #475569; }
+.many-key-dot.indigo { background: #4f46e5; }
+.many-key-dot.coral { background: #e11d48; }
+.many-key-dot.teal { background: #0f766e; }
+.many-key-box { width: 1.25rem; height: .9rem; border: 2px solid #64748b; border-radius: .2rem; background: #fff; }
+.many-key-box.occupied, .many-key-box.indigo { border-color: #4338ca; background: #c7d2fe; }
+.many-key-box.amber { border-color: #92400e; background: #fbbf24; }
+.many-key-box.hatched { border-color: #ea580c; background: repeating-linear-gradient(45deg, #fff7ed 0 4px, #fb923c 4px 7px); }
+.many-key-line { width: 1.4rem; height: .35rem; border-top: 4px solid #0f766e; }
+.many-key-line.indigo { border-color: #4f46e5; }
+.many-key-line.teal { border-color: #0f766e; }
+.many-key-bracket { width: 1.25rem; height: 1rem; border-left: 3px solid #f59e0b; border-top: 3px solid #f59e0b; border-bottom: 3px solid #f59e0b; }
+.many-key-bracket.teal { border-color: #0f766e; }
+.many-key-bracket.amber { border-color: #f59e0b; }
+.many-electron-case-file { border: 2px solid #4338ca; background: linear-gradient(145deg, #eef2ff, #f0fdfa 58%, #fff7ed); }
+.many-electron-campaign-board, .many-electron-dossier { border: 2px solid #4338ca; background: rgba(255,255,255,.88); }
+.many-electron-campaign-board label { display: grid; gap: .3rem; margin-bottom: .62rem; color: #475467; font-size: .8rem; font-weight: 850; }
+.many-electron-campaign-board select:disabled { border-style: dashed; background: #f1f5f9; color: #64748b; opacity: 1; }
+.many-electron-campaign-route { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: .35rem; align-items: center; margin: .85rem 0; }
+.many-electron-campaign-route span { display: flex; min-height: 4.1rem; align-items: center; justify-content: center; border: 2px solid #4338ca; border-radius: .72rem; background: #fff; color: #312e81; font-size: .66rem; font-weight: 950; text-align: center; }
+.many-electron-campaign-route b { color: #ea580c; }
+.many-electron-dossier .boss-artifact { border-color: #99f6e4; background: #f0fdfa; color: #134e4a; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
@@ -576,8 +644,8 @@ input[type="checkbox"] { width: auto; }
   .academy-track-header, .academy-curriculum-intro { align-items: stretch; flex-direction: column; }
   .academy-track-counts { justify-content: flex-start; }
   .matrix-flow { grid-template-columns: 1fr; }
-  .approximation-notebook-list article { grid-template-columns: 1fr 1fr; }
-  .approximation-notebook-list strong { grid-column: 1 / -1; }
+  .approximation-notebook-list article, .many-electron-notebook-list article { grid-template-columns: 1fr 1fr; }
+  .approximation-notebook-list strong, .many-electron-notebook-list strong { grid-column: 1 / -1; }
   .matrix-flow span { transform: rotate(90deg); justify-self: center; }
   .section-title, .record-topline { flex-direction: column; align-items: stretch; }
   .badges { justify-content: flex-start; }
@@ -592,14 +660,14 @@ input[type="checkbox"] { width: auto; }
   .academy-reset-note { justify-self: stretch; text-align: left; }
   .table-scroll-hint { display: block; margin: .35rem 0 .2rem; color: var(--muted); font-size: .76rem; font-weight: 750; }
   .academy-plot > .academy-plot-canvas > svg { width: 560px; max-width: none; }
-  .approximation-plot > .academy-plot-canvas > svg { width: 680px; max-width: none; }
+  .approximation-plot > .academy-plot-canvas > svg, .many-electron-plot > .academy-plot-canvas > svg { width: 680px; max-width: none; }
   .academy-plot-key { display: grid; grid-template-columns: 1fr; font-size: .82rem; }
-  .approximation-campaign-route { grid-template-columns: 1fr; }
-  .approximation-notebook-list article { grid-template-columns: 1fr; }
-  .approximation-notebook-list strong { grid-column: auto; }
+  .approximation-campaign-route, .many-electron-campaign-route { grid-template-columns: 1fr; }
+  .approximation-notebook-list article, .many-electron-notebook-list article { grid-template-columns: 1fr; }
+  .approximation-notebook-list strong, .many-electron-notebook-list strong { grid-column: auto; }
   .game-actions button { flex-basis: 100%; }
   .game-target-grid { grid-template-columns: 1fr; }
-  .approximation-campaign-route b { transform: rotate(90deg); justify-self: center; }
+  .approximation-campaign-route b, .many-electron-campaign-route b { transform: rotate(90deg); justify-self: center; }
   .xp-panel { flex-direction: column; align-items: stretch; }
   main, .intro { padding-left: .9rem; padding-right: .9rem; }
   .choice-main { padding-left: .9rem; padding-right: .9rem; }

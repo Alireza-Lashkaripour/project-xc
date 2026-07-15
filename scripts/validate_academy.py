@@ -57,6 +57,15 @@ LIVE_CHAPTER_RULES = {
         "challenge": "Approximation campaign boss",
         "plots": 10,
     },
+    "qc-many-electron": {
+        "script": "qc-many-electron.js",
+        "test": "test_qc_many_electron_models.js",
+        "interaction_test": "test_qc_many_electron_interactions.js",
+        "source": "qc-many-electron.md",
+        "boundary": "Many-electron-model boundary",
+        "challenge": "Many-electron evidence board",
+        "plots": 9,
+    },
 }
 
 
