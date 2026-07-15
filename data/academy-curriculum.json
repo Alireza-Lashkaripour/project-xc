@@ -249,16 +249,34 @@
           "order": 1,
           "title": "Many-Electron Wavefunctions",
           "route": "qc-many-electron.html",
-          "status": "planned",
+          "status": "live",
           "level": "Undergraduate to graduate",
           "levels": 10,
-          "games": 3,
+          "games": 10,
+          "progress": {
+            "kind": "academy-missions",
+            "total": 10,
+            "mission_ids": [
+              "fermion-exchange",
+              "spin-orbital-occupancy",
+              "determinant-parity",
+              "determinant-overlap",
+              "one-body-selection",
+              "two-body-selection",
+              "spin-adaptation",
+              "one-rdm",
+              "two-rdm",
+              "many-electron-case-file"
+            ],
+            "label": "Academy missions"
+          },
           "prerequisites": ["qc-foundations", "qc-math-language", "qc-atoms"],
-          "summary": "Learn indistinguishability, antisymmetry, spin orbitals, Slater determinants, selection rules, and reduced density matrices before using mean-field approximations.",
+          "summary": "Learn indistinguishability, antisymmetry, spin orbitals, Slater determinants, spin adaptation, Slater–Condon structure, and reduced density matrices before using mean-field approximations.",
           "outcomes": [
-            "Apply antisymmetry under electron exchange",
-            "Build and compare Slater determinants",
-            "Connect determinant matrix elements to selection rules"
+            "Apply total fermionic antisymmetry under electron exchange",
+            "Build, sign, normalize, and compare Slater determinants",
+            "Audit one- and two-body selection structure without confusing allowance with a nonzero integral",
+            "Verify finite 1-RDM and 2-RDM trace, spectrum, antisymmetry, and contraction evidence"
           ]
         },
         {

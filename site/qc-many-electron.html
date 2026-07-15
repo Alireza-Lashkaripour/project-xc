@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Many-Electron Wavefunctions · Quantum Chemistry Academy</title>
+  <meta name="description" content="Ten earned laboratories build fermionic antisymmetry, Slater determinants, spin adaptation, Slater–Condon structure, and reduced density matrices without crossing the Hartree–Fock boundary.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      svg: { fontCache: 'global' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="academy-body many-electron-chapter-body">
+<a class="skip-link" href="#main">Skip to chapter content</a>
+<header class="site-header compact">
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="index.html">Project XC</a>
+    <a href="quantum-chemistry.html">Academy</a>
+    <a href="qc-foundations.html">Foundations</a>
+    <a href="qc-math-language.html">Mathematics</a>
+    <a href="qc-atoms.html">Atoms</a>
+    <a href="basis-sets.html">Basis Sets</a>
+  </nav>
+</header>
+<main id="main" class="prose guide-page academy-chapter-page">
+  <section class="academy-chapter-hero many-electron-chapter-hero" aria-labelledby="chapterTitle">
+    <div>
+      <p class="kicker">Quantum Chemistry Academy · C1</p>
+      <h1 id="chapterTitle">Many-Electron Wavefunctions</h1>
+      <p class="lead">Electrons are indistinguishable fermions. Turn that sentence into executable algebra: exchange signs, occupation strings, determinants, spin-adapted combinations, operator selection structure, and reduced density matrices. Every level asks for a decision before its decisive oracle appears.</p>
+      <div class="module-snapshot" aria-label="Many-Electron Wavefunctions learning arc">
+        <div class="snapshot-card"><span>Starter</span><strong>Exchange and occupy</strong></div>
+        <div class="snapshot-card"><span>Practitioner</span><strong>Connect determinants</strong></div>
+        <div class="snapshot-card"><span>Professor</span><strong>Audit reduced evidence</strong></div>
+      </div>
+      <div class="quest-actions">
+        <a class="button" href="#level1">Enter the fermion workshop</a>
+        <a class="button secondary" href="qc-atoms.html">Prerequisite: Atomic Structure</a>
+        <a class="button secondary" href="quantum-chemistry.html">Academy roadmap</a>
+      </div>
+    </div>
+    <div class="quest-hud" aria-label="Chapter summary">
+      <div><span>Levels</span><strong>10</strong></div>
+      <div><span>Deep games</span><strong>10</strong></div>
+      <div><span>Plot labs</span><strong>9</strong></div>
+      <div><span>Boundary</span><strong>Before HF</strong></div>
+    </div>
+  </section>
+
+  <section class="notice guide-callout many-electron-boundary" aria-labelledby="modelBoundaryTitle">
+    <h2 id="modelBoundaryTitle">Many-electron-model boundary</h2>
+    <p><strong>Exact means exact only in the declared finite spin-orbital space.</strong> The laboratories manipulate normalized finite determinant expansions and supplied one-/two-electron objects. They do not optimize orbitals, solve Hartree–Fock, recover a complete-basis wavefunction, add dynamic correlation, or prove full practical 2-RDM N-representability. “Structurally allowed” means an operator rank does not force a matrix element to zero; symmetry or an actual integral may still make it vanish.</p>
+  </section>
+
+  <section class="card-panel chapter-progress-panel" aria-label="Many-Electron Wavefunctions progress">
+    <div class="section-title">
+      <div><p class="kicker">Fermion workshop seals</p><h2>Ten missions, ten earned laboratories</h2></div>
+      <strong id="chapterProgressText" class="results-meta">0 / 10 missions</strong>
+    </div>
+    <div class="xp-panel">
+      <div><strong>Evidence earned, not self-attested</strong><span>Canonical Academy completion remains browser-local navigation progress, not certification.</span></div>
+      <button id="resetChapterProgress" type="button" class="secondary">Reset only this chapter</button>
+    </div>
+    <div class="basis-progress-bar" aria-hidden="true"><span id="chapterProgressFill"></span></div>
+    <div id="chapterBadgeShelf" class="badge-shelf" aria-live="polite"></div>
+    <div class="button-row academy-lesson-nav many-electron-lesson-nav" aria-label="Jump to a Many-Electron Wavefunctions level">
+      <button type="button" data-step="1">1 · Exchange</button>
+      <button type="button" data-step="2">2 · Occupy</button>
+      <button type="button" data-step="3">3 · Sign</button>
+      <button type="button" data-step="4">4 · Overlap</button>
+      <button type="button" data-step="5">5 · One body</button>
+      <button type="button" data-step="6">6 · Two body</button>
+      <button type="button" data-step="7">7 · Spin</button>
+      <button type="button" data-step="8">8 · 1-RDM</button>
+      <button type="button" data-step="9">9 · 2-RDM</button>
+      <button type="button" data-step="10">10 · Board</button>
+    </div>
+  </section>
+
+  <section class="card-panel many-electron-notebook" aria-labelledby="notebookTitle">
+    <p class="kicker">Persistent evidence ledger</p>
+    <h2 id="notebookTitle">Every seal must preserve the claim boundary</h2>
+    <p>Each cleared laboratory records the same four-part argument: operation → omitted assumption → diagnostic → required evidence and surviving caveat.</p>
+    <div id="manyNotebookList" class="many-electron-notebook-list" aria-live="polite"><p class="help-text">No fermion evidence recorded yet.</p></div>
+  </section>
+
+  <section id="level1" class="academy-lesson card-panel" data-step="1" aria-labelledby="level1Title">
+    <p class="kicker">Level 1 · Exchange passport</p>
+    <h2 id="level1Title">Swap coordinates; do not attach identities to electrons</h2>
+    <p>For the <em>total spin-coordinate amplitude</em>, fermionic exchange requires \(\Psi(x_2,x_1)=-\Psi(x_1,x_2)\). A symmetric spatial factor can still occur when an antisymmetric spin factor supplies the total minus sign; this laboratory classifies the total amplitude only.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Amplitude dossier
+          <select id="exchangeCase">
+            <option value="exchange-a">File X-14</option>
+            <option value="exchange-b">File X-22</option>
+            <option value="exchange-c">File X-31</option>
+          </select>
+        </label>
+        <label>Commit exchange class
+          <select id="exchangeDecision">
+            <option value="">Choose…</option>
+            <option value="antisymmetric">Antisymmetric total amplitude</option>
+            <option value="symmetric">Symmetric total amplitude</option>
+            <option value="neither">Neither exchange eigenstate</option>
+          </select>
+        </label>
+        <button id="exchangeAudit" type="button">Commit exchange passport</button>
+        <p id="exchangeStage" class="game-stage">Dossiers cleared: 0 / 3</p>
+        <div id="exchangeReadout" class="game-result" data-state="neutral" aria-live="polite">The swapped amplitudes are supplied; the exchange eigenvalue remains ungraded until commitment.</div>
+      </div>
+      <figure class="academy-plot many-electron-plot">
+        <div id="exchangePlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Swapped total-amplitude pair" aria-describedby="exchangeCaption exchangeHint"></div>
+        <ul class="academy-plot-key"><li><span class="many-key-dot indigo"></span>\(\Psi(x_1,x_2)\)</li><li><span class="many-key-dot coral"></span>\(\Psi(x_2,x_1)\)</li><li id="exchangeOracleKey" hidden><span class="many-key-line teal"></span>Exchange oracle</li></ul>
+        <figcaption id="exchangeCaption">Two coordinates are exchanged; particle names are not observables.</figcaption>
+        <p id="exchangeHint" class="table-scroll-hint">Narrow screen: scroll the finite amplitude rail internally.</p>
+      </figure>
+    </div>
+    <div class="misconception-card"><strong>Do not say:</strong> “electron 1 moved into electron 2’s place.” Exchange compares arguments of one many-electron state; it does not track classical identity tags.</div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="fermion-exchange" data-badge="Exchange passport">Locked seal · Exchange passport</button>
+  </section>
+
+  <section id="level2" class="academy-lesson card-panel" data-step="2" aria-labelledby="level2Title">
+    <p class="kicker">Level 2 · Occupation forge</p>
+    <h2 id="level2Title">Create a determinant—or annihilate it by occupying twice</h2>
+    <p>With \(M\) ordered spin orbitals, an \(N\)-electron determinant is a bitstring with exactly \(N\) occupied entries. There are \(\binom{M}{N}\) such determinants. Repeating a creation index gives zero by Pauli antisymmetry.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Forge dossier
+          <select id="occupancyCase">
+            <option value="occupancy-a">Forge O-4 · M=4, N=2</option>
+            <option value="occupancy-b">Forge O-6 · M=6, N=3</option>
+            <option value="occupancy-c">Forge O-8 · M=8, N=4</option>
+          </select>
+        </label>
+        <label>Creation sequence, comma-separated orbital indices
+          <input id="occupancyOrbitals" type="text" value="0,3" inputmode="numeric" autocomplete="off" aria-describedby="occupancyHelp">
+        </label>
+        <small id="occupancyHelp">Indices start at 0. Repeated or out-of-range indices are deliberate failure states.</small>
+        <label>Predict determinant-space size
+          <input id="occupancyCount" type="number" min="1" step="1" value="">
+        </label>
+        <button id="occupancyAudit" type="button">Forge and count</button>
+        <p id="occupancyStage" class="game-stage">Forges cleared: 0 / 3</p>
+        <div id="occupancyReadout" class="game-result" data-state="neutral" aria-live="polite">Build one valid state and predict the full fixed-N determinant count.</div>
+      </div>
+      <figure class="academy-plot many-electron-plot">
+        <div id="occupancyPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Spin-orbital occupation bitstring" aria-describedby="occupancyCaption occupancyPlotHint"></div>
+        <ul class="academy-plot-key"><li><span class="many-key-box occupied"></span>Occupied spin orbital</li><li><span class="many-key-box"></span>Empty spin orbital</li><li id="occupancyCountKey" hidden><span class="many-key-bracket amber"></span>Exact determinant count</li></ul>
+        <figcaption id="occupancyCaption">The bitstring is one determinant; the binomial count describes the complete fixed-N determinant basis.</figcaption>
+        <p id="occupancyPlotHint" class="table-scroll-hint">Narrow screen: scroll the ordered spin-orbital cells internally.</p>
+      </figure>
+    </div>
+    <details class="professor-note"><summary>Professor mode · Fock space versus fixed-N sector</summary><p>The full fermionic Fock space over \(M\) spin orbitals has dimension \(2^M\). This chapter stays in one fixed-\(N\) sector of dimension \(\binom{M}{N}\), except when applying one creation or annihilation operator as an intermediate algebraic action.</p></details>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="spin-orbital-occupancy" data-badge="Occupation forge">Locked seal · Occupation forge</button>
+  </section>
+
+  <section id="level3" class="academy-lesson card-panel" data-step="3" aria-labelledby="level3Title">
+    <p class="kicker">Level 3 · Determinant sign ledger</p>
+    <h2 id="level3Title">Canonical order fixes a representation sign—not a new observable</h2>
+    <p>Reordering determinant columns by a permutation \(P\) multiplies the represented determinant by \((-1)^{\mathrm{inv}(P)}\). A duplicate orbital makes the wedge product zero. Global sign remains a state convention; relative determinant phases matter in a CI expansion.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Ordering file
+          <select id="parityCase">
+            <option value="1,0,2">File P-03 · [1,0,2]</option>
+            <option value="2,0,3,1">File P-17 · [2,0,3,1]</option>
+            <option value="3,2,1,0">File P-28 · [3,2,1,0]</option>
+          </select>
+        </label>
+        <label>Commit sign relative to ascending order
+          <select id="paritySign">
+            <option value="">Choose…</option>
+            <option value="1">+1 · even permutation</option>
+            <option value="-1">−1 · odd permutation</option>
+          </select>
+        </label>
+        <button id="parityAudit" type="button">Commit sign ledger</button>
+        <p id="parityStage" class="game-stage">Ordering files cleared: 0 / 3</p>
+        <div id="parityReadout" class="game-result" data-state="neutral" aria-live="polite">Count crossings before the canonical-order oracle appears.</div>
+      </div>
+      <figure class="academy-plot many-electron-plot">
+        <div id="parityPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Permutation crossing ledger" aria-describedby="parityCaption parityHint"></div>
+        <ul class="academy-plot-key"><li><span class="many-key-line indigo"></span>Orbital path</li><li><span class="many-key-dot coral"></span>Inversion crossing</li><li id="parityOracleKey" hidden><span class="many-key-bracket teal"></span>Parity oracle</li></ul>
+        <figcaption id="parityCaption">Each inversion changes the sign once; only parity survives.</figcaption>
+        <p id="parityHint" class="table-scroll-hint">Narrow screen: scroll the ordering diagram internally.</p>
+      </figure>
+    </div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="determinant-parity" data-badge="Sign ledger">Locked seal · Sign ledger</button>
+  </section>
+
+  <section id="level4" class="academy-lesson card-panel" data-step="4" aria-labelledby="level4Title">
+    <p class="kicker">Level 4 · Determinant overlap</p>
+    <h2 id="level4Title">A determinant inherits the volume of its occupied-orbital Gram matrix</h2>
+    <p>For occupied sets \(\{\chi_i\}\) and \(\{\eta_j\}\), \(\langle\Phi_\chi|\Phi_\eta\rangle=\det S\) with \(S_{ij}=\langle\chi_i|\eta_j\rangle\). For one determinant’s norm, \(S\) is its Gram matrix. Linear dependence collapses the wedge volume to zero.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Overlap artifact
+          <select id="overlapCase">
+            <option value="overlap-a">Artifact G-01</option>
+            <option value="overlap-b">Artifact G-06</option>
+            <option value="overlap-c">Artifact G-19</option>
+            <option value="overlap-d">Artifact G-20</option>
+          </select>
+        </label>
+        <label>Commit action
+          <select id="overlapDecision">
+            <option value="">Choose…</option>
+            <option value="accept-normalized">Accept as normalized</option>
+            <option value="renormalize">Retain but renormalize</option>
+            <option value="scan-threshold">Flag and scan a numerical threshold</option>
+            <option value="reject-dependent">Reject the zero determinant</option>
+          </select>
+        </label>
+        <button id="overlapAudit" type="button">Commit overlap action</button>
+        <p id="overlapStage" class="game-stage">Artifacts cleared: 0 / 4</p>
+        <div id="overlapReadout" class="game-result" data-state="neutral" aria-live="polite">The Gram entries are visible; determinant and spectrum remain withheld until commitment.</div>
+      </div>
+      <figure class="academy-plot many-electron-plot">
+        <div id="overlapPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Gram matrix volume and spectrum" aria-describedby="overlapCaption overlapHint"></div>
+        <ul class="academy-plot-key"><li><span class="many-key-box occupied"></span>Supplied overlap</li><li id="overlapSpectrumKey" hidden><span class="many-key-line teal"></span>Gram eigenvalues</li><li id="overlapDetKey" hidden><span class="many-key-bracket amber"></span>det G</li></ul>
+        <figcaption id="overlapCaption">A small determinant is a conditioning warning; the displayed threshold is diagnostic, not a universal theorem.</figcaption>
+        <p id="overlapHint" class="table-scroll-hint">Narrow screen: scroll the Gram spectrum internally.</p>
+      </figure>
+    </div>
+    <div class="misconception-card"><strong>Normalization warning:</strong> the familiar \(1/\sqrt{N!}\) prefactor normalizes a determinant only when the occupied spin orbitals are orthonormal.</div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="determinant-overlap" data-badge="Gram-volume auditor">Locked seal · Gram-volume auditor</button>
+  </section>
+
+  <section id="level5" class="academy-lesson card-panel" data-step="5" aria-labelledby="level5Title">
+    <p class="kicker">Level 5 · One-body Slater–Condon structure</p>
+    <h2 id="level5Title">Count substitutions before evaluating an integral</h2>
+    <p>A one-body operator \(\hat O_1=\sum_{pq}o_{pq}a_p^\dagger a_q\) can connect determinants differing by zero or one orbital substitution. Two or more substitutions force the matrix element to zero. Rank allowance is necessary, not sufficient.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Determinant pair
+          <select id="oneBodyCase">
+            <option value="connection-a">Pair C-00</option>
+            <option value="connection-b">Pair C-11</option>
+            <option value="connection-c">Pair C-24</option>
+            <option value="connection-d">Pair C-37</option>
+          </select>
+        </label>
+        <label>Can a one-body matrix element be structurally nonzero?
+          <select id="oneBodyDecision">
+            <option value="">Choose…</option>
+            <option value="allowed">Allowed by excitation rank</option>
+            <option value="forbidden">Forced to zero by excitation rank</option>
+          </select>
+        </label>
+        <button id="oneBodyAudit" type="button">Commit one-body audit</button>
+        <p id="oneBodyStage" class="game-stage">Pairs cleared: 0 / 4</p>
+        <div id="oneBodyReadout" class="game-result" data-state="neutral" aria-live="polite">The differing occupations are supplied; the excitation-rank certificate is withheld.</div>
+      </div>
+      <figure class="academy-plot many-electron-plot">
+        <div id="oneBodyPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Determinant excitation connectivity for a one-body operator" aria-describedby="oneBodyCaption oneBodyHint"></div>
+        <ul class="academy-plot-key"><li><span class="many-key-box occupied"></span>Shared occupation</li><li><span class="many-key-dot coral"></span>Hole/particle</li><li id="oneBodyRankKey" hidden><span class="many-key-bracket teal"></span>Excitation rank</li></ul>
+        <figcaption id="oneBodyCaption">A structurally allowed edge may still have a zero supplied integral or symmetry-forbidden transition.</figcaption>
+        <p id="oneBodyHint" class="table-scroll-hint">Narrow screen: scroll both determinant rows internally.</p>
+      </figure>
+    </div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="one-body-selection" data-badge="One-body connector">Locked seal · One-body connector</button>
+  </section>
+
+  <section id="level6" class="academy-lesson card-panel" data-step="6" aria-labelledby="level6Title">
+    <p class="kicker">Level 6 · Two-body structure</p>
+    <h2 id="level6Title">Direct minus exchange is an expectation value—not yet Hartree–Fock</h2>
+    <p>A two-body operator can connect determinants through at most two substitutions. For one supplied determinant, its exact finite expectation contains pair terms \(J_{ij}-K_{ij}\). No orbital stationarity or self-consistency has been imposed here.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Determinant pair
+          <select id="twoBodyCase">
+            <option value="connection-a">Pair T-00</option>
+            <option value="connection-b">Pair T-12</option>
+            <option value="connection-c">Pair T-26</option>
+            <option value="connection-d">Pair T-39</option>
+          </select>
+        </label>
+        <label>Can a two-body matrix element be structurally nonzero?
+          <select id="twoBodyDecision">
+            <option value="">Choose…</option>
+            <option value="allowed">Allowed by excitation rank</option>
+            <option value="forbidden">Forced to zero by excitation rank</option>
+          </select>
+        </label>
+        <label>Supplied determinant pair energy uses
+          <select id="energyInterpretation">
+            <option value="">Choose…</option>
+            <option value="coulomb-minus-exchange">One-body + direct Coulomb − exchange</option>
+            <option value="coulomb-only">One-body + direct Coulomb only</option>
+            <option value="hf-solution">A converged Hartree–Fock solution</option>
+          </select>
+        </label>
+        <button id="twoBodyAudit" type="button">Commit pair-operator audit</button>
+        <p id="twoBodyStage" class="game-stage">Pairs cleared: 0 / 4 · energy interpretation pending</p>
+        <div id="twoBodyReadout" class="game-result" data-state="neutral" aria-live="polite">Commit both the structural rule and the supplied-expectation interpretation.</div>
+      </div>
+      <figure class="academy-plot many-electron-plot">
+        <div id="twoBodyPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="One-body, Coulomb, exchange, and total supplied determinant energy" aria-describedby="twoBodyCaption twoBodyHint"></div>
+        <ul class="academy-plot-key"><li><span class="many-key-box indigo"></span>One-body</li><li><span class="many-key-box amber"></span>Direct Coulomb</li><li><span class="many-key-box hatched"></span>Exchange subtraction</li><li id="twoBodyOracleKey" hidden><span class="many-key-line teal"></span>Total</li></ul>
+        <figcaption id="twoBodyCaption">The bars use supplied finite matrix elements. They do not claim the orbitals are optimized.</figcaption>
+        <p id="twoBodyHint" class="table-scroll-hint">Narrow screen: scroll the signed energy ledger internally.</p>
+      </figure>
+    </div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="two-body-selection" data-badge="Pair-operator auditor">Locked seal · Pair-operator auditor</button>
+  </section>
+
+  <section id="level7" class="academy-lesson card-panel" data-step="7" aria-labelledby="level7Title">
+    <p class="kicker">Level 7 · Spin adaptation</p>
+    <h2 id="level7Title">Relative determinant phase chooses singlet or triplet under a declared ordering</h2>
+    <p>Use canonical spin-orbital order \((a\alpha,a\beta,b\alpha,b\beta)\), \(D_1=|a\alpha\,b\beta|\), and \(D_2=|a\beta\,b\alpha|\). Then \((D_1-D_2)/\sqrt2\) is the singlet and \((D_1+D_2)/\sqrt2\) is the \(M_S=0\) triplet. A different determinant ordering changes displayed coefficient signs, not the physical spin.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Coefficient file
+          <select id="spinCase">
+            <option value="spin-a">File S-14 · (D₁−D₂)/√2</option>
+            <option value="spin-b">File S-22 · (D₁+D₂)/√2</option>
+            <option value="spin-c">File S-31 · D₁ only</option>
+          </select>
+        </label>
+        <label>Commit spin diagnosis
+          <select id="spinDecision">
+            <option value="">Choose…</option>
+            <option value="singlet">Pure singlet, ⟨S²⟩=0</option>
+            <option value="triplet">Pure triplet, ⟨S²⟩=2</option>
+            <option value="mixture">Equal singlet/triplet mixture</option>
+          </select>
+        </label>
+        <button id="spinAudit" type="button">Commit spin coupling</button>
+        <p id="spinStage" class="game-stage">Spin files cleared: 0 / 3</p>
+        <div id="spinReadout" class="game-result" data-state="neutral" aria-live="polite">The determinant coefficients are visible; spin weights and ⟨S²⟩ remain hidden.</div>
+      </div>
+      <figure class="academy-plot many-electron-plot">
+        <div id="spinPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Singlet and triplet weights" aria-describedby="spinCaption spinHint"></div>
+        <ul class="academy-plot-key"><li><span class="many-key-box indigo"></span>D₁ coefficient</li><li><span class="many-key-box coral"></span>D₂ coefficient</li><li id="spinWeightKey" hidden><span class="many-key-line teal"></span>Spin weights and S²</li></ul>
+        <figcaption id="spinCaption">\(M_S=0\) alone does not establish a pure singlet.</figcaption>
+        <p id="spinHint" class="table-scroll-hint">Narrow screen: scroll the coefficient/weight rails internally.</p>
+      </figure>
+    </div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="spin-adaptation" data-badge="Spin adapter">Locked seal · Spin adapter</button>
+  </section>
+
+  <section id="level8" class="academy-lesson card-panel" data-step="8" aria-labelledby="level8Title">
+    <p class="kicker">Level 8 · One-particle reduced density matrix</p>
+    <h2 id="level8Title">Compress one-body information without pretending the wavefunction is recovered</h2>
+    <p>For \(\gamma_{pq}=\langle a_p^\dagger a_q\rangle\), a valid spin-orbital 1-RDM is Hermitian, has \(\mathrm{Tr}\,\gamma=N\), and has natural occupations in \([0,1]\). A single determinant has idempotent \(\gamma\); a correlated multi-determinant state can have fractional occupations.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>1-RDM dossier
+          <select id="oneRdmCase">
+            <option value="one-rdm-a">Run R1-04</option>
+            <option value="one-rdm-b">Run R1-11</option>
+            <option value="one-rdm-c">Run R1-23</option>
+          </select>
+        </label>
+        <label>Commit diagnosis
+          <select id="oneRdmDecision">
+            <option value="">Choose…</option>
+            <option value="idempotent">Valid idempotent determinant 1-RDM</option>
+            <option value="fractional">Valid fractional-occupation 1-RDM</option>
+            <option value="reject-trace">Reject: trace is not N</option>
+          </select>
+        </label>
+        <button id="oneRdmAudit" type="button">Commit 1-RDM diagnosis</button>
+        <p id="oneRdmStage" class="game-stage">1-RDM dossiers cleared: 0 / 3</p>
+        <div id="oneRdmReadout" class="game-result" data-state="neutral" aria-live="polite">The supplied diagonal is visible. Commit before the trace/idempotency certificate is revealed.</div>
+      </div>
+      <figure class="academy-plot many-electron-plot">
+        <div id="oneRdmPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Natural spin-orbital occupation spectrum" aria-describedby="oneRdmCaption oneRdmHint"></div>
+        <ul class="academy-plot-key"><li><span class="many-key-line indigo"></span>Pauli interval [0,1]</li><li id="oneRdmOccupationKey" hidden><span class="many-key-dot teal"></span>Natural occupations</li><li id="oneRdmTraceKey" hidden><span class="many-key-bracket amber"></span>Trace/idempotency audit</li></ul>
+        <figcaption id="oneRdmCaption">The 1-RDM determines all one-body expectations, but generally not the full many-electron state.</figcaption>
+        <p id="oneRdmHint" class="table-scroll-hint">Narrow screen: scroll the occupation spectrum internally.</p>
+      </figure>
+    </div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="one-rdm" data-badge="Natural-occupation auditor">Locked seal · Natural-occupation auditor</button>
+  </section>
+
+  <section id="level9" class="academy-lesson card-panel" data-step="9" aria-labelledby="level9Title">
+    <p class="kicker">Level 9 · Two-particle reduced density matrix</p>
+    <h2 id="level9Title">Contract pair evidence back to the one-body record</h2>
+    <p>With \(\Gamma_{pq,rs}=\langle a_p^\dagger a_q^\dagger a_s a_r\rangle\), this chapter uses \(\mathrm{Tr}\,\Gamma=N(N-1)\) and \(\sum_q\Gamma_{pq,rq}=(N-1)\gamma_{pr}\). Antisymmetry, trace, and contraction are necessary checks. They are not advertised as a complete practical 2-RDM N-representability proof.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Pair-evidence dossier
+          <select id="twoRdmCase">
+            <option value="two-rdm-a">Run R2-02</option>
+            <option value="two-rdm-b">Run R2-16</option>
+            <option value="two-rdm-c">Run R2-25</option>
+          </select>
+        </label>
+        <label>Commit certificate decision
+          <select id="twoRdmDecision">
+            <option value="">Choose…</option>
+            <option value="certify-necessary">Pass the stated necessary trace/contraction checks</option>
+            <option value="reject-contraction">Reject: pair contraction is inconsistent</option>
+            <option value="missing-pair-evidence">Withhold: no 2-RDM was supplied</option>
+          </select>
+        </label>
+        <button id="twoRdmAudit" type="button">Commit pair certificate</button>
+        <p id="twoRdmStage" class="game-stage">Pair dossiers cleared: 0 / 3</p>
+        <div id="twoRdmReadout" class="game-result" data-state="neutral" aria-live="polite">The claim file is visible; pair trace and contraction residual remain hidden.</div>
+      </div>
+      <figure class="academy-plot many-electron-plot">
+        <div id="twoRdmPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Two-RDM trace and contraction certificate" aria-describedby="twoRdmCaption twoRdmHint"></div>
+        <ul class="academy-plot-key"><li><span class="many-key-box occupied"></span>Supplied evidence</li><li id="twoRdmTraceKey" hidden><span class="many-key-line teal"></span>Trace N(N−1)</li><li id="twoRdmContractKey" hidden><span class="many-key-bracket amber"></span>Contraction residual</li></ul>
+        <figcaption id="twoRdmCaption">Passing these finite checks supports consistency with the supplied CI state; it does not solve every N-representability question.</figcaption>
+        <p id="twoRdmHint" class="table-scroll-hint">Narrow screen: scroll the certificate rails internally.</p>
+      </figure>
+    </div>
+    <details class="professor-note"><summary>Professor mode · what is and is not being certified</summary><p>For the exact CI-generated example, the RDMs are representable because they were constructed from a normalized state. For an arbitrary candidate 2-RDM, trace, contraction, Hermiticity, and antisymmetry are only a subset of the required conditions. The broader N-representability problem is deliberately deferred.</p></details>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="two-rdm" data-badge="Pair-density certifier">Locked seal · Pair-density certifier</button>
+  </section>
+
+  <section id="level10" class="academy-lesson card-panel many-electron-case-file" data-step="10" aria-labelledby="level10Title">
+    <p class="kicker">Level 10 · Many-electron evidence board</p>
+    <h2 id="level10Title">Choose the representation, diagnostic, and evidence under a four-token budget</h2>
+    <p>Three dossiers reuse the chapter’s full chain. Each wrong commitment spends one token; exhausting four resets only the active dossier. The final seal also requires notebook evidence from Levels 1–9.</p>
+    <div class="lab-grid">
+      <div class="many-electron-campaign-board card-panel">
+        <label>Dossier
+          <select id="manyBossCase">
+            <option value="boss-a">Dossier M-07</option>
+            <option value="boss-b">Dossier M-18</option>
+            <option value="boss-c">Dossier M-29</option>
+          </select>
+        </label>
+        <div class="many-electron-campaign-route" aria-label="Representation then diagnostic then evidence">
+          <span>Representation</span><b>→</b><span>Diagnostic</span><b>→</b><span>Evidence</span><b>→</b><span>Caveat</span>
+        </div>
+        <label>Representation
+          <select id="manyBossRepresentation">
+            <option value="">Choose…</option>
+            <option value="wedge-state">Antisymmetric wedge state</option>
+            <option value="determinant-pair">Pair of canonical determinants</option>
+            <option value="multi-determinant-state">Normalized multi-determinant state</option>
+            <option value="orbital-energy-list">Orbital-energy list</option>
+          </select>
+        </label>
+        <label>Diagnostic
+          <select id="manyBossDiagnostic" disabled>
+            <option value="">Locked until representation</option>
+            <option value="zero-determinant">Duplicate-orbital zero test</option>
+            <option value="excitation-rank">Excitation-rank connectivity</option>
+            <option value="natural-occupations">Natural occupations and trace</option>
+            <option value="total-energy-only">Final energy only</option>
+          </select>
+        </label>
+        <label>Evidence
+          <select id="manyBossEvidence" disabled>
+            <option value="">Locked until diagnostic</option>
+            <option value="canonical-occupancy">Canonical occupancy and Pauli audit</option>
+            <option value="one-body-integral">Actual one-body integral/symmetry evidence</option>
+            <option value="two-rdm-contraction">2-RDM contraction and surviving caveat</option>
+            <option value="method-name">Method name only</option>
+          </select>
+        </label>
+        <button id="manyBossAudit" type="button">Commit current stage</button>
+        <button id="manyBossReset" type="button" class="secondary">Reset active dossier</button>
+        <p id="manyBossStage" class="game-stage">Stage 1 / 3 · four tokens</p>
+        <p id="manyBossScore" class="results-meta">Dossiers cleared: 0 / 3 · notebook prerequisites: 0 / 9</p>
+      </div>
+      <div class="many-electron-dossier card-panel">
+        <p class="kicker">Evidence unlocks after each commitment</p>
+        <h3 id="manyBossTitle">Repeated index, uncertain state</h3>
+        <div id="manyBossArtifact" class="boss-artifact">Initial brief: a creation sequence contains one repeated spin-orbital index; no canonical bitstring or norm is reported.</div>
+        <div id="manyBossFeedback" class="game-result" data-state="neutral" aria-live="polite">Commit the representation first. Later fields stay locked.</div>
+        <p class="help-text">A correct route does not erase the caveat: finite determinant algebra is not an orbital optimization or complete physical model.</p>
+      </div>
+    </div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="many-electron-case-file" data-badge="Many-electron case-file">Locked seal · Many-electron case-file</button>
+  </section>
+
+  <section class="card-panel" aria-labelledby="sourceTitle">
+    <p class="kicker">Verified source spine and conventions</p>
+    <h2 id="sourceTitle">Trace every rule to a declared finite-algebra convention</h2>
+    <p>The full equation ledger, test oracles, ordering choices, and model boundaries are maintained in <a href="https://github.com/Alireza-Lashkaripour/project-xc/blob/main/docs/academy/sources/qc-many-electron.md" target="_blank" rel="noopener">the chapter source record</a>.</p>
+    <div class="table-scroll" role="region" tabindex="0" aria-label="Many-electron source table" aria-describedby="sourceTableHint">
+      <table class="meta-table wide-table">
+        <thead><tr><th>Source</th><th>Chapter use</th><th>Open address</th></tr></thead>
+        <tbody>
+          <tr><td>MIT OpenCourseWare 5.61</td><td>Identical particles, spin, determinants, and electronic-structure bridge.</td><td><a href="https://ocw.mit.edu/courses/5-61-physical-chemistry-fall-2017/" target="_blank" rel="noopener">Course materials</a></td></tr>
+          <tr><td>Simons, Advanced Theoretical Chemistry</td><td>Slater determinants and Slater–Condon structural rules.</td><td><a href="https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Advanced_Theoretical_Chemistry_(Simons)" target="_blank" rel="noopener">LibreTexts map</a></td></tr>
+          <tr><td>Coleman, Rev. Mod. Phys. 35, 668 (1963)</td><td>Fermion reduced-density-matrix and N-representability boundary.</td><td><a href="https://doi.org/10.1103/RevModPhys.35.668" target="_blank" rel="noopener">DOI</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p id="sourceTableHint" class="table-scroll-hint">Narrow screen: swipe or use arrow keys within the source table.</p>
+  </section>
+
+  <nav class="quest-actions" aria-label="Many-Electron Wavefunctions next steps">
+    <a class="button secondary" href="qc-approximations.html">Review Approximation Thinking</a>
+    <a class="button secondary" href="basis-sets.html">Open Basis Set Quest</a>
+    <a class="button" href="quantum-chemistry.html">Return to Academy roadmap</a>
+  </nav>
+</main>
+<footer class="footer"><p>Project XC Quantum Chemistry Academy · finite many-electron algebra with explicit conventions, earned evidence, and honest boundaries.</p></footer>
+<script src="assets/academy-core.js"></script>
+<script src="assets/qc-many-electron.js"></script>
+</body>
+</html>
