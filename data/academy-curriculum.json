@@ -82,16 +82,35 @@
           "order": 3,
           "title": "Approximation and Variational Thinking",
           "route": "qc-approximations.html",
-          "status": "planned",
-          "level": "Undergraduate to graduate",
-          "levels": 9,
-          "games": 3,
+          "status": "live",
+          "level": "Starter to research",
+          "levels": 12,
+          "games": 12,
+          "progress": {
+            "kind": "academy-missions",
+            "total": 12,
+            "mission_ids": [
+              "approximation-passport",
+              "dimensionless-scaling",
+              "rayleigh-quotient",
+              "variational-gaussian",
+              "basis-truncation",
+              "nonorthogonal-basis",
+              "nondegenerate-perturbation",
+              "degenerate-perturbation",
+              "series-budget",
+              "error-decomposition",
+              "residual-bounds",
+              "approximation-case-file"
+            ],
+            "label": "Approximation Thinking missions"
+          },
           "prerequisites": ["qc-foundations", "qc-math-language"],
-          "summary": "Learn how variational bounds, perturbative corrections, finite representations, dimensional analysis, and explicit error budgets make difficult quantum problems solvable.",
+          "summary": "Build approximation judgment through twelve deep laboratories on scaling, variational bounds, finite representations, overlap conditioning, perturbation theory, asymptotic truncation, error budgets, and residual certificates.",
           "outcomes": [
-            "Choose an approximation based on its assumptions",
-            "Distinguish truncation error from model error",
-            "Use variational and perturbative reasoning responsibly"
+            "Choose an approximation from its hypotheses, omitted layer, and required validation evidence",
+            "Distinguish model, representation, solver, perturbative, and truncation errors without hiding cancellation",
+            "Use variational, perturbative, asymptotic, and residual reasoning responsibly from finite models to research practice"
           ]
         }
       ]

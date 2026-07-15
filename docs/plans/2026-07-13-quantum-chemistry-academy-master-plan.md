@@ -132,9 +132,11 @@ Vectors, inner products, basis changes, matrices, Hermitian/unitary operators, t
 
 #### Chapter A3 — Approximation and Variational Thinking (`qc-approximations.html`)
 
-Perturbation theory, variational principle, basis truncation, model Hamiltonians, dimensional analysis, error decomposition.
+**Status:** live (12 levels, 12 deterministic laboratories, 10 responsive scientific plots, model/interaction/progress CI gates, and a source/convention ledger).
 
-**Games:** trial-wavefunction energy minimizer, perturbation-order budget, approximation validity map.
+Dimensional scaling, Rayleigh–Ritz geometry, analytic Gaussian variational balance, nested finite representations, nonorthogonal metrics, nondegenerate and degenerate perturbation theory, factorial asymptotic truncation, signed error decomposition, and residual/gap certificates.
+
+**Games:** approximation passport, dimensionless scaling forge, Rayleigh landscape, Gaussian sculptor, nested-space expedition, overlap rescue, perturbation ladder, degenerate-subspace crossroads, asymptotic order budget, error ledger, residual inspector, and five-case approximation campaign boss.
 
 ### Track B — Atoms, orbitals, and representations
 

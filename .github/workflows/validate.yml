@@ -31,6 +31,10 @@ jobs:
         run: node scripts/test_qc_atomic_models.js
       - name: Test Atomic Structure keyboard and degenerate-plot interactions
         run: node scripts/test_qc_atomic_interactions.js
+      - name: Test Approximation Thinking numerical models
+        run: node scripts/test_qc_approximation_models.js
+      - name: Test Approximation Thinking interactions and mobile plots
+        run: node scripts/test_qc_approximation_interactions.js
       - name: Test Academy progress compatibility
         run: node scripts/test_academy_core.js
       - name: Test Basis Quest badge migration

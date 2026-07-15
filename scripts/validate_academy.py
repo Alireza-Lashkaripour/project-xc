@@ -48,6 +48,15 @@ LIVE_CHAPTER_RULES = {
         "challenge": "Atomic case-file boss",
         "plots": 6,
     },
+    "qc-approximations": {
+        "script": "qc-approximations.js",
+        "test": "test_qc_approximation_models.js",
+        "interaction_test": "test_qc_approximation_interactions.js",
+        "source": "qc-approximations.md",
+        "boundary": "Approximation-model boundary",
+        "challenge": "Approximation campaign boss",
+        "plots": 10,
+    },
 }
 
 

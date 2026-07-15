@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Approximation and Variational Thinking · Quantum Chemistry Academy</title>
+  <meta name="description" content="Twelve deep, source-grounded laboratories on scaling, variational bounds, finite representations, perturbation theory, asymptotic truncation, error budgets, and residual certificates.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script>
+    window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] }, options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body class="academy-body approximation-chapter-body">
+<a class="skip-link" href="#chapterContent">Skip to chapter content</a>
+<header class="site-header">
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="index.html">Project XC</a>
+    <div class="nav-links">
+      <a href="quantum-chemistry.html">Academy</a>
+      <a href="qc-foundations.html">Foundations</a>
+      <a href="qc-math-language.html">Mathematics</a>
+      <a href="qc-atoms.html">Atoms</a>
+      <a href="basis-sets.html">Basis Sets</a>
+    </div>
+  </nav>
+</header>
+
+<main id="chapterContent" class="page academy-chapter-page">
+  <section class="academy-chapter-hero approximation-chapter-hero" aria-labelledby="chapterTitle">
+    <div>
+      <p class="kicker">Quantum Chemistry Academy · A3</p>
+      <h1 id="chapterTitle">Approximation and Variational Thinking</h1>
+      <p class="lead">Exact equations become useful chemistry only after we choose representations, trial spaces, orders, thresholds, and evidence. Build that judgment in twelve connected precision-workshop missions—one deep laboratory at every level.</p>
+      <div class="quest-actions">
+        <a class="button" href="#level1">Begin the approximation workshop</a>
+        <a class="button secondary" href="#sourceSpine">Inspect the source spine</a>
+      </div>
+    </div>
+    <div class="quest-hud" aria-label="Chapter summary">
+      <div><span>Depth</span><strong>Starter → research</strong></div>
+      <div><span>Levels</span><strong>12</strong></div>
+      <div><span>Laboratories</span><strong>12 deep games</strong></div>
+      <div><span>Scientific plots</span><strong>10 responsive instruments</strong></div>
+    </div>
+  </section>
+
+  <section class="notice academy-boundary approximation-boundary" aria-labelledby="boundaryTitle">
+    <h2 id="boundaryTitle">Approximation-model boundary</h2>
+    <p><strong>Exact means exact only inside the stated finite or analytic model.</strong> Variational bounds require a normalized admissible trial and the right Hamiltonian hypotheses. Perturbative ratios and overlap thresholds are diagnostics, not universal theorems. Signed computational errors can cancel and are not statistical uncertainties. Every laboratory names what was solved, what was omitted, and what evidence would be needed next.</p>
+  </section>
+
+  <section class="chapter-progress-panel quest-card" aria-labelledby="progressTitle">
+    <div>
+      <p class="kicker">Local chapter record</p>
+      <h2 id="progressTitle">Workshop seals</h2>
+      <p id="chapterProgressText">0 / 12 missions</p>
+      <div class="basis-progress-bar" aria-hidden="true"><span id="chapterProgressFill"></span></div>
+      <div id="chapterBadgeShelf" class="badge-shelf" aria-live="polite"><span class="quest-badge muted">No chapter missions completed yet.</span></div>
+    </div>
+    <div class="academy-progress-actions">
+      <p class="help-text">Progress stays in this browser. Resetting this chapter does not alter Foundations, Mathematics, Atomic Structure, or Basis Quest badges.</p>
+      <button id="resetChapterProgress" class="button secondary" type="button">Reset only this chapter</button>
+    </div>
+  </section>
+
+  <nav class="lesson-nav academy-lesson-nav approximation-lesson-nav" aria-label="Approximation chapter levels">
+    <button type="button" data-step="1">1 · Passport</button>
+    <button type="button" data-step="2">2 · Scale</button>
+    <button type="button" data-step="3">3 · Rayleigh</button>
+    <button type="button" data-step="4">4 · Gaussian</button>
+    <button type="button" data-step="5">5 · Ritz space</button>
+    <button type="button" data-step="6">6 · Overlap</button>
+    <button type="button" data-step="7">7 · Perturb</button>
+    <button type="button" data-step="8">8 · Degenerate</button>
+    <button type="button" data-step="9">9 · Series</button>
+    <button type="button" data-step="10">10 · Errors</button>
+    <button type="button" data-step="11">11 · Residual</button>
+    <button type="button" data-step="12">12 · Campaign</button>
+  </nav>
+
+  <section class="approximation-model-ribbon" aria-label="Approximation evidence ladder">
+    <article><span>01</span><strong>Name the operation</strong><small>Trial family, finite representation, perturbative order, numerical solver, or replacement model?</small></article>
+    <article><span>02</span><strong>Name the omitted layer</strong><small>Model physics, representation, series, or numerical convergence?</small></article>
+    <article><span>03</span><strong>Measure a diagnostic</strong><small>Upper bound, residual, gap, overlap spectrum, term size, or signed component?</small></article>
+    <article><span>04</span><strong>Demand evidence</strong><small>Nested limits, order stability, threshold scans, reference data, and transfer tests.</small></article>
+  </section>
+
+  <section id="level1" class="lesson-step academy-lesson" data-step="1" aria-labelledby="level1Title">
+    <p class="kicker">Level 1 · Classification before calculation</p>
+    <h2 id="level1Title">Every approximation needs a passport</h2>
+    <p>A computed number can be algebraically exact and scientifically approximate at the same time. First identify the operation; then identify the layer it omits. Those are different questions.</p>
+    <div class="lab-grid">
+      <div class="quest-card approximation-game-brief">
+        <h3>Passport control</h3>
+        <ol><li>Open a case file.</li><li>Classify the mathematical operation.</li><li>Name the dominant omitted layer.</li><li>Audit the evidence and caveat.</li></ol>
+        <label for="approxPassportCase">Case file
+          <select id="approxPassportCase">
+            <option value="gaussian-family">Gaussian trial family</option>
+            <option value="six-site-subspace">Six-site nested subspace</option>
+            <option value="weak-two-level">Weak two-level coupling</option>
+            <option value="harmonic-replacement">Harmonic replacement model</option>
+          </select>
+        </label>
+        <label for="approxPassportMethod">Operation
+          <select id="approxPassportMethod">
+            <option value="">Choose…</option>
+            <option value="variational">Variational minimization</option>
+            <option value="representation-truncation">Representation truncation</option>
+            <option value="perturbation">Perturbative expansion</option>
+            <option value="model-replacement">Model replacement</option>
+            <option value="numerical-solver">Numerical solver only</option>
+          </select>
+        </label>
+        <label for="approxPassportLayer">Dominant omitted layer
+          <select id="approxPassportLayer">
+            <option value="">Choose…</option>
+            <option value="ansatz">Restricted ansatz / trial family</option>
+            <option value="representation">Finite representation</option>
+            <option value="series-truncation">Series truncation</option>
+            <option value="model">Model physics</option>
+            <option value="solver">Solver convergence</option>
+          </select>
+        </label>
+        <button id="approxPassportAudit" type="button">Audit passport</button>
+      </div>
+      <article class="quest-card approximation-dossier" aria-labelledby="approxPassportTitle">
+        <p class="kicker">Active dossier</p>
+        <h3 id="approxPassportTitle">Gaussian trial family for a harmonic ground state</h3>
+        <div class="approximation-stamp-grid" aria-hidden="true"><span id="approxStampMethod">METHOD</span><span id="approxStampLayer">OMISSION</span><span id="approxStampDiagnostic">DIAGNOSTIC</span><span id="approxStampEvidence">EVIDENCE</span></div>
+        <p><strong>Rule:</strong> solving the chosen approximation exactly removes only the solver layer. It cannot restore physics or directions that were never represented.</p>
+      </article>
+    </div>
+    <div id="approxPassportFeedback" class="game-result" aria-live="polite">Choose both the operation and the dominant omitted layer, then audit the claim.</div>
+    <div class="misconception-card"><strong>Misconception:</strong> “The residual is tiny, so the model is accurate.” A residual tests the stated eigenproblem and target separation; it does not test whether the Hamiltonian contains the needed physics.</div>
+    <button class="button academy-complete" type="button" data-mission="approximation-passport" data-badge="Approximation passport">Complete mission · Approximation passport</button>
+  </section>
+
+  <section id="level2" class="lesson-step academy-lesson" data-step="2" aria-labelledby="level2Title">
+    <p class="kicker">Level 2 · Remove accidental units</p>
+    <h2 id="level2Title">Dimensionless scaling forge</h2>
+    <p>For $H=p^2/(2m)+kx^2/2+\beta x^4$, choose $\omega=\sqrt{k/m}$ and $\ell=\sqrt{\hbar/(m\omega)}$. The scaled shape is controlled by $g=\beta\hbar/(m^2\omega^3)$—not by three raw parameters independently.</p>
+    <div class="lab-grid">
+      <div class="quest-card approximation-game-brief">
+        <h3>Scale the quartic oscillator</h3>
+        <ol><li>Change a physical scale.</li><li>Watch $\omega$, $\ell$, and $\hbar\omega$ move.</li><li>Track the single dimensionless shape coupling $g$.</li><li>State what the potential plot does not solve.</li></ol>
+        <label for="scaleMass">Mass $m$: <output id="scaleMassValue" for="scaleMass">1.00</output><input id="scaleMass" type="range" min="0.5" max="4" step="0.05" value="1"></label>
+        <label for="scaleForce">Force constant $k$: <output id="scaleForceValue" for="scaleForce">1.00</output><input id="scaleForce" type="range" min="0.5" max="6" step="0.05" value="1"></label>
+        <label for="scaleBeta">Quartic coefficient $\beta$: <output id="scaleBetaValue" for="scaleBeta">0.100</output><input id="scaleBeta" type="range" min="0" max="0.8" step="0.01" value="0.1"></label>
+      </div>
+      <figure class="basis-figure academy-plot approximation-plot">
+        <div id="scalingPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable dimensionless quartic potential plot" aria-describedby="scalingCaption scalingHint"></div>
+        <ul class="academy-plot-key"><li><span class="plot-key-line long-dash approximation-indigo"></span>Harmonic $q^2/2$</li><li><span class="plot-key-line solid approximation-teal"></span>Full $q^2/2+gq^4$</li></ul>
+        <figcaption id="scalingCaption">Same dimensionless axes after the physical mass, stiffness, and quartic scale are combined.</figcaption>
+        <p id="scalingHint" class="table-scroll-hint">Narrow screen: focus this plot and scroll horizontally; the key remains in normal HTML.</p>
+      </figure>
+    </div>
+    <div id="scalingReadout" class="game-result" aria-live="polite"></div>
+    <details class="professor-note"><summary>Professor mode · Why scaling comes first</summary><p>Dimensionless groups reveal the actual expansion parameter, prevent unit-dependent “smallness,” and make cross-system comparisons meaningful. Scaling does not create a controlled approximation; it tells you which combinations must be controlled.</p></details>
+    <button class="button academy-complete" type="button" data-mission="dimensionless-scaling" data-badge="Dimensionless scaler">Complete mission · Dimensionless scaler</button>
+  </section>
+
+  <section id="level3" class="lesson-step academy-lesson" data-step="3" aria-labelledby="level3Title">
+    <p class="kicker">Level 3 · Variational geometry</p>
+    <h2 id="level3Title">Rayleigh quotient landscape</h2>
+    <p>For a normalized vector $c=(\cos\theta,\sin\theta)$ and real symmetric $H$, $R(c)=c^THc$ lies between the two eigenvalues. Stationary directions—not arbitrary low-looking points—are eigenvectors.</p>
+    <div class="lab-grid">
+      <div class="quest-card approximation-game-brief">
+        <h3>Rotate the trial state</h3>
+        <div class="game-grid">
+          <label for="rayleighA">$H_{11}$<input id="rayleighA" type="number" step="0.1" value="1"></label>
+          <label for="rayleighB">$H_{12}$<input id="rayleighB" type="number" step="0.05" value="0.2"></label>
+          <label for="rayleighD">$H_{22}$<input id="rayleighD" type="number" step="0.1" value="3"></label>
+        </div>
+        <label for="rayleighAngle">Trial angle: <output id="rayleighAngleValue" for="rayleighAngle">20.0°</output><input id="rayleighAngle" type="range" min="0" max="180" step="0.000001" value="20"></label>
+        <div class="quest-actions"><button id="rayleighMinimize" type="button">Find minimum direction</button><button id="rayleighMaximize" class="secondary" type="button">Find maximum direction</button></div>
+      </div>
+      <figure class="basis-figure academy-plot approximation-plot">
+        <div id="rayleighPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable Rayleigh quotient landscape" aria-describedby="rayleighCaption rayleighHint"></div>
+        <ul class="academy-plot-key"><li><span class="plot-key-line solid approximation-indigo"></span>$R(\theta)$</li><li><span class="plot-key-line dotted approximation-teal"></span>Ground eigenvalue</li><li><span class="plot-key-line long-dash approximation-coral"></span>Upper eigenvalue</li><li><span class="approximation-key-dot amber"></span>Selected trial</li></ul>
+        <figcaption id="rayleighCaption">The finite 2×2 landscape is exact; its minimum illustrates the ground-state variational principle.</figcaption>
+        <p id="rayleighHint" class="table-scroll-hint">Narrow screen: use the internal plot scroller; no energy coordinate is moved for annotation.</p>
+      </figure>
+    </div>
+    <div id="rayleighReadout" class="game-result" aria-live="polite"></div>
+    <button class="button academy-complete" type="button" data-mission="rayleigh-quotient" data-badge="Rayleigh navigator">Complete mission · Rayleigh navigator</button>
+  </section>
+
+  <section id="level4" class="lesson-step academy-lesson" data-step="4" aria-labelledby="level4Title">
+    <p class="kicker">Level 4 · Restricted trial family</p>
+    <h2 id="level4Title">Gaussian variational sculptor</h2>
+    <p>For the dimensionless harmonic oscillator and $\psi_\alpha\propto e^{-\alpha x^2/2}$, $T=\alpha/4$, $V=1/(4\alpha)$, and $E\ge 1/2$. Narrowing raises kinetic cost; broadening raises potential cost.</p>
+    <div class="lab-grid">
+      <div class="quest-card approximation-game-brief">
+        <h3>Balance the width penalties</h3>
+        <ol><li>Start too diffuse.</li><li>Cross the virial balance.</li><li>Make the state too narrow.</li><li>Use the optimizer, then explain why this exact hit is special.</li></ol>
+        <label for="gaussianAlpha">Gaussian exponent $\alpha$: <output id="gaussianAlphaValue" for="gaussianAlpha">1.000</output><input id="gaussianAlpha" type="range" min="0.1" max="10" step="0.01" value="1"></label>
+        <button id="gaussianOptimize" type="button">Set the stationary width</button>
+      </div>
+      <figure class="basis-figure academy-plot approximation-plot">
+        <div id="gaussianPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable Gaussian variational energy plot" aria-describedby="gaussianCaption gaussianHint"></div>
+        <ul class="academy-plot-key"><li><span class="plot-key-line solid approximation-indigo"></span>Trial energy</li><li><span class="plot-key-line dotted approximation-teal"></span>Exact model ground</li><li><span class="approximation-key-dot amber"></span>Selected width</li><li><span class="approximation-key-patch teal"></span>Virial-balance neighborhood</li></ul>
+        <figcaption id="gaussianCaption">Logarithmic width reveals the reciprocal symmetry $E(\alpha)=E(1/\alpha)$.</figcaption>
+        <p id="gaussianHint" class="table-scroll-hint">Narrow screen: focus and scroll the curve; kinetic and potential numbers remain in the live readout.</p>
+      </figure>
+    </div>
+    <div id="gaussianReadout" class="game-result" aria-live="polite"></div>
+    <div class="misconception-card"><strong>Misconception:</strong> variational energies are not automatically “close.” They are upper bounds under the theorem’s hypotheses; a rigid family can still sit far above the target.</div>
+    <button class="button academy-complete" type="button" data-mission="variational-gaussian" data-badge="Gaussian sculptor">Complete mission · Gaussian sculptor</button>
+  </section>
+
+  <section id="level5" class="lesson-step academy-lesson" data-step="5" aria-labelledby="level5Title">
+    <p class="kicker">Level 5 · Finite representation</p>
+    <h2 id="level5Title">Nested-basis expedition</h2>
+    <p>The same six-site tridiagonal Hamiltonian is projected into its first $n$ coordinates. Because the spaces are nested, the lowest Ritz values decrease toward the declared six-dimensional oracle.</p>
+    <div class="lab-grid">
+      <div class="quest-card approximation-game-brief">
+        <h3>Converge two diagnostics</h3>
+        <ol><li>Choose a subspace size.</li><li>Track the upper energy excess.</li><li>Track the external residual.</li><li>Choose a teaching tolerance and decide whether both conditions pass.</li></ol>
+        <label for="basisSize">Nested size $n$: <output id="basisSizeValue" for="basisSize">3</output><input id="basisSize" type="range" min="1" max="6" step="1" value="3"></label>
+        <label for="basisTolerance">Log₁₀ energy tolerance: <output id="basisToleranceValue" for="basisTolerance">1.0e-2</output><input id="basisTolerance" type="range" min="-5" max="0" step="0.25" value="-2"></label>
+      </div>
+      <figure class="basis-figure academy-plot approximation-plot">
+        <div id="basisPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable nested-basis convergence plot" aria-describedby="basisCaption basisHint"></div>
+        <ul class="academy-plot-key"><li><span class="plot-key-line solid approximation-indigo"></span>Ritz energy</li><li><span class="plot-key-line dotted approximation-teal"></span>Full six-site oracle</li><li><span class="plot-key-line long-dash approximation-amber"></span>External residual</li><li><span class="approximation-key-dot amber"></span>Selected size</li></ul>
+        <figcaption id="basisCaption">Upper panel: monotone energy. Lower panel: residual outside the selected principal subspace.</figcaption>
+        <p id="basisHint" class="table-scroll-hint">Narrow screen: plot scrolls internally. “Full” means six sites only—not a continuum/CBS limit.</p>
+      </figure>
+    </div>
+    <div id="basisReadout" class="game-result" aria-live="polite"></div>
+    <details class="professor-note"><summary>Professor mode · Why nesting matters</summary><p>If two spaces are not nested, a lower energy in the second calculation does not by itself define a monotone convergence sequence. Real basis families can also change other approximations, thresholds, grids, and linear-dependence treatments at the same time.</p></details>
+    <button class="button academy-complete" type="button" data-mission="basis-truncation" data-badge="Nested-space navigator">Complete mission · Nested-space navigator</button>
+  </section>
+
+  <section id="level6" class="lesson-step academy-lesson" data-step="6" aria-labelledby="level6Title">
+    <p class="kicker">Level 6 · The metric is part of the problem</p>
+    <h2 id="level6Title">Overlap-conditioning rescue</h2>
+    <p>Nonorthogonal functions produce $Hc=ESc$. For $S=\begin{pmatrix}1&s\\s&1\end{pmatrix}$, the eigenvalues are $1\pm s$ and $\kappa_2=(1+|s|)/(1-|s|)$. Near duplication amplifies numerical sensitivity.</p>
+    <div class="lab-grid">
+      <div class="quest-card approximation-game-brief">
+        <h3>Approach linear dependence carefully</h3>
+        <label for="overlapS">Overlap $s$: <output id="overlapSValue" for="overlapS">0.300</output><input id="overlapS" type="range" min="-0.98" max="0.98" step="0.01" value="0.3"></label>
+        <div class="game-grid">
+          <label for="overlapH11">$H_{11}$<input id="overlapH11" type="number" step="0.1" value="-1"></label>
+          <label for="overlapH12">$H_{12}$<input id="overlapH12" type="number" step="0.05" value="-0.2"></label>
+          <label for="overlapH22">$H_{22}$<input id="overlapH22" type="number" step="0.1" value="0.4"></label>
+        </div>
+        <p class="help-text">The warning threshold is deliberately labeled as a teaching choice. A production threshold must be justified by stability of the retained physics.</p>
+      </div>
+      <figure class="basis-figure academy-plot approximation-plot">
+        <div id="overlapPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable overlap conditioning and generalized energy plot" aria-describedby="overlapCaption overlapHint"></div>
+        <ul class="academy-plot-key"><li><span class="plot-key-line solid approximation-coral"></span>Smallest eig($S$)</li><li><span class="plot-key-line long-dash approximation-teal"></span>Largest eig($S$)</li><li><span class="plot-key-line dotted approximation-amber"></span>Scaled log condition</li><li><span class="plot-key-line solid approximation-indigo"></span>Generalized energy rails</li></ul>
+        <figcaption id="overlapCaption">Left: overlap spectrum across $s$. Right: the two energies at the selected metric.</figcaption>
+        <p id="overlapHint" class="table-scroll-hint">Narrow screen: scroll internally to inspect both the metric map and energy rails.</p>
+      </figure>
+    </div>
+    <div id="overlapReadout" class="game-result" aria-live="polite"></div>
+    <button class="button academy-complete" type="button" data-mission="nonorthogonal-basis" data-badge="Conditioning guardian">Complete mission · Conditioning guardian</button>
+  </section>
+
+  <section id="level7" class="lesson-step academy-lesson" data-step="7" aria-labelledby="level7Title">
+    <p class="kicker">Level 7 · Isolated-state expansion</p>
+    <h2 id="level7Title">Nondegenerate perturbation ladder</h2>
+    <p>For $H=\begin{pmatrix}0&\lambda V\\\lambda V&\Delta\end{pmatrix}$, compare exact diagonalization with $E^{(2)}=-(\lambda V)^2/\Delta$ and the fourth-order correction $+(\lambda V)^4/\Delta^3$.</p>
+    <div class="lab-grid">
+      <div class="quest-card approximation-game-brief">
+        <h3>Spend the order budget</h3>
+        <ol><li>Set an unperturbed gap.</li><li>Set coupling and turn on $\lambda$.</li><li>Compare two retained orders.</li><li>Judge the ratio without calling it a theorem.</li></ol>
+        <label for="perturbGap">Gap $\Delta$: <output id="perturbGapValue" for="perturbGap">2.00</output><input id="perturbGap" type="range" min="0.5" max="5" step="0.05" value="2"></label>
+        <label for="perturbCoupling">Coupling $V$: <output id="perturbCouplingValue" for="perturbCoupling">0.50</output><input id="perturbCoupling" type="range" min="0" max="2" step="0.02" value="0.5"></label>
+        <label for="perturbLambda">Scale $\lambda$: <output id="perturbLambdaValue" for="perturbLambda">0.40</output><input id="perturbLambda" type="range" min="0" max="1" step="0.01" value="0.4"></label>
+      </div>
+      <figure class="basis-figure academy-plot approximation-plot">
+        <div id="perturbationPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable exact and perturbative energy plot" aria-describedby="perturbationCaption perturbationHint"></div>
+        <ul class="academy-plot-key"><li><span class="plot-key-line solid approximation-teal"></span>Exact finite model</li><li><span class="plot-key-line long-dash approximation-indigo"></span>Through second order</li><li><span class="plot-key-line dotted approximation-coral"></span>Through fourth order</li><li><span class="approximation-key-dot amber"></span>Selected $\lambda$</li></ul>
+        <figcaption id="perturbationCaption">The exact two-level curve is an oracle for this laboratory, not for a many-state molecular Hamiltonian.</figcaption>
+        <p id="perturbationHint" class="table-scroll-hint">Narrow screen: scroll the full $\lambda$ range internally and compare line styles, not color alone.</p>
+      </figure>
+    </div>
+    <div id="perturbationReadout" class="game-result" aria-live="polite"></div>
+    <button class="button academy-complete" type="button" data-mission="nondegenerate-perturbation" data-badge="Perturbation navigator">Complete mission · Perturbation navigator</button>
+  </section>
+
+  <section id="level8" class="lesson-step academy-lesson" data-step="8" aria-labelledby="level8Title">
+    <p class="kicker">Level 8 · Degenerate subspaces</p>
+    <h2 id="level8Title">Degenerate-subspace crossroads</h2>
+    <p>Inside an exactly degenerate subspace, first-order shifts are the eigenvalues of the restricted perturbation $W$. Its diagonal entries change when the basis rotates; its trace, determinant, and eigenvalues do not.</p>
+    <div class="lab-grid">
+      <div class="quest-card approximation-game-brief">
+        <h3>Remove basis-dependent guessing</h3>
+        <label for="degeneratePreset">Perturbation case
+          <select id="degeneratePreset"><option value="split">Coupled split</option><option value="same">Exact no-splitting identity</option></select>
+        </label>
+        <div class="game-grid">
+          <label for="degenerateW11">$W_{11}$<input id="degenerateW11" type="number" step="0.1" value="1"></label>
+          <label for="degenerateW12">$W_{12}$<input id="degenerateW12" type="number" step="0.05" value="0.5"></label>
+          <label for="degenerateW22">$W_{22}$<input id="degenerateW22" type="number" step="0.1" value="-1"></label>
+        </div>
+        <label for="degenerateAngle">Basis rotation: <output id="degenerateAngleValue" for="degenerateAngle">0.0°</output><input id="degenerateAngle" type="range" min="0" max="180" step="0.000001" value="0"></label>
+        <button id="degenerateAlign" type="button">Diagonalize the restricted perturbation</button>
+      </div>
+      <figure class="basis-figure academy-plot approximation-plot">
+        <div id="degeneratePlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable degenerate perturbation level diagram" aria-describedby="degenerateCaption degenerateHint"></div>
+        <ul class="academy-plot-key"><li><span class="plot-key-line long-dash approximation-slate"></span>Unperturbed doublet</li><li><span class="plot-key-line solid approximation-indigo"></span>Lower first-order shift</li><li><span class="plot-key-line long-dash approximation-teal"></span>Upper first-order shift</li><li><span class="approximation-key-bracket"></span>Same-E grouping when coincident</li></ul>
+        <figcaption id="degenerateCaption">Exactly coincident shifts use one true energy line; labels may separate, energies do not.</figcaption>
+        <p id="degenerateHint" class="table-scroll-hint">Narrow screen: scroll inside the diagram. The HTML readout carries the rotated matrix and invariants.</p>
+      </figure>
+    </div>
+    <div id="degenerateReadout" class="game-result" aria-live="polite"></div>
+    <div class="misconception-card"><strong>Misconception:</strong> “Use the diagonal correction for each original state.” That is basis dependent whenever the perturbation couples the degenerate states.</div>
+    <button class="button academy-complete" type="button" data-mission="degenerate-perturbation" data-badge="Degenerate-space resolver">Complete mission · Degenerate-space resolver</button>
+  </section>
+
+  <section id="level9" class="lesson-step academy-lesson" data-step="9" aria-labelledby="level9Title">
+    <p class="kicker">Level 9 · More terms can be worse</p>
+    <h2 id="level9Title">Asymptotic order budget</h2>
+    <p>For $F(g)=\int_0^\infty e^{-t}/(1+gt)\,dt$, the formal small-$g$ expansion is $\sum_{n\ge0}(-g)^n n!$. Factorial coefficients eventually grow for every fixed $g&gt;0$.</p>
+    <div class="lab-grid">
+      <div class="quest-card approximation-game-brief">
+        <h3>Find the best finite stop</h3>
+        <ol><li>Choose a coupling.</li><li>Advance the truncation order.</li><li>Watch error fall and then rise.</li><li>Compare your stop with the best displayed order.</li></ol>
+        <label for="seriesG">Coupling $g$: <output id="seriesGValue" for="seriesG">0.200</output><input id="seriesG" type="range" min="0.05" max="1" step="0.01" value="0.2"></label>
+        <label for="seriesOrder">Truncation order $N$: <output id="seriesOrderValue" for="seriesOrder">4</output><input id="seriesOrder" type="range" min="0" max="14" step="1" value="4"></label>
+        <button id="seriesBest" type="button">Move to best displayed order</button>
+      </div>
+      <figure class="basis-figure academy-plot approximation-plot">
+        <div id="seriesPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable asymptotic truncation error plot" aria-describedby="seriesCaption seriesHint"></div>
+        <ul class="academy-plot-key"><li><span class="plot-key-line solid approximation-indigo"></span>Error by order</li><li><span class="approximation-key-dot teal"></span>Best displayed order</li><li><span class="approximation-key-dot amber"></span>Selected order</li></ul>
+        <figcaption id="seriesCaption">The plotted error uses a finite numerical integral reference with a documented tail bound.</figcaption>
+        <p id="seriesHint" class="table-scroll-hint">Narrow screen: scroll through all orders internally; marker shape and direct text reinforce color.</p>
+      </figure>
+    </div>
+    <div id="seriesReadout" class="game-result" aria-live="polite"></div>
+    <button class="button academy-complete" type="button" data-mission="series-budget" data-badge="Asymptotic budgeter">Complete mission · Asymptotic budgeter</button>
+  </section>
+
+  <section id="level10" class="lesson-step academy-lesson" data-step="10" aria-labelledby="level10Title">
+    <p class="kicker">Level 10 · Do not hide cancellation</p>
+    <h2 id="level10Title">Computational error-budget ledger</h2>
+    <p>Declare a path from numerical result to representation limit to model limit to reference. The signed differences telescope exactly. Their absolute magnitudes reveal work hidden by cancellation.</p>
+    <div class="lab-grid">
+      <div class="quest-card approximation-game-brief">
+        <h3>Close the four-column ledger</h3>
+        <label for="errorCase">Preset
+          <select id="errorCase"><option value="reinforcing">All layers reinforce</option><option value="cancellation">Large components cancel</option><option value="converged-not-accurate">Converged but model-inaccurate</option></select>
+        </label>
+        <div class="game-grid">
+          <label for="errorNumerical">Current numerical $E_{num}$<input id="errorNumerical" type="number" step="0.001" value="-74.95"></label>
+          <label for="errorBasis">Representation limit $E_{basis}$<input id="errorBasis" type="number" step="0.001" value="-75"></label>
+          <label for="errorModel">Model limit $E_{model}$<input id="errorModel" type="number" step="0.001" value="-75.03"></label>
+          <label for="errorReference">Reference $E_{ref}$<input id="errorReference" type="number" step="0.001" value="-75.04"></label>
+        </div>
+      </div>
+      <figure class="basis-figure academy-plot approximation-plot">
+        <div id="errorPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable signed computational error budget" aria-describedby="errorCaption errorHint"></div>
+        <ul class="academy-plot-key"><li><span class="approximation-key-patch indigo"></span>Solver</li><li><span class="approximation-key-patch teal"></span>Representation</li><li><span class="approximation-key-patch hatched"></span>Model</li><li><span class="approximation-key-zero"></span>Signed zero</li></ul>
+        <figcaption id="errorCaption">Bar direction carries sign. Pattern and direct values remain readable without color.</figcaption>
+        <p id="errorHint" class="table-scroll-hint">Narrow screen: scroll the complete signed ledger internally; the exact telescope is repeated in text.</p>
+      </figure>
+    </div>
+    <div id="errorReadout" class="game-result" aria-live="polite"></div>
+    <details class="professor-note"><summary>Professor mode · Error is not uncertainty</summary><p>The displayed components are deterministic signed differences along one declared path. Statistical uncertainty, parameter uncertainty, and reference uncertainty require separate definitions and combination rules. Changing the order of limits can also change the decomposition.</p></details>
+    <button class="button academy-complete" type="button" data-mission="error-decomposition" data-badge="Error-ledger auditor">Complete mission · Error-ledger auditor</button>
+  </section>
+
+  <section id="level11" class="lesson-step academy-lesson" data-step="11" aria-labelledby="level11Title">
+    <p class="kicker">Level 11 · Certification needs a gap</p>
+    <h2 id="level11Title">Residual and bound inspector</h2>
+    <p>In the finite spectrum $(0,1.5,4)$, build $c=(\cos\theta,\sin\theta\cos\phi,\sin\theta\sin\phi)$. The variance equals $\|(H-\mu)c\|^2$. A Temple-type lower estimate is shown only when $\mu&lt;E_1$.</p>
+    <div class="lab-grid">
+      <div class="quest-card approximation-game-brief">
+        <h3>Build or break a certificate</h3>
+        <ol><li>Add excited-state weight with $\theta$.</li><li>Move that weight between $E_1$ and $E_2$ with $\phi$.</li><li>Track Rayleigh value and residual.</li><li>Cross the gap condition and watch the lower certificate disappear.</li></ol>
+        <label for="residualTheta">Excited weight angle $\theta$: <output id="residualThetaValue" for="residualTheta">20.0°</output><input id="residualTheta" type="range" min="0" max="80" step="0.25" value="20"></label>
+        <label for="residualMix">High-state mix $\phi$: <output id="residualMixValue" for="residualMix">35.0°</output><input id="residualMix" type="range" min="0" max="90" step="0.25" value="35"></label>
+        <button id="residualGround" type="button">Return to exact ground trial</button>
+      </div>
+      <figure class="basis-figure academy-plot approximation-plot">
+        <div id="residualPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable residual and energy-bound certificate" aria-describedby="residualCaption residualHint"></div>
+        <ul class="academy-plot-key"><li><span class="plot-key-line solid approximation-teal"></span>Exact finite ground</li><li><span class="plot-key-line solid approximation-indigo"></span>Rayleigh upper bound</li><li><span class="approximation-key-bracket amber"></span>Conditional Temple bracket</li><li><span class="approximation-key-patch hatched"></span>Gap condition failed</li></ul>
+        <figcaption id="residualCaption">A residual becomes a target-root certificate only with sufficient spectral-separation information.</figcaption>
+        <p id="residualHint" class="table-scroll-hint">Narrow screen: scroll the bracket internally; applicability and numbers remain in the live text.</p>
+      </figure>
+    </div>
+    <div id="residualReadout" class="game-result" aria-live="polite"></div>
+    <button class="button academy-complete" type="button" data-mission="residual-bounds" data-badge="Residual certifier">Complete mission · Residual certifier</button>
+  </section>
+
+  <section id="level12" class="lesson-step academy-lesson" data-step="12" aria-labelledby="level12Title">
+    <p class="kicker">Level 12 · Final synthesis</p>
+    <h2 id="level12Title">Approximation campaign boss</h2>
+    <p>Choose a method, a diagnostic, and validation evidence for each research-style situation. The campaign grades each field separately and always prints the caveat that survives a perfect score.</p>
+    <div class="lab-grid">
+      <div class="quest-card approximation-game-brief approximation-case-file">
+        <h3>Campaign controls</h3>
+        <label for="approxBossCase">Case file
+          <select id="approxBossCase"><option value="weak-isolated">Weak isolated coupling</option><option value="degenerate-pair">Exactly degenerate pair</option><option value="ground-upper-bound">Ground-state upper estimate</option><option value="overlap-collapse">Near-duplicate basis functions</option><option value="factorial-tail">Factorially growing series</option></select>
+        </label>
+        <label for="approxBossMethod">Method
+          <select id="approxBossMethod"><option value="">Choose…</option><option value="nondegenerate-perturbation">Nondegenerate perturbation</option><option value="degenerate-perturbation">Degenerate perturbation</option><option value="variational-ritz">Variational / Ritz</option><option value="generalized-eigenproblem">Generalized eigenproblem</option><option value="asymptotic-truncation">Asymptotic truncation</option></select>
+        </label>
+        <label for="approxBossDiagnostic">Diagnostic
+          <select id="approxBossDiagnostic"><option value="">Choose…</option><option value="coupling-gap-ratio">Coupling/gap ratio</option><option value="subspace-offdiagonal">Degenerate-subspace off-diagonal</option><option value="rayleigh-residual">Rayleigh value + residual</option><option value="overlap-spectrum">Overlap spectrum</option><option value="least-term">Least-term behavior</option></select>
+        </label>
+        <label for="approxBossEvidence">Required evidence
+          <select id="approxBossEvidence"><option value="">Choose…</option><option value="order-stability">Order stability</option><option value="basis-invariance">Basis invariance</option><option value="nested-convergence">Nested convergence</option><option value="threshold-stability">Threshold stability</option><option value="order-scan">Order scan</option></select>
+        </label>
+        <button id="approxBossAudit" type="button">Review campaign</button>
+      </div>
+      <article class="quest-card approximation-campaign-board" aria-labelledby="approxBossTitle">
+        <p class="kicker">Active research brief</p>
+        <h3 id="approxBossTitle">Weak, isolated state coupling</h3>
+        <div class="approximation-campaign-route" aria-hidden="true"><span>ASSUMPTION</span><b>→</b><span>METHOD</span><b>→</b><span>DIAGNOSTIC</span><b>→</b><span>EVIDENCE</span></div>
+        <p>A perfect method choice is only the beginning. A credible claim must survive the relevant limit, perturbation order, basis rotation, threshold, or external comparison.</p>
+      </article>
+    </div>
+    <div id="approxBossFeedback" class="game-result quest-finale" aria-live="polite">Choose the method, diagnostic, and validation evidence, then review the campaign.</div>
+    <div class="misconception-card"><strong>Final rule:</strong> “Converged” must always finish the sentence: converged with respect to what representation, solver, order, threshold, observable, geometry, and reference?</div>
+    <button class="button academy-complete" type="button" data-mission="approximation-case-file" data-badge="Approximation campaign complete">Complete mission · Approximation campaign boss</button>
+  </section>
+
+  <section id="sourceSpine" class="lesson-step" aria-labelledby="sourceTitle">
+    <p class="kicker">Verified source spine</p>
+    <h2 id="sourceTitle">Open sources and continuation routes</h2>
+    <div class="quest-grid three">
+      <article class="quest-card"><h3>Variational and matrix mechanics</h3><p><a href="https://quantummechanics.ucsd.edu/ph130a/130_notes/node375.html" target="_blank" rel="noopener">UCSD Rayleigh–Ritz notes</a> and <a href="https://ocw.mit.edu/courses/5-61-physical-chemistry-fall-2017/pages/lecture-notes/" target="_blank" rel="noopener">MIT 5.61 lecture notes</a>.</p></article>
+      <article class="quest-card"><h3>Perturbation theory</h3><p><a href="https://ocw.mit.edu/courses/8-06-quantum-physics-iii-spring-2018/pages/lecture-notes/" target="_blank" rel="noopener">MIT 8.06 Quantum Physics III</a> separates perturbative, semiclassical, and adiabatic approximation chapters.</p></article>
+      <article class="quest-card"><h3>Asymptotics and bounds</h3><p><a href="https://dlmf.nist.gov/2.1" target="_blank" rel="noopener">NIST DLMF §2.1</a>, the <a href="https://www.ams.org/journals/proc/1978-069-02/S0002-9939-1978-0487733-4/S0002-9939-1978-0487733-4.pdf" target="_blank" rel="noopener">open AMS Temple-inequality article</a>, and <a href="https://www.nist.gov/pml/nist-technical-note-1297" target="_blank" rel="noopener">NIST TN 1297</a>.</p></article>
+    </div>
+    <p class="help-text">Full equations, hypotheses, numerical references, and deterministic review requirements are recorded in <code>docs/academy/sources/qc-approximations.md</code>.</p>
+  </section>
+
+  <nav class="quest-actions" aria-label="Continue learning">
+    <a class="button secondary" href="qc-math-language.html">← Mathematical Language</a>
+    <a class="button" href="qc-atoms.html">Continue to Atomic Structure →</a>
+    <a class="button secondary" href="quantum-chemistry.html">Academy map</a>
+  </nav>
+</main>
+
+<footer class="footer">
+  <p>Project XC Academy · Approximation and Variational Thinking. Teaching models are source-grounded and explicitly bounded; validate production electronic-structure claims with documented programs, convergence studies, and appropriate references.</p>
+</footer>
+<script src="assets/academy-core.js"></script>
+<script src="assets/qc-approximations.js"></script>
+</body>
+</html>
