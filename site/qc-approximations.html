@@ -86,6 +86,15 @@
     <article><span>04</span><strong>Demand evidence</strong><small>Nested limits, order stability, threshold scans, reference data, and transfer tests.</small></article>
   </section>
 
+  <section class="quest-card approximation-notebook" aria-labelledby="approxNotebookTitle">
+    <div>
+      <p class="kicker">Persistent research notebook</p>
+      <h2 id="approxNotebookTitle">Evidence earned, not self-attested</h2>
+      <p>Each cleared laboratory records the same four-part argument: operation → omitted layer → diagnostic → required evidence. A workshop seal unlocks only after the laboratory's decision challenge is cleared; previously saved chapter progress is preserved.</p>
+    </div>
+    <div id="approxNotebookList" class="approximation-notebook-list" aria-live="polite"><p class="help-text">No game evidence recorded yet.</p></div>
+  </section>
+
   <section id="level1" class="lesson-step academy-lesson" data-step="1" aria-labelledby="level1Title">
     <p class="kicker">Level 1 · Classification before calculation</p>
     <h2 id="level1Title">Every approximation needs a passport</h2>
@@ -96,10 +105,10 @@
         <ol><li>Open a case file.</li><li>Classify the mathematical operation.</li><li>Name the dominant omitted layer.</li><li>Audit the evidence and caveat.</li></ol>
         <label for="approxPassportCase">Case file
           <select id="approxPassportCase">
-            <option value="gaussian-family">Gaussian trial family</option>
-            <option value="six-site-subspace">Six-site nested subspace</option>
-            <option value="weak-two-level">Weak two-level coupling</option>
-            <option value="harmonic-replacement">Harmonic replacement model</option>
+            <option value="gaussian-family">Run A · Energy drops, then stalls</option>
+            <option value="six-site-subspace">Run B · Roots drift as coordinates are added</option>
+            <option value="weak-two-level">Run C · Two retained orders nearly agree</option>
+            <option value="harmonic-replacement">Run D · Solver converges, transfer fails</option>
           </select>
         </label>
         <label for="approxPassportMethod">Operation
@@ -123,17 +132,19 @@
           </select>
         </label>
         <button id="approxPassportAudit" type="button">Audit passport</button>
+        <p id="approxPassportScore" class="game-stage" aria-live="polite">0 / 4 case files cleared</p>
       </div>
       <article class="quest-card approximation-dossier" aria-labelledby="approxPassportTitle">
         <p class="kicker">Active dossier</p>
-        <h3 id="approxPassportTitle">Gaussian trial family for a harmonic ground state</h3>
+        <h3 id="approxPassportTitle">Run A · Energy drops, then stalls</h3>
+        <p id="approxPassportBrief">Observed: the normalized trial energy has a stable minimum, but adding non-Gaussian directions has not yet been tested.</p>
         <div class="approximation-stamp-grid" aria-hidden="true"><span id="approxStampMethod">METHOD</span><span id="approxStampLayer">OMISSION</span><span id="approxStampDiagnostic">DIAGNOSTIC</span><span id="approxStampEvidence">EVIDENCE</span></div>
         <p><strong>Rule:</strong> solving the chosen approximation exactly removes only the solver layer. It cannot restore physics or directions that were never represented.</p>
       </article>
     </div>
     <div id="approxPassportFeedback" class="game-result" aria-live="polite">Choose both the operation and the dominant omitted layer, then audit the claim.</div>
     <div class="misconception-card"><strong>Misconception:</strong> “The residual is tiny, so the model is accurate.” A residual tests the stated eigenproblem and target separation; it does not test whether the Hamiltonian contains the needed physics.</div>
-    <button class="button academy-complete" type="button" data-mission="approximation-passport" data-badge="Approximation passport">Complete mission · Approximation passport</button>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="approximation-passport" data-badge="Approximation passport">Locked seal · Approximation passport</button>
   </section>
 
   <section id="level2" class="lesson-step academy-lesson" data-step="2" aria-labelledby="level2Title">
@@ -143,10 +154,14 @@
     <div class="lab-grid">
       <div class="quest-card approximation-game-brief">
         <h3>Scale the quartic oscillator</h3>
-        <ol><li>Change a physical scale.</li><li>Watch $\omega$, $\ell$, and $\hbar\omega$ move.</li><li>Track the single dimensionless shape coupling $g$.</li><li>State what the potential plot does not solve.</li></ol>
+        <ol><li>Retune three physical parameters.</li><li>Hit both target $\omega=2.000$ and $g=0.02500$.</li><li>Commit what the potential comparison still does not determine.</li><li>Lock the design only when both numerical and reasoning targets pass.</li></ol>
         <label for="scaleMass">Mass $m$: <output id="scaleMassValue" for="scaleMass">1.00</output><input id="scaleMass" type="range" min="0.5" max="4" step="0.05" value="1"></label>
         <label for="scaleForce">Force constant $k$: <output id="scaleForceValue" for="scaleForce">1.00</output><input id="scaleForce" type="range" min="0.5" max="6" step="0.05" value="1"></label>
         <label for="scaleBeta">Quartic coefficient $\beta$: <output id="scaleBetaValue" for="scaleBeta">0.100</output><input id="scaleBeta" type="range" min="0" max="0.8" step="0.01" value="0.1"></label>
+        <label for="scaleUnsolved">What remains unsolved after matching the scales?
+          <select id="scaleUnsolved"><option value="">Choose…</option><option value="units">The choice of physical units</option><option value="spectrum">The anharmonic eigenvalue spectrum</option><option value="dimensionless-shape">The dimensionless potential shape</option></select>
+        </label>
+        <button id="scalingLock" type="button">Lock inverse design</button>
       </div>
       <figure class="basis-figure academy-plot approximation-plot">
         <div id="scalingPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable dimensionless quartic potential plot" aria-describedby="scalingCaption scalingHint"></div>
@@ -155,9 +170,10 @@
         <p id="scalingHint" class="table-scroll-hint">Narrow screen: focus this plot and scroll horizontally; the key remains in normal HTML.</p>
       </figure>
     </div>
-    <div id="scalingReadout" class="game-result" aria-live="polite"></div>
+    <div id="scalingReadout" class="game-result" data-state="neutral" aria-live="polite"></div>
+    <div id="scalingChallengeFeedback" class="game-result" data-state="neutral" aria-live="polite">Target: $\omega=2.000$, $g=0.02500$, then identify the missing spectral calculation.</div>
     <details class="professor-note"><summary>Professor mode · Why scaling comes first</summary><p>Dimensionless groups reveal the actual expansion parameter, prevent unit-dependent “smallness,” and make cross-system comparisons meaningful. Scaling does not create a controlled approximation; it tells you which combinations must be controlled.</p></details>
-    <button class="button academy-complete" type="button" data-mission="dimensionless-scaling" data-badge="Dimensionless scaler">Complete mission · Dimensionless scaler</button>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="dimensionless-scaling" data-badge="Dimensionless scaler">Locked seal · Dimensionless scaler</button>
   </section>
 
   <section id="level3" class="lesson-step academy-lesson" data-step="3" aria-labelledby="level3Title">
@@ -167,13 +183,15 @@
     <div class="lab-grid">
       <div class="quest-card approximation-game-brief">
         <h3>Rotate the trial state</h3>
-        <div class="game-grid">
+        <details class="professor-note"><summary>Professor mode · Change the finite matrix</summary><div class="game-grid">
           <label for="rayleighA">$H_{11}$<input id="rayleighA" type="number" step="0.1" value="1"></label>
           <label for="rayleighB">$H_{12}$<input id="rayleighB" type="number" step="0.05" value="0.2"></label>
           <label for="rayleighD">$H_{22}$<input id="rayleighD" type="number" step="0.1" value="3"></label>
-        </div>
+        </div></details>
         <label for="rayleighAngle">Trial angle: <output id="rayleighAngleValue" for="rayleighAngle">20.0°</output><input id="rayleighAngle" type="range" min="0" max="180" step="0.000001" value="20"></label>
-        <div class="quest-actions"><button id="rayleighMinimize" type="button">Find minimum direction</button><button id="rayleighMaximize" class="secondary" type="button">Find maximum direction</button></div>
+        <div class="quest-actions"><button id="rayleighLockMin" type="button">Lock as minimum</button><button id="rayleighLockMax" type="button">Lock as maximum</button></div>
+        <div id="rayleighRevealActions" class="quest-actions" hidden><button id="rayleighMinimize" type="button">Reveal minimum direction</button><button id="rayleighMaximize" class="secondary" type="button">Reveal maximum direction</button></div>
+        <p id="rayleighStage" class="game-stage" aria-live="polite">Stationary directions locked: 0 / 2</p>
       </div>
       <figure class="basis-figure academy-plot approximation-plot">
         <div id="rayleighPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable Rayleigh quotient landscape" aria-describedby="rayleighCaption rayleighHint"></div>
@@ -183,7 +201,7 @@
       </figure>
     </div>
     <div id="rayleighReadout" class="game-result" aria-live="polite"></div>
-    <button class="button academy-complete" type="button" data-mission="rayleigh-quotient" data-badge="Rayleigh navigator">Complete mission · Rayleigh navigator</button>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="rayleigh-quotient" data-badge="Rayleigh navigator">Locked seal · Rayleigh navigator</button>
   </section>
 
   <section id="level4" class="lesson-step academy-lesson" data-step="4" aria-labelledby="level4Title">
@@ -193,9 +211,14 @@
     <div class="lab-grid">
       <div class="quest-card approximation-game-brief">
         <h3>Balance the width penalties</h3>
-        <ol><li>Start too diffuse.</li><li>Cross the virial balance.</li><li>Make the state too narrow.</li><li>Use the optimizer, then explain why this exact hit is special.</li></ol>
-        <label for="gaussianAlpha">Gaussian exponent $\alpha$: <output id="gaussianAlphaValue" for="gaussianAlpha">1.000</output><input id="gaussianAlpha" type="range" min="0.1" max="10" step="0.01" value="1"></label>
-        <button id="gaussianOptimize" type="button">Set the stationary width</button>
+        <ol><li>Record a diffuse sample.</li><li>Predict its reciprocal equal-energy partner.</li><li>Record the narrow partner.</li><li>Manually lock the virial-balanced minimum before any reveal.</li></ol>
+        <label for="gaussianAlpha">Gaussian exponent $\alpha$: <output id="gaussianAlphaValue" for="gaussianAlpha">0.250</output><input id="gaussianAlpha" type="range" min="0.1" max="10" step="0.01" value="0.25"></label>
+        <label for="gaussianReciprocal">For the starting $\alpha=0.25$, predict the equal-energy partner
+          <select id="gaussianReciprocal"><option value="">Choose…</option><option value="2">2</option><option value="4">4</option><option value="8">8</option></select>
+        </label>
+        <div class="quest-actions"><button id="gaussianCommitPrediction" type="button">Commit prediction</button><button id="gaussianRecord" type="button">Record current sample</button><button id="gaussianLockMinimum" type="button">Lock minimum</button></div>
+        <button id="gaussianOptimize" type="button" hidden>Reveal stationary width</button>
+        <p id="gaussianStage" class="game-stage" aria-live="polite">Evidence: diffuse 0 · reciprocal prediction 0 · narrow 0 · minimum 0</p>
       </div>
       <figure class="basis-figure academy-plot approximation-plot">
         <div id="gaussianPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable Gaussian variational energy plot" aria-describedby="gaussianCaption gaussianHint"></div>
@@ -206,7 +229,7 @@
     </div>
     <div id="gaussianReadout" class="game-result" aria-live="polite"></div>
     <div class="misconception-card"><strong>Misconception:</strong> variational energies are not automatically “close.” They are upper bounds under the theorem’s hypotheses; a rigid family can still sit far above the target.</div>
-    <button class="button academy-complete" type="button" data-mission="variational-gaussian" data-badge="Gaussian sculptor">Complete mission · Gaussian sculptor</button>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="variational-gaussian" data-badge="Gaussian sculptor">Locked seal · Gaussian sculptor</button>
   </section>
 
   <section id="level5" class="lesson-step academy-lesson" data-step="5" aria-labelledby="level5Title">
@@ -216,9 +239,10 @@
     <div class="lab-grid">
       <div class="quest-card approximation-game-brief">
         <h3>Converge two diagnostics</h3>
-        <ol><li>Choose a subspace size.</li><li>Track the upper energy excess.</li><li>Track the external residual.</li><li>Choose a teaching tolerance and decide whether both conditions pass.</li></ol>
+        <ol><li>Choose a subspace size.</li><li>Meet fixed energy excess ≤ 0.080.</li><li>Meet fixed external residual ≤ 0.300.</li><li>Stay within the five-vector cost budget and submit the smallest adequate space.</li></ol>
         <label for="basisSize">Nested size $n$: <output id="basisSizeValue" for="basisSize">3</output><input id="basisSize" type="range" min="1" max="6" step="1" value="3"></label>
-        <label for="basisTolerance">Log₁₀ energy tolerance: <output id="basisToleranceValue" for="basisTolerance">1.0e-2</output><input id="basisTolerance" type="range" min="-5" max="0" step="0.25" value="-2"></label>
+        <div class="game-target-grid" aria-label="Fixed convergence requirements"><span><small>Energy excess</small><strong>≤ 0.080</strong></span><span><small>Residual</small><strong>≤ 0.300</strong></span><span><small>Cost</small><strong>n ≤ 5</strong></span></div>
+        <button id="basisSubmit" type="button">Submit smallest adequate space</button>
       </div>
       <figure class="basis-figure academy-plot approximation-plot">
         <div id="basisPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable nested-basis convergence plot" aria-describedby="basisCaption basisHint"></div>
@@ -229,7 +253,7 @@
     </div>
     <div id="basisReadout" class="game-result" aria-live="polite"></div>
     <details class="professor-note"><summary>Professor mode · Why nesting matters</summary><p>If two spaces are not nested, a lower energy in the second calculation does not by itself define a monotone convergence sequence. Real basis families can also change other approximations, thresholds, grids, and linear-dependence treatments at the same time.</p></details>
-    <button class="button academy-complete" type="button" data-mission="basis-truncation" data-badge="Nested-space navigator">Complete mission · Nested-space navigator</button>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="basis-truncation" data-badge="Nested-space navigator">Locked seal · Nested-space navigator</button>
   </section>
 
   <section id="level6" class="lesson-step academy-lesson" data-step="6" aria-labelledby="level6Title">
@@ -238,14 +262,22 @@
     <p>Nonorthogonal functions produce $Hc=ESc$. For $S=\begin{pmatrix}1&s\\s&1\end{pmatrix}$, the eigenvalues are $1\pm s$ and $\kappa_2=(1+|s|)/(1-|s|)$. Near duplication amplifies numerical sensitivity.</p>
     <div class="lab-grid">
       <div class="quest-card approximation-game-brief">
-        <h3>Approach linear dependence carefully</h3>
-        <label for="overlapS">Overlap $s$: <output id="overlapSValue" for="overlapS">0.300</output><input id="overlapS" type="range" min="-0.98" max="0.98" step="0.01" value="0.3"></label>
-        <div class="game-grid">
-          <label for="overlapH11">$H_{11}$<input id="overlapH11" type="number" step="0.1" value="-1"></label>
-          <label for="overlapH12">$H_{12}$<input id="overlapH12" type="number" step="0.05" value="-0.2"></label>
-          <label for="overlapH22">$H_{22}$<input id="overlapH22" type="number" step="0.1" value="0.4"></label>
-        </div>
-        <p class="help-text">The warning threshold is deliberately labeled as a teaching choice. A production threshold must be justified by stability of the retained physics.</p>
+        <h3>Choose and validate a rescue</h3>
+        <label for="overlapCase">Artifact
+          <select id="overlapCase"><option value="stable">Run A · artifact 04</option><option value="duplicate">Run B · artifact 09</option></select>
+        </label>
+        <label for="overlapS">Overlap $s$: <output id="overlapSValue" for="overlapS">0.300</output><input id="overlapS" type="range" min="-0.98" max="0.98" step="0.01" value="0.3" disabled></label>
+        <details class="professor-note"><summary>Professor mode · Inspect the artifact matrices</summary><div class="game-grid">
+          <label for="overlapH11">$H_{11}$<input id="overlapH11" type="number" step="0.1" value="-1" readonly></label>
+          <label for="overlapH12">$H_{12}$<input id="overlapH12" type="number" step="0.05" value="-0.2" readonly></label>
+          <label for="overlapH22">$H_{22}$<input id="overlapH22" type="number" step="0.1" value="0.4" readonly></label>
+        </div></details>
+        <label for="overlapAction">Rescue action
+          <select id="overlapAction"><option value="">Choose…</option><option value="retain">Retain and solve $Hc=ESc$</option><option value="orthogonalize">Canonical orthogonalization only</option><option value="prune">Prune the low-overlap direction</option></select>
+        </label>
+        <label for="overlapThreshold">Trial overlap-eigenvalue threshold: <output id="overlapThresholdValue" for="overlapThreshold">0.030</output><input id="overlapThreshold" type="range" min="0.005" max="0.100" step="0.005" value="0.03"></label>
+        <button id="overlapSubmit" type="button">Run threshold-stability audit</button>
+        <p id="overlapStage" class="game-stage" aria-live="polite">Rescue artifacts cleared: 0 / 2</p>
       </div>
       <figure class="basis-figure academy-plot approximation-plot">
         <div id="overlapPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable overlap conditioning and generalized energy plot" aria-describedby="overlapCaption overlapHint"></div>
@@ -255,7 +287,7 @@
       </figure>
     </div>
     <div id="overlapReadout" class="game-result" aria-live="polite"></div>
-    <button class="button academy-complete" type="button" data-mission="nonorthogonal-basis" data-badge="Conditioning guardian">Complete mission · Conditioning guardian</button>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="nonorthogonal-basis" data-badge="Conditioning guardian">Locked seal · Conditioning guardian</button>
   </section>
 
   <section id="level7" class="lesson-step academy-lesson" data-step="7" aria-labelledby="level7Title">
@@ -265,20 +297,30 @@
     <div class="lab-grid">
       <div class="quest-card approximation-game-brief">
         <h3>Spend the order budget</h3>
-        <ol><li>Set an unperturbed gap.</li><li>Set coupling and turn on $\lambda$.</li><li>Compare two retained orders.</li><li>Judge the ratio without calling it a theorem.</li></ol>
+        <ol><li>Inspect retained orders without the exact curve.</li><li>Choose an order and the largest safe $\lambda$ range.</li><li>Commit before the withheld point is revealed.</li><li>Use the error inset to audit the decision.</li></ol>
+        <details class="professor-note"><summary>Professor mode · Explore gap and coupling</summary>
         <label for="perturbGap">Gap $\Delta$: <output id="perturbGapValue" for="perturbGap">2.00</output><input id="perturbGap" type="range" min="0.5" max="5" step="0.05" value="2"></label>
         <label for="perturbCoupling">Coupling $V$: <output id="perturbCouplingValue" for="perturbCoupling">0.50</output><input id="perturbCoupling" type="range" min="0" max="2" step="0.02" value="0.5"></label>
         <label for="perturbLambda">Scale $\lambda$: <output id="perturbLambdaValue" for="perturbLambda">0.40</output><input id="perturbLambda" type="range" min="0" max="1" step="0.01" value="0.4"></label>
+        <button id="perturbMissionModel" type="button">Return to fixed mission model</button>
+        </details>
+        <label for="perturbOrderChoice">Retained order
+          <select id="perturbOrderChoice"><option value="">Choose…</option><option value="2">Through second order</option><option value="4">Through fourth order</option></select>
+        </label>
+        <label for="perturbRangeChoice">Largest range claimed to keep error ≤ 5×10⁻⁵
+          <select id="perturbRangeChoice"><option value="">Choose…</option><option value="0.4">$\lambda≤0.4$</option><option value="0.6">$\lambda≤0.6$</option><option value="0.8">$\lambda≤0.8$</option></select>
+        </label>
+        <button id="perturbCommit" type="button">Commit order and trust range</button>
       </div>
       <figure class="basis-figure academy-plot approximation-plot">
         <div id="perturbationPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable exact and perturbative energy plot" aria-describedby="perturbationCaption perturbationHint"></div>
-        <ul class="academy-plot-key"><li><span class="plot-key-line solid approximation-teal"></span>Exact finite model</li><li><span class="plot-key-line long-dash approximation-indigo"></span>Through second order</li><li><span class="plot-key-line dotted approximation-coral"></span>Through fourth order</li><li><span class="approximation-key-dot amber"></span>Selected $\lambda$</li></ul>
-        <figcaption id="perturbationCaption">The exact two-level curve is an oracle for this laboratory, not for a many-state molecular Hamiltonian.</figcaption>
+        <ul class="academy-plot-key"><li id="perturbExactKey" hidden><span class="plot-key-line solid approximation-teal"></span>Exact finite model</li><li><span class="plot-key-line long-dash approximation-indigo"></span>Through second order</li><li><span class="plot-key-line dotted approximation-coral"></span>Through fourth order</li><li><span class="approximation-key-dot amber"></span>Selected $\lambda$</li></ul>
+        <figcaption id="perturbationCaption">Commit an order and trust range before the exact finite-model oracle and error inset appear.</figcaption>
         <p id="perturbationHint" class="table-scroll-hint">Narrow screen: scroll the full $\lambda$ range internally and compare line styles, not color alone.</p>
       </figure>
     </div>
     <div id="perturbationReadout" class="game-result" aria-live="polite"></div>
-    <button class="button academy-complete" type="button" data-mission="nondegenerate-perturbation" data-badge="Perturbation navigator">Complete mission · Perturbation navigator</button>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="nondegenerate-perturbation" data-badge="Perturbation navigator">Locked seal · Perturbation navigator</button>
   </section>
 
   <section id="level8" class="lesson-step academy-lesson" data-step="8" aria-labelledby="level8Title">
@@ -289,7 +331,7 @@
       <div class="quest-card approximation-game-brief">
         <h3>Remove basis-dependent guessing</h3>
         <label for="degeneratePreset">Perturbation case
-          <select id="degeneratePreset"><option value="split">Coupled split</option><option value="same">Exact no-splitting identity</option></select>
+          <select id="degeneratePreset"><option value="split">Matrix W-A</option><option value="same">Matrix W-B</option></select>
         </label>
         <div class="game-grid">
           <label for="degenerateW11">$W_{11}$<input id="degenerateW11" type="number" step="0.1" value="1"></label>
@@ -297,7 +339,9 @@
           <label for="degenerateW22">$W_{22}$<input id="degenerateW22" type="number" step="0.1" value="-1"></label>
         </div>
         <label for="degenerateAngle">Basis rotation: <output id="degenerateAngleValue" for="degenerateAngle">0.0°</output><input id="degenerateAngle" type="range" min="0" max="180" step="0.000001" value="0"></label>
-        <button id="degenerateAlign" type="button">Diagonalize the restricted perturbation</button>
+        <div class="quest-actions"><button id="degenerateLock" type="button">Lock diagonal basis</button><button id="degenerateCheckInvariants" type="button">Verify after a second rotation</button><button id="degenerateIdentity" type="button">Confirm identity case</button></div>
+        <button id="degenerateAlign" type="button" hidden>Reveal a diagonalizing angle</button>
+        <p id="degenerateStage" class="game-stage" aria-live="polite">Stages: diagonal basis 0 · rotated invariants 0 · identity case 0</p>
       </div>
       <figure class="basis-figure academy-plot approximation-plot">
         <div id="degeneratePlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable degenerate perturbation level diagram" aria-describedby="degenerateCaption degenerateHint"></div>
@@ -308,7 +352,7 @@
     </div>
     <div id="degenerateReadout" class="game-result" aria-live="polite"></div>
     <div class="misconception-card"><strong>Misconception:</strong> “Use the diagonal correction for each original state.” That is basis dependent whenever the perturbation couples the degenerate states.</div>
-    <button class="button academy-complete" type="button" data-mission="degenerate-perturbation" data-badge="Degenerate-space resolver">Complete mission · Degenerate-space resolver</button>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="degenerate-perturbation" data-badge="Degenerate-space resolver">Locked seal · Degenerate-space resolver</button>
   </section>
 
   <section id="level9" class="lesson-step academy-lesson" data-step="9" aria-labelledby="level9Title">
@@ -318,20 +362,25 @@
     <div class="lab-grid">
       <div class="quest-card approximation-game-brief">
         <h3>Find the best finite stop</h3>
-        <ol><li>Choose a coupling.</li><li>Advance the truncation order.</li><li>Watch error fall and then rise.</li><li>Compare your stop with the best displayed order.</li></ol>
-        <label for="seriesG">Coupling $g$: <output id="seriesGValue" for="seriesG">0.200</output><input id="seriesG" type="range" min="0.05" max="1" step="0.01" value="0.2"></label>
+        <ol><li>Inspect term magnitudes without the reference answer.</li><li>Commit a stopping order.</li><li>Reveal and score the finite-reference error.</li><li>Transfer the rule across three couplings.</li></ol>
+        <label for="seriesCase">Coupling dossier
+          <select id="seriesCase"><option value="0.1">Run A · $g=0.10$</option><option value="0.2">Run B · $g=0.20$</option><option value="0.4">Run C · unseen $g=0.40$</option></select>
+        </label>
+        <label for="seriesG">Coupling $g$: <output id="seriesGValue" for="seriesG">0.100</output><input id="seriesG" type="range" min="0.05" max="1" step="0.01" value="0.1" disabled></label>
         <label for="seriesOrder">Truncation order $N$: <output id="seriesOrderValue" for="seriesOrder">4</output><input id="seriesOrder" type="range" min="0" max="14" step="1" value="4"></label>
-        <button id="seriesBest" type="button">Move to best displayed order</button>
+        <button id="seriesCommit" type="button">Commit stopping order</button>
+        <button id="seriesBest" type="button" hidden>Reveal best displayed order</button>
+        <p id="seriesStage" class="game-stage" aria-live="polite">Coupling dossiers cleared: 0 / 3</p>
       </div>
       <figure class="basis-figure academy-plot approximation-plot">
         <div id="seriesPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable asymptotic truncation error plot" aria-describedby="seriesCaption seriesHint"></div>
-        <ul class="academy-plot-key"><li><span class="plot-key-line solid approximation-indigo"></span>Error by order</li><li><span class="approximation-key-dot teal"></span>Best displayed order</li><li><span class="approximation-key-dot amber"></span>Selected order</li></ul>
-        <figcaption id="seriesCaption">The plotted error uses a finite numerical integral reference with a documented tail bound.</figcaption>
+        <ul class="academy-plot-key"><li id="seriesTermKey"><span class="plot-key-line solid approximation-indigo"></span>Term magnitude by order</li><li id="seriesErrorKey" hidden><span class="plot-key-line solid approximation-indigo"></span>Finite-reference error</li><li id="seriesBestKey" hidden><span class="approximation-key-dot teal"></span>Best displayed order</li><li><span class="approximation-key-dot amber"></span>Selected order</li></ul>
+        <figcaption id="seriesCaption">Before commitment, the plot exposes only term magnitudes; the numerical reference, error curve, and best marker remain hidden.</figcaption>
         <p id="seriesHint" class="table-scroll-hint">Narrow screen: scroll through all orders internally; marker shape and direct text reinforce color.</p>
       </figure>
     </div>
     <div id="seriesReadout" class="game-result" aria-live="polite"></div>
-    <button class="button academy-complete" type="button" data-mission="series-budget" data-badge="Asymptotic budgeter">Complete mission · Asymptotic budgeter</button>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="series-budget" data-badge="Asymptotic budgeter">Locked seal · Asymptotic budgeter</button>
   </section>
 
   <section id="level10" class="lesson-step academy-lesson" data-step="10" aria-labelledby="level10Title">
@@ -341,15 +390,26 @@
     <div class="lab-grid">
       <div class="quest-card approximation-game-brief">
         <h3>Close the four-column ledger</h3>
-        <label for="errorCase">Preset
-          <select id="errorCase"><option value="reinforcing">All layers reinforce</option><option value="cancellation">Large components cancel</option><option value="converged-not-accurate">Converged but model-inaccurate</option></select>
+        <label for="errorCase">Run table
+          <select id="errorCase"><option value="reinforcing">Run table 05</option><option value="cancellation">Run table 12</option><option value="converged-not-accurate">Run table 18</option></select>
         </label>
-        <div class="game-grid">
-          <label for="errorNumerical">Current numerical $E_{num}$<input id="errorNumerical" type="number" step="0.001" value="-74.95"></label>
-          <label for="errorBasis">Representation limit $E_{basis}$<input id="errorBasis" type="number" step="0.001" value="-75"></label>
-          <label for="errorModel">Model limit $E_{model}$<input id="errorModel" type="number" step="0.001" value="-75.03"></label>
-          <label for="errorReference">Reference $E_{ref}$<input id="errorReference" type="number" step="0.001" value="-75.04"></label>
+        <div class="game-grid approximation-artifact-table">
+          <label for="errorNumerical">Current numerical $E_{num}$<input id="errorNumerical" type="number" step="0.001" value="-74.95" readonly></label>
+          <label for="errorBasis">Representation limit $E_{basis}$<input id="errorBasis" type="number" step="0.001" value="-75" readonly></label>
+          <label for="errorModel">Model limit $E_{model}$<input id="errorModel" type="number" step="0.001" value="-75.03" readonly></label>
+          <label for="errorReference">Reference $E_{ref}$<input id="errorReference" type="number" step="0.001" value="-75.04" readonly></label>
         </div>
+        <label for="errorDominant">Dominant absolute layer
+          <select id="errorDominant"><option value="">Choose…</option><option value="solver">Solver</option><option value="representation">Representation</option><option value="model">Model</option></select>
+        </label>
+        <label for="errorCancellation">Does cancellation hide work?
+          <select id="errorCancellation"><option value="">Choose…</option><option value="yes">Yes</option><option value="no">No</option></select>
+        </label>
+        <label for="errorNextAction">Fund one next calculation
+          <select id="errorNextAction"><option value="">Choose…</option><option value="tighten-solver">Tighten solver thresholds</option><option value="enlarge-representation">Enlarge the representation</option><option value="improve-model">Improve omitted model physics</option></select>
+        </label>
+        <button id="errorAudit" type="button">Commit ledger diagnosis</button>
+        <p id="errorStage" class="game-stage" aria-live="polite">Run tables cleared: 0 / 3</p>
       </div>
       <figure class="basis-figure academy-plot approximation-plot">
         <div id="errorPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable signed computational error budget" aria-describedby="errorCaption errorHint"></div>
@@ -360,7 +420,7 @@
     </div>
     <div id="errorReadout" class="game-result" aria-live="polite"></div>
     <details class="professor-note"><summary>Professor mode · Error is not uncertainty</summary><p>The displayed components are deterministic signed differences along one declared path. Statistical uncertainty, parameter uncertainty, and reference uncertainty require separate definitions and combination rules. Changing the order of limits can also change the decomposition.</p></details>
-    <button class="button academy-complete" type="button" data-mission="error-decomposition" data-badge="Error-ledger auditor">Complete mission · Error-ledger auditor</button>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="error-decomposition" data-badge="Error-ledger auditor">Locked seal · Error-ledger auditor</button>
   </section>
 
   <section id="level11" class="lesson-step academy-lesson" data-step="11" aria-labelledby="level11Title">
@@ -370,10 +430,20 @@
     <div class="lab-grid">
       <div class="quest-card approximation-game-brief">
         <h3>Build or break a certificate</h3>
-        <ol><li>Add excited-state weight with $\theta$.</li><li>Move that weight between $E_1$ and $E_2$ with $\phi$.</li><li>Track Rayleigh value and residual.</li><li>Cross the gap condition and watch the lower certificate disappear.</li></ol>
-        <label for="residualTheta">Excited weight angle $\theta$: <output id="residualThetaValue" for="residualTheta">20.0°</output><input id="residualTheta" type="range" min="0" max="80" step="0.25" value="20"></label>
+        <ol><li>Inspect the reported $\mu$, residual, and gap evidence.</li><li>Commit certify, reject, or missing evidence.</li><li>Distinguish a failed hypothesis from a small-residual wrong-root trap.</li><li>Clear all three claim files.</li></ol>
+        <label for="residualCase">Claim file
+          <select id="residualCase"><option value="valid">Run A · certificate request 17</option><option value="gap-fail">Run B · certificate request 23</option><option value="wrong-root">Run C · certificate request 31</option></select>
+        </label>
+        <p id="residualClaim" class="game-stage">Claim: the supplied μ, residual, and known $E_1$ justify a conditional finite-model lower/upper bracket.</p>
+        <details class="professor-note"><summary>Professor mode · Construct another trial</summary>
+        <label for="residualTheta">Excited weight angle $\theta$: <output id="residualThetaValue" for="residualTheta">20.0°</output><input id="residualTheta" type="range" min="0" max="90" step="0.25" value="20"></label>
         <label for="residualMix">High-state mix $\phi$: <output id="residualMixValue" for="residualMix">35.0°</output><input id="residualMix" type="range" min="0" max="90" step="0.25" value="35"></label>
-        <button id="residualGround" type="button">Return to exact ground trial</button>
+        <div class="quest-actions"><button id="residualRestoreCase" type="button">Return to claim-file trial</button><button id="residualGround" type="button">Explore exact ground trial</button></div></details>
+        <label for="residualDecision">Claim decision
+          <select id="residualDecision"><option value="">Choose…</option><option value="certify">Certify the stated finite-model bracket</option><option value="reject">Reject the claim</option><option value="missing-evidence">Request missing target-root evidence</option></select>
+        </label>
+        <button id="residualAudit" type="button">Commit certificate decision</button>
+        <p id="residualStage" class="game-stage" aria-live="polite">Claim files cleared: 0 / 3</p>
       </div>
       <figure class="basis-figure academy-plot approximation-plot">
         <div id="residualPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Scrollable residual and energy-bound certificate" aria-describedby="residualCaption residualHint"></div>
@@ -383,40 +453,42 @@
       </figure>
     </div>
     <div id="residualReadout" class="game-result" aria-live="polite"></div>
-    <button class="button academy-complete" type="button" data-mission="residual-bounds" data-badge="Residual certifier">Complete mission · Residual certifier</button>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="residual-bounds" data-badge="Residual certifier">Locked seal · Residual certifier</button>
   </section>
 
   <section id="level12" class="lesson-step academy-lesson" data-step="12" aria-labelledby="level12Title">
     <p class="kicker">Level 12 · Final synthesis</p>
     <h2 id="level12Title">Approximation campaign boss</h2>
-    <p>Choose a method, a diagnostic, and validation evidence for each research-style situation. The campaign grades each field separately and always prints the caveat that survives a perfect score.</p>
+    <p>Resolve three evolving research dossiers under a four-token investigation budget. A correct method reveals the diagnostic artifact; a correct diagnostic reveals the admissible evidence. All prior notebook entries and all three dossiers are required for the campaign seal.</p>
     <div class="lab-grid">
       <div class="quest-card approximation-game-brief approximation-case-file">
         <h3>Campaign controls</h3>
         <label for="approxBossCase">Case file
-          <select id="approxBossCase"><option value="weak-isolated">Weak isolated coupling</option><option value="degenerate-pair">Exactly degenerate pair</option><option value="ground-upper-bound">Ground-state upper estimate</option><option value="overlap-collapse">Near-duplicate basis functions</option><option value="factorial-tail">Factorially growing series</option></select>
+          <select id="approxBossCase"><option value="ground-upper-bound">Dossier A · three refinements, one claim</option><option value="overlap-collapse">Dossier B · stable entries, unstable coefficients</option><option value="error-cancellation">Dossier C · good final number, costly path</option></select>
         </label>
         <label for="approxBossMethod">Method
-          <select id="approxBossMethod"><option value="">Choose…</option><option value="nondegenerate-perturbation">Nondegenerate perturbation</option><option value="degenerate-perturbation">Degenerate perturbation</option><option value="variational-ritz">Variational / Ritz</option><option value="generalized-eigenproblem">Generalized eigenproblem</option><option value="asymptotic-truncation">Asymptotic truncation</option></select>
+          <select id="approxBossMethod"><option value="">Choose…</option><option value="variational-ritz">Variational / Ritz</option><option value="generalized-eigenproblem">Generalized eigenproblem</option><option value="error-budget-audit">Signed error-budget audit</option><option value="nondegenerate-perturbation">Nondegenerate perturbation</option></select>
         </label>
         <label for="approxBossDiagnostic">Diagnostic
-          <select id="approxBossDiagnostic"><option value="">Choose…</option><option value="coupling-gap-ratio">Coupling/gap ratio</option><option value="subspace-offdiagonal">Degenerate-subspace off-diagonal</option><option value="rayleigh-residual">Rayleigh value + residual</option><option value="overlap-spectrum">Overlap spectrum</option><option value="least-term">Least-term behavior</option></select>
+          <select id="approxBossDiagnostic" disabled><option value="">Locked until method passes…</option><option value="rayleigh-residual">Rayleigh value + external residual</option><option value="overlap-spectrum">Overlap spectrum + condition number</option><option value="signed-components">Signed components + absolute burden</option><option value="coupling-gap-ratio">Coupling/gap ratio</option></select>
         </label>
         <label for="approxBossEvidence">Required evidence
-          <select id="approxBossEvidence"><option value="">Choose…</option><option value="order-stability">Order stability</option><option value="basis-invariance">Basis invariance</option><option value="nested-convergence">Nested convergence</option><option value="threshold-stability">Threshold stability</option><option value="order-scan">Order scan</option></select>
+          <select id="approxBossEvidence" disabled><option value="">Locked until diagnostic passes…</option><option value="nested-convergence">Nested convergence under the cost target</option><option value="threshold-stability">Observable stability under threshold scan</option><option value="targeted-next-run">Targeted next run on the dominant layer</option><option value="order-stability">Order stability</option></select>
         </label>
-        <button id="approxBossAudit" type="button">Review campaign</button>
+        <button id="approxBossAudit" type="button">Commit current dossier stage</button>
+        <p id="approxBossBudget" class="game-stage" aria-live="polite">Investigation budget: 4 tokens · stage 1 / 3</p>
       </div>
       <article class="quest-card approximation-campaign-board" aria-labelledby="approxBossTitle">
         <p class="kicker">Active research brief</p>
-        <h3 id="approxBossTitle">Weak, isolated state coupling</h3>
-        <div class="approximation-campaign-route" aria-hidden="true"><span>ASSUMPTION</span><b>→</b><span>METHOD</span><b>→</b><span>DIAGNOSTIC</span><b>→</b><span>EVIDENCE</span></div>
-        <p>A perfect method choice is only the beginning. A credible claim must survive the relevant limit, perturbation order, basis rotation, threshold, or external comparison.</p>
+        <h3 id="approxBossTitle">Dossier A · Three refinements, one claim</h3>
+        <div class="approximation-campaign-route" aria-hidden="true"><span>BRIEF</span><b>→</b><span>METHOD</span><b>→</b><span>DIAGNOSTIC</span><b>→</b><span>EVIDENCE</span></div>
+        <p id="approxBossArtifact">Initial brief: three increasingly costly runs report E=0.586 → 0.382 → 0.268 while an unresolved-coupling measure falls 0.500 → 0.372 → 0.289. Choose the analysis framework before requesting the next artifact.</p>
+        <p id="approxBossScore" class="game-stage">Dossiers cleared: 0 / 3 · notebook prerequisites: 0 / 11</p>
       </article>
     </div>
     <div id="approxBossFeedback" class="game-result quest-finale" aria-live="polite">Choose the method, diagnostic, and validation evidence, then review the campaign.</div>
     <div class="misconception-card"><strong>Final rule:</strong> “Converged” must always finish the sentence: converged with respect to what representation, solver, order, threshold, observable, geometry, and reference?</div>
-    <button class="button academy-complete" type="button" data-mission="approximation-case-file" data-badge="Approximation campaign complete">Complete mission · Approximation campaign boss</button>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="approximation-case-file" data-badge="Approximation campaign complete">Locked seal · Approximation campaign boss</button>
   </section>
 
   <section id="sourceSpine" class="lesson-step" aria-labelledby="sourceTitle">

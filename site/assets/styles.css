@@ -510,6 +510,31 @@ input[type="checkbox"] { width: auto; }
 .approximation-stamp-grid span[data-state="evidence"] { border-color: #d97706; color: #92400e; }
 .game-result[data-state="needs-work"] { border-color: #fdba74; background: #fff7ed; color: #9a3412; }
 .game-result[data-state="success"] { border-color: #86efac; background: #f0fdf4; color: #065f46; }
+.game-result[data-state="neutral"] { border-color: #bfdbfe; background: #eff6ff; color: #1e3a8a; }
+.game-result[data-state="warning"] { border-color: #fde68a; background: #fffbeb; color: #854d0e; }
+.game-stage { margin: .35rem 0; padding: .52rem .65rem; border: 1px dashed #94a3b8; border-radius: .72rem; background: rgba(255,255,255,.78); color: #334155; font-size: .8rem; font-weight: 850; }
+.game-actions { display: flex; flex-wrap: wrap; gap: .48rem; align-items: center; }
+.game-actions button { flex: 1 1 10rem; }
+.approximation-game-brief [hidden], .game-actions[hidden], .quest-actions[hidden], .academy-plot-key [hidden] { display: none !important; }
+.game-target-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem; margin: .85rem 0; }
+.game-target-grid span { display: grid; gap: .15rem; padding: .55rem .6rem; border: 1px solid #bfdbfe; border-radius: .75rem; background: rgba(255,255,255,.76); }
+.game-target-grid small { color: #475569; font-weight: 700; }
+.game-target-grid strong { color: #0f766e; }
+.academy-complete[data-game-gate="locked"]:disabled { border-color: #cbd5e1; background: #e2e8f0; color: #475569; cursor: not-allowed; opacity: 1; }
+.approximation-notebook { margin: .9rem 0; border-color: #a5b4fc; background: linear-gradient(145deg, #eef2ff, #fff); }
+.approximation-notebook h2 { margin-bottom: .25rem; }
+.approximation-notebook-list { display: grid; gap: .48rem; margin-top: .65rem; }
+.approximation-notebook-list article { display: grid; grid-template-columns: 1.15fr repeat(4, minmax(0, 1fr)); gap: .42rem; padding: .58rem; border: 1px solid #c7d2fe; border-radius: .7rem; background: #fff; font-size: .73rem; }
+.approximation-notebook-list strong { color: #312e81; text-transform: capitalize; }
+.approximation-notebook-list span { padding-left: .42rem; border-left: 2px solid #ccfbf1; color: #475569; }
+.locked-oracle { display: grid; min-height: 300px; place-content: center; gap: .55rem; padding: 1rem; background: repeating-linear-gradient(-45deg, #f8fafc 0 16px, #eef2ff 16px 32px); color: #312e81; text-align: center; }
+.locked-oracle strong { font-family: var(--display); font-size: 1.25rem; }
+.boss-pipeline { display: grid; gap: .58rem; }
+.boss-pipeline label { display: grid; gap: .3rem; color: #475467; font-size: .8rem; font-weight: 850; }
+.boss-pipeline select:disabled { border-style: dashed; background: #f1f5f9; color: #64748b; opacity: 1; }
+.boss-budget { color: #7c2d12; font-weight: 900; }
+.boss-artifact { min-height: 4.6rem; padding: .65rem; border: 1px solid #fcd34d; border-radius: .7rem; background: #fffbeb; color: #78350f; }
+.professor-note .game-grid { margin-top: .7rem; }
 .approximation-case-file { border: 2px solid #0f766e; background: linear-gradient(145deg, #ecfdf5, #fff7ed); }
 .approximation-campaign-route { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: .35rem; align-items: center; margin: .85rem 0; }
 .approximation-campaign-route span { display: flex; min-height: 4.2rem; align-items: center; justify-content: center; border: 2px solid #312e81; border-radius: .72rem; background: #fff; color: #312e81; font-size: .66rem; font-weight: 950; text-align: center; }
@@ -551,6 +576,8 @@ input[type="checkbox"] { width: auto; }
   .academy-track-header, .academy-curriculum-intro { align-items: stretch; flex-direction: column; }
   .academy-track-counts { justify-content: flex-start; }
   .matrix-flow { grid-template-columns: 1fr; }
+  .approximation-notebook-list article { grid-template-columns: 1fr 1fr; }
+  .approximation-notebook-list strong { grid-column: 1 / -1; }
   .matrix-flow span { transform: rotate(90deg); justify-self: center; }
   .section-title, .record-topline { flex-direction: column; align-items: stretch; }
   .badges { justify-content: flex-start; }
@@ -568,6 +595,10 @@ input[type="checkbox"] { width: auto; }
   .approximation-plot > .academy-plot-canvas > svg { width: 680px; max-width: none; }
   .academy-plot-key { display: grid; grid-template-columns: 1fr; font-size: .82rem; }
   .approximation-campaign-route { grid-template-columns: 1fr; }
+  .approximation-notebook-list article { grid-template-columns: 1fr; }
+  .approximation-notebook-list strong { grid-column: auto; }
+  .game-actions button { flex-basis: 100%; }
+  .game-target-grid { grid-template-columns: 1fr; }
   .approximation-campaign-route b { transform: rotate(90deg); justify-self: center; }
   .xp-panel { flex-direction: column; align-items: stretch; }
   main, .intro { padding-left: .9rem; padding-right: .9rem; }
