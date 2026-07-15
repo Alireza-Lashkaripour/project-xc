@@ -40,10 +40,10 @@ function throws(fn, message) {
 }
 
 const expectedApi = [
-  'evaluateApproximationPassport', 'dimensionlessQuartic', 'symmetricEigen2x2', 'rayleighQuotient2',
-  'gaussianVariational', 'basisTruncation', 'generalizedEigen2', 'perturbationTwoLevel',
-  'degeneratePerturbation', 'asymptoticIntegral', 'asymptoticSeriesModel', 'errorDecomposition',
-  'residualCertificate', 'evaluateApproximationCase'
+  'evaluateApproximationPassport', 'dimensionlessQuartic', 'evaluateScalingChallenge', 'symmetricEigen2x2', 'rayleighQuotient2',
+  'gaussianVariational', 'basisTruncation', 'evaluateBasisBudget', 'generalizedEigen2', 'evaluateOverlapRescue', 'perturbationTwoLevel',
+  'evaluatePerturbationTrust', 'degeneratePerturbation', 'asymptoticIntegral', 'asymptoticSeriesModel', 'errorDecomposition',
+  'evaluateErrorLedger', 'residualCertificate', 'evaluateResidualClaim', 'evaluateApproximationCase'
 ];
 for (const name of expectedApi) assert(typeof models[name] === 'function', `${name} production API must be exported`);
 
@@ -85,6 +85,12 @@ for (const [m, k, beta, hbar] of [[2, 8, 0.5, 1], [3.5, 0.7, 0.03, 2], [0.4, 5, 
 throws(() => models.dimensionlessQuartic(0, 1, 1), 'zero mass must throw');
 throws(() => models.dimensionlessQuartic(1, -1, 1), 'negative force constant must throw');
 throws(() => models.dimensionlessQuartic(1, 1, -0.1), 'unbounded negative beta is outside exposed model');
+const inverseDesign = models.evaluateScalingChallenge(1.5, 6, 0.45, 'spectrum');
+assert(inverseDesign.correct && inverseDesign.reasoningCorrect, 'inverse scaling design hits both targets and names missing spectrum');
+near(inverseDesign.model.omega, 2, 1e-14, 'inverse design omega');
+near(inverseDesign.model.g, 0.025, 1e-14, 'inverse design g');
+assert(!models.evaluateScalingChallenge(1.5, 6, 0.45, 'plot').correct, 'inverse design requires interpretation commitment');
+assert(!models.evaluateScalingChallenge(1, 4, 0.45, 'spectrum').correct, 'inverse design rejects one-target shortcut');
 
 // Level 3: exact two-dimensional Rayleigh landscape.
 const spectrum = models.symmetricEigen2x2(1, 0.2, 3);
@@ -145,11 +151,17 @@ assert(models.basisTruncation(6).convergedFiniteModel, 'full six-site model conv
 throws(() => models.basisTruncation(0), 'basis size zero must throw');
 throws(() => models.basisTruncation(7), 'basis above declared full size must throw');
 throws(() => models.basisTruncation(2.5), 'noninteger basis size must throw');
+assert(models.evaluateBasisBudget(5).correct, 'n=5 is smallest fixed-target cost-feasible basis');
+assert(!models.evaluateBasisBudget(4).energyPass && !models.evaluateBasisBudget(4).residualPass, 'n=4 misses fixed scientific targets');
+assert(models.evaluateBasisBudget(6).energyPass && models.evaluateBasisBudget(6).residualPass && !models.evaluateBasisBudget(6).costPass, 'full oracle exceeds cost budget');
 
 // Level 6: generalized symmetric-definite 2x2 eigenproblem.
 const ordinary = models.generalizedEigen2(1, 0.2, 3, 0);
 near(ordinary.values[0], spectrum.values[0], 1e-14, 's=0 generalized lower equals ordinary');
 near(ordinary.values[1], spectrum.values[1], 1e-14, 's=0 generalized upper equals ordinary');
+const coincidentGeneralized = models.generalizedEigen2(1, 0, 1, 0);
+near(coincidentGeneralized.values[0], 1, 1e-15, 'coincident generalized lower root');
+near(coincidentGeneralized.values[1], 1, 1e-15, 'coincident generalized upper root');
 for (const s of [-0.95, -0.6, -0.2, 0, 0.2, 0.6, 0.95]) {
   const model = models.generalizedEigen2(-1, -0.2, 0.4, s);
   const sortedOverlap = [1 - Math.abs(s), 1 + Math.abs(s)];
@@ -164,6 +176,13 @@ for (const s of [-0.95, -0.6, -0.2, 0, 0.2, 0.6, 0.95]) {
 assert(models.generalizedEigen2(-1, -0.2, 0.4, 0.99).nearDependent, 'near dependent overlap warning');
 throws(() => models.generalizedEigen2(1, 0, 2, 1), '|s|=1 must throw');
 throws(() => models.generalizedEigen2(1, 0, 2, -1.1), '|s|>1 must throw');
+const stableRescue = models.evaluateOverlapRescue('stable', 'retain', 0.03);
+assert(stableRescue.correct && stableRescue.stabilityPass && stableRescue.thresholdScan.length === 3, 'well-conditioned artifact retains generalized solve across a three-point threshold scan');
+const duplicateRescue = models.evaluateOverlapRescue('duplicate', 'prune', 0.03);
+assert(duplicateRescue.correct && duplicateRescue.observableDrift < 1e-12 && duplicateRescue.maximumObservableDrift < 1e-12, 'duplicate artifact prunes thresholded direction stably across nearby cutoffs');
+assert(!models.evaluateOverlapRescue('duplicate', 'retain', 0.03).correct, 'duplicate artifact rejects unqualified retention');
+assert(!models.evaluateOverlapRescue('duplicate', 'prune', 0.08).thresholdPass, 'duplicate artifact rejects unvalidated threshold');
+throws(() => models.evaluateOverlapRescue('unknown', 'retain', 0.03), 'unknown overlap rescue case must throw');
 
 // Level 7: exact two-level energy versus perturbative truncations.
 for (const [gap, coupling, lambda] of [[2, 0.5, 0], [2, 0.5, 0.2], [1, 0.3, 1], [4, -0.7, 0.8]]) {
@@ -179,6 +198,11 @@ for (const [gap, coupling, lambda] of [[2, 0.5, 0], [2, 0.5, 0.2], [1, 0.3, 1], 
 const weak = models.perturbationTwoLevel(2, 0.5, 0.02);
 assert(weak.error4 < weak.error2, 'fourth order improves sufficiently weak case');
 throws(() => models.perturbationTwoLevel(0, 1, 1), 'zero gap must throw');
+const trusted = models.evaluatePerturbationTrust(4, 0.6);
+assert(trusted.correct && trusted.safe && trusted.maximal, 'fourth-order maximal safe trust range accepted');
+assert(!models.evaluatePerturbationTrust(2, 0.6).safe, 'second order misses withheld error tolerance');
+assert(models.evaluatePerturbationTrust(4, 0.4).safe && !models.evaluatePerturbationTrust(4, 0.4).maximal, 'overly conservative safe range is not maximal');
+assert(!models.evaluatePerturbationTrust(4, 0.8).safe, 'overextended fourth-order range fails withheld tolerance');
 
 // Level 8: diagonalize the perturbation within the full degenerate subspace.
 const split = models.degeneratePerturbation(1, 0.5, -1, 0);
@@ -194,10 +218,14 @@ for (let angle = 0; angle <= 180; angle += 7.5) {
   near(model.shifts[1], split.shifts[1], 2e-14, `rotation-invariant upper shift ${angle}`);
 }
 const same = models.degeneratePerturbation(0.7, 0, 0.7, 37);
-assert(same.coincident, 'scalar perturbation preserves exact degeneracy');
+assert(same.coincident && same.exactScalar, 'scalar perturbation preserves exact degeneracy');
+assert(!same.numericallyUnresolved, 'exact scalar matrix is not merely tolerance-unresolved');
 near(same.splitting, 0, 1e-15, 'scalar perturbation zero splitting');
 equal(same.preferredAngle, null, 'exact degeneracy has no preferred direction');
 near(same.rotated[0][1], 0, 1e-14, 'scalar perturbation remains diagonal in every basis');
+const tinySplit = models.degeneratePerturbation(0, 0, 5e-13, 0);
+assert(!tinySplit.coincident && !tinySplit.exactScalar && tinySplit.numericallyUnresolved, 'sub-tolerance nonzero splitting is numerically unresolved, not exact degeneracy');
+assert(tinySplit.splitting > 0 && Number.isFinite(tinySplit.preferredAngle), 'sub-tolerance split retains two shifts and a computed preferred direction');
 
 // Level 9: factorial asymptotic expansion and finite numerical reference.
 near(models.asymptoticIntegral(0), 1, 1e-15, 'asymptotic integral at g=0');
@@ -236,6 +264,16 @@ for (const values of [
 assert(models.errorDecomposition(-75.05, -75.0, -75.03, -75.04).cancellation, 'opposed components flag cancellation');
 assert(!models.errorDecomposition(-74.95, -75.0, -75.03, -75.04).cancellation, 'same-sign components do not flag cancellation');
 throws(() => models.errorDecomposition(1, 2, NaN, 4), 'nonfinite error layer must throw');
+for (const [caseId, dominant, cancellation, nextAction] of [
+  ['reinforcing', 'solver', 'no', 'tighten-solver'],
+  ['cancellation', 'solver', 'yes', 'tighten-solver'],
+  ['converged-not-accurate', 'model', 'no', 'improve-model']
+]) {
+  const audit = models.evaluateErrorLedger(caseId, { dominant, cancellation, nextAction });
+  assert(audit.correct && Object.values(audit.fields).every(Boolean), `${caseId} staged ledger answer`);
+  assert(!models.evaluateErrorLedger(caseId, { dominant: 'representation', cancellation, nextAction }).correct, `${caseId} wrong dominant layer rejected`);
+}
+throws(() => models.evaluateErrorLedger('unknown', {}), 'unknown error ledger case must throw');
 
 // Level 11: finite three-level residual and conditional Temple-type bracket.
 const exactTrial = models.residualCertificate(0, 73);
@@ -257,14 +295,19 @@ for (const [theta, phi] of [[5, 0], [15, 20], [25, 50], [35, 80]]) {
 const noGap = models.residualCertificate(70, 90);
 assert(!noGap.applicable, 'high-energy trial fails mu<E1 gap condition');
 equal(noGap.lowerBound, null, 'failed gap condition suppresses lower certificate');
+for (const [caseId, decision] of [['valid', 'certify'], ['gap-fail', 'reject'], ['wrong-root', 'missing-evidence']]) {
+  const audit = models.evaluateResidualClaim(caseId, decision);
+  assert(audit.correct && audit.reason.length > 20, `${caseId} residual claim decision`);
+  assert(!models.evaluateResidualClaim(caseId, 'wrong').correct, `${caseId} wrong residual claim rejected`);
+}
+assert(models.evaluateResidualClaim('wrong-root', 'missing-evidence').model.residualNorm < 0.05, 'wrong-root case deliberately has a tiny residual');
+throws(() => models.evaluateResidualClaim('unknown', ''), 'unknown residual claim case must throw');
 
 // Level 12: each campaign file grades method, diagnostic, and evidence separately.
 const bossCases = [
-  ['weak-isolated', 'nondegenerate-perturbation', 'coupling-gap-ratio', 'order-stability'],
-  ['degenerate-pair', 'degenerate-perturbation', 'subspace-offdiagonal', 'basis-invariance'],
   ['ground-upper-bound', 'variational-ritz', 'rayleigh-residual', 'nested-convergence'],
   ['overlap-collapse', 'generalized-eigenproblem', 'overlap-spectrum', 'threshold-stability'],
-  ['factorial-tail', 'asymptotic-truncation', 'least-term', 'order-scan']
+  ['error-cancellation', 'error-budget-audit', 'signed-components', 'targeted-next-run']
 ];
 for (const [caseId, method, diagnostic, evidence] of bossCases) {
   const correct = models.evaluateApproximationCase(caseId, { method, diagnostic, evidence });

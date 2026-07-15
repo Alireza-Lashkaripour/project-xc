@@ -108,7 +108,7 @@ The generalized eigenvalues solve
 
 `(1-s²)E² + (2sH₁₂-H₁₁-H₂₂)E + (H₁₁H₂₂-H₁₂²)=0`.
 
-The browser reports conditioning and shows an explicit teaching threshold, but never claims one threshold is universally correct. When `|s|≥1`, `S` is not positive definite and the exposed model rejects the input.
+The browser reports conditioning and shows an explicit teaching threshold, but never claims one threshold is universally correct. The rescue decision evaluates the selected observable at the committed threshold and at neighboring cutoffs `τ±0.005`; this is a bounded three-point teaching scan, not a production threshold study. When `|s|≥1`, `S` is not positive definite and the exposed model rejects the input. If two generalized roots coincide, the plot draws one physical rail and separates only their text labels; near-coincident roots below display resolution are grouped and labelled as such rather than silently overprinted.
 
 ## Levels 7–8: perturbation models
 
@@ -126,7 +126,7 @@ Its displayed low-order expansion is
 
 `E_- = -x²/Δ + x⁴/Δ³ + O(x⁶/Δ⁵)`.
 
-The ratio `|x/Δ|` is a local diagnostic only. Small low-order error in one quantity does not prove every property or geometry is reliable.
+The ratio `|x/Δ|` is a local diagnostic only. Small low-order error in one quantity does not prove every property or geometry is reliable. The earned trust-range dossier is intentionally fixed at `Δ=2.00` and `V=0.50`; Professor-mode changes are exploratory and cannot clear that dossier until the fixed mission model is restored. This prevents grading a modified visible Hamiltonian against an unrelated hidden answer key.
 
 ### Degenerate subspace
 
@@ -134,7 +134,7 @@ If `E₀I` is exactly degenerate and the perturbation restricted to that subspac
 
 `W=[[W₁₁,W₁₂],[W₁₂,W₂₂]]`,
 
-then the first-order shifts are the eigenvalues of `W`, not generally its diagonal entries in an arbitrary basis. Orthogonal rotations preserve `tr(W)`, `det(W)`, and its eigenvalues while changing its displayed diagonal/off-diagonal elements. If `W=wI`, the two states remain coincident and no orientation is preferred.
+then the first-order shifts are the eigenvalues of `W`, not generally its diagonal entries in an arbitrary basis. Orthogonal rotations preserve `tr(W)`, `det(W)`, and its eigenvalues while changing its displayed diagonal/off-diagonal elements. If `W=wI` exactly, the two states remain coincident and no orientation is preferred. A nonzero splitting below the plotting tolerance is instead reported as **numerically unresolved**; it retains two computed shifts and must not be promoted to exact degeneracy or an exact no-preferred-basis claim.
 
 ## Level 9: factorial asymptotic series
 
@@ -189,7 +189,7 @@ The variational upper bound is `E₀≤μ`. When `μ<E₁`, the displayed Temple
 
 `E₀ ≥ μ - σ²/(E₁-μ)`.
 
-The browser suppresses this certificate when the gap condition fails. In a real calculation, a trustworthy lower separator for the next spectral value is itself nontrivial; a small residual can be close to the wrong root.
+The browser suppresses this certificate when the gap condition fails. In the wrong-root dossier, the production-style report withholds target-root separation before commitment; the teaching oracle is revealed afterward and shows that the formally valid finite-model bracket is extremely wide despite the tiny residual. Professor-mode angle changes are exploratory and cannot grade any fixed claim file until its declared trial is restored. In a real calculation, a trustworthy lower separator for the next spectral value is itself nontrivial; a small residual can be close to the wrong root.
 
 ## Interactive-model boundary
 
@@ -201,15 +201,18 @@ The 12 games combine exact finite algebra, a solvable analytic oscillator family
 
 `scripts/test_qc_approximation_interactions.js` must load the production page and verify:
 
-- all 12 laboratories initialize without console/page errors;
-- each challenge updates through production controls and produces finite, named output;
+- all 12 laboratories initialize with locked seals and without console/page errors;
+- every seal remains locked until its multi-stage decision objective is earned;
+- commit-before-reveal oracles, best-order markers, and manual-search helpers are visually absent until their declared reveal conditions;
+- wrong attempts provide recoverable, human-readable feedback and cannot earn progress;
 - every declared plot contains a production SVG without `NaN`/`undefined` geometry;
-- an exact-degeneracy case uses one true energy line;
-- the boss returns field-by-field scoring;
-- completion progress reaches 12/12, persists across reload, and chapter reset affects only this chapter;
+- exact scalar degeneracy uses one true energy line, while sub-tolerance nonzero splitting is labelled numerically unresolved;
+- coincident generalized roots use one rail with distinct readable labels;
+- the staged boss enforces all eleven notebook prerequisites, three dossiers, and its token budget;
+- completion reaches 12/12, the notebook and seals persist across reload, legacy canonical completion is preserved, and chapter reset affects only this chapter while re-locking every local oracle/helper/readout and restoring fixed dossier controls;
 - desktop `1440×900` has no document overflow;
 - canonical mobile/touch `390×844` has no document overflow while every wide plot has positive, usable, focusable internal horizontal scrolling;
-- controls have accessible names and visible focus targets.
+- controls have accessible names, visible focus targets, non-color status text, and usable touch dimensions.
 
 Both GitHub validation and the Pages pre-upload gate must invoke the exact numerical and interaction tests.
 
