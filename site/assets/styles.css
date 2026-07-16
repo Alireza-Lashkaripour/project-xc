@@ -691,6 +691,83 @@ input[type="checkbox"] { width: auto; }
 .hf-chapter-body button, .hf-chapter-body select, .hf-chapter-body .button { min-height: 44px; }
 .hf-chapter-body .nav a { display: inline-flex; min-height: 44px; align-items: center; }
 
+/* Geometry, Gradients, and Frequencies chapter */
+.geometry-chapter-body { background: radial-gradient(circle at 8% 9%, rgba(5,150,105,.11), transparent 29rem), radial-gradient(circle at 92% 29%, rgba(234,88,12,.09), transparent 27rem), var(--paper); }
+.geometry-chapter-hero { border-color: #6ee7b7; background: linear-gradient(145deg, rgba(236,253,245,.98), rgba(255,255,255,.97) 52%, rgba(255,247,237,.95)); box-shadow: 0 22px 55px rgba(5,150,105,.13); }
+.geometry-chapter-body mjx-container[jax="SVG"] { display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; }
+.geometry-chapter-body .academy-lesson > p { overflow-wrap: anywhere; }
+.geometry-chapter-hero .quest-hud { border-color: #fdba74; background: linear-gradient(160deg, #fff, #fff7ed); }
+.geometry-boundary { border-left-color: #059669; background: linear-gradient(90deg, #ecfdf5, #fff); }
+.geometry-lesson-nav button { min-height: 44px; border-color: #a7f3d0; background: #ecfdf5; color: #065f46; }
+.geometry-lesson-nav button:hover, .geometry-lesson-nav button:focus-visible { border-color: #059669; background: #fff; }
+.geometry-notebook { margin: .9rem 0; border-color: #6ee7b7; background: linear-gradient(145deg, #ecfdf5, #fff, #fff7ed); }
+.geometry-notebook h2 { margin-bottom: .25rem; }
+.geometry-notebook-list { display: grid; gap: .48rem; margin-top: .65rem; }
+.geometry-notebook-list article { display: grid; grid-template-columns: 1.05fr repeat(4, minmax(0, 1fr)); gap: .42rem; padding: .58rem; border: 1px solid #6ee7b7; border-radius: .7rem; background: #fff; font-size: .73rem; }
+.geometry-notebook-list strong { color: #065f46; text-transform: capitalize; }
+.geometry-notebook-list span { padding-left: .42rem; border-left: 2px solid #fdba74; color: #475569; }
+.geometry-plot { min-width: 0; overflow: hidden; contain: inline-size; border-color: #6ee7b7; background: linear-gradient(180deg, #fff, #f7fffb); }
+.geometry-plot .academy-plot-canvas { width: 100%; overflow-x: auto; overflow-y: hidden; contain: inline-size paint; scrollbar-color: #059669 #e2e8f0; }
+.geometry-plot .academy-plot-canvas:focus-visible { outline: 4px solid #f97316; outline-offset: 3px; border-radius: .65rem; }
+.geometry-plot svg text { font-family: Inter, ui-sans-serif, system-ui, sans-serif; fill: #334155; font-size: 14px; }
+.geometry-plot svg .geometry-axis { stroke: #64748b; stroke-width: 2; }
+.geometry-plot svg .geometry-contour { fill: none; stroke: #047857; stroke-width: 2.5; }
+.geometry-plot svg .geometry-contour.c1 { stroke-dasharray: 10 5; opacity: .86; }
+.geometry-plot svg .geometry-contour.c2 { stroke-dasharray: 3 5; opacity: .68; }
+.geometry-plot svg .geometry-contour.c3 { stroke-dasharray: 14 7 3 7; opacity: .52; }
+.geometry-plot svg .geometry-curve { fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.geometry-plot svg .geometry-vector { fill: none; stroke-width: 5; stroke-linecap: round; }
+.geometry-plot svg .geometry-curve.indigo, .geometry-plot svg .geometry-vector.indigo { stroke: #4338ca; }
+.geometry-plot svg .geometry-curve.coral, .geometry-plot svg .geometry-vector.coral { stroke: #e11d48; }
+.geometry-plot svg .geometry-curve.teal, .geometry-plot svg .geometry-vector.teal { stroke: #0f766e; }
+.geometry-plot svg .dashed { stroke-dasharray: 9 6; }
+.geometry-plot svg .dotted { stroke-dasharray: 2 7; }
+.geometry-plot svg .geometry-point { fill: #4338ca; stroke: #fff; stroke-width: 4; }
+.geometry-plot svg .geometry-point.coral { fill: #e11d48; }
+.geometry-plot svg .geometry-point.teal { fill: #0f766e; }
+.geometry-plot svg .geometry-trust-circle { fill: rgba(199,210,254,.22); stroke: #4338ca; stroke-width: 3; stroke-dasharray: 10 6; }
+.geometry-plot svg .geometry-ledger-box { fill: #fff7ed; stroke: #ea580c; stroke-width: 2; stroke-dasharray: 8 4; }
+.geometry-plot svg .geometry-bracket { fill: none; stroke: #059669; stroke-width: 3; }
+.geometry-plot svg .geometry-matrix-value { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; fill: #065f46; font-size: 13px; font-weight: 850; }
+.geometry-plot svg .geometry-plot-title { fill: #065f46; font-weight: 950; }
+.geometry-plot svg .geometry-oracle { fill: #0f766e; font-weight: 950; }
+.geometry-plot svg .geometry-muted { fill: #64748b; font-size: 13px; font-weight: 750; }
+.geometry-plot svg .geometry-label { fill: #be123c; font-weight: 900; }
+.geometry-plot svg .geometry-spring { stroke: #475569; stroke-width: 5; stroke-dasharray: 8 5; }
+.geometry-plot svg .geometry-mass { stroke-width: 3; }
+.geometry-plot svg .geometry-mass.indigo { fill: #c7d2fe; stroke: #4338ca; }
+.geometry-plot svg .geometry-mass.coral { fill: #fecdd3; stroke: #e11d48; }
+.geometry-plot svg .geometry-frequency { stroke-width: 7; stroke-linecap: round; }
+.geometry-plot svg .geometry-frequency.indigo { stroke: #4338ca; }
+.geometry-plot svg .geometry-frequency.coral { stroke: #e11d48; }
+.geometry-plot svg .geometry-frequency.amber { stroke: #d97706; }
+.geometry-key-dot, .geometry-key-box, .geometry-key-line, .geometry-key-bracket, .geometry-key-arrow { display: inline-block; flex: 0 0 auto; }
+.geometry-key-dot { width: .82rem; height: .82rem; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 0 0 2px #475569; }
+.geometry-key-dot.indigo { background: #4338ca; }
+.geometry-key-dot.coral { background: #e11d48; }
+.geometry-key-dot.teal { background: #0f766e; }
+.geometry-key-box { width: 1.25rem; height: .9rem; border: 2px solid #64748b; border-radius: .2rem; background: #fff; }
+.geometry-key-box.indigo { border-color: #4338ca; background: #c7d2fe; }
+.geometry-key-box.hatched { border-color: #ea580c; background: repeating-linear-gradient(45deg, #fff7ed 0 4px, #fb923c 4px 7px); }
+.geometry-key-line { width: 1.4rem; height: .35rem; border-top: 4px solid #0f766e; }
+.geometry-key-line.indigo { border-color: #4338ca; }
+.geometry-key-line.coral { border-color: #e11d48; }
+.geometry-key-line.teal { border-color: #0f766e; }
+.geometry-key-line.dashed { border-top-style: dashed; }
+.geometry-key-bracket { width: 1.25rem; height: 1rem; border-left: 3px solid #0f766e; border-top: 3px solid #0f766e; border-bottom: 3px solid #0f766e; }
+.geometry-key-bracket.teal { border-color: #0f766e; }
+.geometry-key-arrow { width: 1.4rem; height: .5rem; border-top: 4px solid #4338ca; transform: skewX(-22deg); }
+.geometry-key-arrow.coral { border-color: #e11d48; }
+.geometry-key-arrow.teal { border-color: #0f766e; }
+.geometry-boss { border: 2px solid #059669; background: linear-gradient(145deg, #ecfdf5, #fff 55%, #fff7ed); }
+.geometry-boss label { display: grid; gap: .3rem; margin-bottom: .62rem; color: #475467; font-size: .8rem; font-weight: 850; }
+.geometry-boss select:disabled { border-style: dashed; background: #f1f5f9; color: #64748b; opacity: 1; }
+.geometry-case-artifact { min-height: 15rem; border: 2px solid #fdba74; background: repeating-linear-gradient(-45deg, #fff7ed 0 18px, #fff 18px 36px); }
+.geometry-case-artifact h3 { color: #065f46; }
+.geometry-case-artifact p { padding: .75rem; border: 1px solid #fdba74; border-radius: .7rem; background: rgba(255,255,255,.94); }
+.geometry-chapter-body button, .geometry-chapter-body select, .geometry-chapter-body .button { min-height: 44px; }
+.geometry-chapter-body .nav a { display: inline-flex; min-height: 44px; align-items: center; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
@@ -707,8 +784,8 @@ input[type="checkbox"] { width: auto; }
   .academy-track-header, .academy-curriculum-intro { align-items: stretch; flex-direction: column; }
   .academy-track-counts { justify-content: flex-start; }
   .matrix-flow { grid-template-columns: 1fr; }
-  .approximation-notebook-list article, .many-electron-notebook-list article, .hf-notebook-list article { grid-template-columns: 1fr 1fr; }
-  .approximation-notebook-list strong, .many-electron-notebook-list strong, .hf-notebook-list strong { grid-column: 1 / -1; }
+  .approximation-notebook-list article, .many-electron-notebook-list article, .hf-notebook-list article, .geometry-notebook-list article { grid-template-columns: 1fr 1fr; }
+  .approximation-notebook-list strong, .many-electron-notebook-list strong, .hf-notebook-list strong, .geometry-notebook-list strong { grid-column: 1 / -1; }
   .matrix-flow span { transform: rotate(90deg); justify-self: center; }
   .section-title, .record-topline { flex-direction: column; align-items: stretch; }
   .badges { justify-content: flex-start; }
@@ -723,11 +800,11 @@ input[type="checkbox"] { width: auto; }
   .academy-reset-note { justify-self: stretch; text-align: left; }
   .table-scroll-hint { display: block; margin: .35rem 0 .2rem; color: var(--muted); font-size: .76rem; font-weight: 750; }
   .academy-plot > .academy-plot-canvas > svg { width: 560px; max-width: none; }
-  .approximation-plot > .academy-plot-canvas > svg, .many-electron-plot > .academy-plot-canvas > svg, .hf-plot > .academy-plot-canvas > svg { width: 680px; max-width: none; }
+  .approximation-plot > .academy-plot-canvas > svg, .many-electron-plot > .academy-plot-canvas > svg, .hf-plot > .academy-plot-canvas > svg, .geometry-plot > .academy-plot-canvas > svg { width: 680px; max-width: none; }
   .academy-plot-key { display: grid; grid-template-columns: 1fr; font-size: .82rem; }
   .approximation-campaign-route, .many-electron-campaign-route { grid-template-columns: 1fr; }
-  .approximation-notebook-list article, .many-electron-notebook-list article, .hf-notebook-list article { grid-template-columns: 1fr; }
-  .approximation-notebook-list strong, .many-electron-notebook-list strong, .hf-notebook-list strong { grid-column: auto; }
+  .approximation-notebook-list article, .many-electron-notebook-list article, .hf-notebook-list article, .geometry-notebook-list article { grid-template-columns: 1fr; }
+  .approximation-notebook-list strong, .many-electron-notebook-list strong, .hf-notebook-list strong, .geometry-notebook-list strong { grid-column: auto; }
   .game-actions button { flex-basis: 100%; }
   .game-target-grid { grid-template-columns: 1fr; }
   .approximation-campaign-route b, .many-electron-campaign-route b { transform: rotate(90deg); justify-self: center; }
@@ -735,11 +812,11 @@ input[type="checkbox"] { width: auto; }
   main, .intro { padding-left: .9rem; padding-right: .9rem; }
   .choice-main { padding-left: .9rem; padding-right: .9rem; }
   .record-footer { flex-direction: column; align-items: flex-start; }
-  .hf-chapter-body .nav { align-items: flex-start; }
-  .hf-chapter-body .brand { flex: 1 0 100%; margin-right: 0; }
-  .hf-chapter-body .nav a:not(.brand) { min-width: 0; white-space: normal; }
-  .hf-chapter-body main, .hf-chapter-body main > *, .hf-chapter-hero > * { min-width: 0; }
-  .hf-chapter-hero .quest-actions { display: grid; grid-template-columns: minmax(0, 1fr); }
-  .hf-chapter-hero .quest-actions .button { width: 100%; min-width: 0; white-space: normal; }
-  .hf-chapter-hero h1, .hf-chapter-hero p { overflow-wrap: anywhere; }
+  .hf-chapter-body .nav, .geometry-chapter-body .nav { align-items: flex-start; }
+  .hf-chapter-body .brand, .geometry-chapter-body .brand { flex: 1 0 100%; margin-right: 0; }
+  .hf-chapter-body .nav a:not(.brand), .geometry-chapter-body .nav a:not(.brand) { min-width: 0; white-space: normal; }
+  .hf-chapter-body main, .hf-chapter-body main > *, .hf-chapter-hero > *, .geometry-chapter-body main, .geometry-chapter-body main > *, .geometry-chapter-hero > * { min-width: 0; }
+  .hf-chapter-hero .quest-actions, .geometry-chapter-hero .quest-actions { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .hf-chapter-hero .quest-actions .button, .geometry-chapter-hero .quest-actions .button { width: 100%; min-width: 0; white-space: normal; }
+  .hf-chapter-hero h1, .hf-chapter-hero p, .geometry-chapter-hero h1, .geometry-chapter-hero p { overflow-wrap: anywhere; }
 }

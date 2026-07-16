@@ -43,6 +43,10 @@ jobs:
         run: node scripts/test_qc_hartree_fock_models.js
       - name: Test Hartree-Fock and SCF interactions and mobile plots
         run: node scripts/test_qc_hartree_fock_interactions.js
+      - name: Test Geometry, Gradients, and Frequencies finite models
+        run: node scripts/test_qc_geometry_models.js
+      - name: Test Geometry, Gradients, and Frequencies interactions and mobile plots
+        run: node scripts/test_qc_geometry_interactions.js
       - name: Test Academy progress compatibility
         run: node scripts/test_academy_core.js
       - name: Test Basis Quest badge migration
