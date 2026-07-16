@@ -178,9 +178,11 @@ Mean field, variational orbital rotations, Coulomb/exchange, finite Fock assembl
 
 #### Chapter C3 — Geometry, Gradients, and Frequencies (`qc-geometry.html`)
 
-Hellmann–Feynman/Pulay terms, analytic gradients, Hessians, normal modes, optimization algorithms, transition states, IRC, zero-point energy.
+**Status:** live as a 10-mission earned chapter (2026-07-16).
 
-**Games:** PES walker, steepest/Newton/BFGS race, normal-mode animator, saddle-point finder.
+Stationary analytic-gradient and Pulay terms, finite-difference validation, curvature-aware optimization, trust regions, BFGS, Hessians, mass-weighted normal modes, stationary-point classification, transition states, two-sided IRC, and harmonic zero-point energy.
+
+**Games:** PES/force walker, analytic-gradient ledger, derivative step-size audit, optimizer step race, trust/BFGS workshop, Hessian foundry, mass-weighted mode laboratory, stationary-point/frequency audit, saddle/IRC bridge, and the three-stage Geometry evidence board.
 
 ### Track D — Density-functional theory
 

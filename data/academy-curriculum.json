@@ -321,16 +321,34 @@
           "order": 3,
           "title": "Geometry, Gradients, and Frequencies",
           "route": "qc-geometry.html",
-          "status": "planned",
+          "status": "live",
           "level": "Practitioner to professor",
           "levels": 10,
-          "games": 4,
+          "games": 10,
+          "progress": {
+            "kind": "academy-missions",
+            "total": 10,
+            "mission_ids": [
+              "pes-forces",
+              "analytic-gradient",
+              "gradient-validation",
+              "geometry-optimization",
+              "trust-bfgs",
+              "hessian-curvature",
+              "normal-modes",
+              "stationary-points",
+              "transition-state-irc",
+              "geometry-case-file"
+            ],
+            "label": "Geometry, Gradients, and Frequencies missions"
+          },
           "prerequisites": ["qc-hartree-fock", "qc-approximations"],
-          "summary": "Connect electronic energies to analytic gradients, Pulay terms, optimization algorithms, Hessians, normal modes, transition states, and reaction paths.",
+          "summary": "Connect stationary electronic energies to analytic gradients and Pulay terms, validate derivatives, choose trust-region and BFGS optimization steps, audit Hessians and mass-weighted normal modes, classify stationary points, and verify transition states with two-sided reaction paths.",
           "outcomes": [
-            "Interpret gradients and Hessian eigenvectors",
-            "Choose an optimization method for the surface topology",
-            "Distinguish minima, transition states, and numerical artifacts"
+            "Derive and independently validate finite gradients, forces, Hessians, and harmonic-ZPE certificates",
+            "Choose optimization, trust-region, and quasi-Newton actions from curvature and reduction evidence",
+            "Distinguish minima, first- and higher-order saddles, near-zero artifacts, and invalid mode counts",
+            "Require an intended imaginary mode and distinct two-sided IRC endpoints before assigning transition-state connectivity"
           ]
         }
       ]

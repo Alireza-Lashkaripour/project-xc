@@ -75,6 +75,15 @@ LIVE_CHAPTER_RULES = {
         "challenge": "HF/SCF evidence board",
         "plots": 11,
     },
+    "qc-geometry": {
+        "script": "qc-geometry.js",
+        "test": "test_qc_geometry_models.js",
+        "interaction_test": "test_qc_geometry_interactions.js",
+        "source": "qc-geometry.md",
+        "boundary": "Geometry-model boundary",
+        "challenge": "Geometry evidence board",
+        "plots": 9,
+    },
 }
 
 

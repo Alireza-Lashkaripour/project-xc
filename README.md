@@ -18,6 +18,7 @@ Direct pages:
 - Atomic Structure: https://alireza-lashkaripour.github.io/project-xc/qc-atoms.html
 - Many-Electron Wavefunctions: https://alireza-lashkaripour.github.io/project-xc/qc-many-electron.html
 - Hartree–Fock and SCF: https://alireza-lashkaripour.github.io/project-xc/qc-hartree-fock.html
+- Geometry, Gradients, and Frequencies: https://alireza-lashkaripour.github.io/project-xc/qc-geometry.html
 - XC Functional: https://alireza-lashkaripour.github.io/project-xc/xc-functionals.html
 - MO Diagrams: https://alireza-lashkaripour.github.io/project-xc/mo-builder.html
 - Basis Sets: https://alireza-lashkaripour.github.io/project-xc/basis-sets.html
@@ -39,6 +40,8 @@ node scripts/test_qc_many_electron_models.js
 node scripts/test_qc_many_electron_interactions.js
 node scripts/test_qc_hartree_fock_models.js
 node scripts/test_qc_hartree_fock_interactions.js
+node scripts/test_qc_geometry_models.js
+node scripts/test_qc_geometry_interactions.js
 node scripts/test_academy_core.js
 node scripts/test_basis_progress.js
 python3 scripts/build_site.py

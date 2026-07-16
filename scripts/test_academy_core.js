@@ -60,6 +60,7 @@ const ATOM_MISSION_IDS = ['model-map', 'quantum-numbers', 'coulomb-spectrum', 'r
 const APPROXIMATION_MISSION_IDS = ['approximation-passport', 'dimensionless-scaling', 'rayleigh-quotient', 'variational-gaussian', 'basis-truncation', 'nonorthogonal-basis', 'nondegenerate-perturbation', 'degenerate-perturbation', 'series-budget', 'error-decomposition', 'residual-bounds', 'approximation-case-file'];
 const MANY_ELECTRON_MISSION_IDS = ['fermion-exchange', 'spin-orbital-occupancy', 'determinant-parity', 'determinant-overlap', 'one-body-selection', 'two-body-selection', 'spin-adaptation', 'one-rdm', 'two-rdm', 'many-electron-case-file'];
 const HARTREE_FOCK_MISSION_IDS = ['hf-variational-manifold', 'coulomb-exchange', 'fock-assembly', 'roothaan-hall', 'density-projector', 'orbital-stationarity', 'scf-fixed-point', 'scf-pathology', 'scf-stabilization', 'diis', 'reference-spin', 'hf-case-file'];
+const GEOMETRY_MISSION_IDS = ['pes-forces', 'analytic-gradient', 'gradient-validation', 'geometry-optimization', 'trust-bfgs', 'hessian-curvature', 'normal-modes', 'stationary-points', 'transition-state-irc', 'geometry-case-file'];
 const BASIS_BADGE_IDS = [
   'orbital-alphabet', 'gaussian-sculptor', 'ao-cartographer', 'contraction-smith', 'matrix-runner', 'family-scout',
   'basis-loadout-designer', 'bsse-duelist', 'conditioning-guardian', 'cbs-extrapolator', 'scaling-survivor',
@@ -122,6 +123,12 @@ const hartreeFockChapter = {
   levels: 12,
   progress: { kind: 'academy-missions', total: 12, mission_ids: HARTREE_FOCK_MISSION_IDS, label: 'Hartree–Fock and SCF missions' }
 };
+const geometryChapter = {
+  id: 'qc-geometry',
+  status: 'live',
+  levels: 10,
+  progress: { kind: 'academy-missions', total: 10, mission_ids: GEOMETRY_MISSION_IDS, label: 'Geometry, Gradients, and Frequencies missions' }
+};
 const basisChapter = {
   id: 'qc-basis-sets',
   status: 'existing-tool',
@@ -153,11 +160,13 @@ academy.setMission('qc-atoms', 'model-map', true);
 academy.setMission('qc-approximations', 'approximation-passport', true);
 academy.setMission('qc-many-electron', 'fermion-exchange', true);
 academy.setMission('qc-hartree-fock', 'hf-variational-manifold', true);
+academy.setMission('qc-geometry', 'pes-forces', true);
 academy.setMission('qc-foundations', 'retired-mission', true);
 academy.setMission('qc-atoms', 'retired-atomic-mission', true);
 academy.setMission('qc-approximations', 'retired-approximation-mission', true);
 academy.setMission('qc-many-electron', 'retired-many-electron-mission', true);
 academy.setMission('qc-hartree-fock', 'retired-hartree-fock-mission', true);
+academy.setMission('qc-geometry', 'retired-geometry-mission', true);
 const liveProgress = academy.chapterProgress(liveChapter);
 equal(liveProgress.completed, 1, 'stale mission ids must not inflate live Academy progress');
 equal(liveProgress.total, 10, 'live Academy mission total');
@@ -178,6 +187,9 @@ equal(manyElectronProgress.total, 10, 'many-electron mission total');
 const hartreeFockProgress = academy.chapterProgress(hartreeFockChapter);
 equal(hartreeFockProgress.completed, 1, 'Hartree–Fock progress must count only authoritative mission ids');
 equal(hartreeFockProgress.total, 12, 'Hartree–Fock mission total');
+const geometryProgress = academy.chapterProgress(geometryChapter);
+equal(geometryProgress.completed, 1, 'Geometry progress must count only authoritative mission ids');
+equal(geometryProgress.total, 10, 'Geometry mission total');
 assert(typeof academy.reconcileChapterMissions === 'function', 'mission reconciliation API must be exported');
 academy.reconcileChapterMissions('qc-foundations', FOUNDATION_MISSION_IDS);
 assert(!academy.completedMissions('qc-foundations').includes('retired-mission'), 'chapter reconciliation must migrate stale mission ids out of durable state');
@@ -201,6 +213,7 @@ equal(academy.completedMissions('qc-atoms').length, 2, 'chapter reset must prese
 equal(academy.completedMissions('qc-approximations').length, 2, 'chapter reset must preserve Approximation Thinking, including state pending reconciliation');
 equal(academy.completedMissions('qc-many-electron').length, 2, 'chapter reset must preserve Many-Electron Wavefunctions, including state pending reconciliation');
 equal(academy.completedMissions('qc-hartree-fock').length, 2, 'chapter reset must preserve Hartree–Fock, including state pending reconciliation');
+equal(academy.completedMissions('qc-geometry').length, 2, 'chapter reset must preserve Geometry, including state pending reconciliation');
 academy.setMission('qc-foundations', 'scale', true);
 academy.resetAll();
 equal(localStorage.getItem(BASIS_KEY), beforeReset, 'Academy reset must preserve Basis Quest badges');
@@ -210,6 +223,7 @@ equal(academy.completedMissions('qc-atoms').length, 0, 'Academy reset must clear
 equal(academy.completedMissions('qc-approximations').length, 0, 'Academy reset must clear Approximation Thinking missions');
 equal(academy.completedMissions('qc-many-electron').length, 0, 'Academy reset must clear Many-Electron Wavefunctions missions');
 equal(academy.completedMissions('qc-hartree-fock').length, 0, 'Academy reset must clear Hartree–Fock missions');
+equal(academy.completedMissions('qc-geometry').length, 0, 'Academy reset must clear Geometry missions');
 assert(events.length >= 4, 'progress operations must dispatch update events');
 
 academy.setMission('qc-foundations', 'scale', true);
@@ -218,20 +232,23 @@ academy.setMission('qc-atoms', 'model-map', true);
 academy.setMission('qc-approximations', 'approximation-passport', true);
 academy.setMission('qc-many-electron', 'fermion-exchange', true);
 academy.setMission('qc-hartree-fock', 'hf-variational-manifold', true);
+academy.setMission('qc-geometry', 'pes-forces', true);
 academy.setMission('qc-math-language', 'renamed-away-mission', true);
 academy.setMission('qc-atoms', 'renamed-atomic-mission', true);
 academy.setMission('qc-approximations', 'renamed-approximation-mission', true);
 academy.setMission('qc-many-electron', 'renamed-many-electron-mission', true);
 academy.setMission('qc-hartree-fock', 'renamed-hartree-fock-mission', true);
+academy.setMission('qc-geometry', 'renamed-geometry-mission', true);
 equal(academy.chapterProgress(mathChapter).completed, 1, 'stale mission ids must remain excluded before curriculum migration');
 assert(typeof academy.reconcileCurriculumMissions === 'function', 'curriculum-wide mission reconciliation API must be exported');
-const curriculum = { tracks: [{ chapters: [liveChapter, mathChapter, approximationChapter, atomChapter, manyElectronChapter, hartreeFockChapter, basisChapter] }] };
+const curriculum = { tracks: [{ chapters: [liveChapter, mathChapter, approximationChapter, atomChapter, manyElectronChapter, hartreeFockChapter, geometryChapter, basisChapter] }] };
 academy.reconcileCurriculumMissions(curriculum);
 assert(!academy.completedMissions('qc-math-language').includes('renamed-away-mission'), 'gateway reconciliation must migrate stale ids for every contracted chapter');
 assert(!academy.completedMissions('qc-atoms').includes('renamed-atomic-mission'), 'gateway reconciliation must migrate stale Atomic Structure ids');
 assert(!academy.completedMissions('qc-approximations').includes('renamed-approximation-mission'), 'gateway reconciliation must migrate stale Approximation Thinking ids');
 assert(!academy.completedMissions('qc-many-electron').includes('renamed-many-electron-mission'), 'gateway reconciliation must migrate stale Many-Electron Wavefunctions ids');
 assert(!academy.completedMissions('qc-hartree-fock').includes('renamed-hartree-fock-mission'), 'gateway reconciliation must migrate stale Hartree–Fock ids');
+assert(!academy.completedMissions('qc-geometry').includes('renamed-geometry-mission'), 'gateway reconciliation must migrate stale Geometry ids');
 let rejectedUnknownMission = false;
 try {
   academy.setMission('qc-foundations', 'not-in-contract', true, FOUNDATION_MISSION_IDS);
@@ -240,9 +257,9 @@ try {
 }
 assert(rejectedUnknownMission, 'chapter-bound writes must reject mission ids outside the authoritative contract');
 const summary = academy.summarizeCurriculum(curriculum);
-equal(summary.completed, 8, 'combined available-mission completion count');
-equal(summary.available, 84, 'combined available-mission total');
-equal(summary.fraction, 8 / 84, 'combined progress fraction');
+equal(summary.completed, 9, 'combined available-mission completion count');
+equal(summary.available, 94, 'combined available-mission total');
+equal(summary.fraction, 9 / 94, 'combined progress fraction');
 
 localStorage.setItem(BASIS_KEY, '{malformed json');
 equal(academy.chapterProgress(basisChapter).completed, 0, 'malformed legacy storage must recover safely');
