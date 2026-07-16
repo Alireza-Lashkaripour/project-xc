@@ -16,6 +16,8 @@ Direct pages:
 - Mathematical Language: https://alireza-lashkaripour.github.io/project-xc/qc-math-language.html
 - Approximation and Variational Thinking: https://alireza-lashkaripour.github.io/project-xc/qc-approximations.html
 - Atomic Structure: https://alireza-lashkaripour.github.io/project-xc/qc-atoms.html
+- Many-Electron Wavefunctions: https://alireza-lashkaripour.github.io/project-xc/qc-many-electron.html
+- Hartree–Fock and SCF: https://alireza-lashkaripour.github.io/project-xc/qc-hartree-fock.html
 - XC Functional: https://alireza-lashkaripour.github.io/project-xc/xc-functionals.html
 - MO Diagrams: https://alireza-lashkaripour.github.io/project-xc/mo-builder.html
 - Basis Sets: https://alireza-lashkaripour.github.io/project-xc/basis-sets.html
@@ -33,6 +35,10 @@ node scripts/test_qc_atomic_models.js
 node scripts/test_qc_atomic_interactions.js
 node scripts/test_qc_approximation_models.js
 node scripts/test_qc_approximation_interactions.js
+node scripts/test_qc_many_electron_models.js
+node scripts/test_qc_many_electron_interactions.js
+node scripts/test_qc_hartree_fock_models.js
+node scripts/test_qc_hartree_fock_interactions.js
 node scripts/test_academy_core.js
 node scripts/test_basis_progress.js
 python3 scripts/build_site.py
@@ -50,6 +56,9 @@ Academy implementation roadmap:
 - `docs/academy/sources/qc-atoms.md`
 - `docs/plans/2026-07-15-approximation-variational-thinking-chapter-plan.md`
 - `docs/academy/sources/qc-approximations.md`
+- `docs/academy/sources/qc-many-electron.md`
+- `docs/plans/2026-07-15-hartree-fock-scf-chapter.md`
+- `docs/academy/sources/qc-hartree-fock.md`
 
 - Unified visual system: elegant scientific cockpit presentation with stronger typography, first-screen module summaries, and polished cards across all pages.
 - Advanced Integrals: Basis Set Quest now includes Gaussian product theorem, one-electron integrals, Boys functions, ERI tensor scaling/screening, recurrence algorithms, and derivative/gradient games.

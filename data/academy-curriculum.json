@@ -284,16 +284,36 @@
           "order": 2,
           "title": "Hartree–Fock and SCF",
           "route": "qc-hartree-fock.html",
-          "status": "planned",
+          "status": "live",
           "level": "Undergraduate to professor",
           "levels": 12,
-          "games": 5,
+          "games": 12,
+          "progress": {
+            "kind": "academy-missions",
+            "total": 12,
+            "mission_ids": [
+              "hf-variational-manifold",
+              "coulomb-exchange",
+              "fock-assembly",
+              "roothaan-hall",
+              "density-projector",
+              "orbital-stationarity",
+              "scf-fixed-point",
+              "scf-pathology",
+              "scf-stabilization",
+              "diis",
+              "reference-spin",
+              "hf-case-file"
+            ],
+            "label": "Hartree–Fock and SCF missions"
+          },
           "prerequisites": ["qc-many-electron", "qc-molecular-orbitals", "qc-basis-sets"],
-          "summary": "Derive Coulomb and exchange, the Fock operator, Roothaan–Hall equations, density matrices, SCF convergence strategies, and restricted or open-shell reference choices.",
+          "summary": "Derive Coulomb and exchange, assemble finite Fock matrices, solve Roothaan–Hall problems, certify density projectors and orbital stationarity, diagnose and stabilize SCF iterations, and audit RHF, ROHF, or UHF evidence.",
           "outcomes": [
-            "Derive the self-consistent Hartree–Fock equations",
-            "Diagnose common SCF convergence failures",
-            "Distinguish orbital representations from observables"
+            "Derive and independently verify finite Hartree–Fock stationarity, Fock, density, and Roothaan–Hall certificates",
+            "Diagnose convergence, false plateaus, oscillation, divergence, and DIIS history quality from residual evidence",
+            "Choose restricted or unrestricted references with explicit spin-symmetry and spin-contamination caveats",
+            "Distinguish a converged SCF fixed point from a stable, physically appropriate Hartree–Fock solution"
           ]
         },
         {

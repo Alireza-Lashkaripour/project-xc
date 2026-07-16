@@ -66,6 +66,15 @@ LIVE_CHAPTER_RULES = {
         "challenge": "Many-electron evidence board",
         "plots": 9,
     },
+    "qc-hartree-fock": {
+        "script": "qc-hartree-fock.js",
+        "test": "test_qc_hartree_fock_models.js",
+        "interaction_test": "test_qc_hartree_fock_interactions.js",
+        "source": "qc-hartree-fock.md",
+        "boundary": "Hartree–Fock-model boundary",
+        "challenge": "HF/SCF evidence board",
+        "plots": 11,
+    },
 }
 
 
