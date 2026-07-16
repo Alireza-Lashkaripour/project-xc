@@ -170,9 +170,11 @@ Indistinguishability, antisymmetry, Slater determinants, spin orbitals, Slater�
 
 #### Chapter C2 — Hartree–Fock and SCF (`qc-hartree-fock.html`)
 
-Mean field, Coulomb/exchange, Fock operator, Roothaan–Hall equations, density matrix, SCF convergence, restricted/open-shell/unrestricted references, orbital invariance.
+**Status:** live as a 12-mission earned chapter (2026-07-15).
 
-**Games:** Coulomb/exchange builder, SCF fixed-point race, damping/DIIS stabilizer, spin-contamination diagnostic.
+Mean field, variational orbital rotations, Coulomb/exchange, finite Fock assembly, Roothaan–Hall equations, density projectors, orbital stationarity, SCF fixed-point and pathology diagnostics, damping, level shifting, DIIS, RHF/ROHF/UHF references, spin contamination, and stability caveats.
+
+**Games:** variational slice audit, Coulomb/exchange builder, Fock contraction, generalized eigenproblem, density projector, Brillouin/stability test, SCF fixed-point race, convergence-log pathology lab, damping/level-shift intervention, DIIS subspace test, reference-spin audit, and the three-stage HF/SCF evidence board.
 
 #### Chapter C3 — Geometry, Gradients, and Frequencies (`qc-geometry.html`)
 

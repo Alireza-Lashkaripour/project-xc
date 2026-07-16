@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hartree–Fock and SCF · Quantum Chemistry Academy</title>
+  <meta name="description" content="Twelve earned laboratories derive finite Hartree–Fock stationarity, Fock and density matrices, Roothaan–Hall equations, SCF convergence, DIIS, and reference-spin diagnostics.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      svg: { fontCache: 'global' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="academy-body hf-chapter-body">
+<a class="skip-link" href="#main">Skip to chapter content</a>
+<header class="site-header compact">
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="index.html">Project XC</a>
+    <a href="quantum-chemistry.html">Academy</a>
+    <a href="qc-many-electron.html">Many Electron</a>
+    <a href="mo-diagrams.html">Molecular Orbitals</a>
+    <a href="basis-sets.html">Basis Sets</a>
+  </nav>
+</header>
+<main id="main" class="prose guide-page academy-chapter-page">
+  <section class="academy-chapter-hero hf-chapter-hero" aria-labelledby="chapterTitle">
+    <div>
+      <p class="kicker">Quantum Chemistry Academy · C2</p>
+      <h1 id="chapterTitle">Hartree–Fock and Self-Consistent Field</h1>
+      <p class="lead">A determinant expectation is not yet Hartree–Fock. Vary its orbitals, assemble the density-dependent Fock operator, solve the generalized eigenproblem, and demand self-consistency with evidence stronger than a flat energy trace.</p>
+      <div class="module-snapshot" aria-label="Hartree–Fock and SCF learning arc">
+        <div class="snapshot-card"><span>Variational</span><strong>Rotate and stationarize</strong></div>
+        <div class="snapshot-card"><span>Algebra</span><strong>Build F, C, and D</strong></div>
+        <div class="snapshot-card"><span>Research</span><strong>Diagnose the SCF path</strong></div>
+      </div>
+      <div class="quest-actions">
+        <a class="button" href="#level1">Enter the SCF control room</a>
+        <a class="button secondary" href="qc-many-electron.html">Prerequisite: Many Electron</a>
+        <a class="button secondary" href="quantum-chemistry.html">Academy roadmap</a>
+      </div>
+    </div>
+    <div class="quest-hud" aria-label="Chapter summary">
+      <div><span>Levels</span><strong>12</strong></div>
+      <div><span>Deep games</span><strong>12</strong></div>
+      <div><span>Plot labs</span><strong>11</strong></div>
+      <div><span>Boundary</span><strong>Before correlation</strong></div>
+    </div>
+  </section>
+
+  <section class="notice guide-callout hf-boundary" aria-labelledby="modelBoundaryTitle">
+    <h2 id="modelBoundaryTitle">Hartree–Fock-model boundary</h2>
+    <p><strong>Finite and variational does not mean exact molecular truth.</strong> These laboratories optimize one determinant inside declared two-orbital or two-AO teaching spaces. A small SCF residual certifies a fixed point of that model—not the global HF minimum, complete-basis convergence, spin purity, electron correlation, or agreement with experiment. The two-level SCF map is a transparent nonlinear surrogate, not an ab initio molecular calculation.</p>
+  </section>
+
+  <section class="card-panel chapter-progress-panel" aria-label="Hartree–Fock and SCF progress">
+    <div class="section-title">
+      <div><p class="kicker">SCF control-room seals</p><h2>Twelve missions, twelve earned laboratories</h2></div>
+      <strong id="chapterProgressText" class="results-meta">0 / 12 missions</strong>
+    </div>
+    <div class="xp-panel">
+      <div><strong>Evidence earned, not self-attested</strong><span>Canonical Academy progress is browser-local navigation state, never certification.</span></div>
+      <button id="resetChapterProgress" type="button" class="secondary">Reset only this chapter</button>
+    </div>
+    <div class="basis-progress-bar" aria-hidden="true"><span id="chapterProgressFill"></span></div>
+    <div id="chapterBadgeShelf" class="badge-shelf" aria-live="polite"></div>
+    <div class="button-row academy-lesson-nav hf-lesson-nav" aria-label="Jump to a Hartree–Fock and SCF level">
+      <button type="button" data-step="1">1 · Vary</button><button type="button" data-step="2">2 · J/K</button>
+      <button type="button" data-step="3">3 · Fock</button><button type="button" data-step="4">4 · Solve</button>
+      <button type="button" data-step="5">5 · Density</button><button type="button" data-step="6">6 · Stationarity</button>
+      <button type="button" data-step="7">7 · Fixed point</button><button type="button" data-step="8">8 · Triage</button>
+      <button type="button" data-step="9">9 · Stabilize</button><button type="button" data-step="10">10 · DIIS</button>
+      <button type="button" data-step="11">11 · Reference</button><button type="button" data-step="12">12 · Board</button>
+    </div>
+  </section>
+
+  <section class="card-panel hf-notebook" aria-labelledby="notebookTitle">
+    <p class="kicker">Persistent SCF evidence ledger</p>
+    <h2 id="notebookTitle">A convergence claim needs a model, diagnostic, and surviving caveat</h2>
+    <p>Every cleared laboratory records four linked decisions: operation → omitted layer → diagnostic → required evidence and surviving caveat.</p>
+    <div id="hfNotebookList" class="hf-notebook-list" aria-live="polite"><p class="help-text">No HF/SCF evidence recorded yet.</p></div>
+  </section>
+
+  <section id="level1" class="academy-lesson card-panel" data-step="1" aria-labelledby="level1Title">
+    <p class="kicker">Level 1 · Determinant variation passport</p>
+    <h2 id="level1Title">A determinant becomes Hartree–Fock only after orbital stationarity</h2>
+    <p>Along one declared occupied–virtual rotation, let \(E(\theta)=A_{oo}\cos^2\theta+A_{vv}\sin^2\theta+2A_{ov}\sin\theta\cos\theta\). Commit whether \(\theta=0\) is stationary and what its local curvature says. This slice is exact only for the supplied two-dimensional model.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Rotation dossier<select id="variationCase"><option value="variation-a">File V-14</option><option value="variation-b">File V-22</option><option value="variation-c">File V-31</option></select></label>
+        <label>Commit local classification<select id="variationDecision"><option value="">Choose…</option><option value="local-minimum-slice">Stationary local minimum on this slice</option><option value="local-maximum-slice">Stationary local maximum on this slice</option><option value="not-stationary">Not stationary; first-order descent remains</option></select></label>
+        <button id="variationAudit" type="button">Commit variation passport</button>
+        <p id="variationStage" class="game-stage">Dossiers cleared: 0 / 3</p>
+        <div id="variationReadout" class="game-result" data-state="neutral" aria-live="polite">The complete energy slice is visible; derivative and curvature certificates remain hidden until commitment.</div>
+      </div>
+      <figure class="academy-plot hf-plot"><div id="variationPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Occupied-virtual orbital rotation energy slice" aria-describedby="variationCaption variationHint"></div><ul class="academy-plot-key"><li><span class="hf-key-line indigo"></span>Finite energy slice</li><li><span class="hf-key-dot coral"></span>Current determinant</li><li id="variationOracleKey" hidden><span class="hf-key-line teal"></span>Derivative/curvature certificate</li></ul><figcaption id="variationCaption">Stationarity on one slice is necessary evidence, not a global stability proof.</figcaption><p id="variationHint" class="table-scroll-hint">Narrow screen: scroll the rotation curve internally.</p></figure>
+    </div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="hf-variational-manifold" data-badge="Variation passport">Locked seal · Variation passport</button>
+  </section>
+
+  <section id="level2" class="academy-lesson card-panel" data-step="2" aria-labelledby="level2Title">
+    <p class="kicker">Level 2 · Coulomb/exchange forge</p>
+    <h2 id="level2Title">Direct repulsion sees charge; exchange sees same-spin antisymmetry</h2>
+    <p>For a supplied orbital pair, combine \(J\) and \(K\) only after checking the spin relation. Opposite-spin exchange vanishes after spin integration. For one spin orbital interacting with itself, \(J=K\) cancels the mean-field self term.</p>
+    <div class="lab-grid">
+      <div class="basis-lab card-panel">
+        <label>Pair dossier<select id="coulombCase"><option value="coulomb-a">Pair J-08</option><option value="coulomb-b">Pair J-17</option><option value="coulomb-c">Pair J-29</option></select></label>
+        <label>Commit pair rule<select id="coulombDecision"><option value="">Choose…</option><option value="same-spin-j-minus-k">Same spin: J − K</option><option value="opposite-spin-j-only">Opposite spin: J only</option><option value="self-cancelled">Self pair: J − K = 0</option></select></label>
+        <button id="coulombAudit" type="button">Forge pair contribution</button><p id="coulombStage" class="game-stage">Pairs cleared: 0 / 3</p>
+        <div id="coulombReadout" class="game-result" data-state="neutral" aria-live="polite">J, K, and the spin relation are supplied; the signed pair total remains ungraded.</div>
+      </div>
+      <figure class="academy-plot hf-plot"><div id="coulombPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Coulomb and exchange contribution ledger" aria-describedby="coulombCaption coulombHint"></div><ul class="academy-plot-key"><li><span class="hf-key-box amber"></span>Coulomb J</li><li><span class="hf-key-box hatched"></span>Exchange −K when allowed</li><li id="coulombOracleKey" hidden><span class="hf-key-line teal"></span>Signed pair total</li></ul><figcaption id="coulombCaption">Exchange is not an empirical correction; correlation is still absent.</figcaption><p id="coulombHint" class="table-scroll-hint">Narrow screen: scroll the pair ledger internally.</p></figure>
+    </div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="coulomb-exchange" data-badge="J/K forge">Locked seal · J/K forge</button>
+  </section>
+
+  <section id="level3" class="academy-lesson card-panel" data-step="3" aria-labelledby="level3Title">
+    <p class="kicker">Level 3 · Fock matrix foundry</p>
+    <h2 id="level3Title">The operator depends on the orbitals it is asked to produce</h2>
+    <p>In the declared real spin-orbital convention, \(F_{pq}=h_{pq}+\sum_{rs}D^{(so)}_{rs}\langle pr\Vert qs\rangle\), where \(D^{(so)}\) is the full occupation-one 1-RDM over all occupied alpha and beta spin orbitals. Audit both integral permutations and Hermiticity; changing \(D^{(so)}\) changes \(F[D^{(so)}]\), which makes Hartree–Fock nonlinear.</p>
+    <div class="lab-grid"><div class="basis-lab card-panel">
+      <label>Build dossier<select id="fockCase"><option value="fock-a">Build F-04</option><option value="fock-b">Build F-19</option></select></label>
+      <label>Commit build status<select id="fockDecision"><option value="">Choose…</option><option value="hermitian-density-dependent">Accept symmetry-complete Hermitian F</option><option value="reject-nonhermitian-build">Reject inconsistent integral/build data</option></select></label>
+      <button id="fockAudit" type="button">Audit Fock build</button><p id="fockStage" class="game-stage">Builds cleared: 0 / 2</p><div id="fockReadout" class="game-result" data-state="neutral" aria-live="polite">The core, full spin-orbital density, raw integral record, and contracted contribution are visible; the certificates are hidden.</div>
+    </div><figure class="academy-plot hf-plot"><div id="fockPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Core, full spin-orbital density, mean-field, and Fock matrices" aria-describedby="fockCaption fockHint"></div><ul class="academy-plot-key"><li><span class="hf-key-box indigo"></span>Core h</li><li><span class="hf-key-box"></span>Full D<sup>(so)</sup></li><li><span class="hf-key-box amber"></span>Mean-field G[D<sup>(so)</sup>]</li><li id="fockOracleKey" hidden><span class="hf-key-bracket teal"></span>F, Hermiticity, and ERI symmetry</li></ul><figcaption id="fockCaption">A valid antisymmetrized tensor obeys its permutation identities, and its contraction preserves the expected Hermiticity.</figcaption><p id="fockHint" class="table-scroll-hint">Narrow screen: scroll the matrix foundry internally.</p></figure></div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="fock-assembly" data-badge="Fock foundry">Locked seal · Fock foundry</button>
+  </section>
+
+  <section id="level4" class="academy-lesson card-panel" data-step="4" aria-labelledby="level4Title">
+    <p class="kicker">Level 4 · Roothaan–Hall solver</p><h2 id="level4Title">The AO metric belongs inside the eigenproblem</h2>
+    <p>For nonorthogonal atomic orbitals, solve \(FC=SC\varepsilon\), not an ordinary eigenproblem in raw AO coordinates. A valid solution must satisfy \(C^TSC=I\) and a small residual for every reported root.</p>
+    <div class="lab-grid"><div class="basis-lab card-panel"><label>Metric dossier<select id="roothaanCase"><option value="roothaan-a">Metric R-07</option><option value="roothaan-b">Metric R-23</option></select></label><label>Commit solver action<select id="roothaanDecision"><option value="">Choose…</option><option value="solve-generalized">Solve the positive-definite generalized problem</option><option value="reject-overlap-metric">Reject the singular overlap metric</option></select></label><button id="roothaanAudit" type="button">Commit Roothaan–Hall audit</button><p id="roothaanStage" class="game-stage">Metrics cleared: 0 / 2</p><div id="roothaanReadout" class="game-result" data-state="neutral" aria-live="polite">F and S are supplied; equation and metric-orthonormality residuals remain hidden.</div></div><figure class="academy-plot hf-plot"><div id="roothaanPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Generalized eigenproblem and overlap spectrum" aria-describedby="roothaanCaption roothaanHint"></div><ul class="academy-plot-key"><li><span class="hf-key-box indigo"></span>F matrix</li><li><span class="hf-key-box amber"></span>S metric</li><li id="roothaanOracleKey" hidden><span class="hf-key-line teal"></span>Equation and C<sup>T</sup>SC metric certificate</li></ul><figcaption id="roothaanCaption">A singular AO metric signals linear dependence, not an extra physical orbital.</figcaption><p id="roothaanHint" class="table-scroll-hint">Narrow screen: scroll the generalized solver internally.</p></figure></div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="roothaan-hall" data-badge="Roothaan solver">Locked seal · Roothaan solver</button>
+  </section>
+
+  <section id="level5" class="academy-lesson card-panel" data-step="5" aria-labelledby="level5Title">
+    <p class="kicker">Level 5 · Density closure lab</p><h2 id="level5Title">A determinant density is a projector in the AO metric</h2>
+    <p>For one spin sector, \(D=C_{occ}C_{occ}^T\), \(\mathrm{Tr}(DS)=N_{occ}\), and \(DSD=D\). For the closed-shell spin-summed matrix \(P=2D\), the corresponding closure is \(PSP=2P\).</p>
+    <div class="lab-grid"><div class="basis-lab card-panel"><label>Density dossier<select id="densityCase"><option value="density-a">Density D-05</option><option value="density-b">Density D-18</option></select></label><label>Commit density class<select id="densityDecision"><option value="">Choose…</option><option value="projector-closed">Accept determinant projector</option><option value="not-a-determinant-projector">Reject as non-idempotent determinant density</option></select></label><button id="densityAudit" type="button">Audit density closure</button><p id="densityStage" class="game-stage">Densities cleared: 0 / 2</p><div id="densityReadout" class="game-result" data-state="neutral" aria-live="polite">D and S are supplied; trace and metric-idempotency certificates remain hidden.</div></div><figure class="academy-plot hf-plot"><div id="densityPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Density projector and metric closure" aria-describedby="densityCaption densityHint"></div><ul class="academy-plot-key"><li><span class="hf-key-box indigo"></span>Supplied D</li><li><span class="hf-key-line amber"></span>DSD closure</li><li id="densityOracleKey" hidden><span class="hf-key-bracket teal"></span>Trace and residual</li></ul><figcaption id="densityCaption">Fractional occupations can be useful elsewhere, but they are not one-determinant projector evidence.</figcaption><p id="densityHint" class="table-scroll-hint">Narrow screen: scroll the density closure internally.</p></figure></div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="density-projector" data-badge="Density closure">Locked seal · Density closure</button>
+  </section>
+
+  <section id="level6" class="academy-lesson card-panel" data-step="6" aria-labelledby="level6Title">
+    <p class="kicker">Level 6 · Brillouin stationarity gate</p><h2 id="level6Title">Zero occupied–virtual coupling is stationarity evidence—not a correlation theorem</h2>
+    <p>At a stationary HF determinant, occupied–virtual Fock elements vanish in the optimized framework, equivalently \(\langle\Phi_i^a|H|\Phi_0\rangle=0\) under the usual Brillouin conditions. Occupied–occupied and virtual–virtual rotations change orbital representation without changing the determinant subspaces.</p>
+    <div class="lab-grid"><div class="basis-lab card-panel"><label>Stationarity dossier<select id="stationarityCase"><option value="stationarity-a">Gate B-03</option><option value="stationarity-b">Gate B-16</option><option value="stationarity-c">Gate B-27</option></select></label><label>Commit diagnosis<select id="stationarityDecision"><option value="">Choose…</option><option value="stationary-slice">Stationary minimum on supplied slice</option><option value="occupied-virtual-gradient">Occupied–virtual gradient remains</option><option value="unstable-stationary-slice">Stationary but unstable on supplied slice</option></select></label><button id="stationarityAudit" type="button">Commit Brillouin audit</button><p id="stationarityStage" class="game-stage">Gates cleared: 0 / 3</p><div id="stationarityReadout" class="game-result" data-state="neutral" aria-live="polite">The occupied–virtual block is displayed; stationarity and curvature labels are withheld.</div></div><figure class="academy-plot hf-plot"><div id="stationarityPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Occupied and virtual Fock block stationarity" aria-describedby="stationarityCaption stationarityHint"></div><ul class="academy-plot-key"><li><span class="hf-key-box indigo"></span>Occupied block</li><li><span class="hf-key-box amber"></span>Virtual block</li><li id="stationarityOracleKey" hidden><span class="hf-key-line teal"></span>Occupied–virtual gradient</li></ul><figcaption id="stationarityCaption">Stationarity does not prove the lowest stable HF solution.</figcaption><p id="stationarityHint" class="table-scroll-hint">Narrow screen: scroll the orbital blocks internally.</p></figure></div>
+    <details class="professor-note"><summary>Professor mode · orbital invariance</summary><p>Unitary rotations confined to the occupied subspace leave a single determinant invariant up to phase; virtual-only rotations leave the occupied determinant unchanged. Canonical orbitals diagonalize convenient Fock blocks, but individual orbital energies and shapes are representation-dependent.</p></details>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="orbital-stationarity" data-badge="Brillouin gate">Locked seal · Brillouin gate</button>
+  </section>
+
+  <section id="level7" class="academy-lesson card-panel" data-step="7" aria-labelledby="level7Title">
+    <p class="kicker">Level 7 · SCF fixed-point race</p><h2 id="level7Title">Input density and output density must agree</h2>
+    <p>The declared two-level map converts an input density coordinate \(x\) into the occupied eigenvector of \(F[x]\). Call it self-consistent only when \(|x_{out}-x_{in}|\) is small. The map illustrates nonlinearity; it is not a molecular HF calculation.</p>
+    <div class="lab-grid"><div class="basis-lab card-panel"><label>Iteration dossier<select id="fixedCase"><option value="fixed-a">Run S-10</option><option value="fixed-b">Run S-24</option></select></label><label>Commit fixed-point status<select id="fixedDecision"><option value="">Choose…</option><option value="self-consistent-fixed-point">Accept self-consistent fixed point</option><option value="not-self-consistent">Reject: output and input still differ</option></select></label><button id="fixedAudit" type="button">Run fixed-point audit</button><p id="fixedStage" class="game-stage">Runs cleared: 0 / 2</p><div id="fixedReadout" class="game-result" data-state="neutral" aria-live="polite">The density path is visible; the final output–input residual is hidden.</div></div><figure class="academy-plot hf-plot"><div id="fixedPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="SCF density fixed-point iteration" aria-describedby="fixedCaption fixedHint"></div><ul class="academy-plot-key"><li><span class="hf-key-line indigo"></span>Input density coordinate</li><li><span class="hf-key-line coral dashed"></span>Raw output coordinate</li><li id="fixedOracleKey" hidden><span class="hf-key-bracket teal"></span>Final fixed-point residual</li></ul><figcaption id="fixedCaption">A visually flat energy is not substituted for the density residual.</figcaption><p id="fixedHint" class="table-scroll-hint">Narrow screen: scroll the iteration history internally.</p></figure></div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="scf-fixed-point" data-badge="SCF fixed point">Locked seal · SCF fixed point</button>
+  </section>
+
+  <section id="level8" class="academy-lesson card-panel" data-step="8" aria-labelledby="level8Title">
+    <p class="kicker">Level 8 · Convergence triage</p><h2 id="level8Title">Read the residual history before trusting the last energy</h2>
+    <p>Classify each log using energy change, density/output residual, and iteration pattern together. A two-cycle, a growing residual, and a false energy plateau demand different responses.</p>
+    <div class="lab-grid"><div class="basis-lab card-panel"><label>SCF log<select id="pathologyCase"><option value="pathology-a">Log C-02</option><option value="pathology-b">Log C-11</option><option value="pathology-c">Log C-26</option><option value="pathology-d">Log C-39</option></select></label><label>Commit diagnosis<select id="pathologyDecision"><option value="">Choose…</option><option value="converged">Converged by energy and density evidence</option><option value="false-plateau">False energy plateau</option><option value="oscillatory">Two-cycle / oscillatory</option><option value="divergent">Divergent residual</option></select></label><button id="pathologyAudit" type="button">Commit convergence triage</button><p id="pathologyStage" class="game-stage">Logs cleared: 0 / 4</p><div id="pathologyReadout" class="game-result" data-state="neutral" aria-live="polite">Energy and density histories are supplied; the pathology label is withheld.</div></div><figure class="academy-plot hf-plot"><div id="pathologyPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="SCF energy and density residual history" aria-describedby="pathologyCaption pathologyHint"></div><ul class="academy-plot-key"><li><span class="hf-key-line indigo"></span>Scaled energy change</li><li><span class="hf-key-line coral dashed"></span>Density residual</li><li id="pathologyOracleKey" hidden><span class="hf-key-bracket teal"></span>Convergence diagnosis</li></ul><figcaption id="pathologyCaption">Convergence thresholds are declared workflow choices, not universal physical constants.</figcaption><p id="pathologyHint" class="table-scroll-hint">Narrow screen: scroll the convergence trace internally.</p></figure></div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="scf-pathology" data-badge="Convergence triage">Locked seal · Convergence triage</button>
+  </section>
+
+  <section id="level9" class="academy-lesson card-panel" data-step="9" aria-labelledby="level9Title">
+    <p class="kicker">Level 9 · Stabilizer workshop</p><h2 id="level9Title">Choose an intervention that matches the failure mode</h2>
+    <p>Density damping can contract an oscillatory update; a temporary positive virtual level shift can suppress unstable occupied–virtual mixing in an orthonormal teaching basis. Neither guarantees the desired physical solution.</p>
+    <div class="lab-grid"><div class="basis-lab card-panel"><label>Recovery dossier<select id="stabilizationCase"><option value="stabilize-a">Recovery T-06</option><option value="stabilize-b">Recovery T-18</option><option value="stabilize-c">Recovery T-32</option></select></label><label>Commit intervention<select id="stabilizationDecision"><option value="">Choose…</option><option value="density-damping">Apply density damping and rescan</option><option value="virtual-level-shift">Apply temporary virtual level shift</option><option value="no-intervention">No intervention; convergence evidence passes</option><option value="rebuild-or-change-guess">Rebuild initial guess / model path</option></select></label><button id="stabilizationAudit" type="button">Commit stabilization plan</button><p id="stabilizationStage" class="game-stage">Recoveries cleared: 0 / 3</p><div id="stabilizationReadout" class="game-result" data-state="neutral" aria-live="polite">The pathology and gap are supplied; the intervention certificate remains hidden.</div></div><figure class="academy-plot hf-plot"><div id="stabilizationPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Raw SCF history and intervention-specific evidence" aria-describedby="stabilizationCaption stabilizationHint"></div><ul class="academy-plot-key"><li><span class="hf-key-line coral dashed"></span>Raw supplied history</li><li><span class="hf-key-line indigo"></span>Damped update, when applicable</li><li><span class="hf-key-box amber"></span>Gap before/after, when applicable</li><li id="stabilizationOracleKey" hidden><span class="hf-key-bracket teal"></span>Intervention rationale</li></ul><figcaption id="stabilizationCaption">The damping trace shows update contraction, while the level-shift dossier shows the declared orthonormal gap change. Either intervention still requires an unmodified fixed-point rerun.</figcaption><p id="stabilizationHint" class="table-scroll-hint">Narrow screen: scroll the stabilization trace internally.</p></figure></div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="scf-stabilization" data-badge="SCF stabilizer">Locked seal · SCF stabilizer</button>
+  </section>
+
+  <section id="level10" class="academy-lesson card-panel" data-step="10" aria-labelledby="level10Title">
+    <p class="kicker">Level 10 · DIIS residual mixer</p><h2 id="level10Title">Extrapolate error vectors, not a promise of lower energy</h2>
+    <p>DIIS chooses coefficients \(c_i\) with \(\sum_i c_i=1\) to reduce the norm of a residual combination. Nearly redundant residuals make the small Pulay system singular or ill-conditioned.</p>
+    <div class="lab-grid"><div class="basis-lab card-panel"><label>Residual dossier<select id="diisCase"><option value="diis-a">Subspace P-04</option><option value="diis-b">Subspace P-21</option></select></label><label>Commit subspace action<select id="diisDecision"><option value="">Choose…</option><option value="usable-residual-subspace">Solve constrained DIIS combination</option><option value="singular-residual-history">Reject/prune redundant residual history</option></select></label><button id="diisAudit" type="button">Mix residual subspace</button><p id="diisStage" class="game-stage">Subspaces cleared: 0 / 2</p><div id="diisReadout" class="game-result" data-state="neutral" aria-live="polite">Residual vectors are supplied; coefficients and mixed norm remain hidden.</div></div><figure class="academy-plot hf-plot"><div id="diisPlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="DIIS residual-vector subspace" aria-describedby="diisCaption diisHint"></div><ul class="academy-plot-key"><li><span class="hf-key-arrow indigo"></span>Stored residuals</li><li><span class="hf-key-arrow coral"></span>Linear combination</li><li id="diisOracleKey" hidden><span class="hf-key-bracket teal"></span>Coefficients and norm</li></ul><figcaption id="diisCaption">DIIS residual minimization is not a variational energy theorem.</figcaption><p id="diisHint" class="table-scroll-hint">Narrow screen: scroll the residual plane internally.</p></figure></div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="diis" data-badge="DIIS mixer">Locked seal · DIIS mixer</button>
+  </section>
+
+  <section id="level11" class="academy-lesson card-panel" data-step="11" aria-labelledby="level11Title">
+    <p class="kicker">Level 11 · Reference and spin audit</p><h2 id="level11Title">Choose RHF, ROHF, or UHF from the state and the evidence target</h2>
+    <p>RHF pairs alpha and beta electrons in common spatial orbitals; ROHF retains common closed-shell orbitals plus open-shell occupancy; UHF permits distinct alpha and beta orbitals. For the declared UHF convention, \(\langle S^2\rangle=M_S(M_S+1)+N_\beta-\sum_{ij}|S^{\alpha\beta}_{ij}|^2\).</p>
+    <div class="lab-grid"><div class="basis-lab card-panel"><label>Reference dossier<select id="referenceCase"><option value="reference-a">Reference U-03</option><option value="reference-b">Reference U-15</option><option value="reference-c">Reference U-28</option></select></label><label>Commit reference class<select id="referenceDecision"><option value="">Choose…</option><option value="rhf-reference">RHF paired reference</option><option value="rohf-reference">ROHF spin-adapted open-shell reference</option><option value="uhf-reference">UHF alpha/beta-relaxed reference</option></select></label><p id="referenceConstraint" class="game-stage">Target constraint: paired closed shell with common spatial orbitals and spin purity required.</p><button id="referenceAudit" type="button">Commit reference and spin audit</button><p id="referenceStage" class="game-stage">References cleared: 0 / 3</p><div id="referenceReadout" class="game-result" data-state="neutral" aria-live="polite">Electron counts, constraints, and alpha–beta overlaps are supplied; reference and spin certificates remain hidden.</div></div><figure class="academy-plot hf-plot"><div id="referencePlot" class="academy-plot-canvas" role="region" tabindex="0" aria-label="Reference occupancy and spin expectation" aria-describedby="referenceCaption referenceHint"></div><ul class="academy-plot-key"><li><span class="hf-key-box indigo"></span>Alpha occupied space</li><li><span class="hf-key-box amber"></span>Beta occupied space</li><li id="referenceOracleKey" hidden><span class="hf-key-line teal"></span>Reference and S² certificate</li></ul><figcaption id="referenceCaption">Spin contamination is a diagnostic to interpret, not an automatic universal rejection rule.</figcaption><p id="referenceHint" class="table-scroll-hint">Narrow screen: scroll the reference audit internally.</p></figure></div>
+    <details class="professor-note"><summary>Professor mode · broken symmetry and stability</summary><p>A lower UHF energy can reflect useful static-correlation-like symmetry breaking, an undesired spin-contaminated solution, or both. Compare state character, \(\langle S^2\rangle\), orbital stability, geometry dependence, and the property being predicted.</p></details>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="reference-spin" data-badge="Reference auditor">Locked seal · Reference auditor</button>
+  </section>
+
+  <section id="level12" class="academy-lesson card-panel hf-boss" data-step="12" aria-labelledby="level12Title">
+    <p class="kicker">Level 12 · HF/SCF evidence board</p><h2 id="level12Title">Close a case only when the reference, diagnostic, and evidence agree</h2>
+    <p>Resolve three neutral research dossiers under a four-attempt budget. Levels 1–11 must already be in your evidence notebook. Each case commits in order: reference/model choice → dominant diagnostic → sufficient evidence with a surviving caveat.</p>
+    <div class="lab-grid"><div class="basis-lab card-panel">
+      <label>Research dossier<select id="hfBossCase"><option value="hf-boss-a">Case H-41</option><option value="hf-boss-b">Case H-52</option><option value="hf-boss-c">Case H-68</option></select></label>
+      <p id="hfBossStage" class="game-stage">Stage 1 / 3 · reference choice</p><p id="hfBossBudget" class="game-stage">Evidence budget: 4 attempts</p>
+      <label>Reference/model choice<select id="hfBossReference"><option value="">Choose…</option><option value="rhf-reference">RHF reference</option><option value="rohf-reference">ROHF reference</option><option value="uhf-reference">UHF reference</option></select></label>
+      <label>Dominant diagnostic<select id="hfBossDiagnostic" disabled><option value="">Choose…</option><option value="density-residual">Density/output residual</option><option value="spin-contamination">Spin contamination</option><option value="two-cycle">Two-cycle oscillation</option></select></label>
+      <label>Required evidence<select id="hfBossEvidence" disabled><option value="">Choose…</option><option value="energy-density-residual">Energy plus density residual and restart</option><option value="s2-and-stability-scan">S², state character, and stability scan</option><option value="residual-history-and-intervention-scan">Residual history plus intervention/guess scan</option></select></label>
+      <div class="button-row"><button id="hfBossAudit" type="button">Commit current stage</button><button id="hfResetBossCase" type="button" class="secondary">Reset this dossier</button></div>
+      <p id="hfBossScore" class="game-stage">Cases: 0 / 3 · prerequisites: 0 / 11</p>
+      <div id="hfBossFeedback" class="game-result" data-state="neutral" aria-live="polite">Earn Levels 1–11 before opening the final board.</div>
+    </div><aside class="card-panel hf-case-artifact" aria-labelledby="hfBossArtifactTitle"><p class="kicker">Fixed dossier artifact</p><h3 id="hfBossArtifactTitle">Evidence remains locked</h3><div id="hfBossArtifact">The board reveals only the data needed for the current stage; later-stage evidence stays sealed.</div></aside></div>
+    <div class="misconception-card"><strong>Surviving caveat:</strong> a converged HF solution is still one stationary determinant in a finite basis. Correlation, global stability, basis error, state assignment, and experimental relevance remain separate questions.</div>
+    <button class="button academy-complete" type="button" disabled data-game-gate="locked" data-mission="hf-case-file" data-badge="HF/SCF evidence board">Locked seal · HF/SCF evidence board</button>
+  </section>
+
+  <section class="card-panel" aria-labelledby="sourcesTitle">
+    <p class="kicker">Verified source spine</p><h2 id="sourcesTitle">Trace the equations beyond the finite laboratory</h2>
+    <p>The complete convention, dossier, and verification ledger is stored in <code>docs/academy/sources/qc-hartree-fock.md</code>. Start with these theory and algorithm anchors:</p>
+    <ul>
+      <li><a href="https://doi.org/10.3390/molecules25051218" target="_blank" rel="noopener">Lehtola, Blockhuys, and Van Alsenoy, open review of finite-basis SCF calculations</a></li>
+      <li><a href="https://doi.org/10.1103/RevModPhys.23.69" target="_blank" rel="noopener">Roothaan, molecular orbital theory and the generalized equations</a></li>
+      <li><a href="https://doi.org/10.1016/0009-2614(80)80396-4" target="_blank" rel="noopener">Pulay, DIIS convergence acceleration</a></li>
+      <li><a href="https://doi.org/10.1063/1.1470195" target="_blank" rel="noopener">Kudin, Scuseria, and Cancès, robust SCF convergence</a></li>
+      <li><a href="https://doi.org/10.1103/PhysRev.97.1509" target="_blank" rel="noopener">Löwdin, unrestricted orbitals and spin considerations</a></li>
+    </ul>
+  </section>
+</main>
+<footer class="footer"><p>Project XC Quantum Chemistry Academy · Hartree–Fock and SCF</p></footer>
+<script src="assets/academy-core.js"></script>
+<script src="assets/qc-hartree-fock.js"></script>
+</body>
+</html>
